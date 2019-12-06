@@ -13,9 +13,11 @@
  export let fetcher;
  export let queryMinLen = 0;
  export let translations = I18N_DEFAULTS;
- export let query;
  export let delay = 0;
  export let extraClass = '';
+ export let typeahead = false;
+
+ let query = '';
 
  let input;
  let toggle;
@@ -41,7 +43,11 @@
 
  let previousQuery = null;
  let fetched = false;
- let selectedItem = null;
+
+ let multiple = false;
+ let selection = {};
+ let selectedItems = [];
+
  let downQuery = null;
  let wasDown = false;
 
@@ -188,7 +194,7 @@
              fetched = false;
              fetchingMore = false;
 
-             input.focus();
+             toggle.focus();
              openPopup();
          }
      });
@@ -241,40 +247,58 @@
  function closePopup(focusInput) {
      popupVisible = false;
      if (focusInput) {
-         input.focus();
+         toggle.focus();
      }
  }
 
  function openPopup() {
      if (!popupVisible) {
          popupVisible = true;
-         let w = input.parentElement.offsetWidth;
+         let w = toggle.parentElement.offsetWidth;
          popup.style.minWidth = w + "px";
      }
  }
 
  function selectItem(el) {
      let item = entries[el.dataset.index];
-     if (item) {
-         selectedItem = item;
-         let changed = item.text !== query
-         query = item.text;
-
-         previousQuery = query.trim();
-         if (previousQuery.length > 0) {
-             previousQuery = query;
-         }
-
-         closePopup(true);
-         if (changed) {
-             previousQuery = null;
-         }
-
-         syncToReal(query, selectedItem);
-         real.dispatchEvent(new CustomEvent('select-select', { detail: item }));
-//     } else {
-//         console.debug("MISSING item", el);
+     if (!item) {
+         console.error("MISSING item", el);
+         return;
      }
+
+     if (multiple) {
+         if (item.id) {
+             delete selection[''];
+
+             if (selection[item.id]) {
+                 delete selection[item.id];
+                 selection = selection;
+             } else {
+                 selection[item.id] = item;
+             }
+         } else {
+             Object.keys(selection).forEach(function (id) {
+                 delete selection[id];
+             });
+             selection[item.id] = item;
+         }
+     } else {
+         if (!selection[item.id]) {
+             Object.keys(selection).forEach(function (id) {
+                 delete selection[id];
+             });
+         }
+         selection[item.id] = item;
+     }
+     query = '';
+     previousQuery = null;
+
+     if (!multiple) {
+         closePopup(true);
+     }
+
+     syncToReal();
+     real.dispatchEvent(new CustomEvent('select-select', { detail: selection }));
  }
 
  function containsElement(el) {
@@ -294,7 +318,7 @@
  //
  $: {
      if (mounted) {
-         syncToReal(query, selectedItem);
+         syncToReal();
      }
  }
 
@@ -303,55 +327,49 @@
          return;
      }
 
-     let el = real.options[real.selectedIndex];
-     let item;
-     if (el) {
-         let ds = el.dataset;
+     let newSelection = {};
 
-         item = {
-             id: el.value,
-             text: el.text,
-             desc: ds.desc,
-         };
-     } else {
-         item = {
-             id: '',
-             text: '',
-         };
+     let options = real.options;
+
+     for (let i = options.length - 1; i >= 0; i--) {
+         let el = options[i];
+         if (el.selected) {
+             let ds = el.dataset;
+             let item = {
+                 id: el.value,
+                 text: el.text,
+                 desc: ds.desc,
+             };
+             newSelection[item.id] = item;
+         }
      }
 
-     query = item.text || '';
-     selectedItem = item;
+     selection = newSelection;
  }
 
- function syncToReal(query, selectedItem) {
-     let oldOption;
-     let newOption;
-     let selectedValue = selectedItem.id.toString();
+ function syncToReal() {
+     let changed = false;
 
-     real.querySelectorAll('option').forEach(function(el) {
-         if (el.selected) {
-             oldOption = el;
-         }
-         if (el.value === selectedValue) {
-             newOption = el;
-         }
-     });
+     let options = real.options;
 
-     if (newOption !== oldOption) {
-         try {
-             isSyncToReal = true;
-             oldOption.removeAttribute('selected');
-             newOption.setAttribute('selected', 'true');
-             real.dispatchEvent(new Event('change'));
-         } finally {
-             isSyncToReal = false;
-         }
+     for (let i = options.length - 1; i >= 0; i--) {
+         let el = options[i];
+         changed = el.selected !== selection[el.value];
+         el.selected = selection[el.value];
+     }
+
+     try {
+         isSyncToReal = true;
+         real.dispatchEvent(new Event('change'));
+     } finally {
+         isSyncToReal = false;
      }
  }
 
  onMount(function() {
      real.classList.add('d-none');
+     multiple = real.multiple
+
      fetcher = fetcherSelect
 
      syncFromReal();
@@ -364,7 +382,6 @@
 
  let inputKeypressHandlers = {
      base: function(event) {
-         selectedItem = null;
      },
  };
 
@@ -426,23 +443,23 @@
 
  let toggleKeydownHandlers = {
      base: function(event) {
-         input.focus();
+         toggle.focus();
      },
      ArrowDown: inputKeydownHandlers.ArrowDown,
      ArrowUp: inputKeydownHandlers.ArrowDown,
      Escape: function(event) {
          cancelFetch();
          closePopup(false);
-         input.focus();
+         toggle.focus();
      },
      Tab: function(event) {
-         input.focus();
+         toggle.focus();
      },
  };
 
  let itemKeydownHandlers = {
      base: function(event) {
-         input.focus();
+         toggle.focus();
      },
      ArrowDown: function(event) {
          let next = event.target.nextElementSibling;
@@ -584,6 +601,17 @@
      handleEvent(event.key, inputKeyupHandlers, event);
  }
 
+ function handleInputClick(event) {
+     if (event.button === 0 && !hasModifier(event)) {
+         if (popupVisible) {
+             closePopup(false);
+         } else {
+             openPopup();
+             fetchEntries();
+         }
+     }
+ }
+
  function handleToggleKeydown(event) {
      handleEvent(event.key, toggleKeydownHandlers, event);
  }
@@ -624,6 +652,11 @@
  .ki-select {
      position: relative;
  }
+ .ki-selection {
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
+ }
  .ki-select-popup {
      max-height: 15rem;
      max-width: 90vw;
@@ -636,96 +669,105 @@
 
 <!-- ------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------ -->
-<div class="input-group ki-select">
-  <input class="{real.getAttribute('class')} {extraClass}"
-         autocomplete=new-password
-         autocorrect=off
-         autocapitalize=off
-         spellcheck=off
+<button
+  class="ki-select form-control d-flex"
+  type="button"
+  bind:this={toggle}
+  on:blur={handleBlur}
+  on:keydown={handleToggleKeydown}
+  on:click={handleToggleClick}>
 
-         data-target="{real.id}"
-         placeholder="{real.placeholder}"
-         bind:this={input}
-         bind:value={query}
-         on:blur={handleBlur}
-         on:keypress={handleInputKeypress}
-         on:keydown={handleInputKeydown}
-         on:keyup={handleInputKeyup}>
-  <div class="input-group-append">
-    <button class="btn btn-outline-secondary" type="button" tabindex="-1"
-            bind:this={toggle}
-            on:blur={handleBlur}
-            on:keydown={handleToggleKeydown}
-            on:click={handleToggleClick}>
-      <i class="text-dark fas fa-caret-down"></i>
-    </button>
-  </div>
+  <span class="ki-selection mr-auto">
+    {#each Object.values(selection) as item}
+      <span class="{item.id ? 'text-dark' : 'text-muted'} mr-1">{item.text}</span>
+    {/each}
+  </span>
+  <span>
+    <i class="text-dark fas fa-caret-down"></i>
+  </span>
+</button>
+<div class="dropdown-menu ki-select-popup {popupVisible ? 'show' : ''}"
+     bind:this={popup}
+     on:scroll={handlePopupScroll}>
+  {#if fetchError}
+    <div tabindex="-1" class="dropdown-item text-danger">
+      {fetchError}
+    </div>
+  {:else if activeFetch && !fetchingMore}
+    <div tabindex="-1" class="dropdown-item text-muted">
+      {translate('fetching')}
+    </div>
+  {:else if displayCount === 0}
+    <div tabindex="-1" class="dropdown-item text-muted">
+      {#if tooShort }
+        {translate('too_short')}
+      {:else}
+        {translate('no_results')}
+      {/if}
+    </div>
+  {:else}
+    <input class="{real.getAttribute('class')} {extraClass}"
+           autocomplete=new-password
+           autocorrect=off
+           autocapitalize=off
+           spellcheck=off
 
-  <div class="dropdown-menu ki-select-popup {popupVisible ? 'show' : ''}"
-       bind:this={popup}
-       on:scroll={handlePopupScroll}>
-    {#if fetchError}
-      <div tabindex="-1" class="dropdown-item text-danger">
-        {fetchError}
-      </div>
-    {:else if activeFetch && !fetchingMore}
-      <div tabindex="-1" class="dropdown-item text-muted">
-        {translate('fetching')}
-      </div>
-    {:else if displayCount === 0}
-      <div tabindex="-1" class="dropdown-item text-muted">
-        {#if tooShort }
-          {translate('too_short')}
-        {:else}
-          {translate('no_results')}
-        {/if}
-      </div>
-    {:else}
-      {#each entries as item, index}
-        {#if item.separator}
-          <div tabindex="-1"
-            class="dropdown-divider ki-js-blank"
-            data-index="{index}"
-            on:keydown={handleItemKeydown}>
+           data-target="{real.id}"
+           placeholder="{real.placeholder}"
+           bind:this={input}
+           bind:value={query}
+           on:blur={handleBlur}
+           on:keypress={handleInputKeypress}
+           on:keydown={handleInputKeydown}
+           on:keyup={handleInputKeyup}
+           on:click={handleInputClick}>
+
+    {#each entries as item, index}
+      {#if item.separator}
+        <div tabindex="-1"
+          class="dropdown-divider ki-js-blank"
+          data-index="{index}"
+          on:keydown={handleItemKeydown}>
+        </div>
+      {:else if item.disabled || item.placeholder}
+        <div tabindex="-1" class="dropdown-item text-muted ki-js-blank"
+             on:keydown={handleItemKeydown}>
+          <div class="ki-no-click">
+            {item.display_text || item.text}
           </div>
-        {:else if item.disabled || item.placeholder}
-          <div tabindex="-1" class="dropdown-item text-muted ki-js-blank"
-               on:keydown={handleItemKeydown}>
-            <div class="ki-no-click">
-              {item.display_text || item.text}
+          {#if item.desc}
+            <div class="ki-no-click text-muted">
+              {item.desc}
             </div>
-            {#if item.desc}
-              <div class="ki-no-click text-muted">
-                {item.desc}
-              </div>
-            {/if}
-          </div>
-        {:else}
-          <div tabindex=1 class="ki-js-item dropdown-item"  data-index="{index}"
-             on:blur={handleBlur}
-             on:click={handleItemClick}
-             on:keydown={handleItemKeydown}
-             on:keyup={handleItemKeyup}>
+          {/if}
+        </div>
+      {:else}
+        <div tabindex=1
+           class="ki-js-item dropdown-item {!item.id ? 'text-muted' : ''} {selection[item.id] ? 'bg-primary' : ''}"
+           data-index="{index}"
+           on:blur={handleBlur}
+           on:click={handleItemClick}
+           on:keydown={handleItemKeydown}
+           on:keyup={handleItemKeyup}>
 
-            <div class="ki-no-click">
-              {item.display_text || item.text}
+          <div class="ki-no-click">
+            {item.display_text || item.text}
+          </div>
+          {#if item.desc}
+            <div class="ki-no-click text-muted">
+              {item.desc}
             </div>
-            {#if item.desc}
-              <div class="ki-no-click text-muted">
-                {item.desc}
-              </div>
-            {/if}
-          </div>
-        {/if}
-      {/each}
-    {/if}
+          {/if}
+        </div>
+      {/if}
+    {/each}
+  {/if}
 
-    {#if hasMore}
-      <div tabindex="-1"
-           class="dropdown-item text-muted"
-           bind:this={more}>
-        {translate('has_more')}
-      </div>
-    {/if}
-  </div>
+  {#if hasMore}
+    <div tabindex="-1"
+         class="dropdown-item text-muted"
+         bind:this={more}>
+      {translate('has_more')}
+    </div>
+  {/if}
 </div>
