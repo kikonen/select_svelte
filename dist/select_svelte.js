@@ -552,7 +552,7 @@ var Select = (function () {
     child_ctx.item = list[i];
     child_ctx.index = i;
     return child_ctx;
-  } // (679:4) {:else}
+  } // (683:4) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -611,7 +611,7 @@ var Select = (function () {
         if (detaching) detach(each_1_anchor);
       }
     };
-  } // (671:33) 
+  } // (675:33) 
 
 
   function create_if_block_3(ctx) {
@@ -653,7 +653,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (667:43) 
+  } // (671:43) 
 
 
   function create_if_block_2(ctx) {
@@ -673,7 +673,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (663:4) {#if fetchError}
+  } // (667:4) {#if fetchError}
 
 
   function create_if_block_1(ctx) {
@@ -697,7 +697,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (699:8) {:else}
+  } // (703:8) {:else}
 
 
   function create_else_block_2(ctx) {
@@ -754,7 +754,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (687:52) 
+  } // (691:52) 
 
 
   function create_if_block_6(ctx) {
@@ -809,7 +809,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (681:8) {#if item.separator}
+  } // (685:8) {#if item.separator}
 
 
   function create_if_block_5(ctx) {
@@ -833,7 +833,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (709:12) {#if item.desc}
+  } // (713:12) {#if item.desc}
 
 
   function create_if_block_8(ctx) {
@@ -857,7 +857,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (693:12) {#if item.desc}
+  } // (697:12) {#if item.desc}
 
 
   function create_if_block_7(ctx) {
@@ -881,7 +881,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (680:6) {#each entries as item, index}
+  } // (684:6) {#each entries as item, index}
 
 
   function create_each_block(ctx) {
@@ -922,7 +922,7 @@ var Select = (function () {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (675:8) {:else}
+  } // (679:8) {:else}
 
 
   function create_else_block(ctx) {
@@ -940,7 +940,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (673:8) {#if tooShort }
+  } // (677:8) {#if tooShort }
 
 
   function create_if_block_4(ctx) {
@@ -958,7 +958,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (719:4) {#if hasMore}
+  } // (723:4) {#if hasMore}
 
 
   function create_if_block(ctx) {
@@ -1144,6 +1144,7 @@ var Select = (function () {
     var toggle;
     var popup;
     var more;
+    var mounted = false;
     var entries = [];
     var offsetCount = 0;
     var displayCount = 0;
@@ -1412,6 +1413,7 @@ var Select = (function () {
       real.addEventListener("change", function () {
         syncFromReal();
       });
+      $$invalidate("mounted", mounted = true);
     });
     var inputKeypressHandlers = {
       base: function base(event) {
@@ -1705,13 +1707,14 @@ var Select = (function () {
 
     $$self.$$.update = function () {
       var changed = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+        mounted: 1,
         query: 1,
         selectedItem: 1
       };
 
-      if (changed.query || changed.selectedItem) {
+      if (changed.mounted || changed.query || changed.selectedItem) {
          {
-          if (syncToReal) {
+          if (mounted) {
             syncToReal(query, selectedItem);
           }
         }

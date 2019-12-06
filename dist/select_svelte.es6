@@ -271,7 +271,7 @@ function get_each_context(ctx, list, i) {
 	return child_ctx;
 }
 
-// (679:4) {:else}
+// (683:4) {:else}
 function create_else_block_1(ctx) {
 	let each_1_anchor;
 	let each_value = ctx.entries;
@@ -327,7 +327,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (671:33) 
+// (675:33) 
 function create_if_block_3(ctx) {
 	let div;
 
@@ -370,7 +370,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (667:43) 
+// (671:43) 
 function create_if_block_2(ctx) {
 	let div;
 
@@ -391,7 +391,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (663:4) {#if fetchError}
+// (667:4) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -416,7 +416,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (699:8) {:else}
+// (703:8) {:else}
 function create_else_block_2(ctx) {
 	let div1;
 	let div0;
@@ -480,7 +480,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (687:52) 
+// (691:52) 
 function create_if_block_6(ctx) {
 	let div1;
 	let div0;
@@ -536,7 +536,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (681:8) {#if item.separator}
+// (685:8) {#if item.separator}
 function create_if_block_5(ctx) {
 	let div;
 	let div_data_index_value;
@@ -561,7 +561,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (709:12) {#if item.desc}
+// (713:12) {#if item.desc}
 function create_if_block_8(ctx) {
 	let div;
 	let t_value = ctx.item.desc + "";
@@ -586,7 +586,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (693:12) {#if item.desc}
+// (697:12) {#if item.desc}
 function create_if_block_7(ctx) {
 	let div;
 	let t_value = ctx.item.desc + "";
@@ -611,7 +611,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (680:6) {#each entries as item, index}
+// (684:6) {#each entries as item, index}
 function create_each_block(ctx) {
 	let if_block_anchor;
 
@@ -653,7 +653,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (675:8) {:else}
+// (679:8) {:else}
 function create_else_block(ctx) {
 	let t_value = ctx.translate("no_results") + "";
 	let t;
@@ -672,7 +672,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (673:8) {#if tooShort }
+// (677:8) {#if tooShort }
 function create_if_block_4(ctx) {
 	let t_value = ctx.translate("too_short") + "";
 	let t;
@@ -691,7 +691,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (719:4) {#if hasMore}
+// (723:4) {#if hasMore}
 function create_if_block(ctx) {
 	let div;
 
@@ -887,6 +887,7 @@ function instance($$self, $$props, $$invalidate) {
 	let toggle;
 	let popup;
 	let more;
+	let mounted = false;
 	let entries = [];
 	let offsetCount = 0;
 	let displayCount = 0;
@@ -1159,6 +1160,8 @@ function instance($$self, $$props, $$invalidate) {
 		real.addEventListener("change", function () {
 			syncFromReal();
 		});
+
+		$$invalidate("mounted", mounted = true);
 	});
 
 	let inputKeypressHandlers = {
@@ -1458,10 +1461,10 @@ function instance($$self, $$props, $$invalidate) {
 		if ("extraClass" in $$props) $$invalidate("extraClass", extraClass = $$props.extraClass);
 	};
 
-	$$self.$$.update = (changed = { query: 1, selectedItem: 1 }) => {
-		if (changed.query || changed.selectedItem) {
+	$$self.$$.update = (changed = { mounted: 1, query: 1, selectedItem: 1 }) => {
+		if (changed.mounted || changed.query || changed.selectedItem) {
 			 {
-				if (syncToReal) {
+				if (mounted) {
 					syncToReal(query, selectedItem);
 				}
 			}

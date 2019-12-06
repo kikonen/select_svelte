@@ -22,6 +22,8 @@
  let popup;
  let more;
 
+ let mounted = false;
+
  let entries = [];
  let offsetCount = 0;
  let displayCount = 0;
@@ -291,7 +293,7 @@
  // HANDLERS
  //
  $: {
-     if (syncToReal) {
+     if (mounted) {
          syncToReal(query, selectedItem);
      }
  }
@@ -356,6 +358,8 @@
      real.addEventListener('change', function() {
          syncFromReal();
      });
+
+     mounted = true;
  });
 
  let inputKeypressHandlers = {
