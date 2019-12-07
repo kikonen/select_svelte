@@ -299,11 +299,11 @@
              });
          }
          selection[item.id] = item;
-     }
-     query = '';
-     previousQuery = null;
 
-     if (!multiple) {
+         // NOTE KI reset query only for single item
+//         query = '';
+//         previousQuery = null;
+
          closePopup(true);
      }
 
@@ -401,14 +401,23 @@
  let toggleKeydownHandlers = {
      base: nop,
      ArrowDown: function(event) {
-         let item = popupVisible ? popup.querySelectorAll('.ki-js-item')[0] : null;
-         if (item) {
-             while (item && item.classList.contains('ki-js-blank')) {
-                 item = item.nextElementSibling;
+         if (popupVisible) {
+             let item = typeahead ? input : popup.querySelectorAll('.ki-js-item')[0];
+             if (item) {
+                 while (item && item.classList.contains('ki-js-blank')) {
+                     item = item.nextElementSibling;
+                 }
              }
-             item.focus();
+             if (item) {
+                 item.focus();
+             }
          } else {
              openPopup();
+             if (typeahead) {
+                 setTimeout(function() {
+                     input.focus();
+                 });
+             }
              fetchEntries();
          }
          event.preventDefault();
@@ -422,6 +431,7 @@
          cancelFetch();
          closePopup(false);
      },
+     Tab: nop,
  };
 
  let itemKeydownHandlers = {
@@ -472,6 +482,10 @@
      Escape: function(event) {
          cancelFetch();
          closePopup(true);
+     },
+     Tab: function(event) {
+         toggle.focus();
+         event.preventDefault();
      },
      // allow "meta" keys to navigate in items
      PageUp: nop,
@@ -552,10 +566,24 @@
      base: function(event) {
          wasDown = true;
      },
-     ArrowUp: itemKeydownHandlers.ArrowUp,
-     ArrowDown: itemKeydownHandlers.ArrowDown,
+     ArrowUp: nop,
+     ArrowDown: function(event) {
+         let item = popup.querySelectorAll('.ki-js-item')[0];
+         if (item) {
+             while (item && item.classList.contains('ki-js-blank')) {
+                 item = item.nextElementSibling;
+             }
+         }
+         if (item) {
+             item.focus();
+         }
+         event.preventDefault();
+     },
      Escape: itemKeydownHandlers.Escape,
-     Tab: nop,
+     Tab: function(event) {
+         toggle.focus();
+         event.preventDefault();
+     }
  };
 
  let inputKeyupHandlers = {
@@ -599,7 +627,6 @@
  }
 
  function handleInputBlur(event) {
-//     debugger
      handleBlur(event);
  }
 
@@ -658,12 +685,22 @@
  .ki-selection {
      white-space: nowrap;
      overflow: hidden;
+     word-break: break-all;
      text-overflow: ellipsis;
  }
  .ki-select-popup {
      max-height: 15rem;
      max-width: 90vw;
      overflow-y: auto;
+ }
+ .ki-select-input {
+     width: 100%;
+     padding-left: 0.5rem;
+     padding-right: 0.5rem;
+ }
+ .ki-select-item {
+     padding-left: 0.5rem;
+     padding-right: 0.5rem;
  }
  .ki-no-click {
      pointer-events: none;
@@ -680,12 +717,12 @@
   on:keydown={handleToggleKeydown}
   on:click={handleToggleClick}>
 
-  <span class="ki-selection mr-auto">
-    {#each Object.values(selection) as item}
-      <span class="{item.id ? 'text-dark' : 'text-muted'} mr-1">{item.text}</span>
+  <span class="ki-selection">
+    {#each Object.values(selection) as item, index}
+      <span class="{item.id ? 'text-dark' : 'text-muted'}">{index > 0 ? ', ' : ''}{item.text}</span>
     {/each}
   </span>
-  <span>
+  <span class="ml-auto">
     <i class="text-dark fas fa-caret-down"></i>
   </span>
 </button>
@@ -693,7 +730,8 @@
      bind:this={popup}
      on:scroll={handlePopupScroll}>
   {#if typeahead}
-    <input class="dropdown-item ki-js-item border"
+    <div class="dropdown-item ki-select-item">
+      <input class="ki-select-input border"
          tabindex="1"
          autocomplete="new-password"
          autocorrect=off
@@ -706,6 +744,7 @@
          on:keypress={handleInputKeypress}
          on:keydown={handleInputKeydown}
          on:keyup={handleInputKeyup}>
+    </div>
   {/if}
 
   {#if fetchError}
@@ -746,7 +785,7 @@
         </div>
       {:else}
         <div tabindex=1
-           class="ki-js-item dropdown-item {!item.id ? 'text-muted' : ''} {selection[item.id] ? 'bg-primary' : ''}"
+           class="ki-js-item dropdown-item ki-select-item {!item.id ? 'text-muted' : ''} {selection[item.id] ? 'alert-primary' : ''}"
            data-index="{index}"
            on:blur={handleBlur}
            on:click={handleItemClick}

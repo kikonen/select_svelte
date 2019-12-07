@@ -259,8 +259,8 @@ const { Object: Object_1, document: document_1 } = globals;
 
 function add_css() {
 	var style = element("style");
-	style.id = "svelte-q431y-style";
-	style.textContent = ".ki-select.svelte-q431y{position:relative}.ki-selection.svelte-q431y{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ki-select-popup.svelte-q431y{max-height:15rem;max-width:90vw;overflow-y:auto}.ki-no-click.svelte-q431y{pointer-events:none}";
+	style.id = "svelte-1wk4ybi-style";
+	style.textContent = ".ki-select.svelte-1wk4ybi{position:relative}.ki-selection.svelte-1wk4ybi{white-space:nowrap;overflow:hidden;word-break:break-all;text-overflow:ellipsis}.ki-select-popup.svelte-1wk4ybi{max-height:15rem;max-width:90vw;overflow-y:auto}.ki-select-input.svelte-1wk4ybi{width:100%;padding-left:0.5rem;padding-right:0.5rem}.ki-select-item.svelte-1wk4ybi{padding-left:0.5rem;padding-right:0.5rem}.ki-no-click.svelte-1wk4ybi{pointer-events:none}";
 	append(document_1.head, style);
 }
 
@@ -274,30 +274,35 @@ function get_each_context(ctx, list, i) {
 function get_each_context_1(ctx, list, i) {
 	const child_ctx = Object_1.create(ctx);
 	child_ctx.item = list[i];
+	child_ctx.index = i;
 	return child_ctx;
 }
 
-// (684:4) {#each Object.values(selection) as item}
+// (721:4) {#each Object.values(selection) as item, index}
 function create_each_block_1(ctx) {
 	let span;
-	let t_value = ctx.item.text + "";
-	let t;
+	let t0_value = (ctx.index > 0 ? ", " : "") + "";
+	let t0;
+	let t1_value = ctx.item.text + "";
+	let t1;
 	let span_class_value;
 
 	return {
 		c() {
 			span = element("span");
-			t = text(t_value);
-			attr(span, "class", span_class_value = "" + ((ctx.item.id ? "text-dark" : "text-muted") + " mr-1"));
+			t0 = text(t0_value);
+			t1 = text(t1_value);
+			attr(span, "class", span_class_value = ctx.item.id ? "text-dark" : "text-muted");
 		},
 		m(target, anchor) {
 			insert(target, span, anchor);
-			append(span, t);
+			append(span, t0);
+			append(span, t1);
 		},
 		p(changed, ctx) {
-			if (changed.selection && t_value !== (t_value = ctx.item.text + "")) set_data(t, t_value);
+			if (changed.selection && t1_value !== (t1_value = ctx.item.text + "")) set_data(t1, t1_value);
 
-			if (changed.selection && span_class_value !== (span_class_value = "" + ((ctx.item.id ? "text-dark" : "text-muted") + " mr-1"))) {
+			if (changed.selection && span_class_value !== (span_class_value = ctx.item.id ? "text-dark" : "text-muted")) {
 				attr(span, "class", span_class_value);
 			}
 		},
@@ -307,20 +312,23 @@ function create_each_block_1(ctx) {
 	};
 }
 
-// (695:2) {#if typeahead}
+// (732:2) {#if typeahead}
 function create_if_block_9(ctx) {
+	let div;
 	let input_1;
 	let dispose;
 
 	return {
 		c() {
+			div = element("div");
 			input_1 = element("input");
-			attr(input_1, "class", "dropdown-item ki-js-item border");
+			attr(input_1, "class", "ki-select-input border svelte-1wk4ybi");
 			attr(input_1, "tabindex", "1");
 			attr(input_1, "autocomplete", "new-password");
 			attr(input_1, "autocorrect", "off");
 			attr(input_1, "autocapitalize", "off");
 			attr(input_1, "spellcheck", "off");
+			attr(div, "class", "dropdown-item ki-select-item svelte-1wk4ybi");
 
 			dispose = [
 				listen(input_1, "input", ctx.input_1_input_handler),
@@ -331,7 +339,8 @@ function create_if_block_9(ctx) {
 			];
 		},
 		m(target, anchor) {
-			insert(target, input_1, anchor);
+			insert(target, div, anchor);
+			append(div, input_1);
 			set_input_value(input_1, ctx.query);
 			ctx.input_1_binding(input_1);
 		},
@@ -341,14 +350,14 @@ function create_if_block_9(ctx) {
 			}
 		},
 		d(detaching) {
-			if (detaching) detach(input_1);
+			if (detaching) detach(div);
 			ctx.input_1_binding(null);
 			run_all(dispose);
 		}
 	};
 }
 
-// (727:2) {:else}
+// (766:2) {:else}
 function create_else_block_1(ctx) {
 	let each_1_anchor;
 	let each_value = ctx.entries;
@@ -404,7 +413,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (719:31) 
+// (758:31) 
 function create_if_block_3(ctx) {
 	let div;
 
@@ -447,7 +456,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (715:41) 
+// (754:41) 
 function create_if_block_2(ctx) {
 	let div;
 
@@ -468,7 +477,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (711:2) {#if fetchError}
+// (750:2) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -493,7 +502,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (747:6) {:else}
+// (786:6) {:else}
 function create_else_block_2(ctx) {
 	let div1;
 	let div0;
@@ -514,9 +523,9 @@ function create_else_block_2(ctx) {
 			t1 = space();
 			if (if_block) if_block.c();
 			t2 = space();
-			attr(div0, "class", "ki-no-click svelte-q431y");
+			attr(div0, "class", "ki-no-click svelte-1wk4ybi");
 			attr(div1, "tabindex", "1");
-			attr(div1, "class", div1_class_value = "ki-js-item dropdown-item " + (!ctx.item.id ? "text-muted" : "") + " " + (ctx.selection[ctx.item.id] ? "bg-primary" : ""));
+			attr(div1, "class", div1_class_value = "ki-js-item dropdown-item ki-select-item " + (!ctx.item.id ? "text-muted" : "") + " " + (ctx.selection[ctx.item.id] ? "alert-primary" : "") + " svelte-1wk4ybi");
 			attr(div1, "data-index", div1_data_index_value = ctx.index);
 
 			dispose = [
@@ -550,7 +559,7 @@ function create_else_block_2(ctx) {
 				if_block = null;
 			}
 
-			if ((changed.entries || changed.selection) && div1_class_value !== (div1_class_value = "ki-js-item dropdown-item " + (!ctx.item.id ? "text-muted" : "") + " " + (ctx.selection[ctx.item.id] ? "bg-primary" : ""))) {
+			if ((changed.entries || changed.selection) && div1_class_value !== (div1_class_value = "ki-js-item dropdown-item ki-select-item " + (!ctx.item.id ? "text-muted" : "") + " " + (ctx.selection[ctx.item.id] ? "alert-primary" : "") + " svelte-1wk4ybi")) {
 				attr(div1, "class", div1_class_value);
 			}
 		},
@@ -562,7 +571,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (735:50) 
+// (774:50) 
 function create_if_block_6(ctx) {
 	let div1;
 	let div0;
@@ -581,7 +590,7 @@ function create_if_block_6(ctx) {
 			t1 = space();
 			if (if_block) if_block.c();
 			t2 = space();
-			attr(div0, "class", "ki-no-click svelte-q431y");
+			attr(div0, "class", "ki-no-click svelte-1wk4ybi");
 			attr(div1, "tabindex", "-1");
 			attr(div1, "class", "dropdown-item text-muted ki-js-blank");
 			dispose = listen(div1, "keydown", ctx.handleItemKeydown);
@@ -618,7 +627,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (729:6) {#if item.separator}
+// (768:6) {#if item.separator}
 function create_if_block_5(ctx) {
 	let div;
 	let div_data_index_value;
@@ -643,7 +652,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (759:10) {#if item.desc}
+// (798:10) {#if item.desc}
 function create_if_block_8(ctx) {
 	let div;
 	let t_value = ctx.item.desc + "";
@@ -653,7 +662,7 @@ function create_if_block_8(ctx) {
 		c() {
 			div = element("div");
 			t = text(t_value);
-			attr(div, "class", "ki-no-click text-muted svelte-q431y");
+			attr(div, "class", "ki-no-click text-muted svelte-1wk4ybi");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -668,7 +677,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (741:10) {#if item.desc}
+// (780:10) {#if item.desc}
 function create_if_block_7(ctx) {
 	let div;
 	let t_value = ctx.item.desc + "";
@@ -678,7 +687,7 @@ function create_if_block_7(ctx) {
 		c() {
 			div = element("div");
 			t = text(t_value);
-			attr(div, "class", "ki-no-click text-muted svelte-q431y");
+			attr(div, "class", "ki-no-click text-muted svelte-1wk4ybi");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -693,7 +702,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (728:4) {#each entries as item, index}
+// (767:4) {#each entries as item, index}
 function create_each_block(ctx) {
 	let if_block_anchor;
 
@@ -735,7 +744,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (723:6) {:else}
+// (762:6) {:else}
 function create_else_block(ctx) {
 	let t_value = ctx.translate("no_results") + "";
 	let t;
@@ -754,7 +763,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (721:6) {#if tooShort }
+// (760:6) {#if tooShort }
 function create_if_block_4(ctx) {
 	let t_value = ctx.translate("too_short") + "";
 	let t;
@@ -773,7 +782,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (769:2) {#if hasMore}
+// (808:2) {#if hasMore}
 function create_if_block(ctx) {
 	let div;
 
@@ -847,10 +856,11 @@ function create_fragment(ctx) {
 			if_block1.c();
 			t3 = space();
 			if (if_block2) if_block2.c();
-			attr(span0, "class", "ki-selection mr-auto svelte-q431y");
-			attr(button, "class", button_class_value = "ki-select form-control d-flex " + ctx.real.getAttribute("class") + " " + ctx.extraClass + " svelte-q431y");
+			attr(span0, "class", "ki-selection svelte-1wk4ybi");
+			attr(span1, "class", "ml-auto");
+			attr(button, "class", button_class_value = "ki-select form-control d-flex " + ctx.real.getAttribute("class") + " " + ctx.extraClass + " svelte-1wk4ybi");
 			attr(button, "type", "button");
-			attr(div, "class", div_class_value = "dropdown-menu ki-select-popup " + (ctx.popupVisible ? "show" : "") + " svelte-q431y");
+			attr(div, "class", div_class_value = "dropdown-menu ki-select-popup " + (ctx.popupVisible ? "show" : "") + " svelte-1wk4ybi");
 
 			dispose = [
 				listen(button, "blur", ctx.handleBlur),
@@ -903,7 +913,7 @@ function create_fragment(ctx) {
 				each_blocks.length = each_value_1.length;
 			}
 
-			if ((changed.real || changed.extraClass) && button_class_value !== (button_class_value = "ki-select form-control d-flex " + ctx.real.getAttribute("class") + " " + ctx.extraClass + " svelte-q431y")) {
+			if ((changed.real || changed.extraClass) && button_class_value !== (button_class_value = "ki-select form-control d-flex " + ctx.real.getAttribute("class") + " " + ctx.extraClass + " svelte-1wk4ybi")) {
 				attr(button, "class", button_class_value);
 			}
 
@@ -945,7 +955,7 @@ function create_fragment(ctx) {
 				if_block2 = null;
 			}
 
-			if (changed.popupVisible && div_class_value !== (div_class_value = "dropdown-menu ki-select-popup " + (ctx.popupVisible ? "show" : "") + " svelte-q431y")) {
+			if (changed.popupVisible && div_class_value !== (div_class_value = "dropdown-menu ki-select-popup " + (ctx.popupVisible ? "show" : "") + " svelte-1wk4ybi")) {
 				attr(div, "class", div_class_value);
 			}
 		},
@@ -1224,12 +1234,6 @@ function instance($$self, $$props, $$invalidate) {
 			}
 
 			$$invalidate("selection", selection[item.id] = item, selection);
-		}
-
-		$$invalidate("query", query = "");
-		previousQuery = null;
-
-		if (!multiple) {
 			closePopup(true);
 		}
 
@@ -1312,18 +1316,29 @@ function instance($$self, $$props, $$invalidate) {
 	let toggleKeydownHandlers = {
 		base: nop,
 		ArrowDown(event) {
-			let item = popupVisible
-			? popup.querySelectorAll(".ki-js-item")[0]
-			: null;
+			if (popupVisible) {
+				let item = typeahead
+				? input
+				: popup.querySelectorAll(".ki-js-item")[0];
 
-			if (item) {
-				while (item && item.classList.contains("ki-js-blank")) {
-					item = item.nextElementSibling;
+				if (item) {
+					while (item && item.classList.contains("ki-js-blank")) {
+						item = item.nextElementSibling;
+					}
 				}
 
-				item.focus();
+				if (item) {
+					item.focus();
+				}
 			} else {
 				openPopup();
+
+				if (typeahead) {
+					setTimeout(function () {
+						input.focus();
+					});
+				}
+
 				fetchEntries();
 			}
 
@@ -1335,7 +1350,8 @@ function instance($$self, $$props, $$invalidate) {
 		Escape(event) {
 			cancelFetch();
 			closePopup(false);
-		}
+		},
+		Tab: nop
 	};
 
 	let itemKeydownHandlers = {
@@ -1389,6 +1405,10 @@ function instance($$self, $$props, $$invalidate) {
 		Escape(event) {
 			cancelFetch();
 			closePopup(true);
+		},
+		Tab(event) {
+			toggle.focus();
+			event.preventDefault();
 		},
 		PageUp: nop,
 		PageDown: nop,
@@ -1470,10 +1490,27 @@ function instance($$self, $$props, $$invalidate) {
 		base(event) {
 			wasDown = true;
 		},
-		ArrowUp: itemKeydownHandlers.ArrowUp,
-		ArrowDown: itemKeydownHandlers.ArrowDown,
+		ArrowUp: nop,
+		ArrowDown(event) {
+			let item = popup.querySelectorAll(".ki-js-item")[0];
+
+			if (item) {
+				while (item && item.classList.contains("ki-js-blank")) {
+					item = item.nextElementSibling;
+				}
+			}
+
+			if (item) {
+				item.focus();
+			}
+
+			event.preventDefault();
+		},
 		Escape: itemKeydownHandlers.Escape,
-		Tab: nop
+		Tab(event) {
+			toggle.focus();
+			event.preventDefault();
+		}
 	};
 
 	let inputKeyupHandlers = {
@@ -1652,7 +1689,7 @@ function instance($$self, $$props, $$invalidate) {
 class Select extends SvelteComponent {
 	constructor(options) {
 		super();
-		if (!document_1.getElementById("svelte-q431y-style")) add_css();
+		if (!document_1.getElementById("svelte-1wk4ybi-style")) add_css();
 
 		init(this, options, instance, create_fragment, safe_not_equal, {
 			real: 0,
