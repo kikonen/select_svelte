@@ -598,6 +598,11 @@
      }
  }
 
+ function handleInputBlur(event) {
+//     debugger
+     handleBlur(event);
+ }
+
  function handleInputKeypress(event) {
      handleEvent(event.key, inputKeypressHandlers, event);
  }
@@ -687,6 +692,22 @@
 <div class="dropdown-menu ki-select-popup {popupVisible ? 'show' : ''}"
      bind:this={popup}
      on:scroll={handlePopupScroll}>
+  {#if typeahead}
+    <input class="dropdown-item ki-js-item border"
+         tabindex="1"
+         autocomplete="new-password"
+         autocorrect=off
+         autocapitalize=off
+         spellcheck=off
+
+         bind:this={input}
+         bind:value={query}
+         on:blur={handleInputBlur}
+         on:keypress={handleInputKeypress}
+         on:keydown={handleInputKeydown}
+         on:keyup={handleInputKeyup}>
+  {/if}
+
   {#if fetchError}
     <div tabindex="-1" class="dropdown-item text-danger">
       {fetchError}
@@ -704,22 +725,6 @@
       {/if}
     </div>
   {:else}
-    {#if typeahead}
-      <input class="dropdown-item ki-js-item border"
-           tabindex="1"
-           autocomplete="new-password"
-           autocorrect=off
-           autocapitalize=off
-           spellcheck=off
-
-           bind:this={input}
-           bind:value={query}
-           on:blur={handleBlur}
-           on:keypress={handleInputKeypress}
-           on:keydown={handleInputKeydown}
-           on:keyup={handleInputKeyup}>
-    {/if}
-
     {#each entries as item, index}
       {#if item.separator}
         <div tabindex="-1"

@@ -277,7 +277,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (679:4) {#each Object.values(selection) as item}
+// (684:4) {#each Object.values(selection) as item}
 function create_each_block_1(ctx) {
 	let span;
 	let t_value = ctx.item.text + "";
@@ -307,11 +307,50 @@ function create_each_block_1(ctx) {
 	};
 }
 
-// (706:2) {:else}
+// (695:2) {#if typeahead}
+function create_if_block_9(ctx) {
+	let input_1;
+	let dispose;
+
+	return {
+		c() {
+			input_1 = element("input");
+			attr(input_1, "class", "dropdown-item ki-js-item border");
+			attr(input_1, "tabindex", "1");
+			attr(input_1, "autocomplete", "new-password");
+			attr(input_1, "autocorrect", "off");
+			attr(input_1, "autocapitalize", "off");
+			attr(input_1, "spellcheck", "off");
+
+			dispose = [
+				listen(input_1, "input", ctx.input_1_input_handler),
+				listen(input_1, "blur", ctx.handleInputBlur),
+				listen(input_1, "keypress", ctx.handleInputKeypress),
+				listen(input_1, "keydown", ctx.handleInputKeydown),
+				listen(input_1, "keyup", ctx.handleInputKeyup)
+			];
+		},
+		m(target, anchor) {
+			insert(target, input_1, anchor);
+			set_input_value(input_1, ctx.query);
+			ctx.input_1_binding(input_1);
+		},
+		p(changed, ctx) {
+			if (changed.query && input_1.value !== ctx.query) {
+				set_input_value(input_1, ctx.query);
+			}
+		},
+		d(detaching) {
+			if (detaching) detach(input_1);
+			ctx.input_1_binding(null);
+			run_all(dispose);
+		}
+	};
+}
+
+// (727:2) {:else}
 function create_else_block_1(ctx) {
-	let t;
 	let each_1_anchor;
-	let if_block = ctx.typeahead && create_if_block_9(ctx);
 	let each_value = ctx.entries;
 	let each_blocks = [];
 
@@ -321,9 +360,6 @@ function create_else_block_1(ctx) {
 
 	return {
 		c() {
-			if (if_block) if_block.c();
-			t = space();
-
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
@@ -331,9 +367,6 @@ function create_else_block_1(ctx) {
 			each_1_anchor = empty();
 		},
 		m(target, anchor) {
-			if (if_block) if_block.m(target, anchor);
-			insert(target, t, anchor);
-
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].m(target, anchor);
 			}
@@ -341,19 +374,6 @@ function create_else_block_1(ctx) {
 			insert(target, each_1_anchor, anchor);
 		},
 		p(changed, ctx) {
-			if (ctx.typeahead) {
-				if (if_block) {
-					if_block.p(changed, ctx);
-				} else {
-					if_block = create_if_block_9(ctx);
-					if_block.c();
-					if_block.m(t.parentNode, t);
-				}
-			} else if (if_block) {
-				if_block.d(1);
-				if_block = null;
-			}
-
 			if (changed.entries || changed.handleItemKeydown || changed.selection || changed.handleBlur || changed.handleItemClick || changed.handleItemKeyup) {
 				each_value = ctx.entries;
 				let i;
@@ -378,15 +398,13 @@ function create_else_block_1(ctx) {
 			}
 		},
 		d(detaching) {
-			if (if_block) if_block.d(detaching);
-			if (detaching) detach(t);
 			destroy_each(each_blocks, detaching);
 			if (detaching) detach(each_1_anchor);
 		}
 	};
 }
 
-// (698:31) 
+// (719:31) 
 function create_if_block_3(ctx) {
 	let div;
 
@@ -429,7 +447,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (694:41) 
+// (715:41) 
 function create_if_block_2(ctx) {
 	let div;
 
@@ -450,7 +468,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (690:2) {#if fetchError}
+// (711:2) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -475,48 +493,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (707:4) {#if typeahead}
-function create_if_block_9(ctx) {
-	let input_1;
-	let dispose;
-
-	return {
-		c() {
-			input_1 = element("input");
-			attr(input_1, "class", "dropdown-item ki-js-item border");
-			attr(input_1, "tabindex", "1");
-			attr(input_1, "autocomplete", "new-password");
-			attr(input_1, "autocorrect", "off");
-			attr(input_1, "autocapitalize", "off");
-			attr(input_1, "spellcheck", "off");
-
-			dispose = [
-				listen(input_1, "input", ctx.input_1_input_handler),
-				listen(input_1, "blur", ctx.handleBlur),
-				listen(input_1, "keypress", ctx.handleInputKeypress),
-				listen(input_1, "keydown", ctx.handleInputKeydown),
-				listen(input_1, "keyup", ctx.handleInputKeyup)
-			];
-		},
-		m(target, anchor) {
-			insert(target, input_1, anchor);
-			set_input_value(input_1, ctx.query);
-			ctx.input_1_binding(input_1);
-		},
-		p(changed, ctx) {
-			if (changed.query && input_1.value !== ctx.query) {
-				set_input_value(input_1, ctx.query);
-			}
-		},
-		d(detaching) {
-			if (detaching) detach(input_1);
-			ctx.input_1_binding(null);
-			run_all(dispose);
-		}
-	};
-}
-
-// (742:6) {:else}
+// (747:6) {:else}
 function create_else_block_2(ctx) {
 	let div1;
 	let div0;
@@ -585,7 +562,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (730:50) 
+// (735:50) 
 function create_if_block_6(ctx) {
 	let div1;
 	let div0;
@@ -641,7 +618,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (724:6) {#if item.separator}
+// (729:6) {#if item.separator}
 function create_if_block_5(ctx) {
 	let div;
 	let div_data_index_value;
@@ -666,7 +643,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (754:10) {#if item.desc}
+// (759:10) {#if item.desc}
 function create_if_block_8(ctx) {
 	let div;
 	let t_value = ctx.item.desc + "";
@@ -691,7 +668,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (736:10) {#if item.desc}
+// (741:10) {#if item.desc}
 function create_if_block_7(ctx) {
 	let div;
 	let t_value = ctx.item.desc + "";
@@ -716,7 +693,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (723:4) {#each entries as item, index}
+// (728:4) {#each entries as item, index}
 function create_each_block(ctx) {
 	let if_block_anchor;
 
@@ -758,7 +735,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (702:6) {:else}
+// (723:6) {:else}
 function create_else_block(ctx) {
 	let t_value = ctx.translate("no_results") + "";
 	let t;
@@ -777,7 +754,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (700:6) {#if tooShort }
+// (721:6) {#if tooShort }
 function create_if_block_4(ctx) {
 	let t_value = ctx.translate("too_short") + "";
 	let t;
@@ -796,7 +773,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (764:2) {#if hasMore}
+// (769:2) {#if hasMore}
 function create_if_block(ctx) {
 	let div;
 
@@ -828,6 +805,7 @@ function create_fragment(ctx) {
 	let t1;
 	let div;
 	let t2;
+	let t3;
 	let div_class_value;
 	let dispose;
 	let each_value_1 = Object.values(ctx.selection);
@@ -837,6 +815,8 @@ function create_fragment(ctx) {
 		each_blocks[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
 	}
 
+	let if_block0 = ctx.typeahead && create_if_block_9(ctx);
+
 	function select_block_type(changed, ctx) {
 		if (ctx.fetchError) return create_if_block_1;
 		if (ctx.activeFetch && !ctx.fetchingMore) return create_if_block_2;
@@ -845,8 +825,8 @@ function create_fragment(ctx) {
 	}
 
 	let current_block_type = select_block_type(null, ctx);
-	let if_block0 = current_block_type(ctx);
-	let if_block1 = ctx.hasMore && create_if_block(ctx);
+	let if_block1 = current_block_type(ctx);
+	let if_block2 = ctx.hasMore && create_if_block(ctx);
 
 	return {
 		c() {
@@ -862,9 +842,11 @@ function create_fragment(ctx) {
 			span1.innerHTML = `<i class="text-dark fas fa-caret-down"></i>`;
 			t1 = space();
 			div = element("div");
-			if_block0.c();
+			if (if_block0) if_block0.c();
 			t2 = space();
-			if (if_block1) if_block1.c();
+			if_block1.c();
+			t3 = space();
+			if (if_block2) if_block2.c();
 			attr(span0, "class", "ki-selection mr-auto svelte-q431y");
 			attr(button, "class", button_class_value = "ki-select form-control d-flex " + ctx.real.getAttribute("class") + " " + ctx.extraClass + " svelte-q431y");
 			attr(button, "type", "button");
@@ -890,9 +872,11 @@ function create_fragment(ctx) {
 			ctx.button_binding(button);
 			insert(target, t1, anchor);
 			insert(target, div, anchor);
-			if_block0.m(div, null);
+			if (if_block0) if_block0.m(div, null);
 			append(div, t2);
-			if (if_block1) if_block1.m(div, null);
+			if_block1.m(div, null);
+			append(div, t3);
+			if (if_block2) if_block2.m(div, null);
 			ctx.div_binding_1(div);
 		},
 		p(changed, ctx) {
@@ -923,29 +907,42 @@ function create_fragment(ctx) {
 				attr(button, "class", button_class_value);
 			}
 
-			if (current_block_type === (current_block_type = select_block_type(changed, ctx)) && if_block0) {
-				if_block0.p(changed, ctx);
-			} else {
-				if_block0.d(1);
-				if_block0 = current_block_type(ctx);
-
+			if (ctx.typeahead) {
 				if (if_block0) {
+					if_block0.p(changed, ctx);
+				} else {
+					if_block0 = create_if_block_9(ctx);
 					if_block0.c();
 					if_block0.m(div, t2);
+				}
+			} else if (if_block0) {
+				if_block0.d(1);
+				if_block0 = null;
+			}
+
+			if (current_block_type === (current_block_type = select_block_type(changed, ctx)) && if_block1) {
+				if_block1.p(changed, ctx);
+			} else {
+				if_block1.d(1);
+				if_block1 = current_block_type(ctx);
+
+				if (if_block1) {
+					if_block1.c();
+					if_block1.m(div, t3);
 				}
 			}
 
 			if (ctx.hasMore) {
-				if (if_block1) {
-					if_block1.p(changed, ctx);
+				if (if_block2) {
+					if_block2.p(changed, ctx);
 				} else {
-					if_block1 = create_if_block(ctx);
-					if_block1.c();
-					if_block1.m(div, null);
+					if_block2 = create_if_block(ctx);
+					if_block2.c();
+					if_block2.m(div, null);
 				}
-			} else if (if_block1) {
-				if_block1.d(1);
-				if_block1 = null;
+			} else if (if_block2) {
+				if_block2.d(1);
+				if_block2 = null;
 			}
 
 			if (changed.popupVisible && div_class_value !== (div_class_value = "dropdown-menu ki-select-popup " + (ctx.popupVisible ? "show" : "") + " svelte-q431y")) {
@@ -960,8 +957,9 @@ function create_fragment(ctx) {
 			ctx.button_binding(null);
 			if (detaching) detach(t1);
 			if (detaching) detach(div);
-			if_block0.d();
-			if (if_block1) if_block1.d();
+			if (if_block0) if_block0.d();
+			if_block1.d();
+			if (if_block2) if_block2.d();
 			ctx.div_binding_1(null);
 			run_all(dispose);
 		}
@@ -1511,6 +1509,10 @@ function instance($$self, $$props, $$invalidate) {
 		}
 	}
 
+	function handleInputBlur(event) {
+		handleBlur(event);
+	}
+
 	function handleInputKeypress(event) {
 		handleEvent(event.key, inputKeypressHandlers, event);
 	}
@@ -1629,6 +1631,7 @@ function instance($$self, $$props, $$invalidate) {
 		selection,
 		translate,
 		handleBlur,
+		handleInputBlur,
 		handleInputKeypress,
 		handleInputKeydown,
 		handleInputKeyup,
