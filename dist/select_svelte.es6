@@ -259,8 +259,8 @@ const { Object: Object_1, document: document_1 } = globals;
 
 function add_css() {
 	var style = element("style");
-	style.id = "svelte-1wk4ybi-style";
-	style.textContent = ".ki-select.svelte-1wk4ybi{position:relative}.ki-selection.svelte-1wk4ybi{white-space:nowrap;overflow:hidden;word-break:break-all;text-overflow:ellipsis}.ki-select-popup.svelte-1wk4ybi{max-height:15rem;max-width:90vw;overflow-y:auto}.ki-select-input.svelte-1wk4ybi{width:100%;padding-left:0.5rem;padding-right:0.5rem}.ki-select-item.svelte-1wk4ybi{padding-left:0.5rem;padding-right:0.5rem}.ki-no-click.svelte-1wk4ybi{pointer-events:none}";
+	style.id = "svelte-25hmt3-style";
+	style.textContent = ".ki-select.svelte-25hmt3{position:relative}.ki-selection.svelte-25hmt3{white-space:nowrap;overflow:hidden;word-break:break-all;text-overflow:ellipsis}.ki-select-popup.svelte-25hmt3{max-height:15rem;max-width:90vw;overflow-y:auto}.ki-select-input.svelte-25hmt3{width:100%;padding-left:0.5rem;padding-right:0.5rem}.ki-select-item.svelte-25hmt3{padding-left:0.5rem;padding-right:0.5rem}.ki-no-click.svelte-25hmt3{pointer-events:none}.ki-caret-container.svelte-25hmt3{margin-top:140%;margin-bottom:100%}.ki-caret-down.svelte-25hmt3{width:0;height:0;border-left:0.35rem solid transparent;border-right:0.35rem solid transparent;border-top:0.35rem solid #232323}";
 	append(document_1.head, style);
 }
 
@@ -278,7 +278,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (721:4) {#each Object.values(selection) as item, index}
+// (733:4) {#each Object.values(selection) as item, index}
 function create_each_block_1(ctx) {
 	let span;
 	let t0_value = (ctx.index > 0 ? ", " : "") + "";
@@ -312,7 +312,7 @@ function create_each_block_1(ctx) {
 	};
 }
 
-// (732:2) {#if typeahead}
+// (746:2) {#if typeahead}
 function create_if_block_9(ctx) {
 	let div;
 	let input_1;
@@ -322,13 +322,13 @@ function create_if_block_9(ctx) {
 		c() {
 			div = element("div");
 			input_1 = element("input");
-			attr(input_1, "class", "ki-select-input border svelte-1wk4ybi");
+			attr(input_1, "class", "ki-select-input border svelte-25hmt3");
 			attr(input_1, "tabindex", "1");
 			attr(input_1, "autocomplete", "new-password");
 			attr(input_1, "autocorrect", "off");
 			attr(input_1, "autocapitalize", "off");
 			attr(input_1, "spellcheck", "off");
-			attr(div, "class", "dropdown-item ki-select-item svelte-1wk4ybi");
+			attr(div, "class", "dropdown-item ki-select-item svelte-25hmt3");
 
 			dispose = [
 				listen(input_1, "input", ctx.input_1_input_handler),
@@ -357,7 +357,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (766:2) {:else}
+// (780:2) {:else}
 function create_else_block_1(ctx) {
 	let each_1_anchor;
 	let each_value = ctx.entries;
@@ -413,7 +413,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (758:31) 
+// (772:31) 
 function create_if_block_3(ctx) {
 	let div;
 
@@ -456,7 +456,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (754:41) 
+// (768:41) 
 function create_if_block_2(ctx) {
 	let div;
 
@@ -477,7 +477,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (750:2) {#if fetchError}
+// (764:2) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -502,7 +502,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (786:6) {:else}
+// (800:6) {:else}
 function create_else_block_2(ctx) {
 	let div1;
 	let div0;
@@ -523,9 +523,9 @@ function create_else_block_2(ctx) {
 			t1 = space();
 			if (if_block) if_block.c();
 			t2 = space();
-			attr(div0, "class", "ki-no-click svelte-1wk4ybi");
+			attr(div0, "class", "ki-no-click svelte-25hmt3");
 			attr(div1, "tabindex", "1");
-			attr(div1, "class", div1_class_value = "ki-js-item dropdown-item ki-select-item " + (!ctx.item.id ? "text-muted" : "") + " " + (ctx.selection[ctx.item.id] ? "alert-primary" : "") + " svelte-1wk4ybi");
+			attr(div1, "class", div1_class_value = "ki-js-item dropdown-item ki-select-item " + (!ctx.item.id ? "text-muted" : "") + " " + (ctx.selection[ctx.item.id] ? "alert-primary" : "") + " svelte-25hmt3");
 			attr(div1, "data-index", div1_data_index_value = ctx.index);
 
 			dispose = [
@@ -559,7 +559,7 @@ function create_else_block_2(ctx) {
 				if_block = null;
 			}
 
-			if ((changed.entries || changed.selection) && div1_class_value !== (div1_class_value = "ki-js-item dropdown-item ki-select-item " + (!ctx.item.id ? "text-muted" : "") + " " + (ctx.selection[ctx.item.id] ? "alert-primary" : "") + " svelte-1wk4ybi")) {
+			if ((changed.entries || changed.selection) && div1_class_value !== (div1_class_value = "ki-js-item dropdown-item ki-select-item " + (!ctx.item.id ? "text-muted" : "") + " " + (ctx.selection[ctx.item.id] ? "alert-primary" : "") + " svelte-25hmt3")) {
 				attr(div1, "class", div1_class_value);
 			}
 		},
@@ -571,7 +571,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (774:50) 
+// (788:50) 
 function create_if_block_6(ctx) {
 	let div1;
 	let div0;
@@ -590,7 +590,7 @@ function create_if_block_6(ctx) {
 			t1 = space();
 			if (if_block) if_block.c();
 			t2 = space();
-			attr(div0, "class", "ki-no-click svelte-1wk4ybi");
+			attr(div0, "class", "ki-no-click svelte-25hmt3");
 			attr(div1, "tabindex", "-1");
 			attr(div1, "class", "dropdown-item text-muted ki-js-blank");
 			dispose = listen(div1, "keydown", ctx.handleItemKeydown);
@@ -627,7 +627,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (768:6) {#if item.separator}
+// (782:6) {#if item.separator}
 function create_if_block_5(ctx) {
 	let div;
 	let div_data_index_value;
@@ -652,7 +652,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (798:10) {#if item.desc}
+// (812:10) {#if item.desc}
 function create_if_block_8(ctx) {
 	let div;
 	let t_value = ctx.item.desc + "";
@@ -662,7 +662,7 @@ function create_if_block_8(ctx) {
 		c() {
 			div = element("div");
 			t = text(t_value);
-			attr(div, "class", "ki-no-click text-muted svelte-1wk4ybi");
+			attr(div, "class", "ki-no-click text-muted svelte-25hmt3");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -677,7 +677,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (780:10) {#if item.desc}
+// (794:10) {#if item.desc}
 function create_if_block_7(ctx) {
 	let div;
 	let t_value = ctx.item.desc + "";
@@ -687,7 +687,7 @@ function create_if_block_7(ctx) {
 		c() {
 			div = element("div");
 			t = text(t_value);
-			attr(div, "class", "ki-no-click text-muted svelte-1wk4ybi");
+			attr(div, "class", "ki-no-click text-muted svelte-25hmt3");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -702,7 +702,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (767:4) {#each entries as item, index}
+// (781:4) {#each entries as item, index}
 function create_each_block(ctx) {
 	let if_block_anchor;
 
@@ -744,7 +744,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (762:6) {:else}
+// (776:6) {:else}
 function create_else_block(ctx) {
 	let t_value = ctx.translate("no_results") + "";
 	let t;
@@ -763,7 +763,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (760:6) {#if tooShort }
+// (774:6) {#if tooShort }
 function create_if_block_4(ctx) {
 	let t_value = ctx.translate("too_short") + "";
 	let t;
@@ -782,7 +782,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (808:2) {#if hasMore}
+// (822:2) {#if hasMore}
 function create_if_block(ctx) {
 	let div;
 
@@ -809,13 +809,13 @@ function create_fragment(ctx) {
 	let button;
 	let span0;
 	let t0;
-	let span1;
+	let span2;
 	let button_class_value;
 	let t1;
-	let div;
+	let div1;
 	let t2;
 	let t3;
-	let div_class_value;
+	let div1_class_value;
 	let dispose;
 	let each_value_1 = Object.values(ctx.selection);
 	let each_blocks = [];
@@ -847,26 +847,26 @@ function create_fragment(ctx) {
 			}
 
 			t0 = space();
-			span1 = element("span");
-			span1.innerHTML = `<i class="text-dark fas fa-caret-down"></i>`;
+			span2 = element("span");
+			span2.innerHTML = `<div class="ki-caret-container svelte-25hmt3"><span class="ki-caret-down svelte-25hmt3"></span></div>`;
 			t1 = space();
-			div = element("div");
+			div1 = element("div");
 			if (if_block0) if_block0.c();
 			t2 = space();
 			if_block1.c();
 			t3 = space();
 			if (if_block2) if_block2.c();
-			attr(span0, "class", "ki-selection svelte-1wk4ybi");
-			attr(span1, "class", "ml-auto");
-			attr(button, "class", button_class_value = "ki-select form-control d-flex " + ctx.real.getAttribute("class") + " " + ctx.extraClass + " svelte-1wk4ybi");
+			attr(span0, "class", "ki-selection svelte-25hmt3");
+			attr(span2, "class", "ml-auto");
+			attr(button, "class", button_class_value = "ki-select form-control d-flex " + ctx.real.getAttribute("class") + " " + ctx.extraClass + " svelte-25hmt3");
 			attr(button, "type", "button");
-			attr(div, "class", div_class_value = "dropdown-menu ki-select-popup " + (ctx.popupVisible ? "show" : "") + " svelte-1wk4ybi");
+			attr(div1, "class", div1_class_value = "dropdown-menu ki-select-popup " + (ctx.popupVisible ? "show" : "") + " svelte-25hmt3");
 
 			dispose = [
 				listen(button, "blur", ctx.handleBlur),
 				listen(button, "keydown", ctx.handleToggleKeydown),
 				listen(button, "click", ctx.handleToggleClick),
-				listen(div, "scroll", ctx.handlePopupScroll)
+				listen(div1, "scroll", ctx.handlePopupScroll)
 			];
 		},
 		m(target, anchor) {
@@ -878,16 +878,16 @@ function create_fragment(ctx) {
 			}
 
 			append(button, t0);
-			append(button, span1);
+			append(button, span2);
 			ctx.button_binding(button);
 			insert(target, t1, anchor);
-			insert(target, div, anchor);
-			if (if_block0) if_block0.m(div, null);
-			append(div, t2);
-			if_block1.m(div, null);
-			append(div, t3);
-			if (if_block2) if_block2.m(div, null);
-			ctx.div_binding_1(div);
+			insert(target, div1, anchor);
+			if (if_block0) if_block0.m(div1, null);
+			append(div1, t2);
+			if_block1.m(div1, null);
+			append(div1, t3);
+			if (if_block2) if_block2.m(div1, null);
+			ctx.div1_binding(div1);
 		},
 		p(changed, ctx) {
 			if (changed.Object || changed.selection) {
@@ -913,7 +913,7 @@ function create_fragment(ctx) {
 				each_blocks.length = each_value_1.length;
 			}
 
-			if ((changed.real || changed.extraClass) && button_class_value !== (button_class_value = "ki-select form-control d-flex " + ctx.real.getAttribute("class") + " " + ctx.extraClass + " svelte-1wk4ybi")) {
+			if ((changed.real || changed.extraClass) && button_class_value !== (button_class_value = "ki-select form-control d-flex " + ctx.real.getAttribute("class") + " " + ctx.extraClass + " svelte-25hmt3")) {
 				attr(button, "class", button_class_value);
 			}
 
@@ -923,7 +923,7 @@ function create_fragment(ctx) {
 				} else {
 					if_block0 = create_if_block_9(ctx);
 					if_block0.c();
-					if_block0.m(div, t2);
+					if_block0.m(div1, t2);
 				}
 			} else if (if_block0) {
 				if_block0.d(1);
@@ -938,7 +938,7 @@ function create_fragment(ctx) {
 
 				if (if_block1) {
 					if_block1.c();
-					if_block1.m(div, t3);
+					if_block1.m(div1, t3);
 				}
 			}
 
@@ -948,15 +948,15 @@ function create_fragment(ctx) {
 				} else {
 					if_block2 = create_if_block(ctx);
 					if_block2.c();
-					if_block2.m(div, null);
+					if_block2.m(div1, null);
 				}
 			} else if (if_block2) {
 				if_block2.d(1);
 				if_block2 = null;
 			}
 
-			if (changed.popupVisible && div_class_value !== (div_class_value = "dropdown-menu ki-select-popup " + (ctx.popupVisible ? "show" : "") + " svelte-1wk4ybi")) {
-				attr(div, "class", div_class_value);
+			if (changed.popupVisible && div1_class_value !== (div1_class_value = "dropdown-menu ki-select-popup " + (ctx.popupVisible ? "show" : "") + " svelte-25hmt3")) {
+				attr(div1, "class", div1_class_value);
 			}
 		},
 		i: noop,
@@ -966,11 +966,11 @@ function create_fragment(ctx) {
 			destroy_each(each_blocks, detaching);
 			ctx.button_binding(null);
 			if (detaching) detach(t1);
-			if (detaching) detach(div);
+			if (detaching) detach(div1);
 			if (if_block0) if_block0.d();
 			if_block1.d();
 			if (if_block2) if_block2.d();
-			ctx.div_binding_1(null);
+			ctx.div1_binding(null);
 			run_all(dispose);
 		}
 	};
@@ -1618,7 +1618,7 @@ function instance($$self, $$props, $$invalidate) {
 		});
 	}
 
-	function div_binding_1($$value) {
+	function div1_binding($$value) {
 		binding_callbacks[$$value ? "unshift" : "push"](() => {
 			$$invalidate("popup", popup = $$value);
 		});
@@ -1682,14 +1682,14 @@ function instance($$self, $$props, $$invalidate) {
 		input_1_input_handler,
 		input_1_binding,
 		div_binding,
-		div_binding_1
+		div1_binding
 	};
 }
 
 class Select extends SvelteComponent {
 	constructor(options) {
 		super();
-		if (!document_1.getElementById("svelte-1wk4ybi-style")) add_css();
+		if (!document_1.getElementById("svelte-25hmt3-style")) add_css();
 
 		init(this, options, instance, create_fragment, safe_not_equal, {
 			real: 0,
