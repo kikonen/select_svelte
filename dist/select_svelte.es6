@@ -278,7 +278,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (733:4) {#each Object.values(selection) as item, index}
+// (739:4) {#each Object.values(selection) as item, index}
 function create_each_block_1(ctx) {
 	let span;
 	let t0_value = (ctx.index > 0 ? ", " : "") + "";
@@ -312,7 +312,7 @@ function create_each_block_1(ctx) {
 	};
 }
 
-// (746:2) {#if typeahead}
+// (752:2) {#if typeahead}
 function create_if_block_9(ctx) {
 	let div;
 	let input_1;
@@ -357,7 +357,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (780:2) {:else}
+// (786:2) {:else}
 function create_else_block_1(ctx) {
 	let each_1_anchor;
 	let each_value = ctx.entries;
@@ -413,7 +413,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (772:31) 
+// (778:31) 
 function create_if_block_3(ctx) {
 	let div;
 
@@ -456,7 +456,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (768:41) 
+// (774:41) 
 function create_if_block_2(ctx) {
 	let div;
 
@@ -477,7 +477,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (764:2) {#if fetchError}
+// (770:2) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -502,7 +502,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (800:6) {:else}
+// (806:6) {:else}
 function create_else_block_2(ctx) {
 	let div1;
 	let div0;
@@ -571,7 +571,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (788:50) 
+// (794:50) 
 function create_if_block_6(ctx) {
 	let div1;
 	let div0;
@@ -627,7 +627,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (782:6) {#if item.separator}
+// (788:6) {#if item.separator}
 function create_if_block_5(ctx) {
 	let div;
 	let div_data_index_value;
@@ -652,7 +652,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (812:10) {#if item.desc}
+// (818:10) {#if item.desc}
 function create_if_block_8(ctx) {
 	let div;
 	let t_value = ctx.item.desc + "";
@@ -677,7 +677,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (794:10) {#if item.desc}
+// (800:10) {#if item.desc}
 function create_if_block_7(ctx) {
 	let div;
 	let t_value = ctx.item.desc + "";
@@ -702,7 +702,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (781:4) {#each entries as item, index}
+// (787:4) {#each entries as item, index}
 function create_each_block(ctx) {
 	let if_block_anchor;
 
@@ -744,7 +744,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (776:6) {:else}
+// (782:6) {:else}
 function create_else_block(ctx) {
 	let t_value = ctx.translate("no_results") + "";
 	let t;
@@ -763,7 +763,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (774:6) {#if tooShort }
+// (780:6) {#if tooShort }
 function create_if_block_4(ctx) {
 	let t_value = ctx.translate("too_short") + "";
 	let t;
@@ -782,7 +782,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (822:2) {#if hasMore}
+// (828:2) {#if hasMore}
 function create_if_block(ctx) {
 	let div;
 
@@ -1348,6 +1348,8 @@ function instance($$self, $$props, $$invalidate) {
 			event.preventDefault();
 		},
 		Escape(event) {
+			$$invalidate("query", query = "");
+			previousQuery = null;
 			cancelFetch();
 			closePopup(false);
 		},
@@ -1403,6 +1405,8 @@ function instance($$self, $$props, $$invalidate) {
 			event.preventDefault();
 		},
 		Escape(event) {
+			$$invalidate("query", query = "");
+			previousQuery = null;
 			cancelFetch();
 			closePopup(true);
 		},

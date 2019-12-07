@@ -563,7 +563,7 @@ var Select = (function () {
     child_ctx.item = list[i];
     child_ctx.index = i;
     return child_ctx;
-  } // (733:4) {#each Object.values(selection) as item, index}
+  } // (739:4) {#each Object.values(selection) as item, index}
 
 
   function create_each_block_1(ctx) {
@@ -596,7 +596,7 @@ var Select = (function () {
         if (detaching) detach(span);
       }
     };
-  } // (746:2) {#if typeahead}
+  } // (752:2) {#if typeahead}
 
 
   function create_if_block_9(ctx) {
@@ -633,7 +633,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (780:2) {:else}
+  } // (786:2) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -692,7 +692,7 @@ var Select = (function () {
         if (detaching) detach(each_1_anchor);
       }
     };
-  } // (772:31) 
+  } // (778:31) 
 
 
   function create_if_block_3(ctx) {
@@ -734,7 +734,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (768:41) 
+  } // (774:41) 
 
 
   function create_if_block_2(ctx) {
@@ -754,7 +754,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (764:2) {#if fetchError}
+  } // (770:2) {#if fetchError}
 
 
   function create_if_block_1(ctx) {
@@ -778,7 +778,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (800:6) {:else}
+  } // (806:6) {:else}
 
 
   function create_else_block_2(ctx) {
@@ -840,7 +840,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (788:50) 
+  } // (794:50) 
 
 
   function create_if_block_6(ctx) {
@@ -895,7 +895,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (782:6) {#if item.separator}
+  } // (788:6) {#if item.separator}
 
 
   function create_if_block_5(ctx) {
@@ -919,7 +919,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (812:10) {#if item.desc}
+  } // (818:10) {#if item.desc}
 
 
   function create_if_block_8(ctx) {
@@ -943,7 +943,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (794:10) {#if item.desc}
+  } // (800:10) {#if item.desc}
 
 
   function create_if_block_7(ctx) {
@@ -967,7 +967,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (781:4) {#each entries as item, index}
+  } // (787:4) {#each entries as item, index}
 
 
   function create_each_block(ctx) {
@@ -1008,7 +1008,7 @@ var Select = (function () {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (776:6) {:else}
+  } // (782:6) {:else}
 
 
   function create_else_block(ctx) {
@@ -1026,7 +1026,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (774:6) {#if tooShort }
+  } // (780:6) {#if tooShort }
 
 
   function create_if_block_4(ctx) {
@@ -1044,7 +1044,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (822:2) {#if hasMore}
+  } // (828:2) {#if hasMore}
 
 
   function create_if_block(ctx) {
@@ -1603,6 +1603,8 @@ var Select = (function () {
         event.preventDefault();
       },
       Escape: function Escape(event) {
+        $$invalidate("query", query = "");
+        previousQuery = null;
         cancelFetch();
         closePopup(false);
       },
@@ -1657,6 +1659,8 @@ var Select = (function () {
         event.preventDefault();
       },
       Escape: function Escape(event) {
+        $$invalidate("query", query = "");
+        previousQuery = null;
         cancelFetch();
         closePopup(true);
       },

@@ -428,6 +428,9 @@
          event.preventDefault();
      },
      Escape: function(event) {
+         query = '';
+         previousQuery = null;
+
          cancelFetch();
          closePopup(false);
      },
@@ -480,6 +483,9 @@
          event.preventDefault();
      },
      Escape: function(event) {
+         query = '';
+         previousQuery = null;
+
          cancelFetch();
          closePopup(true);
      },
