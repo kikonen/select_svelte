@@ -714,7 +714,7 @@
 
            bind:this={input}
            bind:value={query}
-           xon:blur={handleBlur}
+           on:blur={handleBlur}
            on:keypress={handleInputKeypress}
            on:keydown={handleInputKeydown}
            on:keyup={handleInputKeyup}>

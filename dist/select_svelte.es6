@@ -489,10 +489,10 @@ function create_if_block_9(ctx) {
 			attr(input_1, "autocorrect", "off");
 			attr(input_1, "autocapitalize", "off");
 			attr(input_1, "spellcheck", "off");
-			attr(input_1, "xon:blur", ctx.handleBlur);
 
 			dispose = [
 				listen(input_1, "input", ctx.input_1_input_handler),
+				listen(input_1, "blur", ctx.handleBlur),
 				listen(input_1, "keypress", ctx.handleInputKeypress),
 				listen(input_1, "keydown", ctx.handleInputKeydown),
 				listen(input_1, "keyup", ctx.handleInputKeyup)

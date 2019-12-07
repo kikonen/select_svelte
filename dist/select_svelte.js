@@ -774,8 +774,7 @@ var Select = (function () {
         attr(input_1, "autocorrect", "off");
         attr(input_1, "autocapitalize", "off");
         attr(input_1, "spellcheck", "off");
-        attr(input_1, "xon:blur", ctx.handleBlur);
-        dispose = [listen(input_1, "input", ctx.input_1_input_handler), listen(input_1, "keypress", ctx.handleInputKeypress), listen(input_1, "keydown", ctx.handleInputKeydown), listen(input_1, "keyup", ctx.handleInputKeyup)];
+        dispose = [listen(input_1, "input", ctx.input_1_input_handler), listen(input_1, "blur", ctx.handleBlur), listen(input_1, "keypress", ctx.handleInputKeypress), listen(input_1, "keydown", ctx.handleInputKeydown), listen(input_1, "keyup", ctx.handleInputKeyup)];
       },
       m: function m(target, anchor) {
         insert(target, input_1, anchor);
