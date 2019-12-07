@@ -277,7 +277,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (681:4) {#each Object.values(selection) as item}
+// (679:4) {#each Object.values(selection) as item}
 function create_each_block_1(ctx) {
 	let span;
 	let t_value = ctx.item.text + "";
@@ -307,15 +307,11 @@ function create_each_block_1(ctx) {
 	};
 }
 
-// (708:2) {:else}
+// (706:2) {:else}
 function create_else_block_1(ctx) {
-	let input_1;
-	let input_1_class_value;
-	let input_1_data_target_value;
-	let input_1_placeholder_value;
 	let t;
 	let each_1_anchor;
-	let dispose;
+	let if_block = ctx.typeahead && create_if_block_9(ctx);
 	let each_value = ctx.entries;
 	let each_blocks = [];
 
@@ -325,7 +321,7 @@ function create_else_block_1(ctx) {
 
 	return {
 		c() {
-			input_1 = element("input");
+			if (if_block) if_block.c();
 			t = space();
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -333,27 +329,9 @@ function create_else_block_1(ctx) {
 			}
 
 			each_1_anchor = empty();
-			attr(input_1, "class", input_1_class_value = "" + (ctx.real.getAttribute("class") + " " + ctx.extraClass + " svelte-q431y"));
-			attr(input_1, "autocomplete", "new-password");
-			attr(input_1, "autocorrect", "off");
-			attr(input_1, "autocapitalize", "off");
-			attr(input_1, "spellcheck", "off");
-			attr(input_1, "data-target", input_1_data_target_value = ctx.real.id);
-			attr(input_1, "placeholder", input_1_placeholder_value = ctx.real.placeholder);
-
-			dispose = [
-				listen(input_1, "input", ctx.input_1_input_handler),
-				listen(input_1, "blur", ctx.handleBlur),
-				listen(input_1, "keypress", ctx.handleInputKeypress),
-				listen(input_1, "keydown", ctx.handleInputKeydown),
-				listen(input_1, "keyup", ctx.handleInputKeyup),
-				listen(input_1, "click", ctx.handleInputClick)
-			];
 		},
 		m(target, anchor) {
-			insert(target, input_1, anchor);
-			set_input_value(input_1, ctx.query);
-			ctx.input_1_binding(input_1);
+			if (if_block) if_block.m(target, anchor);
 			insert(target, t, anchor);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -363,20 +341,17 @@ function create_else_block_1(ctx) {
 			insert(target, each_1_anchor, anchor);
 		},
 		p(changed, ctx) {
-			if ((changed.real || changed.extraClass) && input_1_class_value !== (input_1_class_value = "" + (ctx.real.getAttribute("class") + " " + ctx.extraClass + " svelte-q431y"))) {
-				attr(input_1, "class", input_1_class_value);
-			}
-
-			if (changed.real && input_1_data_target_value !== (input_1_data_target_value = ctx.real.id)) {
-				attr(input_1, "data-target", input_1_data_target_value);
-			}
-
-			if (changed.real && input_1_placeholder_value !== (input_1_placeholder_value = ctx.real.placeholder)) {
-				attr(input_1, "placeholder", input_1_placeholder_value);
-			}
-
-			if (changed.query && input_1.value !== ctx.query) {
-				set_input_value(input_1, ctx.query);
+			if (ctx.typeahead) {
+				if (if_block) {
+					if_block.p(changed, ctx);
+				} else {
+					if_block = create_if_block_9(ctx);
+					if_block.c();
+					if_block.m(t.parentNode, t);
+				}
+			} else if (if_block) {
+				if_block.d(1);
+				if_block = null;
 			}
 
 			if (changed.entries || changed.handleItemKeydown || changed.selection || changed.handleBlur || changed.handleItemClick || changed.handleItemKeyup) {
@@ -403,17 +378,15 @@ function create_else_block_1(ctx) {
 			}
 		},
 		d(detaching) {
-			if (detaching) detach(input_1);
-			ctx.input_1_binding(null);
+			if (if_block) if_block.d(detaching);
 			if (detaching) detach(t);
 			destroy_each(each_blocks, detaching);
 			if (detaching) detach(each_1_anchor);
-			run_all(dispose);
 		}
 	};
 }
 
-// (700:31) 
+// (698:31) 
 function create_if_block_3(ctx) {
 	let div;
 
@@ -456,7 +429,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (696:41) 
+// (694:41) 
 function create_if_block_2(ctx) {
 	let div;
 
@@ -477,7 +450,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (692:2) {#if fetchError}
+// (690:2) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -502,7 +475,48 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (744:6) {:else}
+// (707:4) {#if typeahead}
+function create_if_block_9(ctx) {
+	let input_1;
+	let dispose;
+
+	return {
+		c() {
+			input_1 = element("input");
+			attr(input_1, "class", "dropdown-item ki-js-item border");
+			attr(input_1, "tabindex", "1");
+			attr(input_1, "autocomplete", "new-password");
+			attr(input_1, "autocorrect", "off");
+			attr(input_1, "autocapitalize", "off");
+			attr(input_1, "spellcheck", "off");
+			attr(input_1, "xon:blur", ctx.handleBlur);
+
+			dispose = [
+				listen(input_1, "input", ctx.input_1_input_handler),
+				listen(input_1, "keypress", ctx.handleInputKeypress),
+				listen(input_1, "keydown", ctx.handleInputKeydown),
+				listen(input_1, "keyup", ctx.handleInputKeyup)
+			];
+		},
+		m(target, anchor) {
+			insert(target, input_1, anchor);
+			set_input_value(input_1, ctx.query);
+			ctx.input_1_binding(input_1);
+		},
+		p(changed, ctx) {
+			if (changed.query && input_1.value !== ctx.query) {
+				set_input_value(input_1, ctx.query);
+			}
+		},
+		d(detaching) {
+			if (detaching) detach(input_1);
+			ctx.input_1_binding(null);
+			run_all(dispose);
+		}
+	};
+}
+
+// (742:6) {:else}
 function create_else_block_2(ctx) {
 	let div1;
 	let div0;
@@ -571,7 +585,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (732:50) 
+// (730:50) 
 function create_if_block_6(ctx) {
 	let div1;
 	let div0;
@@ -627,7 +641,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (726:6) {#if item.separator}
+// (724:6) {#if item.separator}
 function create_if_block_5(ctx) {
 	let div;
 	let div_data_index_value;
@@ -652,7 +666,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (756:10) {#if item.desc}
+// (754:10) {#if item.desc}
 function create_if_block_8(ctx) {
 	let div;
 	let t_value = ctx.item.desc + "";
@@ -677,7 +691,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (738:10) {#if item.desc}
+// (736:10) {#if item.desc}
 function create_if_block_7(ctx) {
 	let div;
 	let t_value = ctx.item.desc + "";
@@ -702,7 +716,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (725:4) {#each entries as item, index}
+// (723:4) {#each entries as item, index}
 function create_each_block(ctx) {
 	let if_block_anchor;
 
@@ -744,7 +758,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (704:6) {:else}
+// (702:6) {:else}
 function create_else_block(ctx) {
 	let t_value = ctx.translate("no_results") + "";
 	let t;
@@ -763,7 +777,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (702:6) {#if tooShort }
+// (700:6) {#if tooShort }
 function create_if_block_4(ctx) {
 	let t_value = ctx.translate("too_short") + "";
 	let t;
@@ -782,7 +796,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (766:2) {#if hasMore}
+// (764:2) {#if hasMore}
 function create_if_block(ctx) {
 	let div;
 
@@ -810,6 +824,7 @@ function create_fragment(ctx) {
 	let span0;
 	let t0;
 	let span1;
+	let button_class_value;
 	let t1;
 	let div;
 	let t2;
@@ -851,7 +866,7 @@ function create_fragment(ctx) {
 			t2 = space();
 			if (if_block1) if_block1.c();
 			attr(span0, "class", "ki-selection mr-auto svelte-q431y");
-			attr(button, "class", "ki-select form-control d-flex svelte-q431y");
+			attr(button, "class", button_class_value = "ki-select form-control d-flex " + ctx.real.getAttribute("class") + " " + ctx.extraClass + " svelte-q431y");
 			attr(button, "type", "button");
 			attr(div, "class", div_class_value = "dropdown-menu ki-select-popup " + (ctx.popupVisible ? "show" : "") + " svelte-q431y");
 
@@ -902,6 +917,10 @@ function create_fragment(ctx) {
 				}
 
 				each_blocks.length = each_value_1.length;
+			}
+
+			if ((changed.real || changed.extraClass) && button_class_value !== (button_class_value = "ki-select form-control d-flex " + ctx.real.getAttribute("class") + " " + ctx.extraClass + " svelte-q431y")) {
+				attr(button, "class", button_class_value);
 			}
 
 			if (current_block_type === (current_block_type = select_block_type(changed, ctx)) && if_block0) {
@@ -1000,20 +1019,29 @@ function instance($$self, $$props, $$invalidate) {
 	
 
 	function fetcherSelect(offset, query) {
+		console.log("SELECT: " + query);
+
 		let promise = new Promise(function (resolve, reject) {
 				let entries = [];
+				let pattern = query.toUpperCase().trim();
+				let options = real.options;
 
-				real.querySelectorAll("option").forEach(function (el) {
+				for (let i = 0; i < options.length; i++) {
+					let el = options[i];
 					let ds = el.dataset;
 
 					let item = {
-						id: el.value,
-						text: el.text,
-						desc: ds.desc
+						id: el.value || "",
+						text: el.text || "",
+						desc: ds.desc || ""
 					};
 
-					entries.push(item);
-				});
+					let match = !item.id || item.text.toUpperCase().includes(pattern) || item.desc.toUpperCase().includes(pattern);
+
+					if (match) {
+						entries.push(item);
+					}
+				}
 
 				let response = { entries, info: { more: false } };
 				resolve(response);
@@ -1149,10 +1177,10 @@ function instance($$self, $$props, $$invalidate) {
 		}
 	}
 
-	function closePopup(focusInput) {
+	function closePopup(focusToggle) {
 		$$invalidate("popupVisible", popupVisible = false);
 
-		if (focusInput) {
+		if (focusToggle) {
 			toggle.focus();
 		}
 	}
@@ -1207,7 +1235,7 @@ function instance($$self, $$props, $$invalidate) {
 			closePopup(true);
 		}
 
-		syncToReal();
+		syncToReal(selection);
 		real.dispatchEvent(new CustomEvent("select-select", { detail: selection }));
 	}
 
@@ -1225,42 +1253,45 @@ function instance($$self, $$props, $$invalidate) {
 		}
 
 		let newSelection = {};
-		let options = real.options;
+		let options = real.selectedOptions;
 
 		for (let i = options.length - 1; i >= 0; i--) {
 			let el = options[i];
+			let ds = el.dataset;
+			let item = { id: el.value, text: el.text };
 
-			if (el.selected) {
-				let ds = el.dataset;
-
-				let item = {
-					id: el.value,
-					text: el.text,
-					desc: ds.desc
-				};
-
-				newSelection[item.id] = item;
+			if (ds.desc) {
+				item.desc = ds.desc;
 			}
+
+			newSelection[item.id] = item;
 		}
 
 		$$invalidate("selection", selection = newSelection);
 	}
 
-	function syncToReal() {
+	function syncToReal(selection) {
 		let changed = false;
 		let options = real.options;
 
 		for (let i = options.length - 1; i >= 0; i--) {
 			let el = options[i];
-			changed = el.selected !== selection[el.value];
-			el.selected = selection[el.value];
+			let curr = !!selection[el.value];
+
+			if (el.selected !== curr) {
+				changed = true;
+			}
+
+			el.selected = curr;
 		}
 
-		try {
-			isSyncToReal = true;
-			real.dispatchEvent(new Event("change"));
-		} finally {
-			isSyncToReal = false;
+		if (changed) {
+			try {
+				isSyncToReal = true;
+				real.dispatchEvent(new Event("change"));
+			} finally {
+				isSyncToReal = false;
+			}
 		}
 	}
 
@@ -1271,22 +1302,17 @@ function instance($$self, $$props, $$invalidate) {
 		syncFromReal();
 
 		real.addEventListener("change", function () {
-			syncFromReal();
+			if (!isSyncToReal) {
+				syncFromReal();
+				console.log("FROM_REAL", selection);
+			}
 		});
 
 		$$invalidate("mounted", mounted = true);
 	});
 
-	let inputKeypressHandlers = {
-		base(event) {
-			
-		}
-	};
-
-	let inputKeydownHandlers = {
-		base(event) {
-			wasDown = true;
-		},
+	let toggleKeydownHandlers = {
+		base: nop,
 		ArrowDown(event) {
 			let item = popupVisible
 			? popup.querySelectorAll(".ki-js-item")[0]
@@ -1311,54 +1337,12 @@ function instance($$self, $$props, $$invalidate) {
 		Escape(event) {
 			cancelFetch();
 			closePopup(false);
-		},
-		Tab: nop
-	};
-
-	let inputKeyupHandlers = {
-		base(event) {
-			if (wasDown) {
-				openPopup();
-				fetchEntries();
-			}
-		},
-		Enter: nop,
-		Escape: nop,
-		Tab: nop,
-		ArrowDown: nop,
-		ArrowUp: nop,
-		ArrowLeft: nop,
-		ArrowRight: nop,
-		PageDown: nop,
-		PageUp: nop,
-		Home: nop,
-		End: nop,
-		Control: nop,
-		Shift: nop,
-		AltGraph: nop,
-		Meta: nop,
-		ContextMenu: nop
-	};
-
-	let toggleKeydownHandlers = {
-		base(event) {
-			toggle.focus();
-		},
-		ArrowDown: inputKeydownHandlers.ArrowDown,
-		ArrowUp: inputKeydownHandlers.ArrowDown,
-		Escape(event) {
-			cancelFetch();
-			closePopup(false);
-			toggle.focus();
-		},
-		Tab(event) {
-			toggle.focus();
 		}
 	};
 
 	let itemKeydownHandlers = {
 		base(event) {
-			toggle.focus();
+			input.focus();
 		},
 		ArrowDown(event) {
 			let next = event.target.nextElementSibling;
@@ -1482,6 +1466,43 @@ function instance($$self, $$props, $$invalidate) {
 		}
 	};
 
+	let inputKeypressHandlers = { base: nop };
+
+	let inputKeydownHandlers = {
+		base(event) {
+			wasDown = true;
+		},
+		ArrowUp: itemKeydownHandlers.ArrowUp,
+		ArrowDown: itemKeydownHandlers.ArrowDown,
+		Escape: itemKeydownHandlers.Escape,
+		Tab: nop
+	};
+
+	let inputKeyupHandlers = {
+		base(event) {
+			if (wasDown) {
+				fetchEntries();
+				input.focus();
+			}
+		},
+		Enter: nop,
+		Escape: nop,
+		Tab: nop,
+		ArrowDown: nop,
+		ArrowUp: nop,
+		ArrowLeft: nop,
+		ArrowRight: nop,
+		PageDown: nop,
+		PageUp: nop,
+		Home: nop,
+		End: nop,
+		Control: nop,
+		Shift: nop,
+		AltGraph: nop,
+		Meta: nop,
+		ContextMenu: nop
+	};
+
 	function handleBlur(event) {
 		if (!containsElement(event.relatedTarget)) {
 			cancelFetch();
@@ -1500,17 +1521,6 @@ function instance($$self, $$props, $$invalidate) {
 
 	function handleInputKeyup(event) {
 		handleEvent(event.key, inputKeyupHandlers, event);
-	}
-
-	function handleInputClick(event) {
-		if (event.button === 0 && !hasModifier(event)) {
-			if (popupVisible) {
-				closePopup(false);
-			} else {
-				openPopup();
-				fetchEntries();
-			}
-		}
 	}
 
 	function handleToggleKeydown(event) {
@@ -1585,11 +1595,11 @@ function instance($$self, $$props, $$invalidate) {
 		if ("typeahead" in $$props) $$invalidate("typeahead", typeahead = $$props.typeahead);
 	};
 
-	$$self.$$.update = (changed = { mounted: 1 }) => {
-		if (changed.mounted) {
+	$$self.$$.update = (changed = { mounted: 1, selection: 1 }) => {
+		if (changed.mounted || changed.selection) {
 			 {
 				if (mounted) {
-					syncToReal();
+					syncToReal(selection);
 				}
 			}
 		}
@@ -1622,7 +1632,6 @@ function instance($$self, $$props, $$invalidate) {
 		handleInputKeypress,
 		handleInputKeydown,
 		handleInputKeyup,
-		handleInputClick,
 		handleToggleKeydown,
 		handleToggleClick,
 		handleItemKeydown,

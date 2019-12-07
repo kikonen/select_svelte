@@ -63,18 +63,28 @@
  // select
 
  function fetcherSelect(offset, query) {
+     console.log("SELECT: " + query);
+
      let promise = new Promise(function(resolve, reject) {
          let entries = []
+         let pattern = query.toUpperCase().trim();
 
-         real.querySelectorAll('option').forEach(function(el) {
+         let options = real.options;
+         for (let i = 0; i < options.length; i++) {
+             let el = options[i];
              let ds = el.dataset;
              let item = {
-                 id: el.value,
-                 text: el.text,
-                 desc: ds.desc
+                 id: el.value || '',
+                 text: el.text || '',
+                 desc: ds.desc || ''
              };
-             entries.push(item);
-         });
+             let match = !item.id ||
+                         item.text.toUpperCase().includes(pattern) ||
+                         item.desc.toUpperCase().includes(pattern);
+             if (match) {
+                 entries.push(item);
+             }
+         }
 
          let response = {
              entries: entries,
@@ -244,9 +254,9 @@
      }
  }
 
- function closePopup(focusInput) {
+ function closePopup(focusToggle) {
      popupVisible = false;
-     if (focusInput) {
+     if (focusToggle) {
          toggle.focus();
      }
  }
@@ -297,7 +307,7 @@
          closePopup(true);
      }
 
-     syncToReal();
+     syncToReal(selection);
      real.dispatchEvent(new CustomEvent('select-select', { detail: selection }));
  }
 
@@ -318,7 +328,7 @@
  //
  $: {
      if (mounted) {
-         syncToReal();
+         syncToReal(selection);
      }
  }
 
@@ -329,66 +339,67 @@
 
      let newSelection = {};
 
-     let options = real.options;
+     let options = real.selectedOptions;
 
      for (let i = options.length - 1; i >= 0; i--) {
          let el = options[i];
-         if (el.selected) {
-             let ds = el.dataset;
-             let item = {
-                 id: el.value,
-                 text: el.text,
-                 desc: ds.desc,
-             };
-             newSelection[item.id] = item;
+         let ds = el.dataset;
+         let item = {
+             id: el.value,
+             text: el.text,
+         };
+         if (ds.desc) {
+             item.desc = ds.desc;
          }
+         newSelection[item.id] = item;
      }
-
      selection = newSelection;
  }
 
- function syncToReal() {
+ function syncToReal(selection) {
      let changed = false;
-
      let options = real.options;
 
      for (let i = options.length - 1; i >= 0; i--) {
          let el = options[i];
-         changed = el.selected !== selection[el.value];
-         el.selected = selection[el.value];
+         let curr = !!selection[el.value];
+         if (el.selected !== curr) {
+             changed = true;
+         }
+         el.selected = curr;
      }
 
-     try {
-         isSyncToReal = true;
-         real.dispatchEvent(new Event('change'));
-     } finally {
-         isSyncToReal = false;
+     if (changed) {
+         try {
+             isSyncToReal = true;
+             real.dispatchEvent(new Event('change'));
+         } finally {
+             isSyncToReal = false;
+         }
      }
  }
 
  onMount(function() {
      real.classList.add('d-none');
-     multiple = real.multiple
+     multiple = real.multiple;
 
      fetcher = fetcherSelect
 
      syncFromReal();
      real.addEventListener('change', function() {
-         syncFromReal();
+         if (!isSyncToReal) {
+             syncFromReal();
+             console.log("FROM_REAL", selection);
+         }
      });
 
      mounted = true;
  });
 
- let inputKeypressHandlers = {
-     base: function(event) {
-     },
- };
-
- let inputKeydownHandlers = {
-     base: function(event) {
-         wasDown = true;
-     },
+ ////////////////////////////////////////////////////////////
+ //
+ let toggleKeydownHandlers = {
+     base: nop,
      ArrowDown: function(event) {
          let item = popupVisible ? popup.querySelectorAll('.ki-js-item')[0] : null;
          if (item) {
@@ -411,55 +422,11 @@
          cancelFetch();
          closePopup(false);
      },
-     Tab: nop,
- };
-
- let inputKeyupHandlers = {
-     base: function(event) {
-         if (wasDown) {
-             openPopup();
-             fetchEntries();
-         }
-     },
-     Enter: nop,
-     Escape: nop,
-     Tab: nop,
-     // skip "meta" keys from triggering search
-     ArrowDown: nop,
-     ArrowUp: nop,
-     ArrowLeft: nop,
-     ArrowRight: nop,
-     PageDown: nop,
-     PageUp: nop,
-     Home: nop,
-     End: nop,
-     // disallow modifier keys to trigger search
-     Control: nop,
-     Shift: nop,
-     AltGraph: nop,
-     Meta: nop,
-     ContextMenu: nop,
- }
-
- let toggleKeydownHandlers = {
-     base: function(event) {
-         toggle.focus();
-     },
-     ArrowDown: inputKeydownHandlers.ArrowDown,
-     ArrowUp: inputKeydownHandlers.ArrowDown,
-     Escape: function(event) {
-         cancelFetch();
-         closePopup(false);
-         toggle.focus();
-     },
-     Tab: function(event) {
-         toggle.focus();
-     },
  };
 
  let itemKeydownHandlers = {
      base: function(event) {
-         toggle.focus();
+         input.focus();
      },
      ArrowDown: function(event) {
          let next = event.target.nextElementSibling;
@@ -576,6 +543,48 @@
      },
  }
 
+
+ let inputKeypressHandlers = {
+     base: nop,
+ };
+
+ let inputKeydownHandlers = {
+     base: function(event) {
+         wasDown = true;
+     },
+     ArrowUp: itemKeydownHandlers.ArrowUp,
+     ArrowDown: itemKeydownHandlers.ArrowDown,
+     Escape: itemKeydownHandlers.Escape,
+     Tab: nop,
+ };
+
+ let inputKeyupHandlers = {
+     base: function(event) {
+         if (wasDown) {
+             fetchEntries();
+             input.focus();
+         }
+     },
+     Enter: nop,
+     Escape: nop,
+     Tab: nop,
+     // skip "meta" keys from triggering search
+     ArrowDown: nop,
+     ArrowUp: nop,
+     ArrowLeft: nop,
+     ArrowRight: nop,
+     PageDown: nop,
+     PageUp: nop,
+     Home: nop,
+     End: nop,
+     // disallow modifier keys to trigger search
+     Control: nop,
+     Shift: nop,
+     AltGraph: nop,
+     Meta: nop,
+     ContextMenu: nop,
+ }
+
  function handleEvent(code, handlers, event) {
      (handlers[code] || handlers.base)(event);
  }
@@ -599,17 +608,6 @@
 
  function handleInputKeyup(event) {
      handleEvent(event.key, inputKeyupHandlers, event);
- }
-
- function handleInputClick(event) {
-     if (event.button === 0 && !hasModifier(event)) {
-         if (popupVisible) {
-             closePopup(false);
-         } else {
-             openPopup();
-             fetchEntries();
-         }
-     }
  }
 
  function handleToggleKeydown(event) {
@@ -670,7 +668,7 @@
 <!-- ------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------ -->
 <button
-  class="ki-select form-control d-flex"
+  class="ki-select form-control d-flex {real.getAttribute('class')} {extraClass}"
   type="button"
   bind:this={toggle}
   on:blur={handleBlur}
@@ -706,21 +704,21 @@
       {/if}
     </div>
   {:else}
-    <input class="{real.getAttribute('class')} {extraClass}"
-           autocomplete=new-password
+    {#if typeahead}
+      <input class="dropdown-item ki-js-item border"
+           tabindex="1"
+           autocomplete="new-password"
            autocorrect=off
            autocapitalize=off
            spellcheck=off
 
-           data-target="{real.id}"
-           placeholder="{real.placeholder}"
            bind:this={input}
            bind:value={query}
-           on:blur={handleBlur}
+           xon:blur={handleBlur}
            on:keypress={handleInputKeypress}
            on:keydown={handleInputKeydown}
-           on:keyup={handleInputKeyup}
-           on:click={handleInputClick}>
+           on:keyup={handleInputKeyup}>
+    {/if}
 
     {#each entries as item, index}
       {#if item.separator}
