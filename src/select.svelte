@@ -705,6 +705,18 @@
  .ki-no-click {
      pointer-events: none;
  }
+ .ki-caret-container {
+     margin-top: 140%;
+     margin-bottom: 100%;
+ }
+
+ .ki-caret-down {
+     width: 0;
+     height: 0;
+     border-left: 0.35rem solid transparent;
+     border-right: 0.35rem solid transparent;
+     border-top: 0.35rem solid #232323;
+ }
 </style>
 
 <!-- ------------------------------------------------------------ -->
@@ -723,7 +735,9 @@
     {/each}
   </span>
   <span class="ml-auto">
-    <i class="text-dark fas fa-caret-down"></i>
+    <div class="ki-caret-container">
+      <span class="ki-caret-down"></span>
+    </div>
   </span>
 </button>
 <div class="dropdown-menu ki-select-popup {popupVisible ? 'show' : ''}"
