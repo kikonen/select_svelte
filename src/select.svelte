@@ -717,6 +717,7 @@
 
  function handleToggleClick(event) {
      if (event.button === 0 && !hasModifier(event)) {
+         toggle.focus();
          if (popupVisible) {
              closePopup(false);
          } else {
@@ -769,6 +770,10 @@
      padding-right: 0.5rem;
 */
  }
+ .ki-select-selection {
+     width: 100%;
+     height: 100%;
+ }
  .ki-select-item {
      padding-left: 0.5rem;
      padding-right: 0.5rem;
@@ -818,10 +823,11 @@
            on:keyup={handleInputKeyup}>
     {/if}
 
-    <div class="form-control {inputVisible ? 'd-none' : ''}">
-      <span class="ki-select-selection">
+    <div class="form-control {inputVisible ? 'd-none' : ''}"
+         on:click={handleToggleClick} >
+      <span class="ki-no-click ki-select-selection">
         {#each Object.values(selection) as item, index}
-        <span class="{item.id ? 'text-dark' : 'text-muted'}">{index > 0 ? ', ' : ''}{item.text}</span>
+        <span class="ki-no-click {item.id ? 'text-dark' : 'text-muted'}">{index > 0 ? ', ' : ''}{item.text}</span>
         {/each}
       </span>
     </div>

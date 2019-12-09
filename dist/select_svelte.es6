@@ -259,8 +259,8 @@ const { Object: Object_1, document: document_1 } = globals;
 
 function add_css() {
 	var style = element("style");
-	style.id = "svelte-wf7cb9-style";
-	style.textContent = ".ki-select-container.svelte-wf7cb9{position:relative}.ki-select-selection.svelte-wf7cb9{white-space:nowrap;overflow:hidden;word-break:break-all;text-overflow:ellipsis}.ki-select-popup.svelte-wf7cb9{max-height:15rem;max-width:90vw;overflow-y:auto}.ki-select-item.svelte-wf7cb9{padding-left:0.5rem;padding-right:0.5rem}.ki-no-click.svelte-wf7cb9{pointer-events:none}.ki-caret-container.svelte-wf7cb9{margin-top:140%;margin-bottom:100%}.ki-caret-down.svelte-wf7cb9{width:0;height:0;border-left:0.35rem solid transparent;border-right:0.35rem solid transparent;border-top:0.35rem solid #232323}.ki-w-0.svelte-wf7cb9{width:0}.ki-w-100.svelte-wf7cb9{width:100%}";
+	style.id = "svelte-1y1l0qo-style";
+	style.textContent = ".ki-select-container.svelte-1y1l0qo{position:relative}.ki-select-selection.svelte-1y1l0qo{white-space:nowrap;overflow:hidden;word-break:break-all;text-overflow:ellipsis}.ki-select-popup.svelte-1y1l0qo{max-height:15rem;max-width:90vw;overflow-y:auto}.ki-select-selection.svelte-1y1l0qo{width:100%;height:100%}.ki-select-item.svelte-1y1l0qo{padding-left:0.5rem;padding-right:0.5rem}.ki-no-click.svelte-1y1l0qo{pointer-events:none}.ki-caret-container.svelte-1y1l0qo{margin-top:140%;margin-bottom:100%}.ki-caret-down.svelte-1y1l0qo{width:0;height:0;border-left:0.35rem solid transparent;border-right:0.35rem solid transparent;border-top:0.35rem solid #232323}.ki-w-0.svelte-1y1l0qo{width:0}.ki-w-100.svelte-1y1l0qo{width:100%}";
 	append(document_1.head, style);
 }
 
@@ -278,7 +278,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (806:4) {#if typeahead}
+// (811:4) {#if typeahead}
 function create_if_block_9(ctx) {
 	let input_1;
 	let input_1_class_value;
@@ -287,7 +287,7 @@ function create_if_block_9(ctx) {
 	return {
 		c() {
 			input_1 = element("input");
-			attr(input_1, "class", input_1_class_value = "ki-select-input form-control " + (ctx.inputVisible ? "" : "d-none") + " svelte-wf7cb9");
+			attr(input_1, "class", input_1_class_value = "ki-select-input form-control " + (ctx.inputVisible ? "" : "d-none") + " svelte-1y1l0qo");
 			attr(input_1, "autocomplete", "new-password");
 			attr(input_1, "autocorrect", "off");
 			attr(input_1, "autocapitalize", "off");
@@ -307,7 +307,7 @@ function create_if_block_9(ctx) {
 			ctx.input_1_binding(input_1);
 		},
 		p(changed, ctx) {
-			if (changed.inputVisible && input_1_class_value !== (input_1_class_value = "ki-select-input form-control " + (ctx.inputVisible ? "" : "d-none") + " svelte-wf7cb9")) {
+			if (changed.inputVisible && input_1_class_value !== (input_1_class_value = "ki-select-input form-control " + (ctx.inputVisible ? "" : "d-none") + " svelte-1y1l0qo")) {
 				attr(input_1, "class", input_1_class_value);
 			}
 
@@ -323,7 +323,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (823:8) {#each Object.values(selection) as item, index}
+// (829:8) {#each Object.values(selection) as item, index}
 function create_each_block_1(ctx) {
 	let span;
 	let t0_value = (ctx.index > 0 ? ", " : "") + "";
@@ -337,7 +337,7 @@ function create_each_block_1(ctx) {
 			span = element("span");
 			t0 = text(t0_value);
 			t1 = text(t1_value);
-			attr(span, "class", span_class_value = ctx.item.id ? "text-dark" : "text-muted");
+			attr(span, "class", span_class_value = "ki-no-click " + (ctx.item.id ? "text-dark" : "text-muted") + " svelte-1y1l0qo");
 		},
 		m(target, anchor) {
 			insert(target, span, anchor);
@@ -347,7 +347,7 @@ function create_each_block_1(ctx) {
 		p(changed, ctx) {
 			if (changed.selection && t1_value !== (t1_value = ctx.item.text + "")) set_data(t1, t1_value);
 
-			if (changed.selection && span_class_value !== (span_class_value = ctx.item.id ? "text-dark" : "text-muted")) {
+			if (changed.selection && span_class_value !== (span_class_value = "ki-no-click " + (ctx.item.id ? "text-dark" : "text-muted") + " svelte-1y1l0qo")) {
 				attr(span, "class", span_class_value);
 			}
 		},
@@ -357,7 +357,7 @@ function create_each_block_1(ctx) {
 	};
 }
 
-// (863:4) {:else}
+// (869:4) {:else}
 function create_else_block_1(ctx) {
 	let each_1_anchor;
 	let each_value = ctx.entries;
@@ -413,7 +413,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (855:33) 
+// (861:33) 
 function create_if_block_3(ctx) {
 	let div;
 
@@ -456,7 +456,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (851:43) 
+// (857:43) 
 function create_if_block_2(ctx) {
 	let div;
 
@@ -477,7 +477,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (847:4) {#if fetchError}
+// (853:4) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -502,7 +502,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (883:4) {:else}
+// (889:4) {:else}
 function create_else_block_2(ctx) {
 	let div1;
 	let div0;
@@ -523,9 +523,9 @@ function create_else_block_2(ctx) {
 			t1 = space();
 			if (if_block) if_block.c();
 			t2 = space();
-			attr(div0, "class", "ki-no-click svelte-wf7cb9");
+			attr(div0, "class", "ki-no-click svelte-1y1l0qo");
 			attr(div1, "tabindex", "1");
-			attr(div1, "class", div1_class_value = "ki-js-item dropdown-item ki-select-item " + (!ctx.item.id ? "text-muted" : "") + " " + (ctx.selection[ctx.item.id] ? "alert-primary" : "") + " svelte-wf7cb9");
+			attr(div1, "class", div1_class_value = "ki-js-item dropdown-item ki-select-item " + (!ctx.item.id ? "text-muted" : "") + " " + (ctx.selection[ctx.item.id] ? "alert-primary" : "") + " svelte-1y1l0qo");
 			attr(div1, "data-index", div1_data_index_value = ctx.index);
 
 			dispose = [
@@ -559,7 +559,7 @@ function create_else_block_2(ctx) {
 				if_block = null;
 			}
 
-			if ((changed.entries || changed.selection) && div1_class_value !== (div1_class_value = "ki-js-item dropdown-item ki-select-item " + (!ctx.item.id ? "text-muted" : "") + " " + (ctx.selection[ctx.item.id] ? "alert-primary" : "") + " svelte-wf7cb9")) {
+			if ((changed.entries || changed.selection) && div1_class_value !== (div1_class_value = "ki-js-item dropdown-item ki-select-item " + (!ctx.item.id ? "text-muted" : "") + " " + (ctx.selection[ctx.item.id] ? "alert-primary" : "") + " svelte-1y1l0qo")) {
 				attr(div1, "class", div1_class_value);
 			}
 		},
@@ -571,7 +571,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (871:48) 
+// (877:48) 
 function create_if_block_6(ctx) {
 	let div1;
 	let div0;
@@ -590,7 +590,7 @@ function create_if_block_6(ctx) {
 			t1 = space();
 			if (if_block) if_block.c();
 			t2 = space();
-			attr(div0, "class", "ki-no-click svelte-wf7cb9");
+			attr(div0, "class", "ki-no-click svelte-1y1l0qo");
 			attr(div1, "tabindex", "-1");
 			attr(div1, "class", "dropdown-item text-muted ki-js-blank");
 			dispose = listen(div1, "keydown", ctx.handleItemKeydown);
@@ -627,7 +627,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (865:4) {#if item.separator}
+// (871:4) {#if item.separator}
 function create_if_block_5(ctx) {
 	let div;
 	let div_data_index_value;
@@ -652,7 +652,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (895:6) {#if item.desc}
+// (901:6) {#if item.desc}
 function create_if_block_8(ctx) {
 	let div;
 	let t_value = ctx.item.desc + "";
@@ -662,7 +662,7 @@ function create_if_block_8(ctx) {
 		c() {
 			div = element("div");
 			t = text(t_value);
-			attr(div, "class", "ki-no-click text-muted svelte-wf7cb9");
+			attr(div, "class", "ki-no-click text-muted svelte-1y1l0qo");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -677,7 +677,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (877:6) {#if item.desc}
+// (883:6) {#if item.desc}
 function create_if_block_7(ctx) {
 	let div;
 	let t_value = ctx.item.desc + "";
@@ -687,7 +687,7 @@ function create_if_block_7(ctx) {
 		c() {
 			div = element("div");
 			t = text(t_value);
-			attr(div, "class", "ki-no-click text-muted svelte-wf7cb9");
+			attr(div, "class", "ki-no-click text-muted svelte-1y1l0qo");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -702,7 +702,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (864:4) {#each entries as item, index}
+// (870:4) {#each entries as item, index}
 function create_each_block(ctx) {
 	let if_block_anchor;
 
@@ -744,7 +744,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (859:6) {:else}
+// (865:6) {:else}
 function create_else_block(ctx) {
 	let t_value = ctx.translate("no_results") + "";
 	let t;
@@ -763,7 +763,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (857:6) {#if tooShort }
+// (863:6) {#if tooShort }
 function create_if_block_4(ctx) {
 	let t_value = ctx.translate("too_short") + "";
 	let t;
@@ -782,7 +782,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (905:4) {#if hasMore}
+// (911:4) {#if hasMore}
 function create_if_block(ctx) {
 	let div;
 
@@ -862,17 +862,18 @@ function create_fragment(ctx) {
 			if_block1.c();
 			t3 = space();
 			if (if_block2) if_block2.c();
-			attr(span, "class", "ki-select-selection svelte-wf7cb9");
+			attr(span, "class", "ki-no-click ki-select-selection svelte-1y1l0qo");
 			attr(div0, "class", div0_class_value = "form-control " + (ctx.inputVisible ? "d-none" : ""));
 			attr(button, "class", "btn btn-outline-secondary");
 			attr(button, "type", "button");
 			attr(button, "tabindex", "0");
 			attr(div1, "class", "input-group-append");
 			attr(div2, "class", "input-group");
-			attr(div3, "class", div3_class_value = "dropdown-menu ki-select-popup " + (ctx.popupVisible ? "show" : "") + " svelte-wf7cb9");
-			attr(div4, "class", div4_class_value = "ki-select-container " + ctx.extraClass + " svelte-wf7cb9");
+			attr(div3, "class", div3_class_value = "dropdown-menu ki-select-popup " + (ctx.popupVisible ? "show" : "") + " svelte-1y1l0qo");
+			attr(div4, "class", div4_class_value = "ki-select-container " + ctx.extraClass + " svelte-1y1l0qo");
 
 			dispose = [
+				listen(div0, "click", ctx.handleToggleClick),
 				listen(button, "blur", ctx.handleBlur),
 				listen(button, "keydown", ctx.handleToggleKeydown),
 				listen(button, "click", ctx.handleToggleClick),
@@ -969,11 +970,11 @@ function create_fragment(ctx) {
 				if_block2 = null;
 			}
 
-			if (changed.popupVisible && div3_class_value !== (div3_class_value = "dropdown-menu ki-select-popup " + (ctx.popupVisible ? "show" : "") + " svelte-wf7cb9")) {
+			if (changed.popupVisible && div3_class_value !== (div3_class_value = "dropdown-menu ki-select-popup " + (ctx.popupVisible ? "show" : "") + " svelte-1y1l0qo")) {
 				attr(div3, "class", div3_class_value);
 			}
 
-			if (changed.extraClass && div4_class_value !== (div4_class_value = "ki-select-container " + ctx.extraClass + " svelte-wf7cb9")) {
+			if (changed.extraClass && div4_class_value !== (div4_class_value = "ki-select-container " + ctx.extraClass + " svelte-1y1l0qo")) {
 				attr(div4, "class", div4_class_value);
 			}
 		},
@@ -1648,6 +1649,8 @@ function instance($$self, $$props, $$invalidate) {
 
 	function handleToggleClick(event) {
 		if (event.button === 0 && !hasModifier(event)) {
+			toggle.focus();
+
 			if (popupVisible) {
 				closePopup(false);
 			} else {
@@ -1778,7 +1781,7 @@ function instance($$self, $$props, $$invalidate) {
 class Select extends SvelteComponent {
 	constructor(options) {
 		super();
-		if (!document_1.getElementById("svelte-wf7cb9-style")) add_css();
+		if (!document_1.getElementById("svelte-1y1l0qo-style")) add_css();
 
 		init(this, options, instance, create_fragment, safe_not_equal, {
 			real: 0,
