@@ -2,6 +2,7 @@
  import {onMount} from 'svelte';
 
  const I18N_DEFAULTS = {
+     clear: 'Clear',
      fetching: 'Searching..',
      no_results: 'No results',
      too_short: 'Too short',
@@ -896,7 +897,7 @@
          on:keyup={handleItemKeyup}>
 
       <div class="ki-no-click">
-        {item.display_text || item.text}
+        {item.id ? (item.display_text || item.text) : translate('clear')}
       </div>
       {#if item.desc}
       <div class="ki-no-click text-muted">

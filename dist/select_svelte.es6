@@ -278,7 +278,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (811:4) {#if typeahead}
+// (812:4) {#if typeahead}
 function create_if_block_9(ctx) {
 	let input_1;
 	let input_1_class_value;
@@ -323,7 +323,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (829:8) {#each Object.values(selection) as item, index}
+// (830:8) {#each Object.values(selection) as item, index}
 function create_each_block_1(ctx) {
 	let span;
 	let t0_value = (ctx.index > 0 ? ", " : "") + "";
@@ -357,7 +357,7 @@ function create_each_block_1(ctx) {
 	};
 }
 
-// (869:4) {:else}
+// (870:4) {:else}
 function create_else_block_1(ctx) {
 	let each_1_anchor;
 	let each_value = ctx.entries;
@@ -383,7 +383,7 @@ function create_else_block_1(ctx) {
 			insert(target, each_1_anchor, anchor);
 		},
 		p(changed, ctx) {
-			if (changed.entries || changed.handleItemKeydown || changed.selection || changed.handleBlur || changed.handleItemClick || changed.handleItemKeyup) {
+			if (changed.entries || changed.handleItemKeydown || changed.selection || changed.handleBlur || changed.handleItemClick || changed.handleItemKeyup || changed.translate) {
 				each_value = ctx.entries;
 				let i;
 
@@ -413,7 +413,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (861:33) 
+// (862:33) 
 function create_if_block_3(ctx) {
 	let div;
 
@@ -456,7 +456,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (857:43) 
+// (858:43) 
 function create_if_block_2(ctx) {
 	let div;
 
@@ -477,7 +477,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (853:4) {#if fetchError}
+// (854:4) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -502,11 +502,15 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (889:4) {:else}
+// (890:4) {:else}
 function create_else_block_2(ctx) {
 	let div1;
 	let div0;
-	let t0_value = (ctx.item.display_text || ctx.item.text) + "";
+
+	let t0_value = (ctx.item.id
+	? ctx.item.display_text || ctx.item.text
+	: ctx.translate("clear")) + "";
+
 	let t0;
 	let t1;
 	let t2;
@@ -544,7 +548,9 @@ function create_else_block_2(ctx) {
 			append(div1, t2);
 		},
 		p(changed, ctx) {
-			if (changed.entries && t0_value !== (t0_value = (ctx.item.display_text || ctx.item.text) + "")) set_data(t0, t0_value);
+			if (changed.entries && t0_value !== (t0_value = (ctx.item.id
+			? ctx.item.display_text || ctx.item.text
+			: ctx.translate("clear")) + "")) set_data(t0, t0_value);
 
 			if (ctx.item.desc) {
 				if (if_block) {
@@ -571,7 +577,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (877:48) 
+// (878:48) 
 function create_if_block_6(ctx) {
 	let div1;
 	let div0;
@@ -627,7 +633,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (871:4) {#if item.separator}
+// (872:4) {#if item.separator}
 function create_if_block_5(ctx) {
 	let div;
 	let div_data_index_value;
@@ -652,7 +658,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (901:6) {#if item.desc}
+// (902:6) {#if item.desc}
 function create_if_block_8(ctx) {
 	let div;
 	let t_value = ctx.item.desc + "";
@@ -677,7 +683,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (883:6) {#if item.desc}
+// (884:6) {#if item.desc}
 function create_if_block_7(ctx) {
 	let div;
 	let t_value = ctx.item.desc + "";
@@ -702,7 +708,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (870:4) {#each entries as item, index}
+// (871:4) {#each entries as item, index}
 function create_each_block(ctx) {
 	let if_block_anchor;
 
@@ -744,7 +750,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (865:6) {:else}
+// (866:6) {:else}
 function create_else_block(ctx) {
 	let t_value = ctx.translate("no_results") + "";
 	let t;
@@ -763,7 +769,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (863:6) {#if tooShort }
+// (864:6) {#if tooShort }
 function create_if_block_4(ctx) {
 	let t_value = ctx.translate("too_short") + "";
 	let t;
@@ -782,7 +788,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (911:4) {#if hasMore}
+// (912:4) {#if hasMore}
 function create_if_block(ctx) {
 	let div;
 
@@ -1008,6 +1014,7 @@ function handleEvent(code, handlers, event) {
 
 function instance($$self, $$props, $$invalidate) {
 	const I18N_DEFAULTS = {
+		clear: "Clear",
 		fetching: "Searching..",
 		no_results: "No results",
 		too_short: "Too short",
