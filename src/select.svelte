@@ -19,6 +19,7 @@
 
  let query = '';
 
+ let container;
  let input;
  let toggle;
  let popup;
@@ -38,6 +39,7 @@
  let fetchingMore = false;
  let fetchError = null;
 
+ let inputVisible = false;
  let popupVisible = false;
  let activeFetch = null;
 
@@ -254,8 +256,48 @@
      }
  }
 
- function closePopup(focusToggle) {
-     popupVisible = false;
+ function clearQuery() {
+     query = '';
+     previousQuery = null;
+ }
+
+ let focusingInput = null;
+
+ function openInput(focusInput) {
+     if (!typeahead) {
+         return;
+     }
+
+     let wasVisible = inputVisible;
+     inputVisible = true;
+
+     if (!focusInput) {
+         return;
+
+     }
+
+     if (wasVisible) {
+         input.focus();
+     } else {
+         if (!focusingInput) {
+             focusingInput = function() {
+                 if (focusingInput) {
+                     focusingInput = null;
+                     input.focus();
+                 }
+             }
+             setTimeout(focusingInput);
+         }
+     }
+ }
+
+ function closeInput(focusToggle) {
+     if (!typeahead) {
+         return;
+     }
+
+     focusingInput = null;
+     inputVisible = false;
      if (focusToggle) {
          toggle.focus();
      }
@@ -264,8 +306,15 @@
  function openPopup() {
      if (!popupVisible) {
          popupVisible = true;
-         let w = toggle.parentElement.offsetWidth;
+         let w = container.offsetWidth;
          popup.style.minWidth = w + "px";
+     }
+ }
+
+ function closePopup(focusToggle) {
+     popupVisible = false;
+     if (focusToggle) {
+         toggle.focus();
      }
  }
 
@@ -301,10 +350,9 @@
          selection[item.id] = item;
 
          // NOTE KI reset query only for single item
-//         query = '';
-//         previousQuery = null;
-
+         clearQuery();
          closePopup(true);
+         closeInput(false);
      }
 
      syncToReal(selection);
@@ -398,26 +446,25 @@
 
  ////////////////////////////////////////////////////////////
  //
- let toggleKeydownHandlers = {
-     base: nop,
+ let inputKeypressHandlers = {
+     base: function(event) {
+     },
+ };
+
+ let inputKeydownHandlers = {
+     base: function(event) {
+         wasDown = true;
+         openInput(true);
+     },
      ArrowDown: function(event) {
-         if (popupVisible) {
-             let item = typeahead ? input : popup.querySelectorAll('.ki-js-item')[0];
-             if (item) {
-                 while (item && item.classList.contains('ki-js-blank')) {
-                     item = item.nextElementSibling;
-                 }
+         let item = popupVisible ? popup.querySelectorAll('.ki-js-item')[0] : null;
+         if (item) {
+             while (item && item.classList.contains('ki-js-blank')) {
+                 item = item.nextElementSibling;
              }
-             if (item) {
-                 item.focus();
-             }
+             item.focus();
          } else {
              openPopup();
-             if (typeahead) {
-                 setTimeout(function() {
-                     input.focus();
-                 });
-             }
              fetchEntries();
          }
          event.preventDefault();
@@ -428,18 +475,81 @@
          event.preventDefault();
      },
      Escape: function(event) {
-         query = '';
-         previousQuery = null;
-
          cancelFetch();
-         closePopup(false);
+         clearQuery();
+         closePopup(true);
+         closeInput(false);
      },
      Tab: nop,
  };
 
+ let inputKeyupHandlers = {
+     base: function(event) {
+         if (wasDown) {
+             openPopup();
+             fetchEntries();
+         }
+     },
+     Enter: nop,
+     Escape: nop,
+     Tab: nop,
+     // skip "meta" keys from triggering search
+     ArrowDown: nop,
+     ArrowUp: nop,
+     ArrowLeft: nop,
+     ArrowRight: nop,
+     PageDown: nop,
+     PageUp: nop,
+     Home: nop,
+     End: nop,
+     // disallow modifier keys to trigger search
+     Control: nop,
+     Shift: nop,
+     AltGraph: nop,
+     Meta: nop,
+     ContextMenu: nop,
+ }
+
+ let toggleKeydownHandlers = {
+     base: function(event) {
+         openInput(true);
+     },
+     ArrowDown: inputKeydownHandlers.ArrowDown,
+     ArrowUp: inputKeydownHandlers.ArrowDown,
+     Enter: function(event) {
+         openPopup();
+         fetchEntries();
+     },
+     Escape: function(event) {
+         cancelFetch();
+         clearQuery();
+         closePopup(false);
+         closeInput(false);
+     },
+     Tab: function(event) {
+         if (inputVisible) {
+//             input.focus();
+//             event.preventDefault();
+         }
+     },
+     // skip "meta" keys from triggering search
+     ArrowLeft: nop,
+     ArrowRight: nop,
+     PageDown: nop,
+     PageUp: nop,
+     Home: nop,
+     End: nop,
+     // disallow modifier keys to trigger search
+     Control: nop,
+     Shift: nop,
+     AltGraph: nop,
+     Meta: nop,
+     ContextMenu: nop,
+ };
+
  let itemKeydownHandlers = {
      base: function(event) {
-         input.focus();
+         openInput(true);
      },
      ArrowDown: function(event) {
          let next = event.target.nextElementSibling;
@@ -483,21 +593,24 @@
          event.preventDefault();
      },
      Escape: function(event) {
-         query = '';
-         previousQuery = null;
-
          cancelFetch();
+         clearQuery();
          closePopup(true);
-     },
-     Tab: function(event) {
-         toggle.focus();
-         event.preventDefault();
+         closeInput(false);
      },
      // allow "meta" keys to navigate in items
      PageUp: nop,
      PageDown: nop,
      Home: nop,
      End: nop,
+     Tab: function(event) {
+         if (inputVisible) {
+             input.focus();
+         } else {
+             toggle.focus();
+         }
+         event.preventDefault();
+     },
      // disallow modifier keys to trigger search
      Control: nop,
      Shift: nop,
@@ -564,61 +677,8 @@
  }
 
 
- let inputKeypressHandlers = {
-     base: nop,
- };
-
- let inputKeydownHandlers = {
-     base: function(event) {
-         wasDown = true;
-     },
-     ArrowUp: nop,
-     ArrowDown: function(event) {
-         let item = popup.querySelectorAll('.ki-js-item')[0];
-         if (item) {
-             while (item && item.classList.contains('ki-js-blank')) {
-                 item = item.nextElementSibling;
-             }
-         }
-         if (item) {
-             item.focus();
-         }
-         event.preventDefault();
-     },
-     Escape: itemKeydownHandlers.Escape,
-     Tab: function(event) {
-         toggle.focus();
-         event.preventDefault();
-     }
- };
-
- let inputKeyupHandlers = {
-     base: function(event) {
-         if (wasDown) {
-             fetchEntries();
-             input.focus();
-         }
-     },
-     Enter: nop,
-     Escape: nop,
-     Tab: nop,
-     // skip "meta" keys from triggering search
-     ArrowDown: nop,
-     ArrowUp: nop,
-     ArrowLeft: nop,
-     ArrowRight: nop,
-     PageDown: nop,
-     PageUp: nop,
-     Home: nop,
-     End: nop,
-     // disallow modifier keys to trigger search
-     Control: nop,
-     Shift: nop,
-     AltGraph: nop,
-     Meta: nop,
-     ContextMenu: nop,
- }
-
+ ////////////////////////////////////////////////////////////
+ //
  function handleEvent(code, handlers, event) {
      (handlers[code] || handlers.base)(event);
  }
@@ -626,7 +686,10 @@
  function handleBlur(event) {
      if (!containsElement(event.relatedTarget)) {
          cancelFetch();
+
+         clearQuery();
          closePopup(false);
+         closeInput(false);
 
          syncFromReal();
      }
@@ -685,10 +748,10 @@
 <!-- ------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------ -->
 <style>
- .ki-select {
+ .ki-select-container {
      position: relative;
  }
- .ki-selection {
+ .ki-select-selection {
      white-space: nowrap;
      overflow: hidden;
      word-break: break-all;
@@ -700,9 +763,11 @@
      overflow-y: auto;
  }
  .ki-select-input {
+/*
      width: 100%;
      padding-left: 0.5rem;
      padding-right: 0.5rem;
+*/
  }
  .ki-select-item {
      padding-left: 0.5rem;
@@ -723,113 +788,126 @@
      border-right: 0.35rem solid transparent;
      border-top: 0.35rem solid #232323;
  }
+
+ .ki-w-0 {
+     width: 0;
+ }
+ .ki-w-100 {
+     width: 100%;
+ }
 </style>
 
 <!-- ------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------ -->
-<button
-  class="ki-select form-control d-flex {real.getAttribute('class')} {extraClass}"
-  type="button"
-  bind:this={toggle}
-  on:blur={handleBlur}
-  on:keydown={handleToggleKeydown}
-  on:click={handleToggleClick}>
+<div class="ki-select-container {extraClass}"
+     bind:this={container}>
 
-  <span class="ki-selection">
-    {#each Object.values(selection) as item, index}
-      <span class="{item.id ? 'text-dark' : 'text-muted'}">{index > 0 ? ', ' : ''}{item.text}</span>
-    {/each}
-  </span>
-  <span class="ml-auto">
-    <div class="ki-caret-container">
-      <span class="ki-caret-down"></span>
+  <div class="input-group">
+    {#if typeahead}
+    <input class="ki-select-input form-control {inputVisible ? '' : 'd-none'}"
+           autocomplete="new-password"
+           autocorrect=off
+           autocapitalize=off
+           spellcheck=off
+
+           bind:this={input}
+           bind:value={query}
+           on:blur={handleInputBlur}
+           on:keypress={handleInputKeypress}
+           on:keydown={handleInputKeydown}
+           on:keyup={handleInputKeyup}>
+    {/if}
+
+    <div class="form-control {inputVisible ? 'd-none' : ''}">
+      <span class="ki-select-selection">
+        {#each Object.values(selection) as item, index}
+        <span class="{item.id ? 'text-dark' : 'text-muted'}">{index > 0 ? ', ' : ''}{item.text}</span>
+        {/each}
+      </span>
     </div>
-  </span>
-</button>
-<div class="dropdown-menu ki-select-popup {popupVisible ? 'show' : ''}"
-     bind:this={popup}
-     on:scroll={handlePopupScroll}>
-  {#if typeahead}
-    <div class="dropdown-item ki-select-item">
-      <input class="ki-select-input border"
-         tabindex="1"
-         autocomplete="new-password"
-         autocorrect=off
-         autocapitalize=off
-         spellcheck=off
 
-         bind:this={input}
-         bind:value={query}
-         on:blur={handleInputBlur}
-         on:keypress={handleInputKeypress}
-         on:keydown={handleInputKeydown}
-         on:keyup={handleInputKeyup}>
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary"
+              type="button"
+              tabindex="0"
+              bind:this={toggle}
+              on:blur={handleBlur}
+              on:keydown={handleToggleKeydown}
+              on:click={handleToggleClick}>
+
+        <i class="text-dark fas fa-caret-down"></i>
+      </button>
     </div>
-  {/if}
+  </div>
 
-  {#if fetchError}
+  <div class="dropdown-menu ki-select-popup {popupVisible ? 'show' : ''}"
+       bind:this={popup}
+       on:scroll={handlePopupScroll}>
+
+    {#if fetchError}
     <div tabindex="-1" class="dropdown-item text-danger">
       {fetchError}
     </div>
-  {:else if activeFetch && !fetchingMore}
+    {:else if activeFetch && !fetchingMore}
     <div tabindex="-1" class="dropdown-item text-muted">
       {translate('fetching')}
     </div>
-  {:else if displayCount === 0}
+    {:else if displayCount === 0}
     <div tabindex="-1" class="dropdown-item text-muted">
       {#if tooShort }
-        {translate('too_short')}
+      {translate('too_short')}
       {:else}
-        {translate('no_results')}
+      {translate('no_results')}
       {/if}
     </div>
-  {:else}
+    {:else}
     {#each entries as item, index}
-      {#if item.separator}
-        <div tabindex="-1"
-          class="dropdown-divider ki-js-blank"
-          data-index="{index}"
-          on:keydown={handleItemKeydown}>
-        </div>
-      {:else if item.disabled || item.placeholder}
-        <div tabindex="-1" class="dropdown-item text-muted ki-js-blank"
-             on:keydown={handleItemKeydown}>
-          <div class="ki-no-click">
-            {item.display_text || item.text}
-          </div>
-          {#if item.desc}
-            <div class="ki-no-click text-muted">
-              {item.desc}
-            </div>
-          {/if}
-        </div>
-      {:else}
-        <div tabindex=1
-           class="ki-js-item dropdown-item ki-select-item {!item.id ? 'text-muted' : ''} {selection[item.id] ? 'alert-primary' : ''}"
-           data-index="{index}"
-           on:blur={handleBlur}
-           on:click={handleItemClick}
-           on:keydown={handleItemKeydown}
-           on:keyup={handleItemKeyup}>
-
-          <div class="ki-no-click">
-            {item.display_text || item.text}
-          </div>
-          {#if item.desc}
-            <div class="ki-no-click text-muted">
-              {item.desc}
-            </div>
-          {/if}
-        </div>
+    {#if item.separator}
+    <div tabindex="-1"
+         class="dropdown-divider ki-js-blank"
+         data-index="{index}"
+         on:keydown={handleItemKeydown}>
+    </div>
+    {:else if item.disabled || item.placeholder}
+    <div tabindex="-1" class="dropdown-item text-muted ki-js-blank"
+         on:keydown={handleItemKeydown}>
+      <div class="ki-no-click">
+        {item.display_text || item.text}
+      </div>
+      {#if item.desc}
+      <div class="ki-no-click text-muted">
+        {item.desc}
+      </div>
       {/if}
-    {/each}
-  {/if}
+    </div>
+    {:else}
+    <div tabindex=1
+         class="ki-js-item dropdown-item ki-select-item {!item.id ? 'text-muted' : ''} {selection[item.id] ? 'alert-primary' : ''}"
+         data-index="{index}"
+         on:blur={handleBlur}
+         on:click={handleItemClick}
+         on:keydown={handleItemKeydown}
+         on:keyup={handleItemKeyup}>
 
-  {#if hasMore}
+      <div class="ki-no-click">
+        {item.display_text || item.text}
+      </div>
+      {#if item.desc}
+      <div class="ki-no-click text-muted">
+        {item.desc}
+      </div>
+      {/if}
+    </div>
+    {/if}
+    {/each}
+    {/if}
+
+    {#if hasMore}
     <div tabindex="-1"
          class="dropdown-item text-muted"
          bind:this={more}>
       {translate('has_more')}
     </div>
-  {/if}
+    {/if}
+  </div>
 </div>
