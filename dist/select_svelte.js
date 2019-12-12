@@ -563,7 +563,7 @@ var Select = (function () {
     child_ctx.item = list[i];
     child_ctx.index = i;
     return child_ctx;
-  } // (870:4) {#if typeahead}
+  } // (890:4) {#if typeahead}
 
 
   function create_if_block_9(ctx) {
@@ -600,7 +600,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (888:8) {#each Object.values(selection) as item, index}
+  } // (908:8) {#each Object.values(selection) as item, index}
 
 
   function create_each_block_1(ctx) {
@@ -633,7 +633,7 @@ var Select = (function () {
         if (detaching) detach(span);
       }
     };
-  } // (928:4) {:else}
+  } // (948:4) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -692,7 +692,7 @@ var Select = (function () {
         if (detaching) detach(each_1_anchor);
       }
     };
-  } // (920:33) 
+  } // (940:33) 
 
 
   function create_if_block_3(ctx) {
@@ -734,7 +734,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (916:43) 
+  } // (936:43) 
 
 
   function create_if_block_2(ctx) {
@@ -754,7 +754,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (912:4) {#if fetchError}
+  } // (932:4) {#if fetchError}
 
 
   function create_if_block_1(ctx) {
@@ -778,7 +778,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (948:4) {:else}
+  } // (968:4) {:else}
 
 
   function create_else_block_2(ctx) {
@@ -844,7 +844,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (936:48) 
+  } // (956:48) 
 
 
   function create_if_block_6(ctx) {
@@ -899,7 +899,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (930:4) {#if item.separator}
+  } // (950:4) {#if item.separator}
 
 
   function create_if_block_5(ctx) {
@@ -923,7 +923,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (960:6) {#if item.desc}
+  } // (980:6) {#if item.desc}
 
 
   function create_if_block_8(ctx) {
@@ -947,7 +947,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (942:6) {#if item.desc}
+  } // (962:6) {#if item.desc}
 
 
   function create_if_block_7(ctx) {
@@ -971,7 +971,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (929:4) {#each items as item, index}
+  } // (949:4) {#each items as item, index}
 
 
   function create_each_block(ctx) {
@@ -1012,7 +1012,7 @@ var Select = (function () {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (924:6) {:else}
+  } // (944:6) {:else}
 
 
   function create_else_block(ctx) {
@@ -1030,7 +1030,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (922:6) {#if tooShort }
+  } // (942:6) {#if tooShort }
 
 
   function create_if_block_4(ctx) {
@@ -1048,7 +1048,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (970:4) {#if hasMore}
+  } // (990:4) {#if hasMore}
 
 
   function create_if_block(ctx) {
@@ -1556,8 +1556,9 @@ var Select = (function () {
 
     function selectItemImpl(id) {
       id = id.toString();
+
       var item = items.find(function (item) {
-        return item.id === id;
+        return item.id.toString() === id;
       });
 
       if (!item) {
@@ -1607,7 +1608,7 @@ var Select = (function () {
     }
 
     function selectElement(el) {
-      selectItem(el.dataset.id);
+      selectItemImpl(el.dataset.id);
     }
 
     function containsElement(el) {
@@ -1646,8 +1647,27 @@ var Select = (function () {
 
     function syncToReal(selection) {
       var changed = false;
+
+      if (remote) {
+        Object.values(selection).forEach(function (item) {
+          var el = real.querySelector("option[value=\"" + item.id.trim() + "\"]");
+
+          if (!el) {
+            var _el = document.createElement("option");
+
+            _el.setAttribute("value", item.id);
+
+            if (item.desc) {
+              _el.setAttribute("data-desc", item.desc);
+            }
+
+            _el.textContent = item.text;
+            real.appendChild(_el);
+          }
+        });
+      }
+
       var options = real.options;
-      Object.values(selection).forEach(function (item) {});
 
       for (var i = options.length - 1; i >= 0; i--) {
         var el = options[i];
@@ -1674,7 +1694,7 @@ var Select = (function () {
       real.classList.add("d-none");
       multiple = real.multiple;
 
-      if (!remote) {
+      if (remote) ; else {
         $$invalidate("fetcher", fetcher = inlineFetcher);
       }
 

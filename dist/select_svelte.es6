@@ -278,7 +278,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (870:4) {#if typeahead}
+// (890:4) {#if typeahead}
 function create_if_block_9(ctx) {
 	let input_1;
 	let input_1_class_value;
@@ -323,7 +323,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (888:8) {#each Object.values(selection) as item, index}
+// (908:8) {#each Object.values(selection) as item, index}
 function create_each_block_1(ctx) {
 	let span;
 	let t0_value = (ctx.index > 0 ? ", " : "") + "";
@@ -357,7 +357,7 @@ function create_each_block_1(ctx) {
 	};
 }
 
-// (928:4) {:else}
+// (948:4) {:else}
 function create_else_block_1(ctx) {
 	let each_1_anchor;
 	let each_value = ctx.items;
@@ -413,7 +413,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (920:33) 
+// (940:33) 
 function create_if_block_3(ctx) {
 	let div;
 
@@ -456,7 +456,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (916:43) 
+// (936:43) 
 function create_if_block_2(ctx) {
 	let div;
 
@@ -477,7 +477,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (912:4) {#if fetchError}
+// (932:4) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -502,7 +502,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (948:4) {:else}
+// (968:4) {:else}
 function create_else_block_2(ctx) {
 	let div1;
 	let div0;
@@ -581,7 +581,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (936:48) 
+// (956:48) 
 function create_if_block_6(ctx) {
 	let div1;
 	let div0;
@@ -637,7 +637,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (930:4) {#if item.separator}
+// (950:4) {#if item.separator}
 function create_if_block_5(ctx) {
 	let div;
 	let div_data_index_value;
@@ -662,7 +662,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (960:6) {#if item.desc}
+// (980:6) {#if item.desc}
 function create_if_block_8(ctx) {
 	let div;
 	let t_value = ctx.item.desc + "";
@@ -687,7 +687,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (942:6) {#if item.desc}
+// (962:6) {#if item.desc}
 function create_if_block_7(ctx) {
 	let div;
 	let t_value = ctx.item.desc + "";
@@ -712,7 +712,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (929:4) {#each items as item, index}
+// (949:4) {#each items as item, index}
 function create_each_block(ctx) {
 	let if_block_anchor;
 
@@ -754,7 +754,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (924:6) {:else}
+// (944:6) {:else}
 function create_else_block(ctx) {
 	let t_value = ctx.translate("no_results") + "";
 	let t;
@@ -773,7 +773,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (922:6) {#if tooShort }
+// (942:6) {#if tooShort }
 function create_if_block_4(ctx) {
 	let t_value = ctx.translate("too_short") + "";
 	let t;
@@ -792,7 +792,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (970:4) {#if hasMore}
+// (990:4) {#if hasMore}
 function create_if_block(ctx) {
 	let div;
 
@@ -1309,7 +1309,7 @@ function instance($$self, $$props, $$invalidate) {
 		id = id.toString();
 
 		let item = items.find(function (item) {
-			return item.id === id;
+			return item.id.toString() === id;
 		});
 
 		if (!item) {
@@ -1358,7 +1358,7 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	function selectElement(el) {
-		selectItem(el.dataset.id);
+		selectItemImpl(el.dataset.id);
 	}
 
 	function containsElement(el) {
@@ -1394,11 +1394,26 @@ function instance($$self, $$props, $$invalidate) {
 
 	function syncToReal(selection) {
 		let changed = false;
-		let options = real.options;
 
-		Object.values(selection).forEach(function (item) {
-			
-		});
+		if (remote) {
+			Object.values(selection).forEach(function (item) {
+				let el = real.querySelector("option[value=\"" + item.id.trim() + "\"]");
+
+				if (!el) {
+					let el = document.createElement("option");
+					el.setAttribute("value", item.id);
+
+					if (item.desc) {
+						el.setAttribute("data-desc", item.desc);
+					}
+
+					el.textContent = item.text;
+					real.appendChild(el);
+				}
+			});
+		}
+
+		let options = real.options;
 
 		for (let i = options.length - 1; i >= 0; i--) {
 			let el = options[i];
@@ -1425,7 +1440,7 @@ function instance($$self, $$props, $$invalidate) {
 		real.classList.add("d-none");
 		multiple = real.multiple;
 
-		if (!remote) {
+		if (remote) ; else {
 			$$invalidate("fetcher", fetcher = inlineFetcher);
 		}
 

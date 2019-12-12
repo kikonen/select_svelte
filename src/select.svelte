@@ -354,8 +354,12 @@
  function selectItemImpl(id) {
      id = id.toString();
 
+     if (remote) {
+         syncToReal
+     }
+
      let item = items.find(function(item) {
-         return item.id === id;
+         return item.id.toString() === id;
      });
 
      if (!item) {
@@ -404,7 +408,7 @@
  }
 
  function selectElement(el) {
-     selectItem(el.dataset.id);
+     selectItemImpl(el.dataset.id);
  }
 
  function containsElement(el) {
@@ -450,11 +454,24 @@
 
  function syncToReal(selection) {
      let changed = false;
+
+     // Insert missing values
+     if (remote) {
+         Object.values(selection).forEach(function(item) {
+             let el = real.querySelector('option[value="' + item.id.trim() + '"]');
+             if (!el) {
+                 let el = document.createElement('option');
+                 el.setAttribute('value', item.id);
+                 if (item.desc) {
+                     el.setAttribute('data-desc', item.desc);
+                 }
+                 el.textContent = item.text;
+                 real.appendChild(el);
+             }
+         });
+     }
+
      let options = real.options;
-
-     Object.values(selection).forEach(function(item) {
-     });
-
      for (let i = options.length - 1; i >= 0; i--) {
          let el = options[i];
          let curr = !!selection[el.value];
@@ -478,9 +495,12 @@
      real.classList.add('d-none');
      multiple = real.multiple;
 
-     if (!remote) {
+     if (remote) {
+         // nothing
+     } else {
          fetcher = inlineFetcher
      }
+
 
      // Initial selection
      syncFromReal();
