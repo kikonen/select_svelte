@@ -1,3 +1,15 @@
+<script context="module">
+ const elements = new Set();
+
+ function hasModifier(event) {
+     return event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
+ }
+
+ function isCharacterKey(event) {
+     return event.key.length == 1;
+ }
+</script>
+
 <script>
  import {onMount} from 'svelte';
 
@@ -12,6 +24,7 @@
 
  export let real;
  export let fetcher;
+ export let remote;
  export let queryMinLen = 0;
  export let translations = I18N_DEFAULTS;
  export let delay = 0;
@@ -28,9 +41,12 @@
 
  let mounted = false;
 
- let entries = [];
+ let items = [];
  let offsetCount = 0;
  let displayCount = 0;
+
+ let selection = {};
+ let selectedItems = [];
 
  let message = null;
  let messageClass = null;
@@ -42,14 +58,14 @@
 
  let inputVisible = false;
  let popupVisible = false;
- let activeFetch = null;
 
- let previousQuery = null;
+ let activeFetch = null;
  let fetched = false;
 
+ let previousFetch = null;
+ let previousQuery = null;
+
  let multiple = false;
- let selection = {};
- let selectedItems = [];
 
  let downQuery = null;
  let wasDown = false;
@@ -65,11 +81,11 @@
  ////////////////////////////////////////////////////////////
  // select
 
- function fetcherSelect(offset, query) {
-     console.log("SELECT: " + query);
+ function inlineFetcher(offset, query) {
+     console.log("INLINE_SELECT_FETCH: " + query);
 
      let promise = new Promise(function(resolve, reject) {
-         let entries = []
+         let items = []
          let pattern = query.toUpperCase().trim();
 
          let options = real.options;
@@ -85,12 +101,12 @@
                          item.text.toUpperCase().includes(pattern) ||
                          item.desc.toUpperCase().includes(pattern);
              if (match) {
-                 entries.push(item);
+                 items.push(item);
              }
          }
 
          let response = {
-             entries: entries,
+             items: items,
              info: {
                  more: false,
              }
@@ -103,14 +119,19 @@
 
  ////////////////////////////////////////////////////////////
  //
- function fetchEntries(more) {
-     let currentQuery = query.trim();
-     if (currentQuery.length > 0) {
-         currentQuery = query;
+ function fetchItems(more, fetchId) {
+     let currentQuery;
+     if (fetchId) {
+         currentQuery = '';
+     } else {
+         currentQuery = query.trim();
+         if (currentQuery.length > 0) {
+             currentQuery = query;
+         }
      }
 
-     if (!more && !fetchingMore && currentQuery === previousQuery) {
-         return;
+     if (!more && !fetchingMore && currentQuery === previousQuery && !fetchId) {
+         return activeFetch || previousFetch;
      }
 
 //     console.debug("START fetch: " + currentQuery);
@@ -121,15 +142,14 @@
 
      if (more) {
          fetchOffset = offsetCount;
-         fetchingMore = true;
      } else {
-         entries = [];
+         items = [];
          offsetCount = 0;
          displayCount = 0;
          hasMore = false;
          fetched = false;
-         fetchingMore = false;
      }
+     fetchingMore = more;
      fetchError = null;
 
      let currentFetchOffset = fetchOffset;
@@ -138,12 +158,12 @@
      let currentFetch = new Promise(function(resolve, reject) {
          if (currentFetchingMore) {
 //             console.debug("MOR hit: " + currentQuery);
-             resolve(fetcher(currentFetchOffset, currentQuery));
+             resolve(fetcher(currentFetchOffset, currentQuery, fetchId));
          } else {
-             if (currentQuery.length < queryMinLen) {
+             if (currentQuery.length < queryMinLen && !fetchId) {
 //                 console.debug("TOO_SHORT fetch: " + currentQuery + ", limit: " + queryMinLen);
                  resolve({
-                     entries: [],
+                     items: [],
                      info: {
                          more: false,
                          too_short: true,
@@ -154,7 +174,7 @@
                  setTimeout(function() {
                      if (currentFetch === activeFetch) {
 //                         console.debug("TIMER hit: " + currentQuery);
-                         resolve(fetcher(currentFetchOffset, currentQuery));
+                         resolve(fetcher(currentFetchOffset, currentQuery, fetchId));
                      } else {
 //                         console.debug("TIMER reject: " + currentQuery);
                          reject("cancel");
@@ -164,28 +184,33 @@
          }
      }).then(function(response) {
          if (currentFetch === activeFetch) {
-             let newEntries = response.entries || [];
+             let newItems = response.items || [];
              let info = response.info || {};
 
-//             console.debug("APPLY fetch: " + currentQuery + ", isMore: " + currentFetchingMore + ", offset: " + currentFetchOffset + ", resultSize: " + newEntries.length + ", oldSize: " + entries.length);
+//             console.debug("APPLY fetch: " + currentQuery + ", isMore: " + currentFetchingMore + ", offset: " + currentFetchOffset + ", resultSize: " + newItems.length + ", oldSize: " + items.length);
 //             console.debug(info);
 
-             let updateEntries;
+             let updateItems;
              if (currentFetchingMore) {
-                 updateEntries = entries;
-                 newEntries.forEach(function(item) {
-                     updateEntries.push(item);
+                 updateItems = items;
+                 newItems.forEach(function(item) {
+                     updateItems.push(item);
                  });
              } else {
-                 updateEntries = newEntries;
+                 updateItems = newItems;
              }
-             entries = updateEntries;
-             updateCounts(entries);
+             items = updateItems;
+             resolveItems(items);
 
-             hasMore = info.more && offsetCount > 0;
+             hasMore = info.more && offsetCount > 0 && !fetchId;
              tooShort = info.too_short === true;
 
-             previousQuery = currentQuery;
+             if (fetchId) {
+                 previousQuery = null;
+             } else {
+                 previousQuery = currentQuery;
+             }
+             previousFetch = currentFetch;
              activeFetch = null;
              fetched = true;
              fetchingMore = false;
@@ -197,12 +222,13 @@
              console.error(err);
 
              fetchError = err;
-             entries = [];
+             items = [];
              offsetCount = 0;
              displayCount = 0;
              hasMore = false;
              tooShort = false;
              previousQuery = null;
+             previousFetch = currentFetch;
              activeFetch = null;
              fetched = false;
              fetchingMore = false;
@@ -213,13 +239,20 @@
      });
 
      activeFetch = currentFetch;
+     previousFetch = null;
+
+     return currentFetch;
  }
 
- function updateCounts(entries) {
+ function resolveItems(items) {
      let off = 0;
      let disp = 0;
 
-     entries.forEach(function(item) {
+     items.forEach(function(item) {
+         if (item.id) {
+             item.id = item.id.toString();
+         }
+
          if (item.separator) {
              // NOTE KI separator is ignored always
          } else if (item.placeholder) {
@@ -252,7 +285,7 @@
          // console.debug(popup.scrollTop + popup.clientHeight >= popup.scrollHeight - more.height);
 
          if (popup.scrollTop + popup.clientHeight >= popup.scrollHeight - more.clientHeight * 2 - 2) {
-             fetchEntries(true);
+             fetchItems(true);
          }
      }
  }
@@ -274,7 +307,6 @@
 
      if (!focusInput) {
          return;
-
      }
 
      if (wasVisible) {
@@ -319,10 +351,15 @@
      }
  }
 
- function selectItem(el) {
-     let item = entries[el.dataset.index];
+ function selectItemImpl(id) {
+     id = id.toString();
+
+     let item = items.find(function(item) {
+         return item.id === id;
+     });
+
      if (!item) {
-         console.error("MISSING item", el);
+         console.error("MISSING item=" + id);
          return;
      }
 
@@ -360,12 +397,18 @@
      real.dispatchEvent(new CustomEvent('select-select', { detail: selection }));
  }
 
- function containsElement(el) {
-     return el === input || el === toggle || popup.contains(el);
+ export function selectItem(id) {
+     return fetchItems(false, id).then(function(response) {
+         selectItemImpl(id);
+     });
  }
 
- function hasModifier(event) {
-     return event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
+ function selectElement(el) {
+     selectItem(el.dataset.id);
+ }
+
+ function containsElement(el) {
+     return el === input || el === toggle || popup.contains(el);
  }
 
  function translate(key) {
@@ -409,6 +452,9 @@
      let changed = false;
      let options = real.options;
 
+     Object.values(selection).forEach(function(item) {
+     });
+
      for (let i = options.length - 1; i >= 0; i--) {
          let el = options[i];
          let curr = !!selection[el.value];
@@ -432,9 +478,13 @@
      real.classList.add('d-none');
      multiple = real.multiple;
 
-     fetcher = fetcherSelect
+     if (!remote) {
+         fetcher = inlineFetcher
+     }
 
+     // Initial selection
      syncFromReal();
+
      real.addEventListener('change', function() {
          if (!isSyncToReal) {
              syncFromReal();
@@ -466,7 +516,7 @@
              item.focus();
          } else {
              openPopup();
-             fetchEntries();
+             fetchItems(false);
          }
          event.preventDefault();
      },
@@ -488,7 +538,7 @@
      base: function(event) {
          if (wasDown) {
              openPopup();
-             fetchEntries();
+             fetchItems(false);
          }
      },
      Enter: nop,
@@ -513,13 +563,22 @@
 
  let toggleKeydownHandlers = {
      base: function(event) {
-         openInput(true);
+         if (isCharacterKey(event)) {
+             openInput(true);
+             event.preventDefault();
+         }
      },
      ArrowDown: inputKeydownHandlers.ArrowDown,
      ArrowUp: inputKeydownHandlers.ArrowDown,
      Enter: function(event) {
          openPopup();
-         fetchEntries();
+         fetchItems(false);
+         event.preventDefault();
+     },
+     Space: function(event) {
+         openPopup();
+         fetchItems(false);
+         event.preventDefault();
      },
      Escape: function(event) {
          cancelFetch();
@@ -527,12 +586,7 @@
          closePopup(false);
          closeInput(false);
      },
-     Tab: function(event) {
-         if (inputVisible) {
-//             input.focus();
-//             event.preventDefault();
-         }
-     },
+     Tab: nop,
      // skip "meta" keys from triggering search
      ArrowLeft: nop,
      ArrowRight: nop,
@@ -550,7 +604,10 @@
 
  let itemKeydownHandlers = {
      base: function(event) {
-         openInput(true);
+         if (isCharacterKey(event)) {
+             openInput(true);
+             event.preventDefault();
+         }
      },
      ArrowDown: function(event) {
          let next = event.target.nextElementSibling;
@@ -590,7 +647,7 @@
          event.preventDefault();
      },
      Enter: function(event) {
-         selectItem(event.target)
+         selectElement(event.target)
          event.preventDefault();
      },
      Escape: function(event) {
@@ -681,6 +738,7 @@
  ////////////////////////////////////////////////////////////
  //
  function handleEvent(code, handlers, event) {
+//     console.log(event);
      (handlers[code] || handlers.base)(event);
  }
 
@@ -723,7 +781,7 @@
              closePopup(false);
          } else {
              openPopup();
-             fetchEntries();
+             fetchItems(false);
          }
      }
  }
@@ -738,7 +796,7 @@
 
  function handleItemClick(event) {
      if (event.button === 0 && !hasModifier(event)) {
-         selectItem(event.target)
+         selectElement(event.target)
      }
  }
 
@@ -868,7 +926,7 @@
       {/if}
     </div>
     {:else}
-    {#each entries as item, index}
+    {#each items as item, index}
     {#if item.separator}
     <div tabindex="-1"
          class="dropdown-divider ki-js-blank"
@@ -890,7 +948,7 @@
     {:else}
     <div tabindex=1
          class="ki-js-item dropdown-item ki-select-item {!item.id ? 'text-muted' : ''} {selection[item.id] ? 'alert-primary' : ''}"
-         data-index="{index}"
+         data-id="{item.id}"
          on:blur={handleBlur}
          on:click={handleItemClick}
          on:keydown={handleItemKeydown}

@@ -7,6 +7,22 @@ var Select = (function () {
     }
   }
 
+  function _defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  function _createClass(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties(Constructor, staticProps);
+    return Constructor;
+  }
+
   function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
 
   function _typeof(obj) {
@@ -158,22 +174,6 @@ var Select = (function () {
 
   function _toConsumableArray(arr) {
     return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
-  }
-
-  function _defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }
-
-  function _createClass(Constructor, protoProps, staticProps) {
-    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) _defineProperties(Constructor, staticProps);
-    return Constructor;
   }
 
   function noop() {}
@@ -563,7 +563,7 @@ var Select = (function () {
     child_ctx.item = list[i];
     child_ctx.index = i;
     return child_ctx;
-  } // (812:4) {#if typeahead}
+  } // (870:4) {#if typeahead}
 
 
   function create_if_block_9(ctx) {
@@ -600,7 +600,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (830:8) {#each Object.values(selection) as item, index}
+  } // (888:8) {#each Object.values(selection) as item, index}
 
 
   function create_each_block_1(ctx) {
@@ -633,12 +633,12 @@ var Select = (function () {
         if (detaching) detach(span);
       }
     };
-  } // (870:4) {:else}
+  } // (928:4) {:else}
 
 
   function create_else_block_1(ctx) {
     var each_1_anchor;
-    var each_value = ctx.entries;
+    var each_value = ctx.items;
     var each_blocks = [];
 
     for (var i = 0; i < each_value.length; i += 1) {
@@ -661,8 +661,8 @@ var Select = (function () {
         insert(target, each_1_anchor, anchor);
       },
       p: function p(changed, ctx) {
-        if (changed.entries || changed.handleItemKeydown || changed.selection || changed.handleBlur || changed.handleItemClick || changed.handleItemKeyup || changed.translate) {
-          each_value = ctx.entries;
+        if (changed.items || changed.handleItemKeydown || changed.selection || changed.handleBlur || changed.handleItemClick || changed.handleItemKeyup || changed.translate) {
+          each_value = ctx.items;
 
           var _i3;
 
@@ -692,7 +692,7 @@ var Select = (function () {
         if (detaching) detach(each_1_anchor);
       }
     };
-  } // (862:33) 
+  } // (920:33) 
 
 
   function create_if_block_3(ctx) {
@@ -734,7 +734,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (858:43) 
+  } // (916:43) 
 
 
   function create_if_block_2(ctx) {
@@ -754,7 +754,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (854:4) {#if fetchError}
+  } // (912:4) {#if fetchError}
 
 
   function create_if_block_1(ctx) {
@@ -778,7 +778,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (890:4) {:else}
+  } // (948:4) {:else}
 
 
   function create_else_block_2(ctx) {
@@ -789,7 +789,7 @@ var Select = (function () {
     var t1;
     var t2;
     var div1_class_value;
-    var div1_data_index_value;
+    var div1_data_id_value;
     var dispose;
     var if_block = ctx.item.desc && create_if_block_8(ctx);
     return {
@@ -803,7 +803,7 @@ var Select = (function () {
         attr(div0, "class", "ki-no-click svelte-1y1l0qo");
         attr(div1, "tabindex", "1");
         attr(div1, "class", div1_class_value = "ki-js-item dropdown-item ki-select-item " + (!ctx.item.id ? "text-muted" : "") + " " + (ctx.selection[ctx.item.id] ? "alert-primary" : "") + " svelte-1y1l0qo");
-        attr(div1, "data-index", div1_data_index_value = ctx.index);
+        attr(div1, "data-id", div1_data_id_value = ctx.item.id);
         dispose = [listen(div1, "blur", ctx.handleBlur), listen(div1, "click", ctx.handleItemClick), listen(div1, "keydown", ctx.handleItemKeydown), listen(div1, "keyup", ctx.handleItemKeyup)];
       },
       m: function m(target, anchor) {
@@ -815,7 +815,7 @@ var Select = (function () {
         append(div1, t2);
       },
       p: function p(changed, ctx) {
-        if (changed.entries && t0_value !== (t0_value = (ctx.item.id ? ctx.item.display_text || ctx.item.text : ctx.translate("clear")) + "")) set_data(t0, t0_value);
+        if (changed.items && t0_value !== (t0_value = (ctx.item.id ? ctx.item.display_text || ctx.item.text : ctx.translate("clear")) + "")) set_data(t0, t0_value);
 
         if (ctx.item.desc) {
           if (if_block) {
@@ -830,8 +830,12 @@ var Select = (function () {
           if_block = null;
         }
 
-        if ((changed.entries || changed.selection) && div1_class_value !== (div1_class_value = "ki-js-item dropdown-item ki-select-item " + (!ctx.item.id ? "text-muted" : "") + " " + (ctx.selection[ctx.item.id] ? "alert-primary" : "") + " svelte-1y1l0qo")) {
+        if ((changed.items || changed.selection) && div1_class_value !== (div1_class_value = "ki-js-item dropdown-item ki-select-item " + (!ctx.item.id ? "text-muted" : "") + " " + (ctx.selection[ctx.item.id] ? "alert-primary" : "") + " svelte-1y1l0qo")) {
           attr(div1, "class", div1_class_value);
+        }
+
+        if (changed.items && div1_data_id_value !== (div1_data_id_value = ctx.item.id)) {
+          attr(div1, "data-id", div1_data_id_value);
         }
       },
       d: function d(detaching) {
@@ -840,7 +844,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (878:48) 
+  } // (936:48) 
 
 
   function create_if_block_6(ctx) {
@@ -874,7 +878,7 @@ var Select = (function () {
         append(div1, t2);
       },
       p: function p(changed, ctx) {
-        if (changed.entries && t0_value !== (t0_value = (ctx.item.display_text || ctx.item.text) + "")) set_data(t0, t0_value);
+        if (changed.items && t0_value !== (t0_value = (ctx.item.display_text || ctx.item.text) + "")) set_data(t0, t0_value);
 
         if (ctx.item.desc) {
           if (if_block) {
@@ -895,7 +899,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (872:4) {#if item.separator}
+  } // (930:4) {#if item.separator}
 
 
   function create_if_block_5(ctx) {
@@ -919,7 +923,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (902:6) {#if item.desc}
+  } // (960:6) {#if item.desc}
 
 
   function create_if_block_8(ctx) {
@@ -937,13 +941,13 @@ var Select = (function () {
         append(div, t);
       },
       p: function p(changed, ctx) {
-        if (changed.entries && t_value !== (t_value = ctx.item.desc + "")) set_data(t, t_value);
+        if (changed.items && t_value !== (t_value = ctx.item.desc + "")) set_data(t, t_value);
       },
       d: function d(detaching) {
         if (detaching) detach(div);
       }
     };
-  } // (884:6) {#if item.desc}
+  } // (942:6) {#if item.desc}
 
 
   function create_if_block_7(ctx) {
@@ -961,13 +965,13 @@ var Select = (function () {
         append(div, t);
       },
       p: function p(changed, ctx) {
-        if (changed.entries && t_value !== (t_value = ctx.item.desc + "")) set_data(t, t_value);
+        if (changed.items && t_value !== (t_value = ctx.item.desc + "")) set_data(t, t_value);
       },
       d: function d(detaching) {
         if (detaching) detach(div);
       }
     };
-  } // (871:4) {#each entries as item, index}
+  } // (929:4) {#each items as item, index}
 
 
   function create_each_block(ctx) {
@@ -1008,7 +1012,7 @@ var Select = (function () {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (866:6) {:else}
+  } // (924:6) {:else}
 
 
   function create_else_block(ctx) {
@@ -1026,7 +1030,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (864:6) {#if tooShort }
+  } // (922:6) {#if tooShort }
 
 
   function create_if_block_4(ctx) {
@@ -1044,7 +1048,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (912:4) {#if hasMore}
+  } // (970:4) {#if hasMore}
 
 
   function create_if_block(ctx) {
@@ -1252,11 +1256,15 @@ var Select = (function () {
     };
   }
 
-  function nop() {}
-
   function hasModifier(event) {
     return event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
   }
+
+  function isCharacterKey(event) {
+    return event.key.length == 1;
+  }
+
+  function nop() {}
 
   function handleEvent(code, handlers, event) {
     (handlers[code] || handlers.base)(event);
@@ -1273,6 +1281,7 @@ var Select = (function () {
     };
     var real = $$props.real;
     var fetcher = $$props.fetcher;
+    var remote = $$props.remote;
     var _$$props$queryMinLen = $$props.queryMinLen,
         queryMinLen = _$$props$queryMinLen === void 0 ? 0 : _$$props$queryMinLen;
     var _$$props$translations = $$props.translations,
@@ -1290,9 +1299,10 @@ var Select = (function () {
     var popup;
     var more;
     var mounted = false;
-    var entries = [];
+    var items = [];
     var offsetCount = 0;
     var displayCount = 0;
+    var selection = {};
     var hasMore = false;
     var tooShort = false;
     var fetchingMore = false;
@@ -1300,16 +1310,16 @@ var Select = (function () {
     var inputVisible = false;
     var popupVisible = false;
     var activeFetch = null;
+    var previousFetch = null;
     var previousQuery = null;
     var multiple = false;
-    var selection = {};
     var wasDown = false;
     var isSyncToReal = false;
 
-    function fetcherSelect(offset, query) {
-      console.log("SELECT: " + query);
+    function inlineFetcher(offset, query) {
+      console.log("INLINE_SELECT_FETCH: " + query);
       var promise = new Promise(function (resolve, reject) {
-        var entries = [];
+        var items = [];
         var pattern = query.toUpperCase().trim();
         var options = real.options;
 
@@ -1324,12 +1334,12 @@ var Select = (function () {
           var match = !item.id || item.text.toUpperCase().includes(pattern) || item.desc.toUpperCase().includes(pattern);
 
           if (match) {
-            entries.push(item);
+            items.push(item);
           }
         }
 
         var response = {
-          entries: entries,
+          items: items,
           info: {
             more: false
           }
@@ -1339,15 +1349,21 @@ var Select = (function () {
       return promise;
     }
 
-    function fetchEntries(more) {
-      var currentQuery = query.trim();
+    function fetchItems(more, fetchId) {
+      var currentQuery;
 
-      if (currentQuery.length > 0) {
-        currentQuery = query;
+      if (fetchId) {
+        currentQuery = "";
+      } else {
+        currentQuery = query.trim();
+
+        if (currentQuery.length > 0) {
+          currentQuery = query;
+        }
       }
 
-      if (!more && !fetchingMore && currentQuery === previousQuery) {
-        return;
+      if (!more && !fetchingMore && currentQuery === previousQuery && !fetchId) {
+        return activeFetch || previousFetch;
       }
 
       cancelFetch();
@@ -1355,25 +1371,24 @@ var Select = (function () {
 
       if (more) {
         fetchOffset = offsetCount;
-        $$invalidate("fetchingMore", fetchingMore = true);
       } else {
-        $$invalidate("entries", entries = []);
+        $$invalidate("items", items = []);
         offsetCount = 0;
         $$invalidate("displayCount", displayCount = 0);
         $$invalidate("hasMore", hasMore = false);
-        $$invalidate("fetchingMore", fetchingMore = false);
       }
 
+      $$invalidate("fetchingMore", fetchingMore = more);
       $$invalidate("fetchError", fetchError = null);
       var currentFetchOffset = fetchOffset;
       var currentFetchingMore = fetchingMore;
       var currentFetch = new Promise(function (resolve, reject) {
         if (currentFetchingMore) {
-          resolve(fetcher(currentFetchOffset, currentQuery));
+          resolve(fetcher(currentFetchOffset, currentQuery, fetchId));
         } else {
-          if (currentQuery.length < queryMinLen) {
+          if (currentQuery.length < queryMinLen && !fetchId) {
             resolve({
-              entries: [],
+              items: [],
               info: {
                 more: false,
                 too_short: true
@@ -1382,7 +1397,7 @@ var Select = (function () {
           } else {
             setTimeout(function () {
               if (currentFetch === activeFetch) {
-                resolve(fetcher(currentFetchOffset, currentQuery));
+                resolve(fetcher(currentFetchOffset, currentQuery, fetchId));
               } else {
                 reject("cancel");
               }
@@ -1391,24 +1406,31 @@ var Select = (function () {
         }
       }).then(function (response) {
         if (currentFetch === activeFetch) {
-          var newEntries = response.entries || [];
+          var newItems = response.items || [];
           var info = response.info || {};
-          var updateEntries;
+          var updateItems;
 
           if (currentFetchingMore) {
-            updateEntries = entries;
-            newEntries.forEach(function (item) {
-              updateEntries.push(item);
+            updateItems = items;
+            newItems.forEach(function (item) {
+              updateItems.push(item);
             });
           } else {
-            updateEntries = newEntries;
+            updateItems = newItems;
           }
 
-          $$invalidate("entries", entries = updateEntries);
-          updateCounts(entries);
-          $$invalidate("hasMore", hasMore = info.more && offsetCount > 0);
+          $$invalidate("items", items = updateItems);
+          resolveItems(items);
+          $$invalidate("hasMore", hasMore = info.more && offsetCount > 0 && !fetchId);
           $$invalidate("tooShort", tooShort = info.too_short === true);
-          previousQuery = currentQuery;
+
+          if (fetchId) {
+            previousQuery = null;
+          } else {
+            previousQuery = currentQuery;
+          }
+
+          previousFetch = currentFetch;
           $$invalidate("activeFetch", activeFetch = null);
           $$invalidate("fetchingMore", fetchingMore = false);
         }
@@ -1416,12 +1438,13 @@ var Select = (function () {
         if (currentFetch === activeFetch) {
           console.error(err);
           $$invalidate("fetchError", fetchError = err);
-          $$invalidate("entries", entries = []);
+          $$invalidate("items", items = []);
           offsetCount = 0;
           $$invalidate("displayCount", displayCount = 0);
           $$invalidate("hasMore", hasMore = false);
           $$invalidate("tooShort", tooShort = false);
           previousQuery = null;
+          previousFetch = currentFetch;
           $$invalidate("activeFetch", activeFetch = null);
           $$invalidate("fetchingMore", fetchingMore = false);
           toggle.focus();
@@ -1429,12 +1452,18 @@ var Select = (function () {
         }
       });
       $$invalidate("activeFetch", activeFetch = currentFetch);
+      previousFetch = null;
+      return currentFetch;
     }
 
-    function updateCounts(entries) {
+    function resolveItems(items) {
       var off = 0;
       var disp = 0;
-      entries.forEach(function (item) {
+      items.forEach(function (item) {
+        if (item.id) {
+          item.id = item.id.toString();
+        }
+
         if (item.separator) ; else if (item.placeholder) {
           disp += 1;
         } else {
@@ -1456,7 +1485,7 @@ var Select = (function () {
     function fetchMoreIfneeded() {
       if (hasMore && !fetchingMore) {
         if (popup.scrollTop + popup.clientHeight >= popup.scrollHeight - more.clientHeight * 2 - 2) {
-          fetchEntries(true);
+          fetchItems(true);
         }
       }
     }
@@ -1525,11 +1554,14 @@ var Select = (function () {
       }
     }
 
-    function selectItem(el) {
-      var item = entries[el.dataset.index];
+    function selectItemImpl(id) {
+      id = id.toString();
+      var item = items.find(function (item) {
+        return item.id === id;
+      });
 
       if (!item) {
-        console.error("MISSING item", el);
+        console.error("MISSING item=" + id);
         return;
       }
 
@@ -1566,6 +1598,16 @@ var Select = (function () {
       real.dispatchEvent(new CustomEvent("select-select", {
         detail: selection
       }));
+    }
+
+    function selectItem(id) {
+      return fetchItems(false, id).then(function (response) {
+        selectItemImpl(id);
+      });
+    }
+
+    function selectElement(el) {
+      selectItem(el.dataset.id);
     }
 
     function containsElement(el) {
@@ -1605,6 +1647,7 @@ var Select = (function () {
     function syncToReal(selection) {
       var changed = false;
       var options = real.options;
+      Object.values(selection).forEach(function (item) {});
 
       for (var i = options.length - 1; i >= 0; i--) {
         var el = options[i];
@@ -1630,7 +1673,11 @@ var Select = (function () {
     onMount(function () {
       real.classList.add("d-none");
       multiple = real.multiple;
-      $$invalidate("fetcher", fetcher = fetcherSelect);
+
+      if (!remote) {
+        $$invalidate("fetcher", fetcher = inlineFetcher);
+      }
+
       syncFromReal();
       real.addEventListener("change", function () {
         if (!isSyncToReal) {
@@ -1659,7 +1706,7 @@ var Select = (function () {
           item.focus();
         } else {
           openPopup();
-          fetchEntries();
+          fetchItems(false);
         }
 
         event.preventDefault();
@@ -1679,7 +1726,7 @@ var Select = (function () {
       base: function base(event) {
         if (wasDown) {
           openPopup();
-          fetchEntries();
+          fetchItems(false);
         }
       },
       Enter: nop,
@@ -1701,13 +1748,22 @@ var Select = (function () {
     };
     var toggleKeydownHandlers = {
       base: function base(event) {
-        openInput(true);
+        if (isCharacterKey(event)) {
+          openInput(true);
+          event.preventDefault();
+        }
       },
       ArrowDown: inputKeydownHandlers.ArrowDown,
       ArrowUp: inputKeydownHandlers.ArrowDown,
       Enter: function Enter(event) {
         openPopup();
-        fetchEntries();
+        fetchItems(false);
+        event.preventDefault();
+      },
+      Space: function Space(event) {
+        openPopup();
+        fetchItems(false);
+        event.preventDefault();
       },
       Escape: function Escape(event) {
         cancelFetch();
@@ -1715,8 +1771,7 @@ var Select = (function () {
         closePopup(false);
         closeInput(false);
       },
-      Tab: function Tab(event) {
-      },
+      Tab: nop,
       ArrowLeft: nop,
       ArrowRight: nop,
       PageDown: nop,
@@ -1731,7 +1786,10 @@ var Select = (function () {
     };
     var itemKeydownHandlers = {
       base: function base(event) {
-        openInput(true);
+        if (isCharacterKey(event)) {
+          openInput(true);
+          event.preventDefault();
+        }
       },
       ArrowDown: function ArrowDown(event) {
         var next = event.target.nextElementSibling;
@@ -1774,7 +1832,7 @@ var Select = (function () {
         event.preventDefault();
       },
       Enter: function Enter(event) {
-        selectItem(event.target);
+        selectElement(event.target);
         event.preventDefault();
       },
       Escape: function Escape(event) {
@@ -1903,7 +1961,7 @@ var Select = (function () {
           closePopup(false);
         } else {
           openPopup();
-          fetchEntries();
+          fetchItems(false);
         }
       }
     }
@@ -1918,7 +1976,7 @@ var Select = (function () {
 
     function handleItemClick(event) {
       if (event.button === 0 && !hasModifier(event)) {
-        selectItem(event.target);
+        selectElement(event.target);
       }
     }
 
@@ -1964,6 +2022,7 @@ var Select = (function () {
     $$self.$set = function ($$props) {
       if ("real" in $$props) $$invalidate("real", real = $$props.real);
       if ("fetcher" in $$props) $$invalidate("fetcher", fetcher = $$props.fetcher);
+      if ("remote" in $$props) $$invalidate("remote", remote = $$props.remote);
       if ("queryMinLen" in $$props) $$invalidate("queryMinLen", queryMinLen = $$props.queryMinLen);
       if ("translations" in $$props) $$invalidate("translations", translations = $$props.translations);
       if ("delay" in $$props) $$invalidate("delay", delay = $$props.delay);
@@ -1989,6 +2048,7 @@ var Select = (function () {
     return {
       real: real,
       fetcher: fetcher,
+      remote: remote,
       queryMinLen: queryMinLen,
       translations: translations,
       delay: delay,
@@ -2000,8 +2060,9 @@ var Select = (function () {
       toggle: toggle,
       popup: popup,
       more: more,
-      entries: entries,
+      items: items,
       displayCount: displayCount,
+      selection: selection,
       hasMore: hasMore,
       tooShort: tooShort,
       fetchingMore: fetchingMore,
@@ -2009,7 +2070,7 @@ var Select = (function () {
       inputVisible: inputVisible,
       popupVisible: popupVisible,
       activeFetch: activeFetch,
-      selection: selection,
+      selectItem: selectItem,
       translate: translate,
       handleBlur: handleBlur,
       handleInputBlur: handleInputBlur,
@@ -2045,14 +2106,23 @@ var Select = (function () {
       init(_assertThisInitialized(_this), options, instance, create_fragment, safe_not_equal, {
         real: 0,
         fetcher: 0,
+        remote: 0,
         queryMinLen: 0,
         translations: 0,
         delay: 0,
         extraClass: 0,
-        typeahead: 0
+        typeahead: 0,
+        selectItem: 0
       });
       return _this;
     }
+
+    _createClass(Select, [{
+      key: "selectItem",
+      get: function get() {
+        return this.$$.ctx.selectItem;
+      }
+    }]);
 
     return Select;
   }(SvelteComponent);

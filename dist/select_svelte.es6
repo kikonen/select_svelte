@@ -278,7 +278,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (812:4) {#if typeahead}
+// (870:4) {#if typeahead}
 function create_if_block_9(ctx) {
 	let input_1;
 	let input_1_class_value;
@@ -323,7 +323,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (830:8) {#each Object.values(selection) as item, index}
+// (888:8) {#each Object.values(selection) as item, index}
 function create_each_block_1(ctx) {
 	let span;
 	let t0_value = (ctx.index > 0 ? ", " : "") + "";
@@ -357,10 +357,10 @@ function create_each_block_1(ctx) {
 	};
 }
 
-// (870:4) {:else}
+// (928:4) {:else}
 function create_else_block_1(ctx) {
 	let each_1_anchor;
-	let each_value = ctx.entries;
+	let each_value = ctx.items;
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value.length; i += 1) {
@@ -383,8 +383,8 @@ function create_else_block_1(ctx) {
 			insert(target, each_1_anchor, anchor);
 		},
 		p(changed, ctx) {
-			if (changed.entries || changed.handleItemKeydown || changed.selection || changed.handleBlur || changed.handleItemClick || changed.handleItemKeyup || changed.translate) {
-				each_value = ctx.entries;
+			if (changed.items || changed.handleItemKeydown || changed.selection || changed.handleBlur || changed.handleItemClick || changed.handleItemKeyup || changed.translate) {
+				each_value = ctx.items;
 				let i;
 
 				for (i = 0; i < each_value.length; i += 1) {
@@ -413,7 +413,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (862:33) 
+// (920:33) 
 function create_if_block_3(ctx) {
 	let div;
 
@@ -456,7 +456,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (858:43) 
+// (916:43) 
 function create_if_block_2(ctx) {
 	let div;
 
@@ -477,7 +477,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (854:4) {#if fetchError}
+// (912:4) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -502,7 +502,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (890:4) {:else}
+// (948:4) {:else}
 function create_else_block_2(ctx) {
 	let div1;
 	let div0;
@@ -515,7 +515,7 @@ function create_else_block_2(ctx) {
 	let t1;
 	let t2;
 	let div1_class_value;
-	let div1_data_index_value;
+	let div1_data_id_value;
 	let dispose;
 	let if_block = ctx.item.desc && create_if_block_8(ctx);
 
@@ -530,7 +530,7 @@ function create_else_block_2(ctx) {
 			attr(div0, "class", "ki-no-click svelte-1y1l0qo");
 			attr(div1, "tabindex", "1");
 			attr(div1, "class", div1_class_value = "ki-js-item dropdown-item ki-select-item " + (!ctx.item.id ? "text-muted" : "") + " " + (ctx.selection[ctx.item.id] ? "alert-primary" : "") + " svelte-1y1l0qo");
-			attr(div1, "data-index", div1_data_index_value = ctx.index);
+			attr(div1, "data-id", div1_data_id_value = ctx.item.id);
 
 			dispose = [
 				listen(div1, "blur", ctx.handleBlur),
@@ -548,7 +548,7 @@ function create_else_block_2(ctx) {
 			append(div1, t2);
 		},
 		p(changed, ctx) {
-			if (changed.entries && t0_value !== (t0_value = (ctx.item.id
+			if (changed.items && t0_value !== (t0_value = (ctx.item.id
 			? ctx.item.display_text || ctx.item.text
 			: ctx.translate("clear")) + "")) set_data(t0, t0_value);
 
@@ -565,8 +565,12 @@ function create_else_block_2(ctx) {
 				if_block = null;
 			}
 
-			if ((changed.entries || changed.selection) && div1_class_value !== (div1_class_value = "ki-js-item dropdown-item ki-select-item " + (!ctx.item.id ? "text-muted" : "") + " " + (ctx.selection[ctx.item.id] ? "alert-primary" : "") + " svelte-1y1l0qo")) {
+			if ((changed.items || changed.selection) && div1_class_value !== (div1_class_value = "ki-js-item dropdown-item ki-select-item " + (!ctx.item.id ? "text-muted" : "") + " " + (ctx.selection[ctx.item.id] ? "alert-primary" : "") + " svelte-1y1l0qo")) {
 				attr(div1, "class", div1_class_value);
+			}
+
+			if (changed.items && div1_data_id_value !== (div1_data_id_value = ctx.item.id)) {
+				attr(div1, "data-id", div1_data_id_value);
 			}
 		},
 		d(detaching) {
@@ -577,7 +581,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (878:48) 
+// (936:48) 
 function create_if_block_6(ctx) {
 	let div1;
 	let div0;
@@ -610,7 +614,7 @@ function create_if_block_6(ctx) {
 			append(div1, t2);
 		},
 		p(changed, ctx) {
-			if (changed.entries && t0_value !== (t0_value = (ctx.item.display_text || ctx.item.text) + "")) set_data(t0, t0_value);
+			if (changed.items && t0_value !== (t0_value = (ctx.item.display_text || ctx.item.text) + "")) set_data(t0, t0_value);
 
 			if (ctx.item.desc) {
 				if (if_block) {
@@ -633,7 +637,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (872:4) {#if item.separator}
+// (930:4) {#if item.separator}
 function create_if_block_5(ctx) {
 	let div;
 	let div_data_index_value;
@@ -658,7 +662,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (902:6) {#if item.desc}
+// (960:6) {#if item.desc}
 function create_if_block_8(ctx) {
 	let div;
 	let t_value = ctx.item.desc + "";
@@ -675,7 +679,7 @@ function create_if_block_8(ctx) {
 			append(div, t);
 		},
 		p(changed, ctx) {
-			if (changed.entries && t_value !== (t_value = ctx.item.desc + "")) set_data(t, t_value);
+			if (changed.items && t_value !== (t_value = ctx.item.desc + "")) set_data(t, t_value);
 		},
 		d(detaching) {
 			if (detaching) detach(div);
@@ -683,7 +687,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (884:6) {#if item.desc}
+// (942:6) {#if item.desc}
 function create_if_block_7(ctx) {
 	let div;
 	let t_value = ctx.item.desc + "";
@@ -700,7 +704,7 @@ function create_if_block_7(ctx) {
 			append(div, t);
 		},
 		p(changed, ctx) {
-			if (changed.entries && t_value !== (t_value = ctx.item.desc + "")) set_data(t, t_value);
+			if (changed.items && t_value !== (t_value = ctx.item.desc + "")) set_data(t, t_value);
 		},
 		d(detaching) {
 			if (detaching) detach(div);
@@ -708,7 +712,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (871:4) {#each entries as item, index}
+// (929:4) {#each items as item, index}
 function create_each_block(ctx) {
 	let if_block_anchor;
 
@@ -750,7 +754,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (866:6) {:else}
+// (924:6) {:else}
 function create_else_block(ctx) {
 	let t_value = ctx.translate("no_results") + "";
 	let t;
@@ -769,7 +773,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (864:6) {#if tooShort }
+// (922:6) {#if tooShort }
 function create_if_block_4(ctx) {
 	let t_value = ctx.translate("too_short") + "";
 	let t;
@@ -788,7 +792,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (912:4) {#if hasMore}
+// (970:4) {#if hasMore}
 function create_if_block(ctx) {
 	let div;
 
@@ -1000,12 +1004,16 @@ function create_fragment(ctx) {
 	};
 }
 
-function nop() {
-	
-}
-
 function hasModifier(event) {
 	return event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
+}
+
+function isCharacterKey(event) {
+	return event.key.length == 1;
+}
+
+function nop() {
+	
 }
 
 function handleEvent(code, handlers, event) {
@@ -1024,6 +1032,7 @@ function instance($$self, $$props, $$invalidate) {
 
 	let { real } = $$props;
 	let { fetcher } = $$props;
+	let { remote } = $$props;
 	let { queryMinLen = 0 } = $$props;
 	let { translations = I18N_DEFAULTS } = $$props;
 	let { delay = 0 } = $$props;
@@ -1036,9 +1045,10 @@ function instance($$self, $$props, $$invalidate) {
 	let popup;
 	let more;
 	let mounted = false;
-	let entries = [];
+	let items = [];
 	let offsetCount = 0;
 	let displayCount = 0;
+	let selection = {};
 	let hasMore = false;
 	let tooShort = false;
 	let fetchingMore = false;
@@ -1046,18 +1056,18 @@ function instance($$self, $$props, $$invalidate) {
 	let inputVisible = false;
 	let popupVisible = false;
 	let activeFetch = null;
+	let previousFetch = null;
 	let previousQuery = null;
 	let multiple = false;
-	let selection = {};
 	let wasDown = false;
 	let isSyncToReal = false;
 	
 
-	function fetcherSelect(offset, query) {
-		console.log("SELECT: " + query);
+	function inlineFetcher(offset, query) {
+		console.log("INLINE_SELECT_FETCH: " + query);
 
 		let promise = new Promise(function (resolve, reject) {
-				let entries = [];
+				let items = [];
 				let pattern = query.toUpperCase().trim();
 				let options = real.options;
 
@@ -1074,26 +1084,32 @@ function instance($$self, $$props, $$invalidate) {
 					let match = !item.id || item.text.toUpperCase().includes(pattern) || item.desc.toUpperCase().includes(pattern);
 
 					if (match) {
-						entries.push(item);
+						items.push(item);
 					}
 				}
 
-				let response = { entries, info: { more: false } };
+				let response = { items, info: { more: false } };
 				resolve(response);
 			});
 
 		return promise;
 	}
 
-	function fetchEntries(more) {
-		let currentQuery = query.trim();
+	function fetchItems(more, fetchId) {
+		let currentQuery;
 
-		if (currentQuery.length > 0) {
-			currentQuery = query;
+		if (fetchId) {
+			currentQuery = "";
+		} else {
+			currentQuery = query.trim();
+
+			if (currentQuery.length > 0) {
+				currentQuery = query;
+			}
 		}
 
-		if (!more && !fetchingMore && currentQuery === previousQuery) {
-			return;
+		if (!more && !fetchingMore && currentQuery === previousQuery && !fetchId) {
+			return activeFetch || previousFetch;
 		}
 
 		cancelFetch();
@@ -1101,33 +1117,32 @@ function instance($$self, $$props, $$invalidate) {
 
 		if (more) {
 			fetchOffset = offsetCount;
-			$$invalidate("fetchingMore", fetchingMore = true);
 		} else {
-			$$invalidate("entries", entries = []);
+			$$invalidate("items", items = []);
 			offsetCount = 0;
 			$$invalidate("displayCount", displayCount = 0);
 			$$invalidate("hasMore", hasMore = false);
-			$$invalidate("fetchingMore", fetchingMore = false);
 		}
 
+		$$invalidate("fetchingMore", fetchingMore = more);
 		$$invalidate("fetchError", fetchError = null);
 		let currentFetchOffset = fetchOffset;
 		let currentFetchingMore = fetchingMore;
 
 		let currentFetch = new Promise(function (resolve, reject) {
 				if (currentFetchingMore) {
-					resolve(fetcher(currentFetchOffset, currentQuery));
+					resolve(fetcher(currentFetchOffset, currentQuery, fetchId));
 				} else {
-					if (currentQuery.length < queryMinLen) {
+					if (currentQuery.length < queryMinLen && !fetchId) {
 						resolve({
-							entries: [],
+							items: [],
 							info: { more: false, too_short: true }
 						});
 					} else {
 						setTimeout(
 							function () {
 								if (currentFetch === activeFetch) {
-									resolve(fetcher(currentFetchOffset, currentQuery));
+									resolve(fetcher(currentFetchOffset, currentQuery, fetchId));
 								} else {
 									reject("cancel");
 								}
@@ -1138,25 +1153,32 @@ function instance($$self, $$props, $$invalidate) {
 				}
 			}).then(function (response) {
 			if (currentFetch === activeFetch) {
-				let newEntries = response.entries || [];
+				let newItems = response.items || [];
 				let info = response.info || ({});
-				let updateEntries;
+				let updateItems;
 
 				if (currentFetchingMore) {
-					updateEntries = entries;
+					updateItems = items;
 
-					newEntries.forEach(function (item) {
-						updateEntries.push(item);
+					newItems.forEach(function (item) {
+						updateItems.push(item);
 					});
 				} else {
-					updateEntries = newEntries;
+					updateItems = newItems;
 				}
 
-				$$invalidate("entries", entries = updateEntries);
-				updateCounts(entries);
-				$$invalidate("hasMore", hasMore = info.more && offsetCount > 0);
+				$$invalidate("items", items = updateItems);
+				resolveItems(items);
+				$$invalidate("hasMore", hasMore = info.more && offsetCount > 0 && !fetchId);
 				$$invalidate("tooShort", tooShort = info.too_short === true);
-				previousQuery = currentQuery;
+
+				if (fetchId) {
+					previousQuery = null;
+				} else {
+					previousQuery = currentQuery;
+				}
+
+				previousFetch = currentFetch;
 				$$invalidate("activeFetch", activeFetch = null);
 				$$invalidate("fetchingMore", fetchingMore = false);
 			}
@@ -1164,12 +1186,13 @@ function instance($$self, $$props, $$invalidate) {
 			if (currentFetch === activeFetch) {
 				console.error(err);
 				$$invalidate("fetchError", fetchError = err);
-				$$invalidate("entries", entries = []);
+				$$invalidate("items", items = []);
 				offsetCount = 0;
 				$$invalidate("displayCount", displayCount = 0);
 				$$invalidate("hasMore", hasMore = false);
 				$$invalidate("tooShort", tooShort = false);
 				previousQuery = null;
+				previousFetch = currentFetch;
 				$$invalidate("activeFetch", activeFetch = null);
 				$$invalidate("fetchingMore", fetchingMore = false);
 				toggle.focus();
@@ -1178,13 +1201,19 @@ function instance($$self, $$props, $$invalidate) {
 		});
 
 		$$invalidate("activeFetch", activeFetch = currentFetch);
+		previousFetch = null;
+		return currentFetch;
 	}
 
-	function updateCounts(entries) {
+	function resolveItems(items) {
 		let off = 0;
 		let disp = 0;
 
-		entries.forEach(function (item) {
+		items.forEach(function (item) {
+			if (item.id) {
+				item.id = item.id.toString();
+			}
+
 			if (item.separator) ; else if (item.placeholder) {
 				disp += 1;
 			} else {
@@ -1207,7 +1236,7 @@ function instance($$self, $$props, $$invalidate) {
 	function fetchMoreIfneeded() {
 		if (hasMore && !fetchingMore) {
 			if (popup.scrollTop + popup.clientHeight >= popup.scrollHeight - more.clientHeight * 2 - 2) {
-				fetchEntries(true);
+				fetchItems(true);
 			}
 		}
 	}
@@ -1276,11 +1305,15 @@ function instance($$self, $$props, $$invalidate) {
 		}
 	}
 
-	function selectItem(el) {
-		let item = entries[el.dataset.index];
+	function selectItemImpl(id) {
+		id = id.toString();
+
+		let item = items.find(function (item) {
+			return item.id === id;
+		});
 
 		if (!item) {
-			console.error("MISSING item", el);
+			console.error("MISSING item=" + id);
 			return;
 		}
 
@@ -1318,6 +1351,16 @@ function instance($$self, $$props, $$invalidate) {
 		real.dispatchEvent(new CustomEvent("select-select", { detail: selection }));
 	}
 
+	function selectItem(id) {
+		return fetchItems(false, id).then(function (response) {
+			selectItemImpl(id);
+		});
+	}
+
+	function selectElement(el) {
+		selectItem(el.dataset.id);
+	}
+
 	function containsElement(el) {
 		return el === input || el === toggle || popup.contains(el);
 	}
@@ -1353,6 +1396,10 @@ function instance($$self, $$props, $$invalidate) {
 		let changed = false;
 		let options = real.options;
 
+		Object.values(selection).forEach(function (item) {
+			
+		});
+
 		for (let i = options.length - 1; i >= 0; i--) {
 			let el = options[i];
 			let curr = !!selection[el.value];
@@ -1377,7 +1424,11 @@ function instance($$self, $$props, $$invalidate) {
 	onMount(function () {
 		real.classList.add("d-none");
 		multiple = real.multiple;
-		$$invalidate("fetcher", fetcher = fetcherSelect);
+
+		if (!remote) {
+			$$invalidate("fetcher", fetcher = inlineFetcher);
+		}
+
 		syncFromReal();
 
 		real.addEventListener("change", function () {
@@ -1414,7 +1465,7 @@ function instance($$self, $$props, $$invalidate) {
 				item.focus();
 			} else {
 				openPopup();
-				fetchEntries();
+				fetchItems(false);
 			}
 
 			event.preventDefault();
@@ -1435,7 +1486,7 @@ function instance($$self, $$props, $$invalidate) {
 		base(event) {
 			if (wasDown) {
 				openPopup();
-				fetchEntries();
+				fetchItems(false);
 			}
 		},
 		Enter: nop,
@@ -1458,13 +1509,22 @@ function instance($$self, $$props, $$invalidate) {
 
 	let toggleKeydownHandlers = {
 		base(event) {
-			openInput(true);
+			if (isCharacterKey(event)) {
+				openInput(true);
+				event.preventDefault();
+			}
 		},
 		ArrowDown: inputKeydownHandlers.ArrowDown,
 		ArrowUp: inputKeydownHandlers.ArrowDown,
 		Enter(event) {
 			openPopup();
-			fetchEntries();
+			fetchItems(false);
+			event.preventDefault();
+		},
+		Space(event) {
+			openPopup();
+			fetchItems(false);
+			event.preventDefault();
 		},
 		Escape(event) {
 			cancelFetch();
@@ -1472,8 +1532,7 @@ function instance($$self, $$props, $$invalidate) {
 			closePopup(false);
 			closeInput(false);
 		},
-		Tab(event) {
-		},
+		Tab: nop,
 		ArrowLeft: nop,
 		ArrowRight: nop,
 		PageDown: nop,
@@ -1489,7 +1548,10 @@ function instance($$self, $$props, $$invalidate) {
 
 	let itemKeydownHandlers = {
 		base(event) {
-			openInput(true);
+			if (isCharacterKey(event)) {
+				openInput(true);
+				event.preventDefault();
+			}
 		},
 		ArrowDown(event) {
 			let next = event.target.nextElementSibling;
@@ -1532,7 +1594,7 @@ function instance($$self, $$props, $$invalidate) {
 			event.preventDefault();
 		},
 		Enter(event) {
-			selectItem(event.target);
+			selectElement(event.target);
 			event.preventDefault();
 		},
 		Escape(event) {
@@ -1662,7 +1724,7 @@ function instance($$self, $$props, $$invalidate) {
 				closePopup(false);
 			} else {
 				openPopup();
-				fetchEntries();
+				fetchItems(false);
 			}
 		}
 	}
@@ -1677,7 +1739,7 @@ function instance($$self, $$props, $$invalidate) {
 
 	function handleItemClick(event) {
 		if (event.button === 0 && !hasModifier(event)) {
-			selectItem(event.target);
+			selectElement(event.target);
 		}
 	}
 
@@ -1723,6 +1785,7 @@ function instance($$self, $$props, $$invalidate) {
 	$$self.$set = $$props => {
 		if ("real" in $$props) $$invalidate("real", real = $$props.real);
 		if ("fetcher" in $$props) $$invalidate("fetcher", fetcher = $$props.fetcher);
+		if ("remote" in $$props) $$invalidate("remote", remote = $$props.remote);
 		if ("queryMinLen" in $$props) $$invalidate("queryMinLen", queryMinLen = $$props.queryMinLen);
 		if ("translations" in $$props) $$invalidate("translations", translations = $$props.translations);
 		if ("delay" in $$props) $$invalidate("delay", delay = $$props.delay);
@@ -1743,6 +1806,7 @@ function instance($$self, $$props, $$invalidate) {
 	return {
 		real,
 		fetcher,
+		remote,
 		queryMinLen,
 		translations,
 		delay,
@@ -1754,8 +1818,9 @@ function instance($$self, $$props, $$invalidate) {
 		toggle,
 		popup,
 		more,
-		entries,
+		items,
 		displayCount,
+		selection,
 		hasMore,
 		tooShort,
 		fetchingMore,
@@ -1763,7 +1828,7 @@ function instance($$self, $$props, $$invalidate) {
 		inputVisible,
 		popupVisible,
 		activeFetch,
-		selection,
+		selectItem,
 		translate,
 		handleBlur,
 		handleInputBlur,
@@ -1793,12 +1858,18 @@ class Select extends SvelteComponent {
 		init(this, options, instance, create_fragment, safe_not_equal, {
 			real: 0,
 			fetcher: 0,
+			remote: 0,
 			queryMinLen: 0,
 			translations: 0,
 			delay: 0,
 			extraClass: 0,
-			typeahead: 0
+			typeahead: 0,
+			selectItem: 0
 		});
+	}
+
+	get selectItem() {
+		return this.$$.ctx.selectItem;
 	}
 }
 
