@@ -278,7 +278,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (888:4) {#if typeahead}
+// (891:4) {#if typeahead}
 function create_if_block_9(ctx) {
 	let input_1;
 	let input_1_class_value;
@@ -323,7 +323,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (906:8) {#each Object.values(selection) as item, index}
+// (909:8) {#each Object.values(selection) as item, index}
 function create_each_block_1(ctx) {
 	let span;
 	let t0_value = (/*index*/ ctx[74] > 0 ? ", " : "") + "";
@@ -357,7 +357,7 @@ function create_each_block_1(ctx) {
 	};
 }
 
-// (946:4) {:else}
+// (949:4) {:else}
 function create_else_block_1(ctx) {
 	let each_1_anchor;
 	let each_value = /*items*/ ctx[8];
@@ -413,7 +413,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (938:33) 
+// (941:33) 
 function create_if_block_3(ctx) {
 	let div;
 
@@ -456,7 +456,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (934:43) 
+// (937:43) 
 function create_if_block_2(ctx) {
 	let div;
 
@@ -477,7 +477,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (930:4) {#if fetchError}
+// (933:4) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -502,7 +502,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (966:4) {:else}
+// (969:4) {:else}
 function create_else_block_2(ctx) {
 	let div1;
 	let div0;
@@ -587,7 +587,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (954:48) 
+// (957:48) 
 function create_if_block_6(ctx) {
 	let div1;
 	let div0;
@@ -643,7 +643,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (948:4) {#if item.separator}
+// (951:4) {#if item.separator}
 function create_if_block_5(ctx) {
 	let div;
 	let div_data_index_value;
@@ -668,7 +668,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (978:6) {#if item.desc}
+// (981:6) {#if item.desc}
 function create_if_block_8(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[72].desc + "";
@@ -693,7 +693,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (960:6) {#if item.desc}
+// (963:6) {#if item.desc}
 function create_if_block_7(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[72].desc + "";
@@ -718,7 +718,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (947:4) {#each items as item, index}
+// (950:4) {#each items as item, index}
 function create_each_block(ctx) {
 	let if_block_anchor;
 
@@ -760,7 +760,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (942:6) {:else}
+// (945:6) {:else}
 function create_else_block(ctx) {
 	let t_value = translate("no_results") + "";
 	let t;
@@ -779,7 +779,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (940:6) {#if tooShort }
+// (943:6) {#if tooShort }
 function create_if_block_4(ctx) {
 	let t_value = translate("too_short") + "";
 	let t;
@@ -798,7 +798,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (988:4) {#if hasMore}
+// (991:4) {#if hasMore}
 function create_if_block(ctx) {
 	let div;
 
@@ -1019,10 +1019,10 @@ const I18N_DEFAULTS = {
 	fetching_more: "Searching more..."
 };
 
-let translations = I18N_DEFAULTS;
+let config = { translations: I18N_DEFAULTS };
 
 function translate(key) {
-	return translations[key] || I18N_DEFAULTS[key];
+	return config.translations[key] || I18N_DEFAULTS[key];
 }
 
 function hasModifier(event) {
@@ -1937,4 +1937,4 @@ class Select extends SvelteComponent {
 }
 
 export default Select;
-export { translations };
+export { config };

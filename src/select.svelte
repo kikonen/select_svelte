@@ -808,10 +808,13 @@
      has_more: 'More...',
      fetching_more: 'Searching more...',
  };
- export let translations = I18N_DEFAULTS;
+
+ export let config = {
+     translations: I18N_DEFAULTS
+ };
 
  function translate(key) {
-     return translations[key] || I18N_DEFAULTS[key];
+     return config.translations[key] || I18N_DEFAULTS[key];
  }
 
  function hasModifier(event) {
