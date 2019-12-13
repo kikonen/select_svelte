@@ -1,32 +1,10 @@
-<script context="module">
- const elements = new Set();
-
- function hasModifier(event) {
-     return event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
- }
-
- function isCharacterKey(event) {
-     return event.key.length == 1;
- }
-</script>
-
 <script>
  import {onMount} from 'svelte';
-
- const I18N_DEFAULTS = {
-     clear: 'Clear',
-     fetching: 'Searching..',
-     no_results: 'No results',
-     too_short: 'Too short',
-     has_more: 'More...',
-     fetching_more: 'Searching more...',
- };
 
  export let real;
  export let fetcher;
  export let remote;
  export let queryMinLen = 0;
- export let translations = I18N_DEFAULTS;
  export let delay = 0;
  export let extraClass = '';
  export let typeahead = false;
@@ -413,10 +391,6 @@
 
  function containsElement(el) {
      return el === input || el === toggle || popup.contains(el);
- }
-
- function translate(key) {
-     return translations[key] || I18N_DEFAULTS[key];
  }
 
  ////////////////////////////////////////////////////////////
@@ -822,6 +796,30 @@
 
  function handlePopupScroll(event) {
      fetchMoreIfneeded();
+ }
+</script>
+
+<script context="module">
+ const I18N_DEFAULTS = {
+     clear: 'Clear',
+     fetching: 'Searching..',
+     no_results: 'No results',
+     too_short: 'Too short',
+     has_more: 'More...',
+     fetching_more: 'Searching more...',
+ };
+ export let translations = I18N_DEFAULTS;
+
+ function translate(key) {
+     return translations[key] || I18N_DEFAULTS[key];
+ }
+
+ function hasModifier(event) {
+     return event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
+ }
+
+ function isCharacterKey(event) {
+     return event.key.length == 1;
  }
 </script>
 
