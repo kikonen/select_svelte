@@ -1019,7 +1019,7 @@ const I18N_DEFAULTS = {
 	fetching_more: "Searching more..."
 };
 
-let config = { translations: I18N_DEFAULTS };
+const config = { translations: I18N_DEFAULTS };
 
 function translate(key) {
 	return config.translations[key] || I18N_DEFAULTS[key];
