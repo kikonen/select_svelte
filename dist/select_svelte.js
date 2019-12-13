@@ -1469,6 +1469,8 @@ var Select = (function (exports) {
     translations: I18N_DEFAULTS
   };
 
+  function nop() {}
+
   function translate(key) {
     return config.translations[key] || I18N_DEFAULTS[key];
   }
@@ -1480,8 +1482,6 @@ var Select = (function (exports) {
   function isCharacterKey(event) {
     return event.key.length == 1;
   }
-
-  function nop() {}
 
   function handleEvent(code, handlers, event) {
     (handlers[code] || handlers.base)(event);

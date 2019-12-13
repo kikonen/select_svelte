@@ -1021,6 +1021,12 @@ const I18N_DEFAULTS = {
 
 const config = { translations: I18N_DEFAULTS };
 
+function nop() {
+	
+}
+
+
+
 function translate(key) {
 	return config.translations[key] || I18N_DEFAULTS[key];
 }
@@ -1031,10 +1037,6 @@ function hasModifier(event) {
 
 function isCharacterKey(event) {
 	return event.key.length == 1;
-}
-
-function nop() {
-	
 }
 
 function handleEvent(code, handlers, event) {
@@ -1074,7 +1076,6 @@ function instance($$self, $$props, $$invalidate) {
 	let multiple = false;
 	let wasDown = false;
 	let isSyncToReal = false;
-	
 
 	function inlineFetcher(offset, query) {
 		console.log("INLINE_SELECT_FETCH: " + query);

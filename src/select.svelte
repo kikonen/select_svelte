@@ -54,8 +54,6 @@
  ////////////////////////////////////////////////////////////
  //
 
- function nop() {};
-
  ////////////////////////////////////////////////////////////
  // select
 
@@ -812,6 +810,8 @@
  export const config = {
      translations: I18N_DEFAULTS
  };
+
+ function nop() {};
 
  function translate(key) {
      return config.translations[key] || I18N_DEFAULTS[key];
