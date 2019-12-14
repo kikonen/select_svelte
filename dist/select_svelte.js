@@ -638,7 +638,7 @@ var Select = (function (exports) {
     child_ctx[78] = list[i];
     child_ctx[82] = i;
     return child_ctx;
-  } // (997:4) {#if typeahead}
+  } // (991:4) {#if typeahead}
 
 
   function create_if_block_9(ctx) {
@@ -703,7 +703,7 @@ var Select = (function (exports) {
         run_all(dispose);
       }
     };
-  } // (1017:8) {#each Object.values(selection) as item, index (item.id)}
+  } // (1011:8) {#each Object.values(selection) as item, index (item.id)}
 
 
   function create_each_block_1(key_1, ctx) {
@@ -758,7 +758,7 @@ var Select = (function (exports) {
         if (detaching) detach(span);
       }
     };
-  } // (1057:4) {:else}
+  } // (1051:4) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -811,7 +811,7 @@ var Select = (function (exports) {
         if (detaching) detach(each_1_anchor);
       }
     };
-  } // (1049:32) 
+  } // (1043:32) 
 
 
   function create_if_block_3(ctx) {
@@ -855,7 +855,7 @@ var Select = (function (exports) {
         if_block.d();
       }
     };
-  } // (1045:43) 
+  } // (1039:43) 
 
 
   function create_if_block_2(ctx) {
@@ -875,7 +875,7 @@ var Select = (function (exports) {
         if (detaching) detach(div);
       }
     };
-  } // (1041:4) {#if fetchError}
+  } // (1035:4) {#if fetchError}
 
 
   function create_if_block_1(ctx) {
@@ -905,7 +905,7 @@ var Select = (function (exports) {
         if (detaching) detach(div);
       }
     };
-  } // (1076:4) {:else}
+  } // (1070:4) {:else}
 
 
   function create_else_block_2(ctx) {
@@ -1017,7 +1017,7 @@ var Select = (function (exports) {
         run_all(dispose);
       }
     };
-  } // (1064:48) 
+  } // (1058:48) 
 
 
   function create_if_block_6(ctx) {
@@ -1088,7 +1088,7 @@ var Select = (function (exports) {
         dispose();
       }
     };
-  } // (1059:4) {#if item.separator}
+  } // (1053:4) {#if item.separator}
 
 
   function create_if_block_5(ctx) {
@@ -1112,7 +1112,7 @@ var Select = (function (exports) {
         dispose();
       }
     };
-  } // (1088:6) {#if item.desc}
+  } // (1082:6) {#if item.desc}
 
 
   function create_if_block_8(ctx) {
@@ -1142,7 +1142,7 @@ var Select = (function (exports) {
         if (detaching) detach(div);
       }
     };
-  } // (1070:6) {#if item.desc}
+  } // (1064:6) {#if item.desc}
 
 
   function create_if_block_7(ctx) {
@@ -1172,7 +1172,7 @@ var Select = (function (exports) {
         if (detaching) detach(div);
       }
     };
-  } // (1058:4) {#each displayItems as item (item.id)}
+  } // (1052:4) {#each displayItems as item (item.id)}
 
 
   function create_each_block(key_1, ctx) {
@@ -1226,7 +1226,7 @@ var Select = (function (exports) {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1053:6) {:else}
+  } // (1047:6) {:else}
 
 
   function create_else_block(ctx) {
@@ -1244,7 +1244,7 @@ var Select = (function (exports) {
         if (detaching) detach(t);
       }
     };
-  } // (1051:6) {#if tooShort }
+  } // (1045:6) {#if tooShort }
 
 
   function create_if_block_4(ctx) {
@@ -1262,7 +1262,7 @@ var Select = (function (exports) {
         if (detaching) detach(t);
       }
     };
-  } // (1098:4) {#if hasMore}
+  } // (1092:4) {#if hasMore}
 
 
   function create_if_block(ctx) {
@@ -1847,10 +1847,6 @@ var Select = (function (exports) {
         return;
       }
 
-      if (passEvent) {
-        passEvent.preventDefault();
-      }
-
       var wasVisible = inputVisible;
       $$invalidate(16, inputVisible = true);
 
@@ -1860,13 +1856,10 @@ var Select = (function (exports) {
 
       if (wasVisible) {
         input.focus();
-
-        if (passEvent) {
-          sendKeyPress(input, passEvent);
-        }
       } else {
         if (passEvent) {
           passEvents = passEvents || [];
+          passEvent.preventDefault();
           passEvents.push(passEvent);
         }
 

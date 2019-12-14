@@ -351,7 +351,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (997:4) {#if typeahead}
+// (991:4) {#if typeahead}
 function create_if_block_9(ctx) {
 	let input_1;
 	let input_1_class_value;
@@ -396,7 +396,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (1017:8) {#each Object.values(selection) as item, index (item.id)}
+// (1011:8) {#each Object.values(selection) as item, index (item.id)}
 function create_each_block_1(key_1, ctx) {
 	let span;
 	let t0_value = (/*index*/ ctx[82] > 0 ? ", " : "") + "";
@@ -434,7 +434,7 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (1057:4) {:else}
+// (1051:4) {:else}
 function create_else_block_1(ctx) {
 	let each_blocks = [];
 	let each_1_lookup = new Map();
@@ -477,7 +477,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (1049:32) 
+// (1043:32) 
 function create_if_block_3(ctx) {
 	let div;
 
@@ -520,7 +520,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (1045:43) 
+// (1039:43) 
 function create_if_block_2(ctx) {
 	let div;
 
@@ -541,7 +541,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (1041:4) {#if fetchError}
+// (1035:4) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -566,7 +566,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (1076:4) {:else}
+// (1070:4) {:else}
 function create_else_block_2(ctx) {
 	let div1;
 	let div0;
@@ -651,7 +651,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (1064:48) 
+// (1058:48) 
 function create_if_block_6(ctx) {
 	let div1;
 	let div0;
@@ -707,7 +707,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (1059:4) {#if item.separator}
+// (1053:4) {#if item.separator}
 function create_if_block_5(ctx) {
 	let div;
 	let dispose;
@@ -730,7 +730,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (1088:6) {#if item.desc}
+// (1082:6) {#if item.desc}
 function create_if_block_8(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[78].desc + "";
@@ -755,7 +755,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (1070:6) {#if item.desc}
+// (1064:6) {#if item.desc}
 function create_if_block_7(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[78].desc + "";
@@ -780,7 +780,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (1058:4) {#each displayItems as item (item.id)}
+// (1052:4) {#each displayItems as item (item.id)}
 function create_each_block(key_1, ctx) {
 	let first;
 	let if_block_anchor;
@@ -829,7 +829,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (1053:6) {:else}
+// (1047:6) {:else}
 function create_else_block(ctx) {
 	let t_value = translate("no_results") + "";
 	let t;
@@ -848,7 +848,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (1051:6) {#if tooShort }
+// (1045:6) {#if tooShort }
 function create_if_block_4(ctx) {
 	let t_value = translate("too_short") + "";
 	let t;
@@ -867,7 +867,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (1098:4) {#if hasMore}
+// (1092:4) {#if hasMore}
 function create_if_block(ctx) {
 	let div;
 
@@ -1398,10 +1398,6 @@ function instance($$self, $$props, $$invalidate) {
 			return;
 		}
 
-		if (passEvent) {
-			passEvent.preventDefault();
-		}
-
 		let wasVisible = inputVisible;
 		$$invalidate(16, inputVisible = true);
 
@@ -1411,13 +1407,10 @@ function instance($$self, $$props, $$invalidate) {
 
 		if (wasVisible) {
 			input.focus();
-
-			if (passEvent) {
-				sendKeyPress(input, passEvent);
-			}
 		} else {
 			if (passEvent) {
 				passEvents = passEvents || [];
+				passEvent.preventDefault();
 				passEvents.push(passEvent);
 			}
 

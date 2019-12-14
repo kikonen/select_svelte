@@ -293,11 +293,6 @@
          return;
      }
 
-     // NOTE KI ensure event is received by *input*, not other random target
-     if (passEvent) {
-         passEvent.preventDefault();
-     }
-
      let wasVisible = inputVisible;
      inputVisible = true;
 
@@ -307,12 +302,11 @@
 
      if (wasVisible) {
          input.focus();
-         if (passEvent) {
-             sendKeyPress(input, passEvent);
-         }
      } else {
          if (passEvent) {
              passEvents = passEvents || [];
+             // NOTE KI ensure event is received by *input*, not other random target
+             passEvent.preventDefault();
              passEvents.push(passEvent);
          }
 
