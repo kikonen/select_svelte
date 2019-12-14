@@ -13,15 +13,19 @@
 
  let container;
  let input;
+ let selectionDisplay;
  let toggle;
  let popup;
  let more;
 
  let mounted = false;
 
+ let fixedItems = [];
+ let displayItems = [];
+
  let items = [];
  let offsetCount = 0;
- let displayCount = 0;
+ let actualCount = 0;
 
  let selection = {};
  let selectedItems = [];
@@ -71,7 +75,7 @@
              let item = {
                  id: el.value || '',
                  text: el.text || '',
-                 desc: ds.desc || ''
+                 desc: ds.selectDesc || ''
              };
              let match = !item.id ||
                          item.text.toUpperCase().includes(pattern) ||
@@ -121,7 +125,7 @@
      } else {
          items = [];
          offsetCount = 0;
-         displayCount = 0;
+         actualCount = 0;
          hasMore = false;
          fetched = false;
      }
@@ -160,23 +164,32 @@
          }
      }).then(function(response) {
          if (currentFetch === activeFetch) {
-             let newItems = response.items || [];
+             let fetchedItems = response.items || [];
              let info = response.info || {};
 
-//             console.debug("APPLY fetch: " + currentQuery + ", isMore: " + currentFetchingMore + ", offset: " + currentFetchOffset + ", resultSize: " + newItems.length + ", oldSize: " + items.length);
+//             console.debug("APPLY fetch: " + currentQuery + ", isMore: " + currentFetchingMore + ", offset: " + currentFetchOffset + ", resultSize: " + fetchedItems.length + ", oldSize: " + items.length);
 //             console.debug(info);
 
-             let updateItems;
+             let newItems;
              if (currentFetchingMore) {
-                 updateItems = items;
-                 newItems.forEach(function(item) {
-                     updateItems.push(item);
+                 newItems = items;
+                 fetchedItems.forEach(function(item) {
+                     newItems.push(item);
                  });
              } else {
-                 updateItems = newItems;
+                 newItems = fetchedItems;
              }
-             items = updateItems;
+             items = newItems;
              resolveItems(items);
+
+             let newDisplayItems = [];
+             fixedItems.forEach(function(item) {
+                 newDisplayItems.push(item);
+             });
+             items.forEach(function(item) {
+                 newDisplayItems.push(item);
+             });
+             displayItems = newDisplayItems;
 
              hasMore = info.more && offsetCount > 0 && !fetchId;
              tooShort = info.too_short === true;
@@ -199,8 +212,9 @@
 
              fetchError = err;
              items = [];
+             displayItems = fixedItems;
              offsetCount = 0;
-             displayCount = 0;
+             actualCount = 0;
              hasMore = false;
              tooShort = false;
              previousQuery = null;
@@ -222,7 +236,7 @@
 
  function resolveItems(items) {
      let off = 0;
-     let disp = 0;
+     let act = 0;
 
      items.forEach(function(item) {
          if (item.id) {
@@ -233,16 +247,16 @@
              // NOTE KI separator is ignored always
          } else if (item.placeholder) {
              // NOTE KI does not affect pagination
-             disp += 1;
+             act += 1;
          } else {
              // NOTE KI normal or disabled affects pagination
              off += 1;
-             disp += 1;
+             act += 1;
          }
      });
 
      offsetCount = off;
-     displayCount = disp;
+     actualCount = act;
  }
 
  function cancelFetch() {
@@ -334,7 +348,7 @@
          syncToReal
      }
 
-     let item = items.find(function(item) {
+     let item = displayItems.find(function(item) {
          return item.id.toString() === id;
      });
 
@@ -388,7 +402,7 @@
  }
 
  function containsElement(el) {
-     return el === input || el === toggle || popup.contains(el);
+     return el === input || el === toggle || el === selectionDisplay || popup.contains(el);
  }
 
  ////////////////////////////////////////////////////////////
@@ -417,7 +431,7 @@
              text: el.text,
          };
          if (ds.desc) {
-             item.desc = ds.desc;
+             item.desc = ds.selectDesc;
          }
          newSelection[item.id] = item;
      }
@@ -435,7 +449,7 @@
                  let el = document.createElement('option');
                  el.setAttribute('value', item.id);
                  if (item.desc) {
-                     el.setAttribute('data-desc', item.desc);
+                     el.setAttribute('data-select-desc', item.desc);
                  }
                  el.textContent = item.text;
                  real.appendChild(el);
@@ -463,12 +477,29 @@
      }
  }
 
+ function setupRemote() {
+     let fixedOptions = real.querySelectorAll('option[data-select-fixed]');
+     let collectedItems = [];
+     fixedOptions.forEach(function(el) {
+         let ds = el.dataset;
+         let item = {
+             id: el.value,
+             text: el.text,
+         };
+         if (ds.desc) {
+             item.desc = ds.selectDesc;
+         }
+         collectedItems.push(item);
+     });
+     fixedItems = collectedItems;
+ }
+
  onMount(function() {
      real.classList.add('d-none');
      multiple = real.multiple;
 
      if (remote) {
-         // nothing
+         setupRemote();
      } else {
          fetcher = inlineFetcher
      }
@@ -904,6 +935,8 @@
     {/if}
 
     <div class="form-control {inputVisible ? 'd-none' : ''}"
+         tabindex="0"
+         bind:this={selectionDisplay}
          on:click={handleToggleClick} >
       <span class="ki-no-click ki-select-selection">
         {#each Object.values(selection) as item, index}
@@ -938,7 +971,7 @@
     <div tabindex="-1" class="dropdown-item text-muted">
       {translate('fetching')}
     </div>
-    {:else if displayCount === 0}
+    {:else if actualCount === 0}
     <div tabindex="-1" class="dropdown-item text-muted">
       {#if tooShort }
       {translate('too_short')}
@@ -947,7 +980,7 @@
       {/if}
     </div>
     {:else}
-    {#each items as item, index}
+    {#each displayItems as item}
     {#if item.separator}
     <div tabindex="-1"
          class="dropdown-divider ki-js-blank"
