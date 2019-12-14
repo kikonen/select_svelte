@@ -286,10 +286,16 @@
  }
 
  let focusingInput = null;
+ let passEvents = null;
 
- function openInput(focusInput) {
+ function openInput(focusInput, passEvent) {
      if (!typeahead) {
          return;
+     }
+
+     // NOTE KI ensure event is received by *input*, not other random target
+     if (passEvent) {
+         passEvent.preventDefault();
      }
 
      let wasVisible = inputVisible;
@@ -301,12 +307,29 @@
 
      if (wasVisible) {
          input.focus();
+         if (passEvent) {
+             sendKeyPress(input, passEvent);
+         }
      } else {
+         if (passEvent) {
+             passEvents = passEvents || [];
+             passEvents.push(passEvent);
+         }
+
          if (!focusingInput) {
              focusingInput = function() {
                  if (focusingInput) {
                      focusingInput = null;
                      input.focus();
+
+                     if (passEvents) {
+                         passEvents.forEach(function(event) {
+                             setTimeout(function() {
+                                 sendKeyPress(input, event);
+                             });
+                         });
+                         passEvents = null;
+                     }
                  }
              }
              setTimeout(focusingInput);
@@ -587,7 +610,7 @@
  let toggleKeydownHandlers = {
      base: function(event) {
          if (isValidKey(event)) {
-             openInput(true);
+             openInput(true, event);
          }
      },
      ArrowDown: inputKeydownHandlers.ArrowDown,
@@ -627,7 +650,7 @@
  let itemKeydownHandlers = {
      base: function(event) {
          if (isValidKey(event)) {
-             openInput(true);
+             openInput(true, event);
          }
      },
      ArrowDown: function(event) {
@@ -872,6 +895,40 @@
 
  function isValidKey(event) {
      return !META_KEYS[event.key];
+ }
+
+ // https://stackoverflow.com/questions/596481/is-it-possible-to-simulate-key-press-events-programmatically
+ function sendKeyPress(target, orig) {
+     console.log("SEND", orig);
+     var down = new KeyboardEvent(
+         "keydown", // event type: keydown, keyup, keypress
+         {
+             key: orig.key,
+             ctrlKey: orig.ctrlKey,     // ctrlKey
+             altKey: orig.altKey,     // altKey
+             shiftKey: orig.shiftKey,     // shiftKey
+             metaKey: orig.metaKey,     // metaKey
+             keyCode: orig.keyCode,        // keyCode: unsigned long - the virtual key code, else 0
+             charCode: orig.charCode          // charCode: unsigned long - the Unicode character associated with the depressed key, else 0
+         }
+     );
+     console.log("SEND_DOWN", down);
+     target.dispatchEvent(down);
+
+     var up = new KeyboardEvent(
+         "keyup", // event type: keydown, keyup, keypress
+         {
+             key: orig.key,
+             ctrlKey: orig.ctrlKey,     // ctrlKey
+             altKey: orig.altKey,     // altKey
+             shiftKey: orig.shiftKey,     // shiftKey
+             metaKey: orig.metaKey,     // metaKey
+             keyCode: orig.keyCode,        // keyCode: unsigned long - the virtual key code, else 0
+             charCode: orig.charCode          // charCode: unsigned long - the Unicode character associated with the depressed key, else 0
+         }
+     );
+     console.log("SEND_UP", up);
+     target.dispatchEvent(up);
  }
 </script>
 
