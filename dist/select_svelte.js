@@ -557,7 +557,7 @@ var Select = (function (exports) {
     child_ctx[77] = list[i];
     child_ctx[81] = i;
     return child_ctx;
-  } // (922:4) {#if typeahead}
+  } // (940:4) {#if typeahead}
 
 
   function create_if_block_9(ctx) {
@@ -622,7 +622,7 @@ var Select = (function (exports) {
         run_all(dispose);
       }
     };
-  } // (942:8) {#each Object.values(selection) as item, index}
+  } // (960:8) {#each Object.values(selection) as item, index}
 
 
   function create_each_block_1(ctx) {
@@ -669,7 +669,7 @@ var Select = (function (exports) {
         if (detaching) detach(span);
       }
     };
-  } // (982:4) {:else}
+  } // (1000:4) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -736,7 +736,7 @@ var Select = (function (exports) {
         if (detaching) detach(each_1_anchor);
       }
     };
-  } // (974:32) 
+  } // (992:32) 
 
 
   function create_if_block_3(ctx) {
@@ -780,7 +780,7 @@ var Select = (function (exports) {
         if_block.d();
       }
     };
-  } // (970:43) 
+  } // (988:43) 
 
 
   function create_if_block_2(ctx) {
@@ -800,7 +800,7 @@ var Select = (function (exports) {
         if (detaching) detach(div);
       }
     };
-  } // (966:4) {#if fetchError}
+  } // (984:4) {#if fetchError}
 
 
   function create_if_block_1(ctx) {
@@ -830,7 +830,7 @@ var Select = (function (exports) {
         if (detaching) detach(div);
       }
     };
-  } // (1002:4) {:else}
+  } // (1020:4) {:else}
 
 
   function create_else_block_2(ctx) {
@@ -942,7 +942,7 @@ var Select = (function (exports) {
         run_all(dispose);
       }
     };
-  } // (990:48) 
+  } // (1008:48) 
 
 
   function create_if_block_6(ctx) {
@@ -1013,7 +1013,7 @@ var Select = (function (exports) {
         dispose();
       }
     };
-  } // (984:4) {#if item.separator}
+  } // (1002:4) {#if item.separator}
 
 
   function create_if_block_5(ctx) {
@@ -1038,7 +1038,7 @@ var Select = (function (exports) {
         dispose();
       }
     };
-  } // (1014:6) {#if item.desc}
+  } // (1032:6) {#if item.desc}
 
 
   function create_if_block_8(ctx) {
@@ -1068,7 +1068,7 @@ var Select = (function (exports) {
         if (detaching) detach(div);
       }
     };
-  } // (996:6) {#if item.desc}
+  } // (1014:6) {#if item.desc}
 
 
   function create_if_block_7(ctx) {
@@ -1098,7 +1098,7 @@ var Select = (function (exports) {
         if (detaching) detach(div);
       }
     };
-  } // (983:4) {#each displayItems as item}
+  } // (1001:4) {#each displayItems as item}
 
 
   function create_each_block(ctx) {
@@ -1145,7 +1145,7 @@ var Select = (function (exports) {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (978:6) {:else}
+  } // (996:6) {:else}
 
 
   function create_else_block(ctx) {
@@ -1163,7 +1163,7 @@ var Select = (function (exports) {
         if (detaching) detach(t);
       }
     };
-  } // (976:6) {#if tooShort }
+  } // (994:6) {#if tooShort }
 
 
   function create_if_block_4(ctx) {
@@ -1181,7 +1181,7 @@ var Select = (function (exports) {
         if (detaching) detach(t);
       }
     };
-  } // (1024:4) {#if hasMore}
+  } // (1042:4) {#if hasMore}
 
 
   function create_if_block(ctx) {
@@ -1470,6 +1470,24 @@ var Select = (function (exports) {
     has_more: "More...",
     fetching_more: "Searching more..."
   };
+  var META_KEYS = {
+    Control: true,
+    Shift: true,
+    AltGraph: true,
+    Meta: true,
+    ContextMenu: true,
+    F1: true,
+    F2: true,
+    F3: true,
+    F4: true,
+    F5: true,
+    F6: true,
+    F7: true,
+    F8: true,
+    F9: true,
+    F10: true,
+    F11: true
+  };
   var config = {
     translations: I18N_DEFAULTS
   };
@@ -1484,8 +1502,8 @@ var Select = (function (exports) {
     return event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
   }
 
-  function isCharacterKey(event) {
-    return event.key.length == 1;
+  function isValidKey(event) {
+    return !META_KEYS[event.key];
   }
 
   function handleEvent(code, handlers, event) {
@@ -2015,9 +2033,8 @@ var Select = (function (exports) {
     };
     var toggleKeydownHandlers = {
       base: function base(event) {
-        if (isCharacterKey(event)) {
+        if (isValidKey(event)) {
           openInput(true);
-          event.preventDefault();
         }
       },
       ArrowDown: inputKeydownHandlers.ArrowDown,
@@ -2053,9 +2070,8 @@ var Select = (function (exports) {
     };
     var itemKeydownHandlers = {
       base: function base(event) {
-        if (isCharacterKey(event)) {
+        if (isValidKey(event)) {
           openInput(true);
-          event.preventDefault();
         }
       },
       ArrowDown: function ArrowDown(event) {

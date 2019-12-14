@@ -277,7 +277,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (922:4) {#if typeahead}
+// (940:4) {#if typeahead}
 function create_if_block_9(ctx) {
 	let input_1;
 	let input_1_class_value;
@@ -322,7 +322,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (942:8) {#each Object.values(selection) as item, index}
+// (960:8) {#each Object.values(selection) as item, index}
 function create_each_block_1(ctx) {
 	let span;
 	let t0_value = (/*index*/ ctx[81] > 0 ? ", " : "") + "";
@@ -356,7 +356,7 @@ function create_each_block_1(ctx) {
 	};
 }
 
-// (982:4) {:else}
+// (1000:4) {:else}
 function create_else_block_1(ctx) {
 	let each_1_anchor;
 	let each_value = /*displayItems*/ ctx[9];
@@ -412,7 +412,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (974:32) 
+// (992:32) 
 function create_if_block_3(ctx) {
 	let div;
 
@@ -455,7 +455,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (970:43) 
+// (988:43) 
 function create_if_block_2(ctx) {
 	let div;
 
@@ -476,7 +476,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (966:4) {#if fetchError}
+// (984:4) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -501,7 +501,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (1002:4) {:else}
+// (1020:4) {:else}
 function create_else_block_2(ctx) {
 	let div1;
 	let div0;
@@ -586,7 +586,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (990:48) 
+// (1008:48) 
 function create_if_block_6(ctx) {
 	let div1;
 	let div0;
@@ -642,7 +642,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (984:4) {#if item.separator}
+// (1002:4) {#if item.separator}
 function create_if_block_5(ctx) {
 	let div;
 	let dispose;
@@ -666,7 +666,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (1014:6) {#if item.desc}
+// (1032:6) {#if item.desc}
 function create_if_block_8(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[77].desc + "";
@@ -691,7 +691,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (996:6) {#if item.desc}
+// (1014:6) {#if item.desc}
 function create_if_block_7(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[77].desc + "";
@@ -716,7 +716,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (983:4) {#each displayItems as item}
+// (1001:4) {#each displayItems as item}
 function create_each_block(ctx) {
 	let if_block_anchor;
 
@@ -758,7 +758,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (978:6) {:else}
+// (996:6) {:else}
 function create_else_block(ctx) {
 	let t_value = translate("no_results") + "";
 	let t;
@@ -777,7 +777,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (976:6) {#if tooShort }
+// (994:6) {#if tooShort }
 function create_if_block_4(ctx) {
 	let t_value = translate("too_short") + "";
 	let t;
@@ -796,7 +796,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (1024:4) {#if hasMore}
+// (1042:4) {#if hasMore}
 function create_if_block(ctx) {
 	let div;
 
@@ -1020,6 +1020,25 @@ const I18N_DEFAULTS = {
 	fetching_more: "Searching more..."
 };
 
+const META_KEYS = {
+	Control: true,
+	Shift: true,
+	AltGraph: true,
+	Meta: true,
+	ContextMenu: true,
+	F1: true,
+	F2: true,
+	F3: true,
+	F4: true,
+	F5: true,
+	F6: true,
+	F7: true,
+	F8: true,
+	F9: true,
+	F10: true,
+	F11: true
+};
+
 const config = { translations: I18N_DEFAULTS };
 
 function nop() {
@@ -1036,8 +1055,8 @@ function hasModifier(event) {
 	return event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
 }
 
-function isCharacterKey(event) {
-	return event.key.length == 1;
+function isValidKey(event) {
+	return !META_KEYS[event.key];
 }
 
 function handleEvent(code, handlers, event) {
@@ -1574,9 +1593,8 @@ function instance($$self, $$props, $$invalidate) {
 
 	let toggleKeydownHandlers = {
 		base(event) {
-			if (isCharacterKey(event)) {
+			if (isValidKey(event)) {
 				openInput(true);
-				event.preventDefault();
 			}
 		},
 		ArrowDown: inputKeydownHandlers.ArrowDown,
@@ -1613,9 +1631,8 @@ function instance($$self, $$props, $$invalidate) {
 
 	let itemKeydownHandlers = {
 		base(event) {
-			if (isCharacterKey(event)) {
+			if (isValidKey(event)) {
 				openInput(true);
-				event.preventDefault();
 			}
 		},
 		ArrowDown(event) {

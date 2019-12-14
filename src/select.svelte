@@ -586,9 +586,8 @@
 
  let toggleKeydownHandlers = {
      base: function(event) {
-         if (isCharacterKey(event)) {
+         if (isValidKey(event)) {
              openInput(true);
-             event.preventDefault();
          }
      },
      ArrowDown: inputKeydownHandlers.ArrowDown,
@@ -627,9 +626,8 @@
 
  let itemKeydownHandlers = {
      base: function(event) {
-         if (isCharacterKey(event)) {
+         if (isValidKey(event)) {
              openInput(true);
-             event.preventDefault();
          }
      },
      ArrowDown: function(event) {
@@ -838,6 +836,26 @@
      fetching_more: 'Searching more...',
  };
 
+ const META_KEYS = {
+     Control: true,
+     Shift: true,
+     AltGraph: true,
+     Meta: true,
+     ContextMenu: true,
+     // Ignore function keys
+     F1: true,
+     F2: true,
+     F3: true,
+     F4: true,
+     F5: true,
+     F6: true,
+     F7: true,
+     F8: true,
+     F9: true,
+     F10: true,
+     F11: true,
+ }
+
  export const config = {
      translations: I18N_DEFAULTS
  };
@@ -852,8 +870,8 @@
      return event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
  }
 
- function isCharacterKey(event) {
-     return event.key.length == 1;
+ function isValidKey(event) {
+     return !META_KEYS[event.key];
  }
 </script>
 
