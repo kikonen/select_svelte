@@ -957,7 +957,7 @@
          bind:this={selectionDisplay}
          on:click={handleToggleClick} >
       <span class="ki-no-click ki-select-selection">
-        {#each Object.values(selection) as item, index}
+        {#each Object.values(selection) as item, index (item.id)}
         <span class="ki-no-click {item.id ? 'text-dark' : 'text-muted'}">{index > 0 ? ', ' : ''}{item.text}</span>
         {/each}
       </span>
@@ -998,11 +998,10 @@
       {/if}
     </div>
     {:else}
-    {#each displayItems as item}
+    {#each displayItems as item (item.id)}
     {#if item.separator}
     <div tabindex="-1"
          class="dropdown-divider ki-js-blank"
-         data-index="{index}"
          on:keydown={handleItemKeydown}>
     </div>
     {:else if item.disabled || item.placeholder}
