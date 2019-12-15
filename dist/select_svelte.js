@@ -645,7 +645,7 @@ var Select = (function (exports) {
     child_ctx[81] = list[i];
     child_ctx[85] = i;
     return child_ctx;
-  } // (1074:4) {#if typeahead}
+  } // (1070:4) {#if typeahead}
 
 
   function create_if_block_18(ctx) {
@@ -710,7 +710,7 @@ var Select = (function (exports) {
         run_all(dispose);
       }
     };
-  } // (1097:8) {#each selectedItems as item, index (item.id)}
+  } // (1093:8) {#each selectedItems as item, index (item.id)}
 
 
   function create_each_block_2(key_1, ctx) {
@@ -765,7 +765,7 @@ var Select = (function (exports) {
         if (detaching) detach(span);
       }
     };
-  } // (1131:32) 
+  } // (1127:32) 
 
 
   function create_if_block_16(ctx) {
@@ -809,7 +809,7 @@ var Select = (function (exports) {
         if_block.d();
       }
     };
-  } // (1125:43) 
+  } // (1121:43) 
 
 
   function create_if_block_15(ctx) {
@@ -819,7 +819,7 @@ var Select = (function (exports) {
       p: noop,
       d: noop
     };
-  } // (1120:4) {#if fetchError}
+  } // (1116:4) {#if fetchError}
 
 
   function create_if_block_14(ctx) {
@@ -849,7 +849,7 @@ var Select = (function (exports) {
         if (detaching) detach(div);
       }
     };
-  } // (1135:8) {:else}
+  } // (1131:8) {:else}
 
 
   function create_else_block_3(ctx) {
@@ -867,7 +867,7 @@ var Select = (function (exports) {
         if (detaching) detach(t);
       }
     };
-  } // (1133:8) {#if tooShort }
+  } // (1129:8) {#if tooShort }
 
 
   function create_if_block_17(ctx) {
@@ -885,7 +885,7 @@ var Select = (function (exports) {
         if (detaching) detach(t);
       }
     };
-  } // (1141:4) {#if typeahead}
+  } // (1137:4) {#if typeahead}
 
 
   function create_if_block_8(ctx) {
@@ -949,7 +949,7 @@ var Select = (function (exports) {
         dispose();
       }
     };
-  } // (1143:8) {#if item.id}
+  } // (1139:8) {#if item.id}
 
 
   function create_if_block_9(ctx) {
@@ -1077,7 +1077,7 @@ var Select = (function (exports) {
         run_all(dispose);
       }
     };
-  } // (1154:14) {#if multiple}
+  } // (1150:14) {#if multiple}
 
 
   function create_if_block_12(ctx) {
@@ -1114,7 +1114,7 @@ var Select = (function (exports) {
         if (if_block) if_block.d();
       }
     };
-  } // (1156:18) {#if item.id}
+  } // (1152:18) {#if item.id}
 
 
   function create_if_block_13(ctx) {
@@ -1131,7 +1131,7 @@ var Select = (function (exports) {
         if (detaching) detach(i);
       }
     };
-  } // (1166:18) {:else}
+  } // (1162:18) {:else}
 
 
   function create_else_block_2(ctx) {
@@ -1149,7 +1149,7 @@ var Select = (function (exports) {
         if (detaching) detach(t);
       }
     };
-  } // (1164:18) {#if item.id}
+  } // (1160:18) {#if item.id}
 
 
   function create_if_block_11(ctx) {
@@ -1175,7 +1175,7 @@ var Select = (function (exports) {
         if (detaching) detach(t);
       }
     };
-  } // (1171:16) {#if item.desc}
+  } // (1167:16) {#if item.desc}
 
 
   function create_if_block_10(ctx) {
@@ -1205,7 +1205,7 @@ var Select = (function (exports) {
         if (detaching) detach(div);
       }
     };
-  } // (1142:6) {#each selectedItems as item, index (item.id)}
+  } // (1138:6) {#each selectedItems as item, index (item.id)}
 
 
   function create_each_block_1(key_1, ctx) {
@@ -1250,7 +1250,7 @@ var Select = (function (exports) {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1209:6) {:else}
+  } // (1205:6) {:else}
 
 
   function create_else_block(ctx) {
@@ -1396,7 +1396,7 @@ var Select = (function (exports) {
         run_all(dispose);
       }
     };
-  } // (1195:50) 
+  } // (1191:50) 
 
 
   function create_if_block_2(ctx) {
@@ -1464,7 +1464,7 @@ var Select = (function (exports) {
         dispose();
       }
     };
-  } // (1189:6) {#if item.separator}
+  } // (1185:6) {#if item.separator}
 
 
   function create_if_block_1(ctx) {
@@ -1488,7 +1488,7 @@ var Select = (function (exports) {
         dispose();
       }
     };
-  } // (1219:12) {#if multiple}
+  } // (1215:12) {#if multiple}
 
 
   function create_if_block_6(ctx) {
@@ -1527,7 +1527,7 @@ var Select = (function (exports) {
         if (if_block) if_block.d();
       }
     };
-  } // (1221:16) {#if item.id}
+  } // (1217:16) {#if item.id}
 
 
   function create_if_block_7(ctx) {
@@ -1560,7 +1560,7 @@ var Select = (function (exports) {
         if (detaching) detach(i);
       }
     };
-  } // (1231:16) {:else}
+  } // (1227:16) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -1578,7 +1578,7 @@ var Select = (function (exports) {
         if (detaching) detach(t);
       }
     };
-  } // (1229:16) {#if item.id}
+  } // (1225:16) {#if item.id}
 
 
   function create_if_block_5(ctx) {
@@ -1604,7 +1604,7 @@ var Select = (function (exports) {
         if (detaching) detach(t);
       }
     };
-  } // (1236:14) {#if item.desc}
+  } // (1232:14) {#if item.desc}
 
 
   function create_if_block_4(ctx) {
@@ -1634,7 +1634,7 @@ var Select = (function (exports) {
         if (detaching) detach(div);
       }
     };
-  } // (1202:10) {#if item.desc}
+  } // (1198:10) {#if item.desc}
 
 
   function create_if_block_3(ctx) {
@@ -1664,7 +1664,7 @@ var Select = (function (exports) {
         if (detaching) detach(div);
       }
     };
-  } // (1188:4) {#each displayItems as item (item.id)}
+  } // (1184:4) {#each displayItems as item (item.id)}
 
 
   function create_each_block(key_1, ctx) {
@@ -1718,7 +1718,7 @@ var Select = (function (exports) {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1247:4) {#if hasMore}
+  } // (1243:4) {#if hasMore}
 
 
   function create_if_block(ctx) {
@@ -2483,11 +2483,7 @@ var Select = (function (exports) {
       $$invalidate(19, popupVisible = false);
 
       if (focusToggle) {
-        if (inputVisible) {
-          input.focus();
-        } else {
-          selectionDisplay.focus();
-        }
+        focusTarget(selectionDisplay);
       }
     }
 
@@ -2534,8 +2530,8 @@ var Select = (function (exports) {
 
         $$invalidate(11, selection[item.id] = item, selection);
         clearQuery();
-        closePopup(true);
         closeInput(false);
+        closePopup(true);
       }
 
       var newSelectedItems = [];

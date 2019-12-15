@@ -382,11 +382,7 @@
  function closePopup(focusToggle) {
      popupVisible = false;
      if (focusToggle) {
-         if (inputVisible) {
-             input.focus();
-         } else {
-             selectionDisplay.focus();
-         }
+         focusTarget(selectionDisplay);
      }
  }
 
@@ -438,8 +434,8 @@
 
          // NOTE KI reset query only for single item
          clearQuery();
-         closePopup(true);
          closeInput(false);
+         closePopup(true);
      }
 
      let newSelectedItems = [];
