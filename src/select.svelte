@@ -33,6 +33,7 @@
  let message = null;
  let messageClass = null;
 
+ let showFetching = false;
  let hasMore = false;
  let tooShort = false;
  let fetchingMore = false;
@@ -131,6 +132,7 @@
      }
      fetchingMore = more;
      fetchError = null;
+     showFetching = false;
 
      let currentFetchOffset = fetchOffset;
      let currentFetchingMore = fetchingMore;
@@ -203,6 +205,7 @@
              activeFetch = null;
              fetched = true;
              fetchingMore = false;
+             showFetching = false;
 //         } else {
 //             console.debug("ABORT fetch: " + currentQuery);
          }
@@ -223,10 +226,19 @@
              fetched = false;
              fetchingMore = false;
 
+             showFetching = false;
+
              toggle.focus();
              openPopup();
          }
      });
+
+     setTimeout(function() {
+         if (activeFetch === currentFetch) {
+             console.log("fetching...");
+             showFetching = true;
+         }
+     }, FETCH_INDICATOR_DELAY);
 
      activeFetch = currentFetch;
      previousFetch = null;
@@ -853,6 +865,10 @@
      fetching_more: 'Searching more...',
  };
 
+ const FETCH_INDICATOR_DELAY = 150;
+ const CARET_DOWN = 'fas fa-caret-down';
+ const CARET_FETCHING = 'far fa-hourglass';
+
  const META_KEYS = {
      Control: true,
      Shift: true,
@@ -1009,7 +1025,7 @@
          on:click={handleToggleClick} >
       <span class="ki-no-click ki-select-selection">
         {#each Object.values(selection) as item, index (item.id)}
-        <span class="ki-no-click {item.id ? 'text-dark' : 'text-muted'}">{index > 0 ? ', ' : ''}{item.text}</span>
+          <span class="ki-no-click {item.id ? 'text-dark' : 'text-muted'}">{index > 0 ? ', ' : ''}{item.text}</span>
         {/each}
       </span>
     </div>
@@ -1023,7 +1039,7 @@
               on:keydown={handleToggleKeydown}
               on:click={handleToggleClick}>
 
-        <i class="text-dark fas fa-caret-down"></i>
+        <i class="text-dark {showFetching ? CARET_FETCHING : CARET_DOWN}"></i>
       </button>
     </div>
   </div>
@@ -1031,70 +1047,76 @@
   <div class="dropdown-menu ki-select-popup {popupVisible ? 'show' : ''}"
        bind:this={popup}
        on:scroll={handlePopupScroll}>
-
     {#if fetchError}
-    <div tabindex="-1" class="dropdown-item text-danger">
-      {fetchError}
-    </div>
-    {:else if activeFetch && !fetchingMore}
-    <div tabindex="-1" class="dropdown-item text-muted">
-      {translate('fetching')}
-    </div>
-    {:else if actualCount === 0}
-    <div tabindex="-1" class="dropdown-item text-muted">
-      {#if tooShort }
-      {translate('too_short')}
-      {:else}
-      {translate('no_results')}
-      {/if}
-    </div>
-    {:else}
-    {#each displayItems as item (item.id)}
-    {#if item.separator}
-    <div tabindex="-1"
-         class="dropdown-divider ki-js-blank"
-         on:keydown={handleItemKeydown}>
-    </div>
-    {:else if item.disabled || item.placeholder}
-    <div tabindex="-1" class="dropdown-item text-muted ki-js-blank"
-         on:keydown={handleItemKeydown}>
-      <div class="ki-no-click">
-        {item.display_text || item.text}
+      <div tabindex="-1" class="dropdown-item text-danger ki-select-item">
+        {fetchError}
       </div>
-      {#if item.desc}
-      <div class="ki-no-click text-muted">
-        {item.desc}
-      </div>
-      {/if}
-    </div>
-    {:else}
-    <div tabindex=1
-         class="ki-js-item dropdown-item ki-select-item {!item.id ? 'text-muted' : ''} {selection[item.id] ? 'alert-primary' : ''}"
-         data-id="{item.id}"
-         on:blur={handleBlur}
-         on:click={handleItemClick}
-         on:keydown={handleItemKeydown}
-         on:keyup={handleItemKeyup}>
 
-      <div class="ki-no-click">
-        {item.id ? (item.display_text || item.text) : translate('clear')}
+    {:else if activeFetch && !fetchingMore}
+      <!--
+      <div tabindex="-1" class="dropdown-item text-muted ki-select-item">
+        {translate('fetching')}
       </div>
-      {#if item.desc}
-      <div class="ki-no-click text-muted">
-        {item.desc}
+      -->
+    {:else if actualCount === 0}
+      <div tabindex="-1" class="dropdown-item text-muted ki-select-item">
+        {#if tooShort }
+          {translate('too_short')}
+        {:else}
+          {translate('no_results')}
+        {/if}
       </div>
+    {/if}
+
+    {#each displayItems as item (item.id)}
+      {#if item.separator}
+        <div tabindex="-1"
+             class="dropdown-divider ki-js-blank"
+             on:keydown={handleItemKeydown}>
+        </div>
+
+      {:else if item.disabled || item.placeholder}
+        <div tabindex="-1" class="dropdown-item text-muted ki-js-blank"
+             on:keydown={handleItemKeydown}>
+          <div class="ki-no-click">
+            {item.display_text || item.text}
+          </div>
+
+          {#if item.desc}
+            <div class="ki-no-click text-muted">
+              {item.desc}
+            </div>
+          {/if}
+        </div>
+
+      {:else}
+        <div tabindex=1
+             class="ki-js-item dropdown-item ki-select-item {!item.id ? 'text-muted' : ''} {selection[item.id] ? 'alert-primary' : ''}"
+             data-id="{item.id}"
+             on:blur={handleBlur}
+             on:click={handleItemClick}
+             on:keydown={handleItemKeydown}
+             on:keyup={handleItemKeyup}>
+
+          <div class="ki-no-click">
+            {item.id ? (item.display_text || item.text) : translate('clear')}
+          </div>
+
+          {#if item.desc}
+            <div class="ki-no-click text-muted">
+              {item.desc}
+            </div>
+          {/if}
+        </div>
       {/if}
-    </div>
-    {/if}
     {/each}
-    {/if}
 
     {#if hasMore}
-    <div tabindex="-1"
-         class="dropdown-item text-muted"
-         bind:this={more}>
-      {translate('has_more')}
-    </div>
+      <div tabindex="-1"
+           class="dropdown-item text-muted"
+           bind:this={more}>
+        {translate('has_more')}
+      </div>
     {/if}
   </div>
 </div>
