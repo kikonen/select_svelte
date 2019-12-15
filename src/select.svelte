@@ -1104,37 +1104,49 @@
       </div>
     {/if}
 
-    {#if multiple}
-      {#each selectedItems as item, index (item.id)}
-        {#if item.id}
-          <div tabindex=1
-               class="ki-js-item dropdown-item ki-select-item"
-               data-id="{item.id}"
-               data-selection="true"
-               on:blur={handleBlur}
-               on:click={handleItemClick}
-               on:keydown={handleItemKeydown}
-               on:keyup={handleItemKeyup}>
+    {#each selectedItems as item, index (item.id)}
+      {#if item.id}
+        <div tabindex=1
+             class="ki-js-item dropdown-item ki-select-item"
+             data-id="{item.id}"
+             data-selection="true"
+             on:blur={handleBlur}
+             on:click={handleItemClick}
+             on:keydown={handleItemKeydown}
+             on:keyup={handleItemKeyup}>
 
-            <div class="ki-no-click">
-              <i class="far fa-check-square"></i>
-              {item.text}
-            </div>
-
-            {#if item.desc}
-              <div class="ki-no-click text-muted">
-                {item.desc}
+          <div class="ki-no-click">
+            {#if multiple}
+              <div class="d-inline-block align-top">
+                {#if item.id}
+                  <i class="far fa-check-square"></i>
+                {/if}
               </div>
             {/if}
-          </div>
-        {/if}
-      {/each}
 
-      <div tabindex="-1"
-           class="dropdown-divider ki-js-blank"
-           on:keydown={handleItemKeydown}>
-      </div>
-    {/if}
+            <div class="d-inline-block">
+              <div class="ki-no-click">
+                {#if item.id}
+                  {item.text}
+                {:else}
+                  {translate('clear')}
+                {/if}
+              </div>
+
+              {#if item.desc}
+                <div class="ki-no-click text-muted">
+                  {item.desc}
+                </div>
+              {/if}
+            </div>
+          </div>
+        </div>
+      {/if}
+    {/each}
+    <div tabindex="-1"
+         class="dropdown-divider ki-js-blank"
+         on:keydown={handleItemKeydown}>
+    </div>
 
     {#each displayItems as item (item.id)}
       {#if item.separator}

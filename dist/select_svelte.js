@@ -648,7 +648,7 @@ var Select = (function (exports) {
   } // (1043:4) {#if typeahead}
 
 
-  function create_if_block_15(ctx) {
+  function create_if_block_17(ctx) {
     var input_1;
     var input_1_class_value;
     var dispose;
@@ -768,14 +768,14 @@ var Select = (function (exports) {
   } // (1097:32) 
 
 
-  function create_if_block_13(ctx) {
+  function create_if_block_15(ctx) {
     var div;
 
     function select_block_type_1(ctx, dirty) {
       if (
       /*tooShort*/
-      ctx[15]) return create_if_block_14;
-      return create_else_block_2;
+      ctx[15]) return create_if_block_16;
+      return create_else_block_3;
     }
 
     var current_block_type = select_block_type_1(ctx);
@@ -812,7 +812,7 @@ var Select = (function (exports) {
   } // (1091:43) 
 
 
-  function create_if_block_12(ctx) {
+  function create_if_block_14(ctx) {
     return {
       c: noop,
       m: noop,
@@ -822,7 +822,7 @@ var Select = (function (exports) {
   } // (1086:4) {#if fetchError}
 
 
-  function create_if_block_11(ctx) {
+  function create_if_block_13(ctx) {
     var div;
     var t;
     return {
@@ -852,7 +852,7 @@ var Select = (function (exports) {
   } // (1101:8) {:else}
 
 
-  function create_else_block_2(ctx) {
+  function create_else_block_3(ctx) {
     var t_value = translate("no_results") + "";
     var t;
     return {
@@ -870,7 +870,7 @@ var Select = (function (exports) {
   } // (1099:8) {#if tooShort }
 
 
-  function create_if_block_14(ctx) {
+  function create_if_block_16(ctx) {
     var t_value = translate("too_short") + "";
     var t;
     return {
@@ -885,164 +885,236 @@ var Select = (function (exports) {
         if (detaching) detach(t);
       }
     };
-  } // (1107:4) {#if multiple}
+  } // (1108:6) {#if item.id}
 
 
   function create_if_block_8(ctx) {
-    var each_blocks = [];
-    var each_1_lookup = new Map();
-    var t;
-    var div;
-    var dispose;
-    var each_value_1 =
-    /*selectedItems*/
-    ctx[12];
-
-    var get_key = function get_key(ctx) {
-      return (
-        /*item*/
-        ctx[80].id
-      );
-    };
-
-    for (var i = 0; i < each_value_1.length; i += 1) {
-      var child_ctx = get_each_context_1(ctx, each_value_1, i);
-      var key = get_key(child_ctx);
-      each_1_lookup.set(key, each_blocks[i] = create_each_block_1(key, child_ctx));
-    }
-
-    return {
-      c: function c() {
-        for (var _i = 0; _i < each_blocks.length; _i += 1) {
-          each_blocks[_i].c();
-        }
-
-        t = space();
-        div = element("div");
-        attr(div, "tabindex", "-1");
-        attr(div, "class", "dropdown-divider ki-js-blank");
-        dispose = listen(div, "keydown",
-        /*handleItemKeydown*/
-        ctx[29]);
-      },
-      m: function m(target, anchor) {
-        for (var _i2 = 0; _i2 < each_blocks.length; _i2 += 1) {
-          each_blocks[_i2].m(target, anchor);
-        }
-
-        insert(target, t, anchor);
-        insert(target, div, anchor);
-      },
-      p: function p(ctx, dirty) {
-        var each_value_1 =
-        /*selectedItems*/
-        ctx[12];
-        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value_1, each_1_lookup, t.parentNode, destroy_block, create_each_block_1, t, get_each_context_1);
-      },
-      d: function d(detaching) {
-        for (var _i3 = 0; _i3 < each_blocks.length; _i3 += 1) {
-          each_blocks[_i3].d(detaching);
-        }
-
-        if (detaching) detach(t);
-        if (detaching) detach(div);
-        dispose();
-      }
-    };
-  } // (1109:8) {#if item.id}
-
-
-  function create_if_block_9(ctx) {
+    var div3;
+    var div2;
+    var t0;
     var div1;
     var div0;
-    var i;
-    var t0;
-    var t1_value =
-    /*item*/
-    ctx[80].text + "";
     var t1;
-    var t2;
-    var div1_data_id_value;
+    var div3_data_id_value;
     var dispose;
-    var if_block =
+    var if_block0 =
+    /*multiple*/
+    ctx[21] && create_if_block_11(ctx);
+
+    function select_block_type_2(ctx, dirty) {
+      if (
+      /*item*/
+      ctx[80].id) return create_if_block_10;
+      return create_else_block_2;
+    }
+
+    var current_block_type = select_block_type_2(ctx);
+    var if_block1 = current_block_type(ctx);
+    var if_block2 =
     /*item*/
-    ctx[80].desc && create_if_block_10(ctx);
+    ctx[80].desc && create_if_block_9(ctx);
     return {
       c: function c() {
+        div3 = element("div");
+        div2 = element("div");
+        if (if_block0) if_block0.c();
+        t0 = space();
         div1 = element("div");
         div0 = element("div");
-        i = element("i");
-        t0 = space();
-        t1 = text(t1_value);
-        t2 = space();
-        if (if_block) if_block.c();
-        attr(i, "class", "far fa-check-square");
+        if_block1.c();
+        t1 = space();
+        if (if_block2) if_block2.c();
         attr(div0, "class", "ki-no-click svelte-1y1l0qo");
-        attr(div1, "tabindex", "1");
-        attr(div1, "class", "ki-js-item dropdown-item ki-select-item svelte-1y1l0qo");
-        attr(div1, "data-id", div1_data_id_value =
+        attr(div1, "class", "d-inline-block");
+        attr(div2, "class", "ki-no-click svelte-1y1l0qo");
+        attr(div3, "tabindex", "1");
+        attr(div3, "class", "ki-js-item dropdown-item ki-select-item svelte-1y1l0qo");
+        attr(div3, "data-id", div3_data_id_value =
         /*item*/
         ctx[80].id);
-        attr(div1, "data-selection", "true");
-        dispose = [listen(div1, "blur",
+        attr(div3, "data-selection", "true");
+        dispose = [listen(div3, "blur",
         /*handleBlur*/
-        ctx[22]), listen(div1, "click",
+        ctx[22]), listen(div3, "click",
         /*handleItemClick*/
-        ctx[31]), listen(div1, "keydown",
+        ctx[31]), listen(div3, "keydown",
         /*handleItemKeydown*/
-        ctx[29]), listen(div1, "keyup",
+        ctx[29]), listen(div3, "keyup",
         /*handleItemKeyup*/
         ctx[30])];
       },
       m: function m(target, anchor) {
-        insert(target, div1, anchor);
+        insert(target, div3, anchor);
+        append(div3, div2);
+        if (if_block0) if_block0.m(div2, null);
+        append(div2, t0);
+        append(div2, div1);
         append(div1, div0);
-        append(div0, i);
-        append(div0, t0);
-        append(div0, t1);
-        append(div1, t2);
-        if (if_block) if_block.m(div1, null);
+        if_block1.m(div0, null);
+        append(div1, t1);
+        if (if_block2) if_block2.m(div1, null);
       },
       p: function p(ctx, dirty) {
-        if (dirty[0] &
-        /*selectedItems*/
-        4096 && t1_value !== (t1_value =
-        /*item*/
-        ctx[80].text + "")) set_data(t1, t1_value);
+        if (
+        /*multiple*/
+        ctx[21]) {
+          if (if_block0) {
+            if_block0.p(ctx, dirty);
+          } else {
+            if_block0 = create_if_block_11(ctx);
+            if_block0.c();
+            if_block0.m(div2, t0);
+          }
+        } else if (if_block0) {
+          if_block0.d(1);
+          if_block0 = null;
+        }
+
+        if (current_block_type === (current_block_type = select_block_type_2(ctx)) && if_block1) {
+          if_block1.p(ctx, dirty);
+        } else {
+          if_block1.d(1);
+          if_block1 = current_block_type(ctx);
+
+          if (if_block1) {
+            if_block1.c();
+            if_block1.m(div0, null);
+          }
+        }
 
         if (
         /*item*/
         ctx[80].desc) {
-          if (if_block) {
-            if_block.p(ctx, dirty);
+          if (if_block2) {
+            if_block2.p(ctx, dirty);
           } else {
-            if_block = create_if_block_10(ctx);
+            if_block2 = create_if_block_9(ctx);
+            if_block2.c();
+            if_block2.m(div1, null);
+          }
+        } else if (if_block2) {
+          if_block2.d(1);
+          if_block2 = null;
+        }
+
+        if (dirty[0] &
+        /*selectedItems*/
+        4096 && div3_data_id_value !== (div3_data_id_value =
+        /*item*/
+        ctx[80].id)) {
+          attr(div3, "data-id", div3_data_id_value);
+        }
+      },
+      d: function d(detaching) {
+        if (detaching) detach(div3);
+        if (if_block0) if_block0.d();
+        if_block1.d();
+        if (if_block2) if_block2.d();
+        run_all(dispose);
+      }
+    };
+  } // (1119:12) {#if multiple}
+
+
+  function create_if_block_11(ctx) {
+    var div;
+    var if_block =
+    /*item*/
+    ctx[80].id && create_if_block_12();
+    return {
+      c: function c() {
+        div = element("div");
+        if (if_block) if_block.c();
+        attr(div, "class", "d-inline-block align-top");
+      },
+      m: function m(target, anchor) {
+        insert(target, div, anchor);
+        if (if_block) if_block.m(div, null);
+      },
+      p: function p(ctx, dirty) {
+        if (
+        /*item*/
+        ctx[80].id) {
+          if (!if_block) {
+            if_block = create_if_block_12();
             if_block.c();
-            if_block.m(div1, null);
+            if_block.m(div, null);
           }
         } else if (if_block) {
           if_block.d(1);
           if_block = null;
         }
-
-        if (dirty[0] &
-        /*selectedItems*/
-        4096 && div1_data_id_value !== (div1_data_id_value =
-        /*item*/
-        ctx[80].id)) {
-          attr(div1, "data-id", div1_data_id_value);
-        }
       },
       d: function d(detaching) {
-        if (detaching) detach(div1);
+        if (detaching) detach(div);
         if (if_block) if_block.d();
-        run_all(dispose);
       }
     };
-  } // (1124:12) {#if item.desc}
+  } // (1121:16) {#if item.id}
+
+
+  function create_if_block_12(ctx) {
+    var i;
+    return {
+      c: function c() {
+        i = element("i");
+        attr(i, "class", "far fa-check-square");
+      },
+      m: function m(target, anchor) {
+        insert(target, i, anchor);
+      },
+      d: function d(detaching) {
+        if (detaching) detach(i);
+      }
+    };
+  } // (1131:16) {:else}
+
+
+  function create_else_block_2(ctx) {
+    var t_value = translate("clear") + "";
+    var t;
+    return {
+      c: function c() {
+        t = text(t_value);
+      },
+      m: function m(target, anchor) {
+        insert(target, t, anchor);
+      },
+      p: noop,
+      d: function d(detaching) {
+        if (detaching) detach(t);
+      }
+    };
+  } // (1129:16) {#if item.id}
 
 
   function create_if_block_10(ctx) {
+    var t_value =
+    /*item*/
+    ctx[80].text + "";
+    var t;
+    return {
+      c: function c() {
+        t = text(t_value);
+      },
+      m: function m(target, anchor) {
+        insert(target, t, anchor);
+      },
+      p: function p(ctx, dirty) {
+        if (dirty[0] &
+        /*selectedItems*/
+        4096 && t_value !== (t_value =
+        /*item*/
+        ctx[80].text + "")) set_data(t, t_value);
+      },
+      d: function d(detaching) {
+        if (detaching) detach(t);
+      }
+    };
+  } // (1136:14) {#if item.desc}
+
+
+  function create_if_block_9(ctx) {
     var div;
     var t_value =
     /*item*/
@@ -1069,7 +1141,7 @@ var Select = (function (exports) {
         if (detaching) detach(div);
       }
     };
-  } // (1108:6) {#each selectedItems as item, index (item.id)}
+  } // (1107:4) {#each selectedItems as item, index (item.id)}
 
 
   function create_each_block_1(key_1, ctx) {
@@ -1077,7 +1149,7 @@ var Select = (function (exports) {
     var if_block_anchor;
     var if_block =
     /*item*/
-    ctx[80].id && create_if_block_9(ctx);
+    ctx[80].id && create_if_block_8(ctx);
     return {
       key: key_1,
       first: null,
@@ -1099,7 +1171,7 @@ var Select = (function (exports) {
           if (if_block) {
             if_block.p(ctx, dirty);
           } else {
-            if_block = create_if_block_9(ctx);
+            if_block = create_if_block_8(ctx);
             if_block.c();
             if_block.m(if_block_anchor.parentNode, if_block_anchor);
           }
@@ -1114,7 +1186,7 @@ var Select = (function (exports) {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1160:6) {:else}
+  } // (1172:6) {:else}
 
 
   function create_else_block(ctx) {
@@ -1131,14 +1203,14 @@ var Select = (function (exports) {
     /*multiple*/
     ctx[21] && create_if_block_6(ctx);
 
-    function select_block_type_3(ctx, dirty) {
+    function select_block_type_4(ctx, dirty) {
       if (
       /*item*/
       ctx[80].id) return create_if_block_5;
       return create_else_block_1;
     }
 
-    var current_block_type = select_block_type_3(ctx);
+    var current_block_type = select_block_type_4(ctx);
     var if_block1 = current_block_type(ctx);
     var if_block2 =
     /*item*/
@@ -1205,7 +1277,7 @@ var Select = (function (exports) {
           if_block0 = null;
         }
 
-        if (current_block_type === (current_block_type = select_block_type_3(ctx)) && if_block1) {
+        if (current_block_type === (current_block_type = select_block_type_4(ctx)) && if_block1) {
           if_block1.p(ctx, dirty);
         } else {
           if_block1.d(1);
@@ -1260,7 +1332,7 @@ var Select = (function (exports) {
         run_all(dispose);
       }
     };
-  } // (1146:50) 
+  } // (1158:50) 
 
 
   function create_if_block_2(ctx) {
@@ -1328,7 +1400,7 @@ var Select = (function (exports) {
         dispose();
       }
     };
-  } // (1140:6) {#if item.separator}
+  } // (1152:6) {#if item.separator}
 
 
   function create_if_block_1(ctx) {
@@ -1352,7 +1424,7 @@ var Select = (function (exports) {
         dispose();
       }
     };
-  } // (1170:12) {#if multiple}
+  } // (1182:12) {#if multiple}
 
 
   function create_if_block_6(ctx) {
@@ -1391,7 +1463,7 @@ var Select = (function (exports) {
         if (if_block) if_block.d();
       }
     };
-  } // (1172:16) {#if item.id}
+  } // (1184:16) {#if item.id}
 
 
   function create_if_block_7(ctx) {
@@ -1424,7 +1496,7 @@ var Select = (function (exports) {
         if (detaching) detach(i);
       }
     };
-  } // (1182:16) {:else}
+  } // (1194:16) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -1442,7 +1514,7 @@ var Select = (function (exports) {
         if (detaching) detach(t);
       }
     };
-  } // (1180:16) {#if item.id}
+  } // (1192:16) {#if item.id}
 
 
   function create_if_block_5(ctx) {
@@ -1468,7 +1540,7 @@ var Select = (function (exports) {
         if (detaching) detach(t);
       }
     };
-  } // (1187:14) {#if item.desc}
+  } // (1199:14) {#if item.desc}
 
 
   function create_if_block_4(ctx) {
@@ -1498,7 +1570,7 @@ var Select = (function (exports) {
         if (detaching) detach(div);
       }
     };
-  } // (1153:10) {#if item.desc}
+  } // (1165:10) {#if item.desc}
 
 
   function create_if_block_3(ctx) {
@@ -1528,14 +1600,14 @@ var Select = (function (exports) {
         if (detaching) detach(div);
       }
     };
-  } // (1139:4) {#each displayItems as item (item.id)}
+  } // (1151:4) {#each displayItems as item (item.id)}
 
 
   function create_each_block(key_1, ctx) {
     var first;
     var if_block_anchor;
 
-    function select_block_type_2(ctx, dirty) {
+    function select_block_type_3(ctx, dirty) {
       if (
       /*item*/
       ctx[80].separator) return create_if_block_1;
@@ -1547,7 +1619,7 @@ var Select = (function (exports) {
       return create_else_block;
     }
 
-    var current_block_type = select_block_type_2(ctx);
+    var current_block_type = select_block_type_3(ctx);
     var if_block = current_block_type(ctx);
     return {
       key: key_1,
@@ -1564,7 +1636,7 @@ var Select = (function (exports) {
         insert(target, if_block_anchor, anchor);
       },
       p: function p(ctx, dirty) {
-        if (current_block_type === (current_block_type = select_block_type_2(ctx)) && if_block) {
+        if (current_block_type === (current_block_type = select_block_type_3(ctx)) && if_block) {
           if_block.p(ctx, dirty);
         } else {
           if_block.d(1);
@@ -1582,7 +1654,7 @@ var Select = (function (exports) {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1198:4) {#if hasMore}
+  } // (1210:4) {#if hasMore}
 
 
   function create_if_block(ctx) {
@@ -1611,12 +1683,12 @@ var Select = (function (exports) {
   }
 
   function create_fragment(ctx) {
-    var div4;
+    var div5;
     var div2;
     var t0;
     var div0;
     var span;
-    var each_blocks_1 = [];
+    var each_blocks_2 = [];
     var each0_lookup = new Map();
     var div0_class_value;
     var t1;
@@ -1625,18 +1697,22 @@ var Select = (function (exports) {
     var i;
     var i_class_value;
     var t2;
-    var div3;
+    var div4;
     var t3;
-    var t4;
-    var each_blocks = [];
+    var each_blocks_1 = [];
     var each1_lookup = new Map();
+    var t4;
+    var div3;
     var t5;
-    var div3_class_value;
+    var each_blocks = [];
+    var each2_lookup = new Map();
+    var t6;
     var div4_class_value;
+    var div5_class_value;
     var dispose;
     var if_block0 =
     /*typeahead*/
-    ctx[1] && create_if_block_15(ctx);
+    ctx[1] && create_if_block_17(ctx);
     var each_value_2 =
     /*selectedItems*/
     ctx[12];
@@ -1648,34 +1724,31 @@ var Select = (function (exports) {
       );
     };
 
-    for (var _i4 = 0; _i4 < each_value_2.length; _i4 += 1) {
-      var child_ctx = get_each_context_2(ctx, each_value_2, _i4);
+    for (var _i = 0; _i < each_value_2.length; _i += 1) {
+      var child_ctx = get_each_context_2(ctx, each_value_2, _i);
       var key = get_key(child_ctx);
-      each0_lookup.set(key, each_blocks_1[_i4] = create_each_block_2(key, child_ctx));
+      each0_lookup.set(key, each_blocks_2[_i] = create_each_block_2(key, child_ctx));
     }
 
     function select_block_type(ctx, dirty) {
       if (
       /*fetchError*/
-      ctx[17]) return create_if_block_11;
+      ctx[17]) return create_if_block_13;
       if (
       /*activeFetch*/
       ctx[20] && !
       /*fetchingMore*/
-      ctx[16]) return create_if_block_12;
+      ctx[16]) return create_if_block_14;
       if (
       /*actualCount*/
-      ctx[10] === 0) return create_if_block_13;
+      ctx[10] === 0) return create_if_block_15;
     }
 
     var current_block_type = select_block_type(ctx);
     var if_block1 = current_block_type && current_block_type(ctx);
-    var if_block2 =
-    /*multiple*/
-    ctx[21] && create_if_block_8(ctx);
-    var each_value =
-    /*displayItems*/
-    ctx[9];
+    var each_value_1 =
+    /*selectedItems*/
+    ctx[12];
 
     var get_key_1 = function get_key_1(ctx) {
       return (
@@ -1684,28 +1757,47 @@ var Select = (function (exports) {
       );
     };
 
-    for (var _i5 = 0; _i5 < each_value.length; _i5 += 1) {
-      var _child_ctx = get_each_context(ctx, each_value, _i5);
+    for (var _i2 = 0; _i2 < each_value_1.length; _i2 += 1) {
+      var _child_ctx = get_each_context_1(ctx, each_value_1, _i2);
 
       var _key = get_key_1(_child_ctx);
 
-      each1_lookup.set(_key, each_blocks[_i5] = create_each_block(_key, _child_ctx));
+      each1_lookup.set(_key, each_blocks_1[_i2] = create_each_block_1(_key, _child_ctx));
     }
 
-    var if_block3 =
+    var each_value =
+    /*displayItems*/
+    ctx[9];
+
+    var get_key_2 = function get_key_2(ctx) {
+      return (
+        /*item*/
+        ctx[80].id
+      );
+    };
+
+    for (var _i3 = 0; _i3 < each_value.length; _i3 += 1) {
+      var _child_ctx2 = get_each_context(ctx, each_value, _i3);
+
+      var _key2 = get_key_2(_child_ctx2);
+
+      each2_lookup.set(_key2, each_blocks[_i3] = create_each_block(_key2, _child_ctx2));
+    }
+
+    var if_block2 =
     /*hasMore*/
     ctx[14] && create_if_block(ctx);
     return {
       c: function c() {
-        div4 = element("div");
+        div5 = element("div");
         div2 = element("div");
         if (if_block0) if_block0.c();
         t0 = space();
         div0 = element("div");
         span = element("span");
 
-        for (var _i6 = 0; _i6 < each_blocks_1.length; _i6 += 1) {
-          each_blocks_1[_i6].c();
+        for (var _i4 = 0; _i4 < each_blocks_2.length; _i4 += 1) {
+          each_blocks_2[_i4].c();
         }
 
         t1 = space();
@@ -1713,18 +1805,24 @@ var Select = (function (exports) {
         button = element("button");
         i = element("i");
         t2 = space();
-        div3 = element("div");
+        div4 = element("div");
         if (if_block1) if_block1.c();
         t3 = space();
-        if (if_block2) if_block2.c();
-        t4 = space();
 
-        for (var _i7 = 0; _i7 < each_blocks.length; _i7 += 1) {
-          each_blocks[_i7].c();
+        for (var _i5 = 0; _i5 < each_blocks_1.length; _i5 += 1) {
+          each_blocks_1[_i5].c();
         }
 
+        t4 = space();
+        div3 = element("div");
         t5 = space();
-        if (if_block3) if_block3.c();
+
+        for (var _i6 = 0; _i6 < each_blocks.length; _i6 += 1) {
+          each_blocks[_i6].c();
+        }
+
+        t6 = space();
+        if (if_block2) if_block2.c();
         attr(span, "class", "ki-no-click ki-select-selection svelte-1y1l0qo");
         attr(div0, "class", div0_class_value = "form-control " + (
         /*inputVisible*/
@@ -1738,10 +1836,12 @@ var Select = (function (exports) {
         attr(button, "tabindex", "0");
         attr(div1, "class", "input-group-append");
         attr(div2, "class", "input-group");
-        attr(div3, "class", div3_class_value = "dropdown-menu ki-select-popup " + (
+        attr(div3, "tabindex", "-1");
+        attr(div3, "class", "dropdown-divider ki-js-blank");
+        attr(div4, "class", div4_class_value = "dropdown-menu ki-select-popup " + (
         /*popupVisible*/
         ctx[19] ? "show" : "") + " svelte-1y1l0qo");
-        attr(div4, "class", div4_class_value = "ki-select-container " +
+        attr(div5, "class", div5_class_value = "ki-select-container " +
         /*extraClass*/
         ctx[0] + " svelte-1y1l0qo");
         dispose = [listen(div0, "click",
@@ -1752,20 +1852,22 @@ var Select = (function (exports) {
         /*handleToggleKeydown*/
         ctx[27]), listen(button, "click",
         /*handleToggleClick*/
-        ctx[28]), listen(div3, "scroll",
+        ctx[28]), listen(div3, "keydown",
+        /*handleItemKeydown*/
+        ctx[29]), listen(div4, "scroll",
         /*handlePopupScroll*/
         ctx[32])];
       },
       m: function m(target, anchor) {
-        insert(target, div4, anchor);
-        append(div4, div2);
+        insert(target, div5, anchor);
+        append(div5, div2);
         if (if_block0) if_block0.m(div2, null);
         append(div2, t0);
         append(div2, div0);
         append(div0, span);
 
-        for (var _i8 = 0; _i8 < each_blocks_1.length; _i8 += 1) {
-          each_blocks_1[_i8].m(span, null);
+        for (var _i7 = 0; _i7 < each_blocks_2.length; _i7 += 1) {
+          each_blocks_2[_i7].m(span, null);
         }
         /*div0_binding*/
 
@@ -1778,25 +1880,31 @@ var Select = (function (exports) {
         /*button_binding*/
 
         ctx[76](button);
-        append(div4, t2);
-        append(div4, div3);
-        if (if_block1) if_block1.m(div3, null);
-        append(div3, t3);
-        if (if_block2) if_block2.m(div3, null);
-        append(div3, t4);
+        append(div5, t2);
+        append(div5, div4);
+        if (if_block1) if_block1.m(div4, null);
+        append(div4, t3);
 
-        for (var _i9 = 0; _i9 < each_blocks.length; _i9 += 1) {
-          each_blocks[_i9].m(div3, null);
+        for (var _i8 = 0; _i8 < each_blocks_1.length; _i8 += 1) {
+          each_blocks_1[_i8].m(div4, null);
         }
 
-        append(div3, t5);
-        if (if_block3) if_block3.m(div3, null);
-        /*div3_binding*/
+        append(div4, t4);
+        append(div4, div3);
+        append(div4, t5);
 
-        ctx[78](div3);
+        for (var _i9 = 0; _i9 < each_blocks.length; _i9 += 1) {
+          each_blocks[_i9].m(div4, null);
+        }
+
+        append(div4, t6);
+        if (if_block2) if_block2.m(div4, null);
         /*div4_binding*/
 
-        ctx[79](div4);
+        ctx[78](div4);
+        /*div5_binding*/
+
+        ctx[79](div5);
       },
       p: function p(ctx, dirty) {
         if (
@@ -1805,7 +1913,7 @@ var Select = (function (exports) {
           if (if_block0) {
             if_block0.p(ctx, dirty);
           } else {
-            if_block0 = create_if_block_15(ctx);
+            if_block0 = create_if_block_17(ctx);
             if_block0.c();
             if_block0.m(div2, t0);
           }
@@ -1817,7 +1925,7 @@ var Select = (function (exports) {
         var each_value_2 =
         /*selectedItems*/
         ctx[12];
-        each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key, 1, ctx, each_value_2, each0_lookup, span, destroy_block, create_each_block_2, null, get_each_context_2);
+        each_blocks_2 = update_keyed_each(each_blocks_2, dirty, get_key, 1, ctx, each_value_2, each0_lookup, span, destroy_block, create_each_block_2, null, get_each_context_2);
 
         if (dirty[0] &
         /*inputVisible*/
@@ -1843,69 +1951,58 @@ var Select = (function (exports) {
 
           if (if_block1) {
             if_block1.c();
-            if_block1.m(div3, t3);
+            if_block1.m(div4, t3);
           }
         }
 
+        var each_value_1 =
+        /*selectedItems*/
+        ctx[12];
+        each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key_1, 1, ctx, each_value_1, each1_lookup, div4, destroy_block, create_each_block_1, t4, get_each_context_1);
+        var each_value =
+        /*displayItems*/
+        ctx[9];
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key_2, 1, ctx, each_value, each2_lookup, div4, destroy_block, create_each_block, t6, get_each_context);
+
         if (
-        /*multiple*/
-        ctx[21]) {
+        /*hasMore*/
+        ctx[14]) {
           if (if_block2) {
             if_block2.p(ctx, dirty);
           } else {
-            if_block2 = create_if_block_8(ctx);
+            if_block2 = create_if_block(ctx);
             if_block2.c();
-            if_block2.m(div3, t4);
+            if_block2.m(div4, null);
           }
         } else if (if_block2) {
           if_block2.d(1);
           if_block2 = null;
         }
 
-        var each_value =
-        /*displayItems*/
-        ctx[9];
-        each_blocks = update_keyed_each(each_blocks, dirty, get_key_1, 1, ctx, each_value, each1_lookup, div3, destroy_block, create_each_block, t5, get_each_context);
-
-        if (
-        /*hasMore*/
-        ctx[14]) {
-          if (if_block3) {
-            if_block3.p(ctx, dirty);
-          } else {
-            if_block3 = create_if_block(ctx);
-            if_block3.c();
-            if_block3.m(div3, null);
-          }
-        } else if (if_block3) {
-          if_block3.d(1);
-          if_block3 = null;
-        }
-
         if (dirty[0] &
         /*popupVisible*/
-        524288 && div3_class_value !== (div3_class_value = "dropdown-menu ki-select-popup " + (
+        524288 && div4_class_value !== (div4_class_value = "dropdown-menu ki-select-popup " + (
         /*popupVisible*/
         ctx[19] ? "show" : "") + " svelte-1y1l0qo")) {
-          attr(div3, "class", div3_class_value);
+          attr(div4, "class", div4_class_value);
         }
 
         if (dirty[0] &
         /*extraClass*/
-        1 && div4_class_value !== (div4_class_value = "ki-select-container " +
+        1 && div5_class_value !== (div5_class_value = "ki-select-container " +
         /*extraClass*/
         ctx[0] + " svelte-1y1l0qo")) {
-          attr(div4, "class", div4_class_value);
+          attr(div5, "class", div5_class_value);
         }
       },
       i: noop,
       o: noop,
       d: function d(detaching) {
-        if (detaching) detach(div4);
+        if (detaching) detach(div5);
         if (if_block0) if_block0.d();
 
-        for (var _i10 = 0; _i10 < each_blocks_1.length; _i10 += 1) {
-          each_blocks_1[_i10].d();
+        for (var _i10 = 0; _i10 < each_blocks_2.length; _i10 += 1) {
+          each_blocks_2[_i10].d();
         }
         /*div0_binding*/
 
@@ -1919,17 +2016,19 @@ var Select = (function (exports) {
           if_block1.d();
         }
 
-        if (if_block2) if_block2.d();
-
-        for (var _i11 = 0; _i11 < each_blocks.length; _i11 += 1) {
-          each_blocks[_i11].d();
+        for (var _i11 = 0; _i11 < each_blocks_1.length; _i11 += 1) {
+          each_blocks_1[_i11].d();
         }
 
-        if (if_block3) if_block3.d();
-        /*div3_binding*/
+        for (var _i12 = 0; _i12 < each_blocks.length; _i12 += 1) {
+          each_blocks[_i12].d();
+        }
+
+        if (if_block2) if_block2.d();
+        /*div4_binding*/
 
         ctx[78](null);
-        /*div4_binding*/
+        /*div5_binding*/
 
         ctx[79](null);
         run_all(dispose);
@@ -2861,13 +2960,13 @@ var Select = (function (exports) {
       });
     }
 
-    function div3_binding($$value) {
+    function div4_binding($$value) {
       binding_callbacks[$$value ? "unshift" : "push"](function () {
         $$invalidate(7, popup = $$value);
       });
     }
 
-    function div4_binding($$value) {
+    function div5_binding($$value) {
       binding_callbacks[$$value ? "unshift" : "push"](function () {
         $$invalidate(3, container = $$value);
       });
@@ -2897,7 +2996,7 @@ var Select = (function (exports) {
       }
     };
 
-    return [extraClass, typeahead, query, container, input, selectionDisplay, toggle, popup, more, displayItems, actualCount, selection, selectedItems, showFetching, hasMore, tooShort, fetchingMore, fetchError, inputVisible, popupVisible, activeFetch, multiple, handleBlur, handleInputBlur, handleInputKeypress, handleInputKeydown, handleInputKeyup, handleToggleKeydown, handleToggleClick, handleItemKeydown, handleItemKeyup, handleItemClick, handlePopupScroll, fetcher, real, remote, queryMinLen, delay, selectItem, mounted, fixedItems, items, offsetCount, fetched, previousFetch, previousQuery, wasDown, isSyncToReal, _focusingInput, passEvents, inlineFetcher, fetchItems, resolveItems, cancelFetch, fetchMoreIfneeded, clearQuery, openInput, closeInput, openPopup, closePopup, selectItemImpl, selectElement, containsElement, syncFromReal, syncToReal, setupRemote, inputKeypressHandlers, inputKeydownHandlers, inputKeyupHandlers, toggleKeydownHandlers, focusPreviousItem, itemKeydownHandlers, itemKeyupHandlers, input_1_input_handler, input_1_binding, div0_binding, button_binding, div_binding, div3_binding, div4_binding];
+    return [extraClass, typeahead, query, container, input, selectionDisplay, toggle, popup, more, displayItems, actualCount, selection, selectedItems, showFetching, hasMore, tooShort, fetchingMore, fetchError, inputVisible, popupVisible, activeFetch, multiple, handleBlur, handleInputBlur, handleInputKeypress, handleInputKeydown, handleInputKeyup, handleToggleKeydown, handleToggleClick, handleItemKeydown, handleItemKeyup, handleItemClick, handlePopupScroll, fetcher, real, remote, queryMinLen, delay, selectItem, mounted, fixedItems, items, offsetCount, fetched, previousFetch, previousQuery, wasDown, isSyncToReal, _focusingInput, passEvents, inlineFetcher, fetchItems, resolveItems, cancelFetch, fetchMoreIfneeded, clearQuery, openInput, closeInput, openPopup, closePopup, selectItemImpl, selectElement, containsElement, syncFromReal, syncToReal, setupRemote, inputKeypressHandlers, inputKeydownHandlers, inputKeyupHandlers, toggleKeydownHandlers, focusPreviousItem, itemKeydownHandlers, itemKeyupHandlers, input_1_input_handler, input_1_binding, div0_binding, button_binding, div_binding, div4_binding, div5_binding];
   }
 
   var Select =
