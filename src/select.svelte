@@ -228,7 +228,11 @@
 
              showFetching = false;
 
-             toggle.focus();
+             if (inputVisible) {
+                 input.focus();
+             } else {
+                 selectinDisplay.focus();
+             }
              openPopup();
          }
      });
@@ -305,6 +309,9 @@
          return;
      }
 
+     // TODO KI passing events *DOES NOT* work
+//     passEvent = null;
+
      let wasVisible = inputVisible;
      inputVisible = true;
 
@@ -343,15 +350,27 @@
      }
  }
 
+ function focusSelectionDisplay(wasInputVisible) {
+     if (wasInputVisible) {
+         setTimeout(function() {
+             selectionDisplay.focus();
+         });
+     } else {
+         selectionDisplay.focus();
+     }
+ }
+
  function closeInput(focusToggle) {
      if (!typeahead) {
          return;
      }
 
+     let wasInputVisible = inputVisible;
      focusingInput = null;
      inputVisible = false;
+
      if (focusToggle) {
-         toggle.focus();
+         focusSelectionDisplay(wasInputVisible);
      }
  }
 
@@ -366,7 +385,11 @@
  function closePopup(focusToggle) {
      popupVisible = false;
      if (focusToggle) {
-         toggle.focus();
+         if (inputVisible) {
+             input.focus();
+         } else {
+             selectionDisplay.focus();
+         }
      }
  }
 
@@ -605,7 +628,7 @@
          cancelFetch();
          clearQuery();
          closePopup(true);
-         closeInput(false);
+         closeInput(true);
      },
      Tab: nop,
  };
@@ -659,7 +682,7 @@
          cancelFetch();
          clearQuery();
          closePopup(false);
-         closeInput(false);
+         closeInput(true);
      },
      Tab: nop,
      // skip "meta" keys from triggering search
@@ -690,7 +713,7 @@
      }
 
      if (!next) {
-         next = toggle;
+         next = inputVisible ? input : selectionDisplay;
      }
      if (next) {
          next.focus();
@@ -733,14 +756,22 @@
          event.preventDefault();
      },
      Enter: function(event) {
-         selectElement(event.target)
-         event.preventDefault();
+         if (!hasModifier(event)) {
+             selectElement(event.target);
+             event.preventDefault();
+         }
+     },
+     Space: function(event) {
+         if (!hasModifier(event)) {
+             selectElement(event.target);
+             event.preventDefault();
+         }
      },
      Escape: function(event) {
          cancelFetch();
          clearQuery();
          closePopup(true);
-         closeInput(false);
+         closeInput(true);
      },
      // allow "meta" keys to navigate in items
      PageUp: nop,
@@ -751,7 +782,7 @@
          if (inputVisible) {
              input.focus();
          } else {
-             toggle.focus();
+             selectionDisplay.focus();
          }
          event.preventDefault();
      },
@@ -824,7 +855,7 @@
  ////////////////////////////////////////////////////////////
  //
  function handleEvent(code, handlers, event) {
-//     console.log(event);
+     console.debug(event);
      (handlers[code] || handlers.base)(event);
  }
 
@@ -845,24 +876,23 @@
  }
 
  function handleInputKeypress(event) {
-     handleEvent(event.key, inputKeypressHandlers, event);
+     handleEvent(event.code, inputKeypressHandlers, event);
  }
 
  function handleInputKeydown(event) {
-     handleEvent(event.key, inputKeydownHandlers, event);
+     handleEvent(event.code, inputKeydownHandlers, event);
  }
 
  function handleInputKeyup(event) {
-     handleEvent(event.key, inputKeyupHandlers, event);
+     handleEvent(event.code, inputKeyupHandlers, event);
  }
 
  function handleToggleKeydown(event) {
-     handleEvent(event.key, toggleKeydownHandlers, event);
+     handleEvent(event.code, toggleKeydownHandlers, event);
  }
 
  function handleToggleClick(event) {
      if (event.button === 0 && !hasModifier(event)) {
-         toggle.focus();
          if (popupVisible) {
              closePopup(false);
          } else {
@@ -873,11 +903,11 @@
  }
 
  function handleItemKeydown(event) {
-     handleEvent(event.key, itemKeydownHandlers, event);
+     handleEvent(event.code, itemKeydownHandlers, event);
  }
 
  function handleItemKeyup(event) {
-     handleEvent(event.key, itemKeyupHandlers, event);
+     handleEvent(event.code, itemKeyupHandlers, event);
  }
 
  function handleItemClick(event) {
@@ -908,9 +938,13 @@
  const META_KEYS = {
      Control: true,
      Shift: true,
+     Alt: true,
      AltGraph: true,
      Meta: true,
      ContextMenu: true,
+     PrintScreen: true,
+     Pause: true,
+     CapsLock: true,
      // Ignore function keys
      F1: true,
      F2: true,
@@ -940,7 +974,7 @@
  }
 
  function isValidKey(event) {
-     return !META_KEYS[event.key];
+     return !(META_KEYS[event.key] || META_KEYS[event.code])
  }
 
  // https://stackoverflow.com/questions/596481/is-it-possible-to-simulate-key-press-events-programmatically
@@ -1058,7 +1092,10 @@
     <div class="form-control {inputVisible ? 'd-none' : ''}"
          tabindex="0"
          bind:this={selectionDisplay}
+         on:blur={handleBlur}
+         on:keydown={handleToggleKeydown}
          on:click={handleToggleClick} >
+
       <span class="ki-no-click ki-select-selection d-flex">
         {#each selectedItems as item, index (item.id)}
           <span class="ki-no-click ki-select-selected-item {item.id ? 'text-dark' : 'text-muted'}">{index > 0 ? ', ' : ''}{item.text}</span>
@@ -1069,7 +1106,7 @@
     <div class="input-group-append">
       <button class="btn btn-outline-secondary"
               type="button"
-              tabindex="0"
+              tabindex="-1"
               bind:this={toggle}
               on:blur={handleBlur}
               on:keydown={handleToggleKeydown}
@@ -1104,49 +1141,52 @@
       </div>
     {/if}
 
-    {#each selectedItems as item, index (item.id)}
-      {#if item.id}
-        <div tabindex=1
-             class="ki-js-item dropdown-item ki-select-item"
-             data-id="{item.id}"
-             data-selection="true"
-             on:blur={handleBlur}
-             on:click={handleItemClick}
-             on:keydown={handleItemKeydown}
-             on:keyup={handleItemKeyup}>
+    {#if typeahead}
+      {#each selectedItems as item, index (item.id)}
+        {#if item.id}
+          <div tabindex=1
+               class="ki-js-item dropdown-item ki-select-item"
+               data-id="{item.id}"
+               data-selection="true"
+               on:blur={handleBlur}
+               on:click={handleItemClick}
+               on:keydown={handleItemKeydown}
+               on:keyup={handleItemKeyup}>
 
-          <div class="ki-no-click">
-            {#if multiple}
-              <div class="d-inline-block align-top">
-                {#if item.id}
-                  <i class="far fa-check-square"></i>
-                {/if}
-              </div>
-            {/if}
-
-            <div class="d-inline-block">
-              <div class="ki-no-click">
-                {#if item.id}
-                  {item.text}
-                {:else}
-                  {translate('clear')}
-                {/if}
-              </div>
-
-              {#if item.desc}
-                <div class="ki-no-click text-muted">
-                  {item.desc}
+            <div class="ki-no-click">
+              {#if multiple}
+                <div class="d-inline-block align-top">
+                  {#if item.id}
+                    <i class="far fa-check-square"></i>
+                  {/if}
                 </div>
               {/if}
+
+              <div class="d-inline-block">
+                <div class="ki-no-click">
+                  {#if item.id}
+                    {item.text}
+                  {:else}
+                    {translate('clear')}
+                  {/if}
+                </div>
+
+                {#if item.desc}
+                  <div class="ki-no-click text-muted">
+                    {item.desc}
+                  </div>
+                {/if}
+              </div>
             </div>
           </div>
-        </div>
-      {/if}
-    {/each}
-    <div tabindex="-1"
-         class="dropdown-divider ki-js-blank"
-         on:keydown={handleItemKeydown}>
-    </div>
+        {/if}
+      {/each}
+
+      <div tabindex="-1"
+           class="dropdown-divider ki-js-blank"
+           on:keydown={handleItemKeydown}>
+      </div>
+    {/if}
 
     {#each displayItems as item (item.id)}
       {#if item.separator}
