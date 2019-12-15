@@ -985,6 +985,10 @@
      position: relative;
  }
  .ki-select-selection {
+     width: 100%;
+     height: 100%;
+ }
+ .ki-select-selected-item {
      white-space: nowrap;
      overflow: hidden;
      word-break: break-all;
@@ -1001,10 +1005,6 @@
      padding-left: 0.5rem;
      padding-right: 0.5rem;
 */
- }
- .ki-select-selection {
-     width: 100%;
-     height: 100%;
  }
  .ki-select-item {
      padding-left: 0.5rem;
@@ -1036,7 +1036,7 @@
 
 <!-- ------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------ -->
-<div class="ki-select-container {extraClass}"
+<div class="ki-select-container form-control p-0 border-0 {extraClass}"
      bind:this={container}>
 
   <div class="input-group">
@@ -1059,9 +1059,9 @@
          tabindex="0"
          bind:this={selectionDisplay}
          on:click={handleToggleClick} >
-      <span class="ki-no-click ki-select-selection">
+      <span class="ki-no-click ki-select-selection d-flex">
         {#each selectedItems as item, index (item.id)}
-          <span class="ki-no-click {item.id ? 'text-dark' : 'text-muted'}">{index > 0 ? ', ' : ''}{item.text}</span>
+          <span class="ki-no-click ki-select-selected-item {item.id ? 'text-dark' : 'text-muted'}">{index > 0 ? ', ' : ''}{item.text}</span>
         {/each}
       </span>
     </div>

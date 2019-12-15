@@ -657,7 +657,7 @@ var Select = (function (exports) {
         input_1 = element("input");
         attr(input_1, "class", input_1_class_value = "ki-select-input form-control " + (
         /*inputVisible*/
-        ctx[18] ? "" : "d-none") + " svelte-1y1l0qo");
+        ctx[18] ? "" : "d-none") + " svelte-11aflex");
         attr(input_1, "autocomplete", "new-password");
         attr(input_1, "autocorrect", "off");
         attr(input_1, "autocapitalize", "off");
@@ -688,7 +688,7 @@ var Select = (function (exports) {
         /*inputVisible*/
         262144 && input_1_class_value !== (input_1_class_value = "ki-select-input form-control " + (
         /*inputVisible*/
-        ctx[18] ? "" : "d-none") + " svelte-1y1l0qo")) {
+        ctx[18] ? "" : "d-none") + " svelte-11aflex")) {
           attr(input_1, "class", input_1_class_value);
         }
 
@@ -731,9 +731,9 @@ var Select = (function (exports) {
         span = element("span");
         t0 = text(t0_value);
         t1 = text(t1_value);
-        attr(span, "class", span_class_value = "ki-no-click " + (
+        attr(span, "class", span_class_value = "ki-no-click ki-select-selected-item " + (
         /*item*/
-        ctx[80].id ? "text-dark" : "text-muted") + " svelte-1y1l0qo");
+        ctx[80].id ? "text-dark" : "text-muted") + " svelte-11aflex");
         this.first = span;
       },
       m: function m(target, anchor) {
@@ -755,9 +755,9 @@ var Select = (function (exports) {
 
         if (dirty[0] &
         /*selectedItems*/
-        4096 && span_class_value !== (span_class_value = "ki-no-click " + (
+        4096 && span_class_value !== (span_class_value = "ki-no-click ki-select-selected-item " + (
         /*item*/
-        ctx[80].id ? "text-dark" : "text-muted") + " svelte-1y1l0qo")) {
+        ctx[80].id ? "text-dark" : "text-muted") + " svelte-11aflex")) {
           attr(span, "class", span_class_value);
         }
       },
@@ -785,7 +785,7 @@ var Select = (function (exports) {
         div = element("div");
         if_block.c();
         attr(div, "tabindex", "-1");
-        attr(div, "class", "dropdown-item text-muted ki-select-item svelte-1y1l0qo");
+        attr(div, "class", "dropdown-item text-muted ki-select-item svelte-11aflex");
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -832,7 +832,7 @@ var Select = (function (exports) {
         /*fetchError*/
         ctx[17]);
         attr(div, "tabindex", "-1");
-        attr(div, "class", "dropdown-item text-danger ki-select-item svelte-1y1l0qo");
+        attr(div, "class", "dropdown-item text-danger ki-select-item svelte-11aflex");
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -924,11 +924,11 @@ var Select = (function (exports) {
         if_block1.c();
         t1 = space();
         if (if_block2) if_block2.c();
-        attr(div0, "class", "ki-no-click svelte-1y1l0qo");
+        attr(div0, "class", "ki-no-click svelte-11aflex");
         attr(div1, "class", "d-inline-block");
-        attr(div2, "class", "ki-no-click svelte-1y1l0qo");
+        attr(div2, "class", "ki-no-click svelte-11aflex");
         attr(div3, "tabindex", "1");
-        attr(div3, "class", "ki-js-item dropdown-item ki-select-item svelte-1y1l0qo");
+        attr(div3, "class", "ki-js-item dropdown-item ki-select-item svelte-11aflex");
         attr(div3, "data-id", div3_data_id_value =
         /*item*/
         ctx[80].id);
@@ -1124,7 +1124,7 @@ var Select = (function (exports) {
       c: function c() {
         div = element("div");
         t = text(t_value);
-        attr(div, "class", "ki-no-click text-muted svelte-1y1l0qo");
+        attr(div, "class", "ki-no-click text-muted svelte-11aflex");
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -1226,9 +1226,9 @@ var Select = (function (exports) {
         if_block1.c();
         t1 = space();
         if (if_block2) if_block2.c();
-        attr(div0, "class", "ki-no-click svelte-1y1l0qo");
+        attr(div0, "class", "ki-no-click svelte-11aflex");
         attr(div1, "class", "d-inline-block");
-        attr(div2, "class", "ki-no-click svelte-1y1l0qo");
+        attr(div2, "class", "ki-no-click svelte-11aflex");
         attr(div3, "tabindex", "1");
         attr(div3, "class", div3_class_value = "ki-js-item dropdown-item ki-select-item " + (!
         /*item*/
@@ -1236,7 +1236,7 @@ var Select = (function (exports) {
         /*selection*/
         ctx[11][
         /*item*/
-        ctx[80].id] ? "alert-primary" : "") + " svelte-1y1l0qo");
+        ctx[80].id] ? "alert-primary" : "") + " svelte-11aflex");
         attr(div3, "data-id", div3_data_id_value =
         /*item*/
         ctx[80].id);
@@ -1312,7 +1312,7 @@ var Select = (function (exports) {
         /*selection*/
         ctx[11][
         /*item*/
-        ctx[80].id] ? "alert-primary" : "") + " svelte-1y1l0qo")) {
+        ctx[80].id] ? "alert-primary" : "") + " svelte-11aflex")) {
           attr(div3, "class", div3_class_value);
         }
 
@@ -1356,7 +1356,7 @@ var Select = (function (exports) {
         t0 = text(t0_value);
         t1 = space();
         if (if_block) if_block.c();
-        attr(div0, "class", "ki-no-click svelte-1y1l0qo");
+        attr(div0, "class", "ki-no-click svelte-11aflex");
         attr(div1, "tabindex", "-1");
         attr(div1, "class", "dropdown-item text-muted ki-js-blank");
         dispose = listen(div1, "keydown",
@@ -1553,7 +1553,7 @@ var Select = (function (exports) {
       c: function c() {
         div = element("div");
         t = text(t_value);
-        attr(div, "class", "ki-no-click text-muted svelte-1y1l0qo");
+        attr(div, "class", "ki-no-click text-muted svelte-11aflex");
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -1583,7 +1583,7 @@ var Select = (function (exports) {
       c: function c() {
         div = element("div");
         t = text(t_value);
-        attr(div, "class", "ki-no-click text-muted svelte-1y1l0qo");
+        attr(div, "class", "ki-no-click text-muted svelte-11aflex");
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -1823,14 +1823,14 @@ var Select = (function (exports) {
 
         t6 = space();
         if (if_block2) if_block2.c();
-        attr(span, "class", "ki-no-click ki-select-selection svelte-1y1l0qo");
+        attr(span, "class", "ki-no-click ki-select-selection d-flex svelte-11aflex");
         attr(div0, "class", div0_class_value = "form-control " + (
         /*inputVisible*/
         ctx[18] ? "d-none" : ""));
         attr(div0, "tabindex", "0");
         attr(i, "class", i_class_value = "text-dark " + (
         /*showFetching*/
-        ctx[13] ? CARET_FETCHING : CARET_DOWN) + " svelte-1y1l0qo");
+        ctx[13] ? CARET_FETCHING : CARET_DOWN) + " svelte-11aflex");
         attr(button, "class", "btn btn-outline-secondary");
         attr(button, "type", "button");
         attr(button, "tabindex", "0");
@@ -1840,10 +1840,10 @@ var Select = (function (exports) {
         attr(div3, "class", "dropdown-divider ki-js-blank");
         attr(div4, "class", div4_class_value = "dropdown-menu ki-select-popup " + (
         /*popupVisible*/
-        ctx[19] ? "show" : "") + " svelte-1y1l0qo");
-        attr(div5, "class", div5_class_value = "ki-select-container " +
+        ctx[19] ? "show" : "") + " svelte-11aflex");
+        attr(div5, "class", div5_class_value = "ki-select-container form-control p-0 border-0 " +
         /*extraClass*/
-        ctx[0] + " svelte-1y1l0qo");
+        ctx[0] + " svelte-11aflex");
         dispose = [listen(div0, "click",
         /*handleToggleClick*/
         ctx[28]), listen(button, "blur",
@@ -1939,7 +1939,7 @@ var Select = (function (exports) {
         /*showFetching*/
         8192 && i_class_value !== (i_class_value = "text-dark " + (
         /*showFetching*/
-        ctx[13] ? CARET_FETCHING : CARET_DOWN) + " svelte-1y1l0qo")) {
+        ctx[13] ? CARET_FETCHING : CARET_DOWN) + " svelte-11aflex")) {
           attr(i, "class", i_class_value);
         }
 
@@ -1983,15 +1983,15 @@ var Select = (function (exports) {
         /*popupVisible*/
         524288 && div4_class_value !== (div4_class_value = "dropdown-menu ki-select-popup " + (
         /*popupVisible*/
-        ctx[19] ? "show" : "") + " svelte-1y1l0qo")) {
+        ctx[19] ? "show" : "") + " svelte-11aflex")) {
           attr(div4, "class", div4_class_value);
         }
 
         if (dirty[0] &
         /*extraClass*/
-        1 && div5_class_value !== (div5_class_value = "ki-select-container " +
+        1 && div5_class_value !== (div5_class_value = "ki-select-container form-control p-0 border-0 " +
         /*extraClass*/
-        ctx[0] + " svelte-1y1l0qo")) {
+        ctx[0] + " svelte-11aflex")) {
           attr(div5, "class", div5_class_value);
         }
       },
