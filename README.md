@@ -4,7 +4,8 @@ Simple select widget implemented using Svelte
 
 ## Styling
 
-- This is hardcoded to use bootstrap 4
+- Uses bootstrap 4
+- Uses Fontawesome
 
 ## Fetures
 
