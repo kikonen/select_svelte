@@ -382,6 +382,12 @@
      });
 
      if (!item) {
+         item = selectedItems.find(function(item) {
+             return item.id.toString() === id;
+         });
+     }
+
+     if (!item) {
          console.error("MISSING item=" + id);
          return;
      }
@@ -416,6 +422,12 @@
          closeInput(false);
      }
 
+     let newSelectedItems = [];
+     Object.values(selection).forEach(function (item) {
+         newSelectedItems.push(item);
+     });
+     selectedItems = newSelectedItems;
+
      syncToReal(selection);
      real.dispatchEvent(new CustomEvent('select-select', { detail: selection }));
  }
@@ -428,6 +440,11 @@
 
  function selectElement(el) {
      selectItemImpl(el.dataset.id);
+     if (el.dataset.selection) {
+         if (!focusNextItem(el)) {
+             focusPreviousItem(el);
+         }
+     }
  }
 
  function containsElement(el) {
@@ -465,6 +482,13 @@
          newSelection[item.id] = item;
      }
      selection = newSelection;
+
+     let newSelectedItems = [];
+     Object.values(selection).forEach(function (item) {
+         newSelectedItems.push(item);
+     });
+
+     selectedItems = newSelectedItems;
  }
 
  function syncToReal(selection) {
@@ -472,7 +496,7 @@
 
      // Insert missing values
      if (remote) {
-         Object.values(selection).forEach(function(item) {
+         selectedItems.forEach(function(item) {
              let el = real.querySelector('option[value="' + item.id.trim() + '"]');
              if (!el) {
                  let el = document.createElement('option');
@@ -653,6 +677,47 @@
      ContextMenu: nop,
  };
 
+ function focusPreviousItem(item) {
+     let next = event.target.previousElementSibling;
+
+     if (next) {
+         while (next && next.classList.contains('ki-js-blank')) {
+             next = next.previousElementSibling;
+         }
+         if (next && !next.classList.contains('ki-js-item')) {
+             next = null;
+         }
+     }
+
+     if (!next) {
+         next = toggle;
+     }
+     if (next) {
+         next.focus();
+     }
+
+     return next;
+ }
+
+ function focusNextItem(item) {
+     let next = item.nextElementSibling;
+
+     if (next) {
+         while (next && next.classList.contains('ki-js-blank')) {
+             next = next.nextElementSibling;
+         }
+
+         if (next && !next.classList.contains('ki-js-item')) {
+             next = null;
+         }
+     }
+
+     if (next) {
+         next.focus();
+     }
+     return next;
+ }
+
  let itemKeydownHandlers = {
      base: function(event) {
          if (isValidKey(event)) {
@@ -660,40 +725,11 @@
          }
      },
      ArrowDown: function(event) {
-         let next = event.target.nextElementSibling;
-
-         if (next) {
-             while (next && next.classList.contains('ki-js-blank')) {
-                 next = next.nextElementSibling;
-             }
-
-             if (next && !next.classList.contains('ki-js-item')) {
-                 next = null;
-             }
-         }
-
-         if (next) {
-             next.focus();
-         }
+         focusNextItem(event.target);
          event.preventDefault();
      },
      ArrowUp: function(event) {
-         let next = event.target.previousElementSibling;
-
-         if (next) {
-             while (next && next.classList.contains('ki-js-blank')) {
-                 next = next.previousElementSibling;
-             }
-             if (next && !next.classList.contains('ki-js-item')) {
-                 next = null;
-             }
-         }
-
-         if (next) {
-             next.focus();
-         } else {
-             input.focus();
-         }
+         focusPreviousItem(event.target);
          event.preventDefault();
      },
      Enter: function(event) {
@@ -1024,7 +1060,7 @@
          bind:this={selectionDisplay}
          on:click={handleToggleClick} >
       <span class="ki-no-click ki-select-selection">
-        {#each Object.values(selection) as item, index (item.id)}
+        {#each selectedItems as item, index (item.id)}
           <span class="ki-no-click {item.id ? 'text-dark' : 'text-muted'}">{index > 0 ? ', ' : ''}{item.text}</span>
         {/each}
       </span>
@@ -1068,6 +1104,38 @@
       </div>
     {/if}
 
+    {#if multiple}
+      {#each selectedItems as item, index (item.id)}
+        {#if item.id}
+          <div tabindex=1
+               class="ki-js-item dropdown-item ki-select-item"
+               data-id="{item.id}"
+               data-selection="true"
+               on:blur={handleBlur}
+               on:click={handleItemClick}
+               on:keydown={handleItemKeydown}
+               on:keyup={handleItemKeyup}>
+
+            <div class="ki-no-click">
+              <i class="far fa-check-square"></i>
+              {item.text}
+            </div>
+
+            {#if item.desc}
+              <div class="ki-no-click text-muted">
+                {item.desc}
+              </div>
+            {/if}
+          </div>
+        {/if}
+      {/each}
+
+      <div tabindex="-1"
+           class="dropdown-divider ki-js-blank"
+           on:keydown={handleItemKeydown}>
+      </div>
+    {/if}
+
     {#each displayItems as item (item.id)}
       {#if item.separator}
         <div tabindex="-1"
@@ -1099,14 +1167,30 @@
              on:keyup={handleItemKeyup}>
 
           <div class="ki-no-click">
-            {item.id ? (item.display_text || item.text) : translate('clear')}
-          </div>
+            {#if multiple}
+              <div class="d-inline-block align-top">
+                {#if item.id}
+                  <i class="far {selection[item.id] ? 'fa-check-square' : 'fa-square'}"></i>
+                {/if}
+              </div>
+            {/if}
 
-          {#if item.desc}
-            <div class="ki-no-click text-muted">
-              {item.desc}
+            <div class="d-inline-block">
+              <div class="ki-no-click">
+                {#if item.id}
+                  {item.text}
+                {:else}
+                  {translate('clear')}
+                {/if}
+              </div>
+
+              {#if item.desc}
+                <div class="ki-no-click text-muted">
+                  {item.desc}
+                </div>
+              {/if}
             </div>
-          {/if}
+          </div>
         </div>
       {/if}
     {/each}
