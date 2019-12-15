@@ -301,10 +301,28 @@
      previousQuery = null;
  }
 
- let focusingInput = null;
+ let activeFocusRequest = null;
  let passEvents = null;
 
- function openInput(focusInput, passEvent) {
+ function focusTarget(target) {
+     console.trace("request_Focus", target);
+     activeFocusRequest = null;
+
+     let handler = function() {
+         console.log("HANDLE: request_Focus", target, activeFocusRequest);
+         if (activeFocusRequest === handler) {
+             console.log("HANDLE_HIT: request_Focus", target);
+             activeFocusRequest = null;
+             target.focus();
+         } else {
+             console.log("HANDLE_MISS: request_Focus", target);
+         }
+     }
+     setTimeout(handler);
+     activeFocusRequest = handler;
+ }
+
+ function openInput(focus, passEvent) {
      if (!typeahead) {
          return;
      }
@@ -315,62 +333,41 @@
      let wasVisible = inputVisible;
      inputVisible = true;
 
-     if (!focusInput) {
+     if (!focus) {
          return;
      }
 
-     if (wasVisible) {
-         input.focus();
-     } else {
+     focusTarget(input);
+
+     if (!wasVisible) {
          if (passEvent) {
              passEvents = passEvents || [];
              // NOTE KI ensure event is received by *input*, not other random target
              passEvent.preventDefault();
              passEvents.push(passEvent);
          }
-
-         if (!focusingInput) {
-             focusingInput = function() {
-                 if (focusingInput) {
-                     focusingInput = null;
-                     input.focus();
-
-                     if (passEvents) {
-                         passEvents.forEach(function(event) {
-                             setTimeout(function() {
-                                 sendKeyPress(input, event);
-                             });
-                         });
-                         passEvents = null;
-                     }
-                 }
-             }
-             setTimeout(focusingInput);
-         }
-     }
- }
-
- function focusSelectionDisplay(wasInputVisible) {
-     if (wasInputVisible) {
-         setTimeout(function() {
-             selectionDisplay.focus();
-         });
-     } else {
-         selectionDisplay.focus();
      }
  }
 
  function closeInput(focusToggle) {
+     console.trace("CLOSE_INPUT", focusToggle);
+
      if (!typeahead) {
          return;
      }
 
-     let wasInputVisible = inputVisible;
-     focusingInput = null;
-     inputVisible = false;
+     let wasVisible = inputVisible;
+     if (wasVisible) {
+         activeFocusRequest = null;
+         inputVisible = false;
+     }
 
      if (focusToggle) {
-         focusSelectionDisplay(wasInputVisible);
+         focusTarget(selectionDisplay);
+     } else {
+         if (wasVisible) {
+             toggle.focus();
+         }
      }
  }
 

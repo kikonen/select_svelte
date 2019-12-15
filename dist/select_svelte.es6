@@ -358,7 +358,7 @@ function get_each_context_2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (1077:4) {#if typeahead}
+// (1074:4) {#if typeahead}
 function create_if_block_18(ctx) {
 	let input_1;
 	let input_1_class_value;
@@ -403,7 +403,7 @@ function create_if_block_18(ctx) {
 	};
 }
 
-// (1100:8) {#each selectedItems as item, index (item.id)}
+// (1097:8) {#each selectedItems as item, index (item.id)}
 function create_each_block_2(key_1, ctx) {
 	let span;
 	let t0_value = (/*index*/ ctx[85] > 0 ? ", " : "") + "";
@@ -441,7 +441,7 @@ function create_each_block_2(key_1, ctx) {
 	};
 }
 
-// (1134:32) 
+// (1131:32) 
 function create_if_block_16(ctx) {
 	let div;
 
@@ -484,12 +484,12 @@ function create_if_block_16(ctx) {
 	};
 }
 
-// (1128:43) 
+// (1125:43) 
 function create_if_block_15(ctx) {
 	return { c: noop, m: noop, p: noop, d: noop };
 }
 
-// (1123:4) {#if fetchError}
+// (1120:4) {#if fetchError}
 function create_if_block_14(ctx) {
 	let div;
 	let t;
@@ -514,7 +514,7 @@ function create_if_block_14(ctx) {
 	};
 }
 
-// (1138:8) {:else}
+// (1135:8) {:else}
 function create_else_block_3(ctx) {
 	let t_value = translate("no_results") + "";
 	let t;
@@ -533,7 +533,7 @@ function create_else_block_3(ctx) {
 	};
 }
 
-// (1136:8) {#if tooShort }
+// (1133:8) {#if tooShort }
 function create_if_block_17(ctx) {
 	let t_value = translate("too_short") + "";
 	let t;
@@ -552,7 +552,7 @@ function create_if_block_17(ctx) {
 	};
 }
 
-// (1144:4) {#if typeahead}
+// (1141:4) {#if typeahead}
 function create_if_block_8(ctx) {
 	let each_blocks = [];
 	let each_1_lookup = new Map();
@@ -604,7 +604,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (1146:8) {#if item.id}
+// (1143:8) {#if item.id}
 function create_if_block_9(ctx) {
 	let div3;
 	let div2;
@@ -715,7 +715,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (1157:14) {#if multiple}
+// (1154:14) {#if multiple}
 function create_if_block_12(ctx) {
 	let div;
 	let if_block = /*item*/ ctx[81].id && create_if_block_13();
@@ -749,7 +749,7 @@ function create_if_block_12(ctx) {
 	};
 }
 
-// (1159:18) {#if item.id}
+// (1156:18) {#if item.id}
 function create_if_block_13(ctx) {
 	let i;
 
@@ -767,7 +767,7 @@ function create_if_block_13(ctx) {
 	};
 }
 
-// (1169:18) {:else}
+// (1166:18) {:else}
 function create_else_block_2(ctx) {
 	let t_value = translate("clear") + "";
 	let t;
@@ -786,7 +786,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (1167:18) {#if item.id}
+// (1164:18) {#if item.id}
 function create_if_block_11(ctx) {
 	let t_value = /*item*/ ctx[81].text + "";
 	let t;
@@ -807,7 +807,7 @@ function create_if_block_11(ctx) {
 	};
 }
 
-// (1174:16) {#if item.desc}
+// (1171:16) {#if item.desc}
 function create_if_block_10(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[81].desc + "";
@@ -832,7 +832,7 @@ function create_if_block_10(ctx) {
 	};
 }
 
-// (1145:6) {#each selectedItems as item, index (item.id)}
+// (1142:6) {#each selectedItems as item, index (item.id)}
 function create_each_block_1(key_1, ctx) {
 	let first;
 	let if_block_anchor;
@@ -874,7 +874,7 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (1212:6) {:else}
+// (1209:6) {:else}
 function create_else_block(ctx) {
 	let div3;
 	let div2;
@@ -995,7 +995,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (1198:50) 
+// (1195:50) 
 function create_if_block_2(ctx) {
 	let div1;
 	let div0;
@@ -1048,7 +1048,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (1192:6) {#if item.separator}
+// (1189:6) {#if item.separator}
 function create_if_block_1(ctx) {
 	let div;
 	let dispose;
@@ -1071,7 +1071,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (1222:12) {#if multiple}
+// (1219:12) {#if multiple}
 function create_if_block_6(ctx) {
 	let div;
 	let if_block = /*item*/ ctx[81].id && create_if_block_7(ctx);
@@ -1107,7 +1107,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (1224:16) {#if item.id}
+// (1221:16) {#if item.id}
 function create_if_block_7(ctx) {
 	let i;
 	let i_class_value;
@@ -1136,7 +1136,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (1234:16) {:else}
+// (1231:16) {:else}
 function create_else_block_1(ctx) {
 	let t_value = translate("clear") + "";
 	let t;
@@ -1155,7 +1155,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (1232:16) {#if item.id}
+// (1229:16) {#if item.id}
 function create_if_block_5(ctx) {
 	let t_value = /*item*/ ctx[81].text + "";
 	let t;
@@ -1176,7 +1176,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (1239:14) {#if item.desc}
+// (1236:14) {#if item.desc}
 function create_if_block_4(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[81].desc + "";
@@ -1201,7 +1201,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (1205:10) {#if item.desc}
+// (1202:10) {#if item.desc}
 function create_if_block_3(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[81].desc + "";
@@ -1226,7 +1226,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (1191:4) {#each displayItems as item (item.id)}
+// (1188:4) {#each displayItems as item (item.id)}
 function create_each_block(key_1, ctx) {
 	let first;
 	let if_block_anchor;
@@ -1275,7 +1275,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (1250:4) {#if hasMore}
+// (1247:4) {#if hasMore}
 function create_if_block(ctx) {
 	let div;
 
@@ -1599,38 +1599,6 @@ function isValidKey(event) {
 	return !(META_KEYS[event.key] || META_KEYS[event.code]);
 }
 
-function sendKeyPress(target, orig) {
-	console.log("SEND", orig);
-
-	var down = new KeyboardEvent("keydown",
-	{
-			key: orig.key,
-			ctrlKey: orig.ctrlKey,
-			altKey: orig.altKey,
-			shiftKey: orig.shiftKey,
-			metaKey: orig.metaKey,
-			keyCode: orig.keyCode,
-			charCode: orig.charCode
-		});
-
-	console.log("SEND_DOWN", down);
-	target.dispatchEvent(down);
-
-	var up = new KeyboardEvent("keyup",
-	{
-			key: orig.key,
-			ctrlKey: orig.ctrlKey,
-			altKey: orig.altKey,
-			shiftKey: orig.shiftKey,
-			metaKey: orig.metaKey,
-			keyCode: orig.keyCode,
-			charCode: orig.charCode
-		});
-
-	console.log("SEND_UP", up);
-	target.dispatchEvent(up);
-}
-
 function focusNextItem(item) {
 	let next = item.nextElementSibling;
 
@@ -1912,10 +1880,30 @@ function instance($$self, $$props, $$invalidate) {
 		previousQuery = null;
 	}
 
-	let focusingInput = null;
+	let activeFocusRequest = null;
 	let passEvents = null;
 
-	function openInput(focusInput, passEvent) {
+	function focusTarget(target) {
+		console.trace("request_Focus", target);
+		activeFocusRequest = null;
+
+		let handler = function () {
+			console.log("HANDLE: request_Focus", target, activeFocusRequest);
+
+			if (activeFocusRequest === handler) {
+				console.log("HANDLE_HIT: request_Focus", target);
+				activeFocusRequest = null;
+				target.focus();
+			} else {
+				console.log("HANDLE_MISS: request_Focus", target);
+			}
+		};
+
+		setTimeout(handler);
+		activeFocusRequest = handler;
+	}
+
+	function openInput(focus, passEvent) {
 		if (!typeahead) {
 			return;
 		}
@@ -1923,63 +1911,41 @@ function instance($$self, $$props, $$invalidate) {
 		let wasVisible = inputVisible;
 		$$invalidate(18, inputVisible = true);
 
-		if (!focusInput) {
+		if (!focus) {
 			return;
 		}
 
-		if (wasVisible) {
-			input.focus();
-		} else {
+		focusTarget(input);
+
+		if (!wasVisible) {
 			if (passEvent) {
 				passEvents = passEvents || [];
 				passEvent.preventDefault();
 				passEvents.push(passEvent);
 			}
-
-			if (!focusingInput) {
-				focusingInput = function () {
-					if (focusingInput) {
-						focusingInput = null;
-						input.focus();
-
-						if (passEvents) {
-							passEvents.forEach(function (event) {
-								setTimeout(function () {
-									sendKeyPress(input, event);
-								});
-							});
-
-							passEvents = null;
-						}
-					}
-				};
-
-				setTimeout(focusingInput);
-			}
-		}
-	}
-
-	function focusSelectionDisplay(wasInputVisible) {
-		if (wasInputVisible) {
-			setTimeout(function () {
-				selectionDisplay.focus();
-			});
-		} else {
-			selectionDisplay.focus();
 		}
 	}
 
 	function closeInput(focusToggle) {
+		console.trace("CLOSE_INPUT", focusToggle);
+
 		if (!typeahead) {
 			return;
 		}
 
-		let wasInputVisible = inputVisible;
-		focusingInput = null;
-		$$invalidate(18, inputVisible = false);
+		let wasVisible = inputVisible;
+
+		if (wasVisible) {
+			activeFocusRequest = null;
+			$$invalidate(18, inputVisible = false);
+		}
 
 		if (focusToggle) {
-			focusSelectionDisplay(wasInputVisible);
+			focusTarget(selectionDisplay);
+		} else {
+			if (wasVisible) {
+				toggle.focus();
+			}
 		}
 	}
 
@@ -2608,7 +2574,7 @@ function instance($$self, $$props, $$invalidate) {
 		previousQuery,
 		wasDown,
 		isSyncToReal,
-		focusingInput,
+		activeFocusRequest,
 		passEvents,
 		inlineFetcher,
 		fetchItems,
@@ -2616,8 +2582,8 @@ function instance($$self, $$props, $$invalidate) {
 		cancelFetch,
 		fetchMoreIfneeded,
 		clearQuery,
+		focusTarget,
 		openInput,
-		focusSelectionDisplay,
 		closeInput,
 		openPopup,
 		closePopup,
