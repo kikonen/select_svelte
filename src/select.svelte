@@ -363,7 +363,7 @@
      }
 
      if (focusToggle) {
-         focusTarget(selectionDisplay);
+         focusTarget(selectionDisplay || toggle);
      } else {
          if (wasVisible) {
              toggle.focus();
@@ -382,7 +382,7 @@
  function closePopup(focusToggle) {
      popupVisible = false;
      if (focusToggle) {
-         focusTarget(selectionDisplay);
+         focusTarget(selectionDisplay || toggle);
      }
  }
 
@@ -706,7 +706,7 @@
      }
 
      if (!next) {
-         next = inputVisible ? input : selectionDisplay;
+         next = inputVisible ? input : (selectionDisplay || toggle);
      }
      if (next) {
          next.focus();
@@ -775,7 +775,7 @@
          if (inputVisible) {
              input.focus();
          } else {
-             selectionDisplay.focus();
+             (selectionDisplay || toggle).focus();
          }
          event.preventDefault();
      },
@@ -1066,49 +1066,67 @@
 <div class="ki-select-container form-control p-0 border-0 {extraClass}"
      bind:this={container}>
 
-  <div class="input-group">
-    {#if typeahead}
-    <input class="ki-select-input form-control {inputVisible ? '' : 'd-none'}"
-           autocomplete="new-password"
-           autocorrect=off
-           autocapitalize=off
-           spellcheck=off
+  {#if typeahead}
+    <div class="input-group">
+      <input class="ki-select-input form-control {inputVisible ? '' : 'd-none'}"
+             autocomplete="new-password"
+             autocorrect=off
+             autocapitalize=off
+             spellcheck=off
 
-           bind:this={input}
-           bind:value={query}
-           on:blur={handleInputBlur}
-           on:keypress={handleInputKeypress}
-           on:keydown={handleInputKeydown}
-           on:keyup={handleInputKeyup}>
-    {/if}
+             bind:this={input}
+             bind:value={query}
+             on:blur={handleInputBlur}
+             on:keypress={handleInputKeypress}
+             on:keydown={handleInputKeydown}
+             on:keyup={handleInputKeyup}>
 
-    <div class="form-control {inputVisible ? 'd-none' : ''}"
-         tabindex="0"
-         bind:this={selectionDisplay}
-         on:blur={handleBlur}
-         on:keydown={handleToggleKeydown}
-         on:click={handleToggleClick} >
+      <div class="form-control {inputVisible ? 'd-none' : ''}"
+           tabindex="0"
+           bind:this={selectionDisplay}
+           on:blur={handleBlur}
+           on:keydown={handleToggleKeydown}
+           on:click={handleToggleClick} >
+
+        <span class="ki-no-click ki-select-selection d-flex">
+          {#each selectedItems as item, index (item.id)}
+            <span class="ki-no-click ki-select-selected-item {item.id ? 'text-dark' : 'text-muted'}">{index > 0 ? ', ' : ''}{item.text}</span>
+          {/each}
+        </span>
+      </div>
+
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary"
+                type="button"
+                tabindex="-1"
+                bind:this={toggle}
+                on:blur={handleBlur}
+                on:keydown={handleToggleKeydown}
+                on:click={handleToggleClick}>
+
+          <i class="text-dark {showFetching ? CARET_FETCHING : CARET_DOWN}"></i>
+        </button>
+      </div>
+    </div>
+  {:else}
+    <button class="form-control d-flex"
+            type="button"
+            tabindex="0"
+            bind:this={toggle}
+            on:blur={handleBlur}
+            on:keydown={handleToggleKeydown}
+            on:click={handleToggleClick}>
 
       <span class="ki-no-click ki-select-selection d-flex">
         {#each selectedItems as item, index (item.id)}
-          <span class="ki-no-click ki-select-selected-item {item.id ? 'text-dark' : 'text-muted'}">{index > 0 ? ', ' : ''}{item.text}</span>
+        <span class="ki-no-click ki-select-selected-item {item.id ? 'text-dark' : 'text-muted'}">{index > 0 ? ', ' : ''}{item.text}</span>
         {/each}
+        <span class="ml-auto">
+          <i class="text-dark {showFetching ? CARET_FETCHING : CARET_DOWN}"></i>
+        </span>
       </span>
-    </div>
-
-    <div class="input-group-append">
-      <button class="btn btn-outline-secondary"
-              type="button"
-              tabindex="-1"
-              bind:this={toggle}
-              on:blur={handleBlur}
-              on:keydown={handleToggleKeydown}
-              on:click={handleToggleClick}>
-
-        <i class="text-dark {showFetching ? CARET_FETCHING : CARET_DOWN}"></i>
-      </button>
-    </div>
-  </div>
+    </button>
+  {/if}
 
   <div class="dropdown-menu ki-select-popup {popupVisible ? 'show' : ''}"
        bind:this={popup}
