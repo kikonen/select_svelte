@@ -1746,8 +1746,8 @@ function createItemFromOption(el) {
 	let item = { id: el.value || "", text: el.text || "" };
 
 	if (ds) {
-		if (ds.itemtDesc) {
-			item.desc = ds.itemtDesc;
+		if (ds.itemDesc) {
+			item.desc = ds.itemDesc;
 		}
 
 		if (ds.itemClass) {

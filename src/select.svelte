@@ -985,8 +985,8 @@
      };
 
      if (ds) {
-         if (ds.itemtDesc) {
-             item.desc = ds.itemtDesc;
+         if (ds.itemDesc) {
+             item.desc = ds.itemDesc;
          }
          if (ds.itemClass) {
              item.itemClass = ds.itemClass;
