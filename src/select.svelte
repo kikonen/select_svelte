@@ -1008,67 +1008,68 @@
 <!-- ------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------ -->
 <style>
- .ki-select-container {
+ :global(.select-svelte-container) {
      position: relative;
  }
- .ki-select-selection {
+ :global(.select-svelte-selection) {
      width: 100%;
      height: 100%;
  }
- .ki-select-selected-item {
+ :global(.select-svelte-selected-item) {
      white-space: nowrap;
      overflow: hidden;
      word-break: break-all;
      text-overflow: ellipsis;
  }
- .ki-select-popup {
+ :global(.select-svelte-popup) {
      max-height: 50vh;
      max-width: 90vw;
      overflow-y: auto;
  }
- .ki-select-input {
+ :global(.select-svelte-input) {
 /*
      width: 100%;
      padding-left: 0.5rem;
      padding-right: 0.5rem;
 */
  }
- .ki-select-item {
+ :global(.select-svelte-item) {
      padding-left: 0.5rem;
      padding-right: 0.5rem;
  }
- .ki-no-click {
+ :global(.ki-no-click) {
      pointer-events: none;
  }
- .ki-caret-container {
+
+/*
+ :global(.ki-caret-container) {
      margin-top: 140%;
      margin-bottom: 100%;
  }
-
- .ki-caret-down {
+ :global(.ki-caret-down) {
      width: 0;
      height: 0;
      border-left: 0.35rem solid transparent;
      border-right: 0.35rem solid transparent;
      border-top: 0.35rem solid #232323;
  }
-
- .ki-w-0 {
+ :global(.ki-w-0) {
      width: 0;
  }
- .ki-w-100 {
+ :global(.ki-w-100) {
      width: 100%;
  }
+*/
 </style>
 
 <!-- ------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------ -->
-<div class="ki-select-container form-control p-0 border-0 {extraClass}"
+<div class="select-svelte-container form-control p-0 border-0 {extraClass}"
      bind:this={container}>
 
   {#if typeahead}
     <div class="input-group">
-      <input class="ki-select-input form-control {inputVisible ? '' : 'd-none'}"
+      <input class="select-svelte-input form-control {inputVisible ? '' : 'd-none'}"
              autocomplete="new-password"
              autocorrect=off
              autocapitalize=off
@@ -1088,9 +1089,9 @@
            on:keydown={handleToggleKeydown}
            on:click={handleToggleClick} >
 
-        <span class="ki-no-click ki-select-selection d-flex">
+        <span class="ki-no-click select-svelte-selection d-flex">
           {#each selectedItems as item, index (item.id)}
-            <span class="ki-no-click ki-select-selected-item {item.id ? 'text-dark' : 'text-muted'}">{index > 0 ? ', ' : ''}{item.text}</span>
+            <span class="ki-no-click select-svelte-selected-item {item.id ? 'text-dark' : 'text-muted'}">{index > 0 ? ', ' : ''}{item.text}</span>
           {/each}
         </span>
       </div>
@@ -1117,9 +1118,9 @@
             on:keydown={handleToggleKeydown}
             on:click={handleToggleClick}>
 
-      <span class="ki-no-click ki-select-selection d-flex">
+      <span class="ki-no-click select-svelte-selection d-flex">
         {#each selectedItems as item, index (item.id)}
-        <span class="ki-no-click ki-select-selected-item {item.id ? 'text-dark' : 'text-muted'}">{index > 0 ? ', ' : ''}{item.text}</span>
+        <span class="ki-no-click select-svelte-selected-item {item.id ? 'text-dark' : 'text-muted'}">{index > 0 ? ', ' : ''}{item.text}</span>
         {/each}
         <span class="ml-auto">
           <i class="text-dark {showFetching ? CARET_FETCHING : CARET_DOWN}"></i>
@@ -1128,22 +1129,22 @@
     </button>
   {/if}
 
-  <div class="dropdown-menu ki-select-popup {popupVisible ? 'show' : ''}"
+  <div class="dropdown-menu select-svelte-popup {popupVisible ? 'show' : ''}"
        bind:this={popup}
        on:scroll={handlePopupScroll}>
     {#if fetchError}
-      <div tabindex="-1" class="dropdown-item text-danger ki-select-item">
+      <div tabindex="-1" class="dropdown-item text-danger select-svelte-item">
         {fetchError}
       </div>
 
     {:else if activeFetch && !fetchingMore}
       <!--
-      <div tabindex="-1" class="dropdown-item text-muted ki-select-item">
+      <div tabindex="-1" class="dropdown-item text-muted select-svelte-item">
         {translate('fetching')}
       </div>
       -->
     {:else if actualCount === 0}
-      <div tabindex="-1" class="dropdown-item text-muted ki-select-item">
+      <div tabindex="-1" class="dropdown-item text-muted select-svelte-item">
         {#if tooShort }
           {translate('too_short')}
         {:else}
@@ -1156,7 +1157,7 @@
       {#each selectedItems as item, index (item.id)}
         {#if item.id}
           <div tabindex=1
-               class="ki-js-item dropdown-item ki-select-item"
+               class="ki-js-item dropdown-item select-svelte-item"
                data-id="{item.id}"
                data-selection="true"
                on:blur={handleBlur}
@@ -1222,7 +1223,7 @@
 
       {:else}
         <div tabindex=1
-             class="ki-js-item dropdown-item ki-select-item {!item.id ? 'text-muted' : ''} {selection[item.id] ? 'alert-primary' : ''}"
+             class="ki-js-item dropdown-item select-svelte-item {!item.id ? 'text-muted' : ''} {selection[item.id] ? 'alert-primary' : ''}"
              data-id="{item.id}"
              on:blur={handleBlur}
              on:click={handleItemClick}
