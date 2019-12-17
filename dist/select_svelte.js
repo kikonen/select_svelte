@@ -696,9 +696,9 @@ var Select = (function (exports) {
         i = element("i");
         attr(i, "class", i_class_value = "text-dark " + (
         /*showFetching*/
-        ctx[13] ? CARET_FETCHING : CARET_DOWN) + " svelte-11aflex");
+        ctx[13] ? CARET_FETCHING : CARET_DOWN) + " svelte-gmkdqk");
         attr(span0, "class", "ml-auto");
-        attr(span1, "class", "ki-no-click ki-select-selection d-flex svelte-11aflex");
+        attr(span1, "class", "ki-no-click ki-select-selection d-flex svelte-gmkdqk");
         attr(button, "class", "form-control d-flex");
         attr(button, "type", "button");
         attr(button, "tabindex", "0");
@@ -735,7 +735,7 @@ var Select = (function (exports) {
         /*showFetching*/
         8192 && i_class_value !== (i_class_value = "text-dark " + (
         /*showFetching*/
-        ctx[13] ? CARET_FETCHING : CARET_DOWN) + " svelte-11aflex")) {
+        ctx[13] ? CARET_FETCHING : CARET_DOWN) + " svelte-gmkdqk")) {
           attr(i, "class", i_class_value);
         }
       },
@@ -806,19 +806,19 @@ var Select = (function (exports) {
         i = element("i");
         attr(input_1, "class", input_1_class_value = "ki-select-input form-control " + (
         /*inputVisible*/
-        ctx[18] ? "" : "d-none") + " svelte-11aflex");
+        ctx[18] ? "" : "d-none") + " svelte-gmkdqk");
         attr(input_1, "autocomplete", "new-password");
         attr(input_1, "autocorrect", "off");
         attr(input_1, "autocapitalize", "off");
         attr(input_1, "spellcheck", "off");
-        attr(span, "class", "ki-no-click ki-select-selection d-flex svelte-11aflex");
+        attr(span, "class", "ki-no-click ki-select-selection d-flex svelte-gmkdqk");
         attr(div0, "class", div0_class_value = "form-control " + (
         /*inputVisible*/
         ctx[18] ? "d-none" : ""));
         attr(div0, "tabindex", "0");
         attr(i, "class", i_class_value = "text-dark " + (
         /*showFetching*/
-        ctx[13] ? CARET_FETCHING : CARET_DOWN) + " svelte-11aflex");
+        ctx[13] ? CARET_FETCHING : CARET_DOWN) + " svelte-gmkdqk");
         attr(button, "class", "btn btn-outline-secondary");
         attr(button, "type", "button");
         attr(button, "tabindex", "-1");
@@ -881,7 +881,7 @@ var Select = (function (exports) {
         /*inputVisible*/
         262144 && input_1_class_value !== (input_1_class_value = "ki-select-input form-control " + (
         /*inputVisible*/
-        ctx[18] ? "" : "d-none") + " svelte-11aflex")) {
+        ctx[18] ? "" : "d-none") + " svelte-gmkdqk")) {
           attr(input_1, "class", input_1_class_value);
         }
 
@@ -912,7 +912,7 @@ var Select = (function (exports) {
         /*showFetching*/
         8192 && i_class_value !== (i_class_value = "text-dark " + (
         /*showFetching*/
-        ctx[13] ? CARET_FETCHING : CARET_DOWN) + " svelte-11aflex")) {
+        ctx[13] ? CARET_FETCHING : CARET_DOWN) + " svelte-gmkdqk")) {
           attr(i, "class", i_class_value);
         }
       },
@@ -958,7 +958,7 @@ var Select = (function (exports) {
         t1 = text(t1_value);
         attr(span, "class", span_class_value = "ki-no-click ki-select-selected-item " + (
         /*item*/
-        ctx[82].id ? "text-dark" : "text-muted") + " svelte-11aflex");
+        ctx[82].id ? "text-dark" : "text-muted") + " svelte-gmkdqk");
         this.first = span;
       },
       m: function m(target, anchor) {
@@ -982,7 +982,7 @@ var Select = (function (exports) {
         /*selectedItems*/
         4096 && span_class_value !== (span_class_value = "ki-no-click ki-select-selected-item " + (
         /*item*/
-        ctx[82].id ? "text-dark" : "text-muted") + " svelte-11aflex")) {
+        ctx[82].id ? "text-dark" : "text-muted") + " svelte-gmkdqk")) {
           attr(span, "class", span_class_value);
         }
       },
@@ -1013,7 +1013,7 @@ var Select = (function (exports) {
         t1 = text(t1_value);
         attr(span, "class", span_class_value = "ki-no-click ki-select-selected-item " + (
         /*item*/
-        ctx[82].id ? "text-dark" : "text-muted") + " svelte-11aflex");
+        ctx[82].id ? "text-dark" : "text-muted") + " svelte-gmkdqk");
         this.first = span;
       },
       m: function m(target, anchor) {
@@ -1037,7 +1037,7 @@ var Select = (function (exports) {
         /*selectedItems*/
         4096 && span_class_value !== (span_class_value = "ki-no-click ki-select-selected-item " + (
         /*item*/
-        ctx[82].id ? "text-dark" : "text-muted") + " svelte-11aflex")) {
+        ctx[82].id ? "text-dark" : "text-muted") + " svelte-gmkdqk")) {
           attr(span, "class", span_class_value);
         }
       },
@@ -1065,7 +1065,7 @@ var Select = (function (exports) {
         div = element("div");
         if_block.c();
         attr(div, "tabindex", "-1");
-        attr(div, "class", "dropdown-item text-muted ki-select-item svelte-11aflex");
+        attr(div, "class", "dropdown-item text-muted ki-select-item svelte-gmkdqk");
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -1112,7 +1112,7 @@ var Select = (function (exports) {
         /*fetchError*/
         ctx[17]);
         attr(div, "tabindex", "-1");
-        attr(div, "class", "dropdown-item text-danger ki-select-item svelte-11aflex");
+        attr(div, "class", "dropdown-item text-danger ki-select-item svelte-gmkdqk");
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -1268,11 +1268,11 @@ var Select = (function (exports) {
         if_block1.c();
         t1 = space();
         if (if_block2) if_block2.c();
-        attr(div0, "class", "ki-no-click svelte-11aflex");
+        attr(div0, "class", "ki-no-click svelte-gmkdqk");
         attr(div1, "class", "d-inline-block");
-        attr(div2, "class", "ki-no-click svelte-11aflex");
+        attr(div2, "class", "ki-no-click svelte-gmkdqk");
         attr(div3, "tabindex", "1");
-        attr(div3, "class", "ki-js-item dropdown-item ki-select-item svelte-11aflex");
+        attr(div3, "class", "ki-js-item dropdown-item ki-select-item svelte-gmkdqk");
         attr(div3, "data-id", div3_data_id_value =
         /*item*/
         ctx[82].id);
@@ -1468,7 +1468,7 @@ var Select = (function (exports) {
       c: function c() {
         div = element("div");
         t = text(t_value);
-        attr(div, "class", "ki-no-click text-muted svelte-11aflex");
+        attr(div, "class", "ki-no-click text-muted svelte-gmkdqk");
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -1570,9 +1570,9 @@ var Select = (function (exports) {
         if_block1.c();
         t1 = space();
         if (if_block2) if_block2.c();
-        attr(div0, "class", "ki-no-click svelte-11aflex");
+        attr(div0, "class", "ki-no-click svelte-gmkdqk");
         attr(div1, "class", "d-inline-block");
-        attr(div2, "class", "ki-no-click svelte-11aflex");
+        attr(div2, "class", "ki-no-click svelte-gmkdqk");
         attr(div3, "tabindex", "1");
         attr(div3, "class", div3_class_value = "ki-js-item dropdown-item ki-select-item " + (!
         /*item*/
@@ -1580,7 +1580,7 @@ var Select = (function (exports) {
         /*selection*/
         ctx[11][
         /*item*/
-        ctx[82].id] ? "alert-primary" : "") + " svelte-11aflex");
+        ctx[82].id] ? "alert-primary" : "") + " svelte-gmkdqk");
         attr(div3, "data-id", div3_data_id_value =
         /*item*/
         ctx[82].id);
@@ -1656,7 +1656,7 @@ var Select = (function (exports) {
         /*selection*/
         ctx[11][
         /*item*/
-        ctx[82].id] ? "alert-primary" : "") + " svelte-11aflex")) {
+        ctx[82].id] ? "alert-primary" : "") + " svelte-gmkdqk")) {
           attr(div3, "class", div3_class_value);
         }
 
@@ -1700,7 +1700,7 @@ var Select = (function (exports) {
         t0 = text(t0_value);
         t1 = space();
         if (if_block) if_block.c();
-        attr(div0, "class", "ki-no-click svelte-11aflex");
+        attr(div0, "class", "ki-no-click svelte-gmkdqk");
         attr(div1, "tabindex", "-1");
         attr(div1, "class", "dropdown-item text-muted ki-js-blank");
         dispose = listen(div1, "keydown",
@@ -1897,7 +1897,7 @@ var Select = (function (exports) {
       c: function c() {
         div = element("div");
         t = text(t_value);
-        attr(div, "class", "ki-no-click text-muted svelte-11aflex");
+        attr(div, "class", "ki-no-click text-muted svelte-gmkdqk");
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -1927,7 +1927,7 @@ var Select = (function (exports) {
       c: function c() {
         div = element("div");
         t = text(t_value);
-        attr(div, "class", "ki-no-click text-muted svelte-11aflex");
+        attr(div, "class", "ki-no-click text-muted svelte-gmkdqk");
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -2107,10 +2107,10 @@ var Select = (function (exports) {
         if (if_block3) if_block3.c();
         attr(div0, "class", div0_class_value = "dropdown-menu ki-select-popup " + (
         /*popupVisible*/
-        ctx[19] ? "show" : "") + " svelte-11aflex");
+        ctx[19] ? "show" : "") + " svelte-gmkdqk");
         attr(div1, "class", div1_class_value = "ki-select-container form-control p-0 border-0 " +
         /*extraClass*/
-        ctx[0] + " svelte-11aflex");
+        ctx[0] + " svelte-gmkdqk");
         dispose = listen(div0, "scroll",
         /*handlePopupScroll*/
         ctx[32]);
@@ -2202,7 +2202,7 @@ var Select = (function (exports) {
         /*popupVisible*/
         524288 && div0_class_value !== (div0_class_value = "dropdown-menu ki-select-popup " + (
         /*popupVisible*/
-        ctx[19] ? "show" : "") + " svelte-11aflex")) {
+        ctx[19] ? "show" : "") + " svelte-gmkdqk")) {
           attr(div0, "class", div0_class_value);
         }
 
@@ -2210,7 +2210,7 @@ var Select = (function (exports) {
         /*extraClass*/
         1 && div1_class_value !== (div1_class_value = "ki-select-container form-control p-0 border-0 " +
         /*extraClass*/
-        ctx[0] + " svelte-11aflex")) {
+        ctx[0] + " svelte-gmkdqk")) {
           attr(div1, "class", div1_class_value);
         }
       },
