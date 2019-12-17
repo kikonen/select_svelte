@@ -22,12 +22,13 @@
 
  let fixedItems = [];
  let displayItems = [];
+ let itemMap = {};
 
  let items = [];
  let offsetCount = 0;
  let actualCount = 0;
 
- let selection = {};
+ let selectedMap = {};
  let selectedItems = [];
 
  let message = null;
@@ -71,13 +72,7 @@
 
          let options = real.options;
          for (let i = 0; i < options.length; i++) {
-             let el = options[i];
-             let ds = el.dataset;
-             let item = {
-                 id: el.value || '',
-                 text: el.text || '',
-                 desc: ds.selectDesc || ''
-             };
+             let item = createItemFromOption(options[i]);
              let match = !item.id ||
                          item.text.toUpperCase().includes(pattern) ||
                          item.desc.toUpperCase().includes(pattern);
@@ -193,6 +188,8 @@
              });
              displayItems = newDisplayItems;
 
+             resolveItemMap(displayItems);
+
              hasMore = info.more && offsetCount > 0 && !fetchId;
              tooShort = info.too_short === true;
 
@@ -227,6 +224,8 @@
              fetchingMore = false;
 
              showFetching = false;
+
+             resolveItemMap(displayItems);
 
              if (inputVisible) {
                  input.focus();
@@ -273,6 +272,14 @@
 
      offsetCount = off;
      actualCount = act;
+ }
+
+ function resolveItemMap(displayItems) {
+     let newMap = {};
+     displayItems.forEach(function(item) {
+         newMap[item.id] = item;
+     });
+     itemMap = newMap;
  }
 
  function cancelFetch() {
@@ -393,15 +400,7 @@
          syncToReal
      }
 
-     let item = displayItems.find(function(item) {
-         return item.id.toString() === id;
-     });
-
-     if (!item) {
-         item = selectedItems.find(function(item) {
-             return item.id.toString() === id;
-         });
-     }
+     let item = itemMap[id] || selectedMap[id];
 
      if (!item) {
          console.error("MISSING item=" + id);
@@ -410,27 +409,23 @@
 
      if (multiple) {
          if (item.id) {
-             delete selection[''];
+             delete selectedMap[''];
 
-             if (selection[item.id]) {
-                 delete selection[item.id];
-                 selection = selection;
+             if (selectedMap[item.id]) {
+                 delete selectedMap[item.id];
+                 selectedMap = selectedMap;
              } else {
-                 selection[item.id] = item;
+                 selectedMap[item.id] = item;
              }
          } else {
-             Object.keys(selection).forEach(function (id) {
-                 delete selection[id];
-             });
-             selection[item.id] = item;
+             selectedMap = {
+                 [item.id]: item
+             }
          }
      } else {
-         if (!selection[item.id]) {
-             Object.keys(selection).forEach(function (id) {
-                 delete selection[id];
-             });
+         selectedMap = {
+             [item.id]: item
          }
-         selection[item.id] = item;
 
          // NOTE KI reset query only for single item
          clearQuery();
@@ -438,14 +433,10 @@
          closePopup(true);
      }
 
-     let newSelectedItems = [];
-     Object.values(selection).forEach(function (item) {
-         newSelectedItems.push(item);
-     });
-     selectedItems = newSelectedItems;
+     selectedItems = Object.values(selectedMap);
 
-     syncToReal(selection);
-     real.dispatchEvent(new CustomEvent('select-select', { detail: selection }));
+     syncToReal(selectedMap);
+     real.dispatchEvent(new CustomEvent('select-select', { detail: selectedMap }));
  }
 
  export function selectItem(id) {
@@ -472,7 +463,7 @@
  //
  $: {
      if (mounted) {
-         syncToReal(selection);
+         syncToReal(selectedMap);
      }
  }
 
@@ -481,46 +472,28 @@
          return;
      }
 
-     let newSelection = {};
+     let newMap = {};
 
      let options = real.selectedOptions;
-
      for (let i = options.length - 1; i >= 0; i--) {
-         let el = options[i];
-         let ds = el.dataset;
-         let item = {
-             id: el.value,
-             text: el.text,
-         };
-         if (ds.desc) {
-             item.desc = ds.selectDesc;
-         }
-         newSelection[item.id] = item;
+         let item = createItemFromOption(options[i]);
+         newMap[item.id] = item;
      }
-     selection = newSelection;
 
-     let newSelectedItems = [];
-     Object.values(selection).forEach(function (item) {
-         newSelectedItems.push(item);
-     });
-
-     selectedItems = newSelectedItems;
+     selectedMap = newMap;
+     selectedItems = Object.values(newMap);
  }
 
- function syncToReal(selection) {
+ function syncToReal(selectedMap) {
      let changed = false;
 
      // Insert missing values
+     // NOTE KI all existing values are *assumed* to be in sync data-attr wise
      if (remote) {
          selectedItems.forEach(function(item) {
              let el = real.querySelector('option[value="' + item.id.trim() + '"]');
              if (!el) {
-                 let el = document.createElement('option');
-                 el.setAttribute('value', item.id);
-                 if (item.desc) {
-                     el.setAttribute('data-select-desc', item.desc);
-                 }
-                 el.textContent = item.text;
+                 el = createOptionFromItem(item);
                  real.appendChild(el);
              }
          });
@@ -529,7 +502,7 @@
      let options = real.options;
      for (let i = options.length - 1; i >= 0; i--) {
          let el = options[i];
-         let curr = !!selection[el.value];
+         let curr = !!selectedMap[el.value];
          if (el.selected !== curr) {
              changed = true;
          }
@@ -556,7 +529,7 @@
              text: el.text,
          };
          if (ds.desc) {
-             item.desc = ds.selectDesc;
+             item.desc = ds.itemDesc;
          }
          collectedItems.push(item);
      });
@@ -580,7 +553,7 @@
      real.addEventListener('change', function() {
          if (!isSyncToReal) {
              syncFromReal();
-             console.log("FROM_REAL", selection);
+             console.log("FROM_REAL", selectedMap);
          }
      });
 
@@ -1003,41 +976,73 @@
      console.log("SEND_UP", up);
      target.dispatchEvent(up);
  }
+
+ function createItemFromOption(el) {
+     let ds = el.dataset;
+     let item = {
+         id: el.value || '',
+         text: el.text || '',
+     };
+
+     if (ds) {
+         if (ds.itemtDesc) {
+             item.desc = ds.itemtDesc;
+         }
+         if (ds.itemClass) {
+             item.itemClass = ds.itemClass;
+         }
+     }
+     return item;
+ }
+
+ function createOptionFromItem(item) {
+     let el = document.createElement('option');
+     el.setAttribute('value', item.id);
+     if (item.desc) {
+         el.setAttribute('data-item-desc', item.desc);
+     }
+     if (item.itemClass) {
+         el.setAttribute('data-item-class', item.itemClass);
+     }
+     el.textContent = item.text;
+     return el;
+ }
+
 </script>
 
 <!-- ------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------ -->
 <style>
- :global(.select-svelte-container) {
+ :global(.ss-container) {
      position: relative;
  }
- :global(.select-svelte-selection) {
+ :global(.ss-selection) {
      width: 100%;
      height: 100%;
  }
- :global(.select-svelte-selected-item) {
+ :global(.ss-selected-item) {
      white-space: nowrap;
      overflow: hidden;
      word-break: break-all;
      text-overflow: ellipsis;
  }
- :global(.select-svelte-popup) {
+ :global(.ss-popup) {
      max-height: 50vh;
      max-width: 90vw;
      overflow-y: auto;
  }
- :global(.select-svelte-input) {
+ :global(.ss-input) {
 /*
      width: 100%;
      padding-left: 0.5rem;
      padding-right: 0.5rem;
 */
  }
- :global(.select-svelte-item) {
+ :global(.ss-item) {
      padding-left: 0.5rem;
      padding-right: 0.5rem;
  }
- :global(.ki-no-click) {
+ :global(.ss-no-click) {
      pointer-events: none;
  }
 
@@ -1064,12 +1069,12 @@
 
 <!-- ------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------ -->
-<div class="select-svelte-container form-control p-0 border-0 {extraClass}"
+<div class="ss-container form-control p-0 border-0 {extraClass}"
      bind:this={container}>
 
   {#if typeahead}
     <div class="input-group">
-      <input class="select-svelte-input form-control {inputVisible ? '' : 'd-none'}"
+      <input class="ss-input form-control {inputVisible ? '' : 'd-none'}"
              autocomplete="new-password"
              autocorrect=off
              autocapitalize=off
@@ -1089,9 +1094,9 @@
            on:keydown={handleToggleKeydown}
            on:click={handleToggleClick} >
 
-        <span class="ki-no-click select-svelte-selection d-flex">
+        <span class="ss-no-click ss-selection text-dark d-flex">
           {#each selectedItems as item, index (item.id)}
-            <span class="ki-no-click select-svelte-selected-item {item.id ? 'text-dark' : 'text-muted'}">{index > 0 ? ', ' : ''}{item.text}</span>
+            <span class="ss-no-click ss-selected-item {item.itemClass} {item.id ? '' : 'text-muted'}">{index > 0 ? ', ' : ''}{item.text}</span>
           {/each}
         </span>
       </div>
@@ -1118,9 +1123,9 @@
             on:keydown={handleToggleKeydown}
             on:click={handleToggleClick}>
 
-      <span class="ki-no-click select-svelte-selection d-flex">
+      <span class="ss-no-click ss-selection text-dark d-flex">
         {#each selectedItems as item, index (item.id)}
-        <span class="ki-no-click select-svelte-selected-item {item.id ? 'text-dark' : 'text-muted'}">{index > 0 ? ', ' : ''}{item.text}</span>
+          <span class="ss-no-click ss-selected-item {item.itemClass} {item.id ? '' : 'text-muted'}">{index > 0 ? ', ' : ''}{item.text}</span>
         {/each}
         <span class="ml-auto">
           <i class="text-dark {showFetching ? CARET_FETCHING : CARET_DOWN}"></i>
@@ -1129,22 +1134,22 @@
     </button>
   {/if}
 
-  <div class="dropdown-menu select-svelte-popup {popupVisible ? 'show' : ''}"
+  <div class="dropdown-menu ss-popup {popupVisible ? 'show' : ''}"
        bind:this={popup}
        on:scroll={handlePopupScroll}>
     {#if fetchError}
-      <div tabindex="-1" class="dropdown-item text-danger select-svelte-item">
+      <div tabindex="-1" class="dropdown-item text-danger ss-item">
         {fetchError}
       </div>
 
     {:else if activeFetch && !fetchingMore}
       <!--
-      <div tabindex="-1" class="dropdown-item text-muted select-svelte-item">
+      <div tabindex="-1" class="dropdown-item text-muted ss-item">
         {translate('fetching')}
       </div>
       -->
     {:else if actualCount === 0}
-      <div tabindex="-1" class="dropdown-item text-muted select-svelte-item">
+      <div tabindex="-1" class="dropdown-item text-muted ss-item">
         {#if tooShort }
           {translate('too_short')}
         {:else}
@@ -1157,7 +1162,7 @@
       {#each selectedItems as item, index (item.id)}
         {#if item.id}
           <div tabindex=1
-               class="ki-js-item dropdown-item select-svelte-item"
+               class="ki-js-item dropdown-item ss-item"
                data-id="{item.id}"
                data-selection="true"
                on:blur={handleBlur}
@@ -1165,7 +1170,7 @@
                on:keydown={handleItemKeydown}
                on:keyup={handleItemKeyup}>
 
-            <div class="ki-no-click">
+            <div class="ss-no-click">
               {#if multiple}
                 <div class="d-inline-block align-top">
                   {#if item.id}
@@ -1175,7 +1180,7 @@
               {/if}
 
               <div class="d-inline-block">
-                <div class="ki-no-click">
+                <div class="ss-no-click {item.itemClass}">
                   {#if item.id}
                     {item.text}
                   {:else}
@@ -1184,7 +1189,7 @@
                 </div>
 
                 {#if item.desc}
-                  <div class="ki-no-click text-muted">
+                  <div class="ss-no-click text-muted">
                     {item.desc}
                   </div>
                 {/if}
@@ -1210,12 +1215,12 @@
       {:else if item.disabled || item.placeholder}
         <div tabindex="-1" class="dropdown-item text-muted ki-js-blank"
              on:keydown={handleItemKeydown}>
-          <div class="ki-no-click">
+          <div class="ss-no-click {item.itemClass}">
             {item.display_text || item.text}
           </div>
 
           {#if item.desc}
-            <div class="ki-no-click text-muted">
+            <div class="ss-no-click text-muted">
               {item.desc}
             </div>
           {/if}
@@ -1223,24 +1228,24 @@
 
       {:else}
         <div tabindex=1
-             class="ki-js-item dropdown-item select-svelte-item {!item.id ? 'text-muted' : ''} {selection[item.id] ? 'alert-primary' : ''}"
+             class="ki-js-item dropdown-item ss-item {!item.id ? 'text-muted' : ''} {selectedMap[item.id] ? 'alert-primary' : ''}"
              data-id="{item.id}"
              on:blur={handleBlur}
              on:click={handleItemClick}
              on:keydown={handleItemKeydown}
              on:keyup={handleItemKeyup}>
 
-          <div class="ki-no-click">
+          <div class="ss-no-click">
             {#if multiple}
               <div class="d-inline-block align-top">
                 {#if item.id}
-                  <i class="far {selection[item.id] ? 'fa-check-square' : 'fa-square'}"></i>
+                  <i class="far {selectedMap[item.id] ? 'fa-check-square' : 'fa-square'}"></i>
                 {/if}
               </div>
             {/if}
 
             <div class="d-inline-block">
-              <div class="ki-no-click">
+              <div class="ss-no-click {item.itemClass}">
                 {#if item.id}
                   {item.text}
                 {:else}
@@ -1249,7 +1254,7 @@
               </div>
 
               {#if item.desc}
-                <div class="ki-no-click text-muted">
+                <div class="ss-no-click text-muted">
                   {item.desc}
                 </div>
               {/if}

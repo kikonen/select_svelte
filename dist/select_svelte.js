@@ -84,6 +84,21 @@ var Select = (function (exports) {
     if (superClass) _setPrototypeOf(subClass, superClass);
   }
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
   function _isNativeFunction(fn) {
     return Function.toString.call(fn).indexOf("[native code]") !== -1;
   }
@@ -629,30 +644,30 @@ var Select = (function (exports) {
 
   function get_each_context(ctx, list, i) {
     var child_ctx = ctx.slice();
-    child_ctx[82] = list[i];
+    child_ctx[84] = list[i];
     return child_ctx;
   }
 
   function get_each_context_1(ctx, list, i) {
     var child_ctx = ctx.slice();
-    child_ctx[82] = list[i];
-    child_ctx[86] = i;
+    child_ctx[84] = list[i];
+    child_ctx[88] = i;
     return child_ctx;
   }
 
   function get_each_context_3(ctx, list, i) {
     var child_ctx = ctx.slice();
-    child_ctx[82] = list[i];
-    child_ctx[86] = i;
+    child_ctx[84] = list[i];
+    child_ctx[88] = i;
     return child_ctx;
   }
 
   function get_each_context_2(ctx, list, i) {
     var child_ctx = ctx.slice();
-    child_ctx[82] = list[i];
-    child_ctx[86] = i;
+    child_ctx[84] = list[i];
+    child_ctx[88] = i;
     return child_ctx;
-  } // (1112:2) {:else}
+  } // (1117:2) {:else}
 
 
   function create_else_block_4(ctx) {
@@ -672,7 +687,7 @@ var Select = (function (exports) {
     var get_key = function get_key(ctx) {
       return (
         /*item*/
-        ctx[82].id
+        ctx[84].id
       );
     };
 
@@ -698,7 +713,7 @@ var Select = (function (exports) {
         /*showFetching*/
         ctx[13] ? CARET_FETCHING : CARET_DOWN));
         attr(span0, "class", "ml-auto");
-        attr(span1, "class", "ki-no-click select-svelte-selection d-flex");
+        attr(span1, "class", "ss-no-click ss-selection text-dark d-flex");
         attr(button, "class", "form-control d-flex");
         attr(button, "type", "button");
         attr(button, "tabindex", "0");
@@ -723,7 +738,7 @@ var Select = (function (exports) {
         append(span0, i);
         /*button_binding_1*/
 
-        ctx[78](button);
+        ctx[80](button);
       },
       p: function p(ctx, dirty) {
         var each_value_3 =
@@ -748,11 +763,11 @@ var Select = (function (exports) {
         /*button_binding_1*/
 
 
-        ctx[78](null);
+        ctx[80](null);
         run_all(dispose);
       }
     };
-  } // (1070:2) {#if typeahead}
+  } // (1075:2) {#if typeahead}
 
 
   function create_if_block_18(ctx) {
@@ -778,7 +793,7 @@ var Select = (function (exports) {
     var get_key = function get_key(ctx) {
       return (
         /*item*/
-        ctx[82].id
+        ctx[84].id
       );
     };
 
@@ -804,14 +819,14 @@ var Select = (function (exports) {
         div1 = element("div");
         button = element("button");
         i = element("i");
-        attr(input_1, "class", input_1_class_value = "select-svelte-input form-control " + (
+        attr(input_1, "class", input_1_class_value = "ss-input form-control " + (
         /*inputVisible*/
         ctx[18] ? "" : "d-none"));
         attr(input_1, "autocomplete", "new-password");
         attr(input_1, "autocorrect", "off");
         attr(input_1, "autocapitalize", "off");
         attr(input_1, "spellcheck", "off");
-        attr(span, "class", "ki-no-click select-svelte-selection d-flex");
+        attr(span, "class", "ss-no-click ss-selection text-dark d-flex");
         attr(div0, "class", div0_class_value = "form-control " + (
         /*inputVisible*/
         ctx[18] ? "d-none" : ""));
@@ -826,7 +841,7 @@ var Select = (function (exports) {
         attr(div2, "class", "input-group");
         dispose = [listen(input_1, "input",
         /*input_1_input_handler*/
-        ctx[74]), listen(input_1, "blur",
+        ctx[76]), listen(input_1, "blur",
         /*handleInputBlur*/
         ctx[23]), listen(input_1, "keypress",
         /*handleInputKeypress*/
@@ -856,7 +871,7 @@ var Select = (function (exports) {
         ctx[2]);
         /*input_1_binding*/
 
-        ctx[75](input_1);
+        ctx[77](input_1);
         append(div2, t0);
         append(div2, div0);
         append(div0, span);
@@ -867,19 +882,19 @@ var Select = (function (exports) {
         /*div0_binding*/
 
 
-        ctx[76](div0);
+        ctx[78](div0);
         append(div2, t1);
         append(div2, div1);
         append(div1, button);
         append(button, i);
         /*button_binding*/
 
-        ctx[77](button);
+        ctx[79](button);
       },
       p: function p(ctx, dirty) {
         if (dirty[0] &
         /*inputVisible*/
-        262144 && input_1_class_value !== (input_1_class_value = "select-svelte-input form-control " + (
+        262144 && input_1_class_value !== (input_1_class_value = "ss-input form-control " + (
         /*inputVisible*/
         ctx[18] ? "" : "d-none"))) {
           attr(input_1, "class", input_1_class_value);
@@ -920,7 +935,7 @@ var Select = (function (exports) {
         if (detaching) detach(div2);
         /*input_1_binding*/
 
-        ctx[75](null);
+        ctx[77](null);
 
         for (var _i8 = 0; _i8 < each_blocks.length; _i8 += 1) {
           each_blocks[_i8].d();
@@ -928,25 +943,25 @@ var Select = (function (exports) {
         /*div0_binding*/
 
 
-        ctx[76](null);
+        ctx[78](null);
         /*button_binding*/
 
-        ctx[77](null);
+        ctx[79](null);
         run_all(dispose);
       }
     };
-  } // (1122:8) {#each selectedItems as item, index (item.id)}
+  } // (1127:8) {#each selectedItems as item, index (item.id)}
 
 
   function create_each_block_3(key_1, ctx) {
     var span;
     var t0_value = (
     /*index*/
-    ctx[86] > 0 ? ", " : "") + "";
+    ctx[88] > 0 ? ", " : "") + "";
     var t0;
     var t1_value =
     /*item*/
-    ctx[82].text + "";
+    ctx[84].text + "";
     var t1;
     var span_class_value;
     return {
@@ -956,9 +971,11 @@ var Select = (function (exports) {
         span = element("span");
         t0 = text(t0_value);
         t1 = text(t1_value);
-        attr(span, "class", span_class_value = "ki-no-click select-svelte-selected-item " + (
+        attr(span, "class", span_class_value = "ss-no-click ss-selected-item " +
         /*item*/
-        ctx[82].id ? "text-dark" : "text-muted"));
+        ctx[84].itemClass + " " + (
+        /*item*/
+        ctx[84].id ? "" : "text-muted"));
         this.first = span;
       },
       m: function m(target, anchor) {
@@ -971,18 +988,20 @@ var Select = (function (exports) {
         /*selectedItems*/
         4096 && t0_value !== (t0_value = (
         /*index*/
-        ctx[86] > 0 ? ", " : "") + "")) set_data(t0, t0_value);
+        ctx[88] > 0 ? ", " : "") + "")) set_data(t0, t0_value);
         if (dirty[0] &
         /*selectedItems*/
         4096 && t1_value !== (t1_value =
         /*item*/
-        ctx[82].text + "")) set_data(t1, t1_value);
+        ctx[84].text + "")) set_data(t1, t1_value);
 
         if (dirty[0] &
         /*selectedItems*/
-        4096 && span_class_value !== (span_class_value = "ki-no-click select-svelte-selected-item " + (
+        4096 && span_class_value !== (span_class_value = "ss-no-click ss-selected-item " +
         /*item*/
-        ctx[82].id ? "text-dark" : "text-muted"))) {
+        ctx[84].itemClass + " " + (
+        /*item*/
+        ctx[84].id ? "" : "text-muted"))) {
           attr(span, "class", span_class_value);
         }
       },
@@ -990,18 +1009,18 @@ var Select = (function (exports) {
         if (detaching) detach(span);
       }
     };
-  } // (1093:10) {#each selectedItems as item, index (item.id)}
+  } // (1098:10) {#each selectedItems as item, index (item.id)}
 
 
   function create_each_block_2(key_1, ctx) {
     var span;
     var t0_value = (
     /*index*/
-    ctx[86] > 0 ? ", " : "") + "";
+    ctx[88] > 0 ? ", " : "") + "";
     var t0;
     var t1_value =
     /*item*/
-    ctx[82].text + "";
+    ctx[84].text + "";
     var t1;
     var span_class_value;
     return {
@@ -1011,9 +1030,11 @@ var Select = (function (exports) {
         span = element("span");
         t0 = text(t0_value);
         t1 = text(t1_value);
-        attr(span, "class", span_class_value = "ki-no-click select-svelte-selected-item " + (
+        attr(span, "class", span_class_value = "ss-no-click ss-selected-item " +
         /*item*/
-        ctx[82].id ? "text-dark" : "text-muted"));
+        ctx[84].itemClass + " " + (
+        /*item*/
+        ctx[84].id ? "" : "text-muted"));
         this.first = span;
       },
       m: function m(target, anchor) {
@@ -1026,18 +1047,20 @@ var Select = (function (exports) {
         /*selectedItems*/
         4096 && t0_value !== (t0_value = (
         /*index*/
-        ctx[86] > 0 ? ", " : "") + "")) set_data(t0, t0_value);
+        ctx[88] > 0 ? ", " : "") + "")) set_data(t0, t0_value);
         if (dirty[0] &
         /*selectedItems*/
         4096 && t1_value !== (t1_value =
         /*item*/
-        ctx[82].text + "")) set_data(t1, t1_value);
+        ctx[84].text + "")) set_data(t1, t1_value);
 
         if (dirty[0] &
         /*selectedItems*/
-        4096 && span_class_value !== (span_class_value = "ki-no-click select-svelte-selected-item " + (
+        4096 && span_class_value !== (span_class_value = "ss-no-click ss-selected-item " +
         /*item*/
-        ctx[82].id ? "text-dark" : "text-muted"))) {
+        ctx[84].itemClass + " " + (
+        /*item*/
+        ctx[84].id ? "" : "text-muted"))) {
           attr(span, "class", span_class_value);
         }
       },
@@ -1045,7 +1068,7 @@ var Select = (function (exports) {
         if (detaching) detach(span);
       }
     };
-  } // (1146:32) 
+  } // (1151:32) 
 
 
   function create_if_block_16(ctx) {
@@ -1065,7 +1088,7 @@ var Select = (function (exports) {
         div = element("div");
         if_block.c();
         attr(div, "tabindex", "-1");
-        attr(div, "class", "dropdown-item text-muted select-svelte-item");
+        attr(div, "class", "dropdown-item text-muted ss-item");
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -1089,7 +1112,7 @@ var Select = (function (exports) {
         if_block.d();
       }
     };
-  } // (1140:43) 
+  } // (1145:43) 
 
 
   function create_if_block_15(ctx) {
@@ -1099,7 +1122,7 @@ var Select = (function (exports) {
       p: noop,
       d: noop
     };
-  } // (1135:4) {#if fetchError}
+  } // (1140:4) {#if fetchError}
 
 
   function create_if_block_14(ctx) {
@@ -1112,7 +1135,7 @@ var Select = (function (exports) {
         /*fetchError*/
         ctx[17]);
         attr(div, "tabindex", "-1");
-        attr(div, "class", "dropdown-item text-danger select-svelte-item");
+        attr(div, "class", "dropdown-item text-danger ss-item");
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -1129,7 +1152,7 @@ var Select = (function (exports) {
         if (detaching) detach(div);
       }
     };
-  } // (1150:8) {:else}
+  } // (1155:8) {:else}
 
 
   function create_else_block_3(ctx) {
@@ -1147,7 +1170,7 @@ var Select = (function (exports) {
         if (detaching) detach(t);
       }
     };
-  } // (1148:8) {#if tooShort }
+  } // (1153:8) {#if tooShort }
 
 
   function create_if_block_17(ctx) {
@@ -1165,7 +1188,7 @@ var Select = (function (exports) {
         if (detaching) detach(t);
       }
     };
-  } // (1156:4) {#if typeahead}
+  } // (1161:4) {#if typeahead}
 
 
   function create_if_block_8(ctx) {
@@ -1181,7 +1204,7 @@ var Select = (function (exports) {
     var get_key = function get_key(ctx) {
       return (
         /*item*/
-        ctx[82].id
+        ctx[84].id
       );
     };
 
@@ -1229,7 +1252,7 @@ var Select = (function (exports) {
         dispose();
       }
     };
-  } // (1158:8) {#if item.id}
+  } // (1163:8) {#if item.id}
 
 
   function create_if_block_9(ctx) {
@@ -1238,6 +1261,7 @@ var Select = (function (exports) {
     var t0;
     var div1;
     var div0;
+    var div0_class_value;
     var t1;
     var div3_data_id_value;
     var dispose;
@@ -1248,7 +1272,7 @@ var Select = (function (exports) {
     function select_block_type_3(ctx, dirty) {
       if (
       /*item*/
-      ctx[82].id) return create_if_block_11;
+      ctx[84].id) return create_if_block_11;
       return create_else_block_2;
     }
 
@@ -1256,7 +1280,7 @@ var Select = (function (exports) {
     var if_block1 = current_block_type(ctx);
     var if_block2 =
     /*item*/
-    ctx[82].desc && create_if_block_10(ctx);
+    ctx[84].desc && create_if_block_10(ctx);
     return {
       c: function c() {
         div3 = element("div");
@@ -1268,14 +1292,16 @@ var Select = (function (exports) {
         if_block1.c();
         t1 = space();
         if (if_block2) if_block2.c();
-        attr(div0, "class", "ki-no-click");
+        attr(div0, "class", div0_class_value = "ss-no-click " +
+        /*item*/
+        ctx[84].itemClass);
         attr(div1, "class", "d-inline-block");
-        attr(div2, "class", "ki-no-click");
+        attr(div2, "class", "ss-no-click");
         attr(div3, "tabindex", "1");
-        attr(div3, "class", "ki-js-item dropdown-item select-svelte-item");
+        attr(div3, "class", "ki-js-item dropdown-item ss-item");
         attr(div3, "data-id", div3_data_id_value =
         /*item*/
-        ctx[82].id);
+        ctx[84].id);
         attr(div3, "data-selection", "true");
         dispose = [listen(div3, "blur",
         /*handleBlur*/
@@ -1326,9 +1352,17 @@ var Select = (function (exports) {
           }
         }
 
+        if (dirty[0] &
+        /*selectedItems*/
+        4096 && div0_class_value !== (div0_class_value = "ss-no-click " +
+        /*item*/
+        ctx[84].itemClass)) {
+          attr(div0, "class", div0_class_value);
+        }
+
         if (
         /*item*/
-        ctx[82].desc) {
+        ctx[84].desc) {
           if (if_block2) {
             if_block2.p(ctx, dirty);
           } else {
@@ -1345,7 +1379,7 @@ var Select = (function (exports) {
         /*selectedItems*/
         4096 && div3_data_id_value !== (div3_data_id_value =
         /*item*/
-        ctx[82].id)) {
+        ctx[84].id)) {
           attr(div3, "data-id", div3_data_id_value);
         }
       },
@@ -1357,14 +1391,14 @@ var Select = (function (exports) {
         run_all(dispose);
       }
     };
-  } // (1169:14) {#if multiple}
+  } // (1174:14) {#if multiple}
 
 
   function create_if_block_12(ctx) {
     var div;
     var if_block =
     /*item*/
-    ctx[82].id && create_if_block_13();
+    ctx[84].id && create_if_block_13();
     return {
       c: function c() {
         div = element("div");
@@ -1378,7 +1412,7 @@ var Select = (function (exports) {
       p: function p(ctx, dirty) {
         if (
         /*item*/
-        ctx[82].id) {
+        ctx[84].id) {
           if (!if_block) {
             if_block = create_if_block_13();
             if_block.c();
@@ -1394,7 +1428,7 @@ var Select = (function (exports) {
         if (if_block) if_block.d();
       }
     };
-  } // (1171:18) {#if item.id}
+  } // (1176:18) {#if item.id}
 
 
   function create_if_block_13(ctx) {
@@ -1411,7 +1445,7 @@ var Select = (function (exports) {
         if (detaching) detach(i);
       }
     };
-  } // (1181:18) {:else}
+  } // (1186:18) {:else}
 
 
   function create_else_block_2(ctx) {
@@ -1429,13 +1463,13 @@ var Select = (function (exports) {
         if (detaching) detach(t);
       }
     };
-  } // (1179:18) {#if item.id}
+  } // (1184:18) {#if item.id}
 
 
   function create_if_block_11(ctx) {
     var t_value =
     /*item*/
-    ctx[82].text + "";
+    ctx[84].text + "";
     var t;
     return {
       c: function c() {
@@ -1449,26 +1483,26 @@ var Select = (function (exports) {
         /*selectedItems*/
         4096 && t_value !== (t_value =
         /*item*/
-        ctx[82].text + "")) set_data(t, t_value);
+        ctx[84].text + "")) set_data(t, t_value);
       },
       d: function d(detaching) {
         if (detaching) detach(t);
       }
     };
-  } // (1186:16) {#if item.desc}
+  } // (1191:16) {#if item.desc}
 
 
   function create_if_block_10(ctx) {
     var div;
     var t_value =
     /*item*/
-    ctx[82].desc + "";
+    ctx[84].desc + "";
     var t;
     return {
       c: function c() {
         div = element("div");
         t = text(t_value);
-        attr(div, "class", "ki-no-click text-muted");
+        attr(div, "class", "ss-no-click text-muted");
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -1479,13 +1513,13 @@ var Select = (function (exports) {
         /*selectedItems*/
         4096 && t_value !== (t_value =
         /*item*/
-        ctx[82].desc + "")) set_data(t, t_value);
+        ctx[84].desc + "")) set_data(t, t_value);
       },
       d: function d(detaching) {
         if (detaching) detach(div);
       }
     };
-  } // (1157:6) {#each selectedItems as item, index (item.id)}
+  } // (1162:6) {#each selectedItems as item, index (item.id)}
 
 
   function create_each_block_1(key_1, ctx) {
@@ -1493,7 +1527,7 @@ var Select = (function (exports) {
     var if_block_anchor;
     var if_block =
     /*item*/
-    ctx[82].id && create_if_block_9(ctx);
+    ctx[84].id && create_if_block_9(ctx);
     return {
       key: key_1,
       first: null,
@@ -1511,7 +1545,7 @@ var Select = (function (exports) {
       p: function p(ctx, dirty) {
         if (
         /*item*/
-        ctx[82].id) {
+        ctx[84].id) {
           if (if_block) {
             if_block.p(ctx, dirty);
           } else {
@@ -1530,7 +1564,7 @@ var Select = (function (exports) {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1224:6) {:else}
+  } // (1229:6) {:else}
 
 
   function create_else_block(ctx) {
@@ -1539,6 +1573,7 @@ var Select = (function (exports) {
     var t0;
     var div1;
     var div0;
+    var div0_class_value;
     var t1;
     var div3_class_value;
     var div3_data_id_value;
@@ -1550,7 +1585,7 @@ var Select = (function (exports) {
     function select_block_type_5(ctx, dirty) {
       if (
       /*item*/
-      ctx[82].id) return create_if_block_5;
+      ctx[84].id) return create_if_block_5;
       return create_else_block_1;
     }
 
@@ -1558,7 +1593,7 @@ var Select = (function (exports) {
     var if_block1 = current_block_type(ctx);
     var if_block2 =
     /*item*/
-    ctx[82].desc && create_if_block_4(ctx);
+    ctx[84].desc && create_if_block_4(ctx);
     return {
       c: function c() {
         div3 = element("div");
@@ -1570,20 +1605,22 @@ var Select = (function (exports) {
         if_block1.c();
         t1 = space();
         if (if_block2) if_block2.c();
-        attr(div0, "class", "ki-no-click");
-        attr(div1, "class", "d-inline-block");
-        attr(div2, "class", "ki-no-click");
-        attr(div3, "tabindex", "1");
-        attr(div3, "class", div3_class_value = "ki-js-item dropdown-item select-svelte-item " + (!
+        attr(div0, "class", div0_class_value = "ss-no-click " +
         /*item*/
-        ctx[82].id ? "text-muted" : "") + " " + (
-        /*selection*/
+        ctx[84].itemClass);
+        attr(div1, "class", "d-inline-block");
+        attr(div2, "class", "ss-no-click");
+        attr(div3, "tabindex", "1");
+        attr(div3, "class", div3_class_value = "ki-js-item dropdown-item ss-item " + (!
+        /*item*/
+        ctx[84].id ? "text-muted" : "") + " " + (
+        /*selectedMap*/
         ctx[11][
         /*item*/
-        ctx[82].id] ? "alert-primary" : ""));
+        ctx[84].id] ? "alert-primary" : ""));
         attr(div3, "data-id", div3_data_id_value =
         /*item*/
-        ctx[82].id);
+        ctx[84].id);
         dispose = [listen(div3, "blur",
         /*handleBlur*/
         ctx[22]), listen(div3, "click",
@@ -1633,9 +1670,17 @@ var Select = (function (exports) {
           }
         }
 
+        if (dirty[0] &
+        /*displayItems*/
+        512 && div0_class_value !== (div0_class_value = "ss-no-click " +
+        /*item*/
+        ctx[84].itemClass)) {
+          attr(div0, "class", div0_class_value);
+        }
+
         if (
         /*item*/
-        ctx[82].desc) {
+        ctx[84].desc) {
           if (if_block2) {
             if_block2.p(ctx, dirty);
           } else {
@@ -1649,14 +1694,14 @@ var Select = (function (exports) {
         }
 
         if (dirty[0] &
-        /*displayItems, selection*/
-        2560 && div3_class_value !== (div3_class_value = "ki-js-item dropdown-item select-svelte-item " + (!
+        /*displayItems, selectedMap*/
+        2560 && div3_class_value !== (div3_class_value = "ki-js-item dropdown-item ss-item " + (!
         /*item*/
-        ctx[82].id ? "text-muted" : "") + " " + (
-        /*selection*/
+        ctx[84].id ? "text-muted" : "") + " " + (
+        /*selectedMap*/
         ctx[11][
         /*item*/
-        ctx[82].id] ? "alert-primary" : ""))) {
+        ctx[84].id] ? "alert-primary" : ""))) {
           attr(div3, "class", div3_class_value);
         }
 
@@ -1664,7 +1709,7 @@ var Select = (function (exports) {
         /*displayItems*/
         512 && div3_data_id_value !== (div3_data_id_value =
         /*item*/
-        ctx[82].id)) {
+        ctx[84].id)) {
           attr(div3, "data-id", div3_data_id_value);
         }
       },
@@ -1676,7 +1721,7 @@ var Select = (function (exports) {
         run_all(dispose);
       }
     };
-  } // (1210:50) 
+  } // (1215:50) 
 
 
   function create_if_block_2(ctx) {
@@ -1684,15 +1729,16 @@ var Select = (function (exports) {
     var div0;
     var t0_value = (
     /*item*/
-    ctx[82].display_text ||
+    ctx[84].display_text ||
     /*item*/
-    ctx[82].text) + "";
+    ctx[84].text) + "";
     var t0;
+    var div0_class_value;
     var t1;
     var dispose;
     var if_block =
     /*item*/
-    ctx[82].desc && create_if_block_3(ctx);
+    ctx[84].desc && create_if_block_3(ctx);
     return {
       c: function c() {
         div1 = element("div");
@@ -1700,7 +1746,9 @@ var Select = (function (exports) {
         t0 = text(t0_value);
         t1 = space();
         if (if_block) if_block.c();
-        attr(div0, "class", "ki-no-click");
+        attr(div0, "class", div0_class_value = "ss-no-click " +
+        /*item*/
+        ctx[84].itemClass);
         attr(div1, "tabindex", "-1");
         attr(div1, "class", "dropdown-item text-muted ki-js-blank");
         dispose = listen(div1, "keydown",
@@ -1719,13 +1767,21 @@ var Select = (function (exports) {
         /*displayItems*/
         512 && t0_value !== (t0_value = (
         /*item*/
-        ctx[82].display_text ||
+        ctx[84].display_text ||
         /*item*/
-        ctx[82].text) + "")) set_data(t0, t0_value);
+        ctx[84].text) + "")) set_data(t0, t0_value);
+
+        if (dirty[0] &
+        /*displayItems*/
+        512 && div0_class_value !== (div0_class_value = "ss-no-click " +
+        /*item*/
+        ctx[84].itemClass)) {
+          attr(div0, "class", div0_class_value);
+        }
 
         if (
         /*item*/
-        ctx[82].desc) {
+        ctx[84].desc) {
           if (if_block) {
             if_block.p(ctx, dirty);
           } else {
@@ -1744,7 +1800,7 @@ var Select = (function (exports) {
         dispose();
       }
     };
-  } // (1204:6) {#if item.separator}
+  } // (1209:6) {#if item.separator}
 
 
   function create_if_block_1(ctx) {
@@ -1768,14 +1824,14 @@ var Select = (function (exports) {
         dispose();
       }
     };
-  } // (1234:12) {#if multiple}
+  } // (1239:12) {#if multiple}
 
 
   function create_if_block_6(ctx) {
     var div;
     var if_block =
     /*item*/
-    ctx[82].id && create_if_block_7(ctx);
+    ctx[84].id && create_if_block_7(ctx);
     return {
       c: function c() {
         div = element("div");
@@ -1789,7 +1845,7 @@ var Select = (function (exports) {
       p: function p(ctx, dirty) {
         if (
         /*item*/
-        ctx[82].id) {
+        ctx[84].id) {
           if (if_block) {
             if_block.p(ctx, dirty);
           } else {
@@ -1807,7 +1863,7 @@ var Select = (function (exports) {
         if (if_block) if_block.d();
       }
     };
-  } // (1236:16) {#if item.id}
+  } // (1241:16) {#if item.id}
 
 
   function create_if_block_7(ctx) {
@@ -1817,22 +1873,22 @@ var Select = (function (exports) {
       c: function c() {
         i = element("i");
         attr(i, "class", i_class_value = "far " + (
-        /*selection*/
+        /*selectedMap*/
         ctx[11][
         /*item*/
-        ctx[82].id] ? "fa-check-square" : "fa-square"));
+        ctx[84].id] ? "fa-check-square" : "fa-square"));
       },
       m: function m(target, anchor) {
         insert(target, i, anchor);
       },
       p: function p(ctx, dirty) {
         if (dirty[0] &
-        /*selection, displayItems*/
+        /*selectedMap, displayItems*/
         2560 && i_class_value !== (i_class_value = "far " + (
-        /*selection*/
+        /*selectedMap*/
         ctx[11][
         /*item*/
-        ctx[82].id] ? "fa-check-square" : "fa-square"))) {
+        ctx[84].id] ? "fa-check-square" : "fa-square"))) {
           attr(i, "class", i_class_value);
         }
       },
@@ -1840,7 +1896,7 @@ var Select = (function (exports) {
         if (detaching) detach(i);
       }
     };
-  } // (1246:16) {:else}
+  } // (1251:16) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -1858,13 +1914,13 @@ var Select = (function (exports) {
         if (detaching) detach(t);
       }
     };
-  } // (1244:16) {#if item.id}
+  } // (1249:16) {#if item.id}
 
 
   function create_if_block_5(ctx) {
     var t_value =
     /*item*/
-    ctx[82].text + "";
+    ctx[84].text + "";
     var t;
     return {
       c: function c() {
@@ -1878,26 +1934,26 @@ var Select = (function (exports) {
         /*displayItems*/
         512 && t_value !== (t_value =
         /*item*/
-        ctx[82].text + "")) set_data(t, t_value);
+        ctx[84].text + "")) set_data(t, t_value);
       },
       d: function d(detaching) {
         if (detaching) detach(t);
       }
     };
-  } // (1251:14) {#if item.desc}
+  } // (1256:14) {#if item.desc}
 
 
   function create_if_block_4(ctx) {
     var div;
     var t_value =
     /*item*/
-    ctx[82].desc + "";
+    ctx[84].desc + "";
     var t;
     return {
       c: function c() {
         div = element("div");
         t = text(t_value);
-        attr(div, "class", "ki-no-click text-muted");
+        attr(div, "class", "ss-no-click text-muted");
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -1908,26 +1964,26 @@ var Select = (function (exports) {
         /*displayItems*/
         512 && t_value !== (t_value =
         /*item*/
-        ctx[82].desc + "")) set_data(t, t_value);
+        ctx[84].desc + "")) set_data(t, t_value);
       },
       d: function d(detaching) {
         if (detaching) detach(div);
       }
     };
-  } // (1217:10) {#if item.desc}
+  } // (1222:10) {#if item.desc}
 
 
   function create_if_block_3(ctx) {
     var div;
     var t_value =
     /*item*/
-    ctx[82].desc + "";
+    ctx[84].desc + "";
     var t;
     return {
       c: function c() {
         div = element("div");
         t = text(t_value);
-        attr(div, "class", "ki-no-click text-muted");
+        attr(div, "class", "ss-no-click text-muted");
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -1938,13 +1994,13 @@ var Select = (function (exports) {
         /*displayItems*/
         512 && t_value !== (t_value =
         /*item*/
-        ctx[82].desc + "")) set_data(t, t_value);
+        ctx[84].desc + "")) set_data(t, t_value);
       },
       d: function d(detaching) {
         if (detaching) detach(div);
       }
     };
-  } // (1203:4) {#each displayItems as item (item.id)}
+  } // (1208:4) {#each displayItems as item (item.id)}
 
 
   function create_each_block(key_1, ctx) {
@@ -1954,12 +2010,12 @@ var Select = (function (exports) {
     function select_block_type_4(ctx, dirty) {
       if (
       /*item*/
-      ctx[82].separator) return create_if_block_1;
+      ctx[84].separator) return create_if_block_1;
       if (
       /*item*/
-      ctx[82].disabled ||
+      ctx[84].disabled ||
       /*item*/
-      ctx[82].placeholder) return create_if_block_2;
+      ctx[84].placeholder) return create_if_block_2;
       return create_else_block;
     }
 
@@ -1998,7 +2054,7 @@ var Select = (function (exports) {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1262:4) {#if hasMore}
+  } // (1267:4) {#if hasMore}
 
 
   function create_if_block(ctx) {
@@ -2014,14 +2070,14 @@ var Select = (function (exports) {
         insert(target, div, anchor);
         /*div_binding*/
 
-        ctx[79](div);
+        ctx[81](div);
       },
       p: noop,
       d: function d(detaching) {
         if (detaching) detach(div);
         /*div_binding*/
 
-        ctx[79](null);
+        ctx[81](null);
       }
     };
   }
@@ -2075,7 +2131,7 @@ var Select = (function (exports) {
     var get_key = function get_key(ctx) {
       return (
         /*item*/
-        ctx[82].id
+        ctx[84].id
       );
     };
 
@@ -2105,10 +2161,10 @@ var Select = (function (exports) {
 
         t3 = space();
         if (if_block3) if_block3.c();
-        attr(div0, "class", div0_class_value = "dropdown-menu select-svelte-popup " + (
+        attr(div0, "class", div0_class_value = "dropdown-menu ss-popup " + (
         /*popupVisible*/
         ctx[19] ? "show" : ""));
-        attr(div1, "class", div1_class_value = "select-svelte-container form-control p-0 border-0 " +
+        attr(div1, "class", div1_class_value = "ss-container form-control p-0 border-0 " +
         /*extraClass*/
         ctx[0]);
         dispose = listen(div0, "scroll",
@@ -2133,10 +2189,10 @@ var Select = (function (exports) {
         if (if_block3) if_block3.m(div0, null);
         /*div0_binding_1*/
 
-        ctx[80](div0);
+        ctx[82](div0);
         /*div1_binding*/
 
-        ctx[81](div1);
+        ctx[83](div1);
       },
       p: function p(ctx, dirty) {
         if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block0) {
@@ -2200,7 +2256,7 @@ var Select = (function (exports) {
 
         if (dirty[0] &
         /*popupVisible*/
-        524288 && div0_class_value !== (div0_class_value = "dropdown-menu select-svelte-popup " + (
+        524288 && div0_class_value !== (div0_class_value = "dropdown-menu ss-popup " + (
         /*popupVisible*/
         ctx[19] ? "show" : ""))) {
           attr(div0, "class", div0_class_value);
@@ -2208,7 +2264,7 @@ var Select = (function (exports) {
 
         if (dirty[0] &
         /*extraClass*/
-        1 && div1_class_value !== (div1_class_value = "select-svelte-container form-control p-0 border-0 " +
+        1 && div1_class_value !== (div1_class_value = "ss-container form-control p-0 border-0 " +
         /*extraClass*/
         ctx[0])) {
           attr(div1, "class", div1_class_value);
@@ -2233,10 +2289,10 @@ var Select = (function (exports) {
         if (if_block3) if_block3.d();
         /*div0_binding_1*/
 
-        ctx[80](null);
+        ctx[82](null);
         /*div1_binding*/
 
-        ctx[81](null);
+        ctx[83](null);
         dispose();
       }
     };
@@ -2293,6 +2349,42 @@ var Select = (function (exports) {
     return !(META_KEYS[event.key] || META_KEYS[event.code]);
   }
 
+  function createItemFromOption(el) {
+    var ds = el.dataset;
+    var item = {
+      id: el.value || "",
+      text: el.text || ""
+    };
+
+    if (ds) {
+      if (ds.itemtDesc) {
+        item.desc = ds.itemtDesc;
+      }
+
+      if (ds.itemClass) {
+        item.itemClass = ds.itemClass;
+      }
+    }
+
+    return item;
+  }
+
+  function createOptionFromItem(item) {
+    var el = document.createElement("option");
+    el.setAttribute("value", item.id);
+
+    if (item.desc) {
+      el.setAttribute("data-item-desc", item.desc);
+    }
+
+    if (item.itemClass) {
+      el.setAttribute("data-item-class", item.itemClass);
+    }
+
+    el.textContent = item.text;
+    return el;
+  }
+
   function focusNextItem(item) {
     var next = item.nextElementSibling;
 
@@ -2340,10 +2432,11 @@ var Select = (function (exports) {
     var mounted = false;
     var fixedItems = [];
     var displayItems = [];
+    var itemMap = {};
     var items = [];
     var offsetCount = 0;
     var actualCount = 0;
-    var selection = {};
+    var selectedMap = {};
     var selectedItems = [];
     var showFetching = false;
     var hasMore = false;
@@ -2368,13 +2461,7 @@ var Select = (function (exports) {
         var options = real.options;
 
         for (var i = 0; i < options.length; i++) {
-          var el = options[i];
-          var ds = el.dataset;
-          var item = {
-            id: el.value || "",
-            text: el.text || "",
-            desc: ds.selectDesc || ""
-          };
+          var item = createItemFromOption(options[i]);
           var match = !item.id || item.text.toUpperCase().includes(pattern) || item.desc.toUpperCase().includes(pattern);
 
           if (match) {
@@ -2475,6 +2562,7 @@ var Select = (function (exports) {
             newDisplayItems.push(item);
           });
           $$invalidate(9, displayItems = newDisplayItems);
+          resolveItemMap(displayItems);
           $$invalidate(14, hasMore = info.more && offsetCount > 0 && !fetchId);
           $$invalidate(15, tooShort = info.too_short === true);
 
@@ -2506,6 +2594,7 @@ var Select = (function (exports) {
           fetched = false;
           $$invalidate(16, fetchingMore = false);
           $$invalidate(13, showFetching = false);
+          resolveItemMap(displayItems);
 
           if (inputVisible) {
             input.focus();
@@ -2544,6 +2633,14 @@ var Select = (function (exports) {
       });
       offsetCount = off;
       $$invalidate(10, actualCount = act);
+    }
+
+    function resolveItemMap(displayItems) {
+      var newMap = {};
+      displayItems.forEach(function (item) {
+        newMap[item.id] = item;
+      });
+      itemMap = newMap;
     }
 
     function cancelFetch() {
@@ -2655,15 +2752,7 @@ var Select = (function (exports) {
     function selectItemImpl(id) {
       id = id.toString();
 
-      var item = displayItems.find(function (item) {
-        return item.id.toString() === id;
-      });
-
-      if (!item) {
-        item = selectedItems.find(function (item) {
-          return item.id.toString() === id;
-        });
-      }
+      var item = itemMap[id] || selectedMap[id];
 
       if (!item) {
         console.error("MISSING item=" + id);
@@ -2672,41 +2761,28 @@ var Select = (function (exports) {
 
       if (multiple) {
         if (item.id) {
-          delete selection[""];
+          delete selectedMap[""];
 
-          if (selection[item.id]) {
-            delete selection[item.id];
-            $$invalidate(11, selection);
+          if (selectedMap[item.id]) {
+            delete selectedMap[item.id];
+            $$invalidate(11, selectedMap);
           } else {
-            $$invalidate(11, selection[item.id] = item, selection);
+            $$invalidate(11, selectedMap[item.id] = item, selectedMap);
           }
         } else {
-          Object.keys(selection).forEach(function (id) {
-            delete selection[id];
-          });
-          $$invalidate(11, selection[item.id] = item, selection);
+          $$invalidate(11, selectedMap = _defineProperty({}, item.id, item));
         }
       } else {
-        if (!selection[item.id]) {
-          Object.keys(selection).forEach(function (id) {
-            delete selection[id];
-          });
-        }
-
-        $$invalidate(11, selection[item.id] = item, selection);
+        $$invalidate(11, selectedMap = _defineProperty({}, item.id, item));
         clearQuery();
         closeInput(false);
         closePopup(true);
       }
 
-      var newSelectedItems = [];
-      Object.values(selection).forEach(function (item) {
-        newSelectedItems.push(item);
-      });
-      $$invalidate(12, selectedItems = newSelectedItems);
-      syncToReal(selection);
+      $$invalidate(12, selectedItems = Object.values(selectedMap));
+      syncToReal(selectedMap);
       real.dispatchEvent(new CustomEvent("select-select", {
-        detail: selection
+        detail: selectedMap
       }));
     }
 
@@ -2735,33 +2811,19 @@ var Select = (function (exports) {
         return;
       }
 
-      var newSelection = {};
+      var newMap = {};
       var options = real.selectedOptions;
 
       for (var i = options.length - 1; i >= 0; i--) {
-        var el = options[i];
-        var ds = el.dataset;
-        var item = {
-          id: el.value,
-          text: el.text
-        };
-
-        if (ds.desc) {
-          item.desc = ds.selectDesc;
-        }
-
-        newSelection[item.id] = item;
+        var item = createItemFromOption(options[i]);
+        newMap[item.id] = item;
       }
 
-      $$invalidate(11, selection = newSelection);
-      var newSelectedItems = [];
-      Object.values(selection).forEach(function (item) {
-        newSelectedItems.push(item);
-      });
-      $$invalidate(12, selectedItems = newSelectedItems);
+      $$invalidate(11, selectedMap = newMap);
+      $$invalidate(12, selectedItems = Object.values(newMap));
     }
 
-    function syncToReal(selection) {
+    function syncToReal(selectedMap) {
       var changed = false;
 
       if (remote) {
@@ -2769,16 +2831,8 @@ var Select = (function (exports) {
           var el = real.querySelector("option[value=\"" + item.id.trim() + "\"]");
 
           if (!el) {
-            var _el = document.createElement("option");
-
-            _el.setAttribute("value", item.id);
-
-            if (item.desc) {
-              _el.setAttribute("data-select-desc", item.desc);
-            }
-
-            _el.textContent = item.text;
-            real.appendChild(_el);
+            el = createOptionFromItem(item);
+            real.appendChild(el);
           }
         });
       }
@@ -2787,7 +2841,7 @@ var Select = (function (exports) {
 
       for (var i = options.length - 1; i >= 0; i--) {
         var el = options[i];
-        var curr = !!selection[el.value];
+        var curr = !!selectedMap[el.value];
 
         if (el.selected !== curr) {
           changed = true;
@@ -2817,7 +2871,7 @@ var Select = (function (exports) {
         };
 
         if (ds.desc) {
-          item.desc = ds.selectDesc;
+          item.desc = ds.itemDesc;
         }
 
         collectedItems.push(item);
@@ -2839,7 +2893,7 @@ var Select = (function (exports) {
       real.addEventListener("change", function () {
         if (!isSyncToReal) {
           syncFromReal();
-          console.log("FROM_REAL", selection);
+          console.log("FROM_REAL", selectedMap);
         }
       });
       $$invalidate(39, mounted = true);
@@ -3197,19 +3251,19 @@ var Select = (function (exports) {
 
     $$self.$$.update = function () {
       if ($$self.$$.dirty[0] &
-      /*selection*/
+      /*selectedMap*/
       2048 | $$self.$$.dirty[1] &
       /*mounted*/
       256) {
          {
           if (mounted) {
-            syncToReal(selection);
+            syncToReal(selectedMap);
           }
         }
       }
     };
 
-    return [extraClass, typeahead, query, container, input, selectionDisplay, toggle, popup, more, displayItems, actualCount, selection, selectedItems, showFetching, hasMore, tooShort, fetchingMore, fetchError, inputVisible, popupVisible, activeFetch, multiple, handleBlur, handleInputBlur, handleInputKeypress, handleInputKeydown, handleInputKeyup, handleToggleKeydown, handleToggleClick, handleItemKeydown, handleItemKeyup, handleItemClick, handlePopupScroll, fetcher, real, remote, queryMinLen, delay, selectItem, mounted, fixedItems, items, offsetCount, fetched, previousFetch, previousQuery, wasDown, isSyncToReal, activeFocusRequest, passEvents, inlineFetcher, fetchItems, resolveItems, cancelFetch, fetchMoreIfneeded, clearQuery, focusTarget, openInput, closeInput, openPopup, closePopup, selectItemImpl, selectElement, containsElement, syncFromReal, syncToReal, setupRemote, inputKeypressHandlers, inputKeydownHandlers, inputKeyupHandlers, toggleKeydownHandlers, focusPreviousItem, itemKeydownHandlers, itemKeyupHandlers, input_1_input_handler, input_1_binding, div0_binding, button_binding, button_binding_1, div_binding, div0_binding_1, div1_binding];
+    return [extraClass, typeahead, query, container, input, selectionDisplay, toggle, popup, more, displayItems, actualCount, selectedMap, selectedItems, showFetching, hasMore, tooShort, fetchingMore, fetchError, inputVisible, popupVisible, activeFetch, multiple, handleBlur, handleInputBlur, handleInputKeypress, handleInputKeydown, handleInputKeyup, handleToggleKeydown, handleToggleClick, handleItemKeydown, handleItemKeyup, handleItemClick, handlePopupScroll, fetcher, real, remote, queryMinLen, delay, selectItem, mounted, fixedItems, itemMap, items, offsetCount, fetched, previousFetch, previousQuery, wasDown, isSyncToReal, activeFocusRequest, passEvents, inlineFetcher, fetchItems, resolveItems, resolveItemMap, cancelFetch, fetchMoreIfneeded, clearQuery, focusTarget, openInput, closeInput, openPopup, closePopup, selectItemImpl, selectElement, containsElement, syncFromReal, syncToReal, setupRemote, inputKeypressHandlers, inputKeydownHandlers, inputKeyupHandlers, toggleKeydownHandlers, focusPreviousItem, itemKeydownHandlers, itemKeyupHandlers, input_1_input_handler, input_1_binding, div0_binding, button_binding, button_binding_1, div_binding, div0_binding_1, div1_binding];
   }
 
   var Select =
