@@ -11,12 +11,12 @@
 
  let query = '';
 
- let container;
- let input;
- let selectionDisplay;
- let toggle;
- let popup;
- let more;
+ let containerEl;
+ let inputEl;
+ let selectionEl;
+ let toggleEl;
+ let popupEl;
+ let moreEl;
 
  let mounted = false;
 
@@ -64,7 +64,7 @@
  // select
 
  function inlineFetcher(offset, query) {
-     console.log("INLINE_SELECT_FETCH: " + query);
+     if (DEBUG) console.log("INLINE_SELECT_FETCH: " + query);
 
      let promise = new Promise(function(resolve, reject) {
          let items = []
@@ -228,7 +228,7 @@
              resolveItemMap(displayItems);
 
              if (inputVisible) {
-                 input.focus();
+                 inputEl.focus();
              } else {
                  selectinDisplay.focus();
              }
@@ -238,7 +238,7 @@
 
      setTimeout(function() {
          if (activeFetch === currentFetch) {
-             console.log("fetching...");
+             if (DEBUG) console.log("fetching...");
              showFetching = true;
          }
      }, FETCH_INDICATOR_DELAY);
@@ -294,10 +294,7 @@
 
  function fetchMoreIfneeded() {
      if (hasMore && !fetchingMore) {
-         // console.debug({scrollTop: popup.scrollTop, clientHeight: popup.clientHeight, scrollHeight: popup.scrollHeight, moreHeight: more.clientHeight});
-         // console.debug(popup.scrollTop + popup.clientHeight >= popup.scrollHeight - more.height);
-
-         if (popup.scrollTop + popup.clientHeight >= popup.scrollHeight - more.clientHeight * 2 - 2) {
+         if (popupEl.scrollTop + popupEl.clientHeight >= popupEl.scrollHeight - moreEl.clientHeight * 2 - 2) {
              fetchItems(true);
          }
      }
@@ -312,17 +309,18 @@
  let passEvents = null;
 
  function focusTarget(target) {
-     console.trace("request_Focus", target);
+     if (DEBUG) console.trace("request_Focus", target);
      activeFocusRequest = null;
 
      let handler = function() {
-         console.log("HANDLE: request_Focus", target, activeFocusRequest);
+         if (DEBUG) console.log("HANDLE: request_Focus", target, activeFocusRequest);
+
          if (activeFocusRequest === handler) {
-             console.log("HANDLE_HIT: request_Focus", target);
+             if (DEBUG) console.log("HANDLE_HIT: request_Focus", target);
              activeFocusRequest = null;
              target.focus();
          } else {
-             console.log("HANDLE_MISS: request_Focus", target);
+             if (DEBUG) console.log("HANDLE_MISS: request_Focus", target);
          }
      }
      setTimeout(handler);
@@ -344,7 +342,7 @@
          return;
      }
 
-     focusTarget(input);
+     focusTarget(inputEl);
 
      if (!wasVisible) {
          if (passEvent) {
@@ -357,7 +355,7 @@
  }
 
  function closeInput(focusToggle) {
-     console.trace("CLOSE_INPUT", focusToggle);
+     if (DEBUG) console.trace("CLOSE_INPUT", focusToggle);
 
      if (!typeahead) {
          return;
@@ -370,10 +368,10 @@
      }
 
      if (focusToggle) {
-         focusTarget(selectionDisplay || toggle);
+         focusTarget(selectionEl || toggleEl);
      } else {
          if (wasVisible) {
-             toggle.focus();
+             toggleEl.focus();
          }
      }
  }
@@ -381,15 +379,15 @@
  function openPopup() {
      if (!popupVisible) {
          popupVisible = true;
-         let w = container.offsetWidth;
-         popup.style.minWidth = w + "px";
+         let w = containerEl.offsetWidth;
+         popupEl.style.minWidth = w + "px";
      }
  }
 
  function closePopup(focusToggle) {
      popupVisible = false;
      if (focusToggle) {
-         focusTarget(selectionDisplay || toggle);
+         focusTarget(selectionEl || toggleEl);
      }
  }
 
@@ -455,7 +453,7 @@
  }
 
  function containsElement(el) {
-     return el === input || el === toggle || el === selectionDisplay || popup.contains(el);
+     return el === inputEl || el === toggleEl || el === selectionEl || popupEl.contains(el);
  }
 
  ////////////////////////////////////////////////////////////
@@ -553,7 +551,7 @@
      real.addEventListener('change', function() {
          if (!isSyncToReal) {
              syncFromReal();
-             console.log("FROM_REAL", selectedMap);
+             if (DEBUG) console.log("FROM_REAL", selection);
          }
      });
 
@@ -573,12 +571,12 @@
          openInput(true);
      },
      ArrowDown: function(event) {
-         let item = popupVisible ? popup.querySelectorAll('.ki-js-item')[0] : null;
-         if (item) {
-             while (item && item.classList.contains('ki-js-blank')) {
-                 item = item.nextElementSibling;
+         let el = popupVisible ? popupEl.querySelectorAll('.ki-js-item')[0] : null;
+         if (el) {
+             while (el && el.classList.contains('ki-js-blank')) {
+                 el = el.nextElementSibling;
              }
-             item.focus();
+             el.focus();
          } else {
              openPopup();
              fetchItems(false);
@@ -666,8 +664,8 @@
      ContextMenu: nop,
  };
 
- function focusPreviousItem(item) {
-     let next = event.target.previousElementSibling;
+ function focusPreviousItem(el) {
+     let next = el.previousElementSibling;
 
      if (next) {
          while (next && next.classList.contains('ki-js-blank')) {
@@ -679,7 +677,7 @@
      }
 
      if (!next) {
-         next = inputVisible ? input : (selectionDisplay || toggle);
+         next = inputVisible ? inputEl : (selectionEl || toggleEl);
      }
      if (next) {
          next.focus();
@@ -688,8 +686,8 @@
      return next;
  }
 
- function focusNextItem(item) {
-     let next = item.nextElementSibling;
+ function focusNextItem(el) {
+     let next = el.nextElementSibling;
 
      if (next) {
          while (next && next.classList.contains('ki-js-blank')) {
@@ -746,9 +744,9 @@
      End: nop,
      Tab: function(event) {
          if (inputVisible) {
-             input.focus();
+             inputEl.focus();
          } else {
-             (selectionDisplay || toggle).focus();
+             (selectionEl || toggleEl).focus();
          }
          event.preventDefault();
      },
@@ -767,13 +765,13 @@
          let scrollLeft = document.body.scrollLeft;
          let scrollTop = document.body.scrollTop;
 
-         let rect = popup.getBoundingClientRect();
+         let rect = popupEl.getBoundingClientRect();
          let item = document.elementFromPoint(scrollLeft + rect.x + 10, scrollTop + rect.top + 1);
          if (!item) {
-             item = popup.querySelector('.ki-js-item:first-child');
+             item = popupEl.querySelector('.ki-js-item:first-child');
          } else {
              if (!item.classList.contains('ki-js-item')) {
-                 item = popup.querySelector('.ki-js-item:first-child');
+                 item = popupEl.querySelector('.ki-js-item:first-child');
              }
          }
          if (item) {
@@ -784,15 +782,15 @@
      PageDown: function(event) {
          let scrollLeft = document.body.scrollLeft;
          let scrollTop = document.body.scrollTop;
-         let h = popup.offsetHeight;
+         let h = popupEl.offsetHeight;
 
-         let rect = popup.getBoundingClientRect();
+         let rect = popupEl.getBoundingClientRect();
          let item = document.elementFromPoint(scrollLeft + rect.x + 10, scrollTop + rect.top + h - 10);
          if (!item) {
-             item = popup.querySelector('.ki-js-item:last-child');
+             item = popupEl.querySelector('.ki-js-item:last-child');
          } else {
              if (!item.classList.contains('ki-js-item')) {
-                 item = popup.querySelector('.ki-js-item:last-child');
+                 item = popupEl.querySelector('.ki-js-item:last-child');
              }
          }
          if (item) {
@@ -802,14 +800,14 @@
          event.preventDefault();
      },
      Home: function(event) {
-         let item = popup.querySelector('.ki-js-item:first-child');
+         let item = popupEl.querySelector('.ki-js-item:first-child');
          if (item) {
              item.focus();
          }
          event.preventDefault();
      },
      End: function(event) {
-         let item = popup.querySelector('.ki-js-item:last-child');
+         let item = popupEl.querySelector('.ki-js-item:last-child');
          if (item) {
              item.focus();
          }
@@ -821,7 +819,7 @@
  ////////////////////////////////////////////////////////////
  //
  function handleEvent(code, handlers, event) {
-     console.debug(event);
+     if (DEBUG) console.debug(event);
      (handlers[code] || handlers.base)(event);
  }
 
@@ -864,7 +862,7 @@
  function handleSelectionClick(event) {
      if (event.button === 0 && !hasModifier(event)) {
          if (popupVisible) {
-             toggle.focus();
+             toggleEl.focus();
              openInput(true);
          } else {
              openPopup();
@@ -904,6 +902,8 @@
 </script>
 
 <script context="module">
+ const DEBUG = false;
+
  const I18N_DEFAULTS = {
      clear: 'Clear',
      fetching: 'Searching..',
@@ -961,7 +961,7 @@
 
  // https://stackoverflow.com/questions/596481/is-it-possible-to-simulate-key-press-events-programmatically
  function sendKeyPress(target, orig) {
-     console.log("SEND", orig);
+     if (DEBUG) console.log("SEND", orig);
      var down = new KeyboardEvent(
          "keydown", // event type: keydown, keyup, keypress
          {
@@ -974,7 +974,7 @@
              charCode: orig.charCode          // charCode: unsigned long - the Unicode character associated with the depressed key, else 0
          }
      );
-     console.log("SEND_DOWN", down);
+     if (DEBUG) console.log("SEND_DOWN", down);
      target.dispatchEvent(down);
 
      var up = new KeyboardEvent(
@@ -989,7 +989,7 @@
              charCode: orig.charCode          // charCode: unsigned long - the Unicode character associated with the depressed key, else 0
          }
      );
-     console.log("SEND_UP", up);
+     if (DEBUG) console.log("SEND_UP", up);
      target.dispatchEvent(up);
  }
 
@@ -1086,7 +1086,7 @@
 <!-- ------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------ -->
 <div class="ss-container form-control p-0 border-0 {extraClass}"
-     bind:this={container}>
+     bind:this={containerEl}>
 
   {#if typeahead}
     <div class="input-group">
@@ -1096,7 +1096,7 @@
              autocapitalize=off
              spellcheck=off
 
-             bind:this={input}
+             bind:this={inputEl}
              bind:value={query}
              on:blur={handleInputBlur}
              on:keypress={handleInputKeypress}
@@ -1105,7 +1105,7 @@
 
       <div class="form-control {inputVisible ? 'd-none' : ''}"
            tabindex="0"
-           bind:this={selectionDisplay}
+           bind:this={selectionEl}
            on:blur={handleBlur}
            on:keydown={handleSelectionKeydown}
            on:click={handleSelectionClick} >
@@ -1121,7 +1121,7 @@
         <button class="btn btn-outline-secondary"
                 type="button"
                 tabindex="-1"
-                bind:this={toggle}
+                bind:this={toggleEl}
                 on:blur={handleBlur}
                 on:keydown={handleToggleKeydown}
                 on:click={handleToggleClick}>
@@ -1134,7 +1134,7 @@
     <button class="form-control d-flex"
             type="button"
             tabindex="0"
-            bind:this={toggle}
+            bind:this={toggleEl}
             on:blur={handleBlur}
             on:keydown={handleToggleKeydown}
             on:click={handleToggleClick}>
@@ -1151,7 +1151,7 @@
   {/if}
 
   <div class="dropdown-menu ss-popup {popupVisible ? 'show' : ''}"
-       bind:this={popup}
+       bind:this={popupEl}
        on:scroll={handlePopupScroll}>
     {#if fetchError}
       <div tabindex="-1" class="dropdown-item text-danger ss-item">
@@ -1283,7 +1283,7 @@
     {#if hasMore}
       <div tabindex="-1"
            class="dropdown-item text-muted"
-           bind:this={more}>
+           bind:this={moreEl}>
         {translate('has_more')}
       </div>
     {/if}
