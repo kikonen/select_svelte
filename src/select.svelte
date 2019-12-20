@@ -9,8 +9,6 @@
  export let extraClass = '';
  export let typeahead = false;
 
- let query = '';
-
  let containerEl;
  let inputEl;
  let selectionEl;
@@ -20,23 +18,24 @@
 
  let mounted = false;
 
+ let query = '';
+
  let fixedItems = [];
+
+ let result = createResult({});
  let displayItems = [];
- let itemMap = {};
-
- let items = [];
- let offsetCount = 0;
  let actualCount = 0;
+ let tooShort = false;
+ let hasMore = false;
 
- let selectedMap = {};
- let selectedItems = [];
-
- let message = null;
- let messageClass = null;
+ let selection = {
+     byId: {},
+     items: [],
+ };
+ let selectionById = {};
+ let selectionItems = [];
 
  let showFetching = false;
- let hasMore = false;
- let tooShort = false;
  let fetchingMore = false;
  let fetchError = null;
 
@@ -95,7 +94,7 @@
 
  ////////////////////////////////////////////////////////////
  //
- function fetchItems(more, fetchId) {
+ function fetchItems(fetchMore, fetchId) {
      let currentQuery;
      if (fetchId) {
          currentQuery = '';
@@ -106,7 +105,7 @@
          }
      }
 
-     if (!more && !fetchingMore && currentQuery === previousQuery && !fetchId) {
+     if (!fetchMore && !fetchingMore && currentQuery === previousQuery && !fetchId) {
          return activeFetch || previousFetch;
      }
 
@@ -114,22 +113,19 @@
 
      cancelFetch();
 
-     let fetchOffset = 0;
+     let currentFetchOffset = 0;
 
-     if (more) {
-         fetchOffset = offsetCount;
+     if (fetchMore) {
+         currentFetchOffset = result.offsetCount;
      } else {
-         items = [];
-         offsetCount = 0;
-         actualCount = 0;
+         tooShort = false;
          hasMore = false;
          fetched = false;
      }
-     fetchingMore = more;
+     fetchingMore = fetchMore;
      fetchError = null;
      showFetching = false;
 
-     let currentFetchOffset = fetchOffset;
      let currentFetchingMore = fetchingMore;
 
      let currentFetch = new Promise(function(resolve, reject) {
@@ -161,37 +157,31 @@
          }
      }).then(function(response) {
          if (currentFetch === activeFetch) {
-             let fetchedItems = response.items || [];
+             let responseItems = response.items || [];
              let info = response.info || {};
 
 //             console.debug("APPLY fetch: " + currentQuery + ", isMore: " + currentFetchingMore + ", offset: " + currentFetchOffset + ", resultSize: " + fetchedItems.length + ", oldSize: " + items.length);
 //             console.debug(info);
 
-             let newItems;
+             let fetchedItems = responseItems;
              if (currentFetchingMore) {
-                 newItems = items;
-                 fetchedItems.forEach(function(item) {
-                     newItems.push(item);
+                 fetchedItems = result.fetchedItems;
+                 responseItems.forEach(function(item) {
+                     fetchedItems.push(item);
                  });
-             } else {
-                 newItems = fetchedItems;
              }
-             items = newItems;
-             resolveItems(items);
 
-             let newDisplayItems = [];
-             fixedItems.forEach(function(item) {
-                 newDisplayItems.push(item);
+             result = createResult({
+                 fetchedItems: fetchedItems,
+                 fixedItems: fixedItems,
+                 fetchedId: fetchId,
+                 more: info.more,
+                 tooShort: info.too_short === true,
              });
-             items.forEach(function(item) {
-                 newDisplayItems.push(item);
-             });
-             displayItems = newDisplayItems;
-
-             resolveItemMap(displayItems);
-
-             hasMore = info.more && offsetCount > 0 && !fetchId;
-             tooShort = info.too_short === true;
+             displayItems = result.displayItems;
+             actualCount = result.actualCount;
+             tooShort = result.tooShort;
+             hasMore = result.more;
 
              if (fetchId) {
                  previousQuery = null;
@@ -211,12 +201,15 @@
              console.error(err);
 
              fetchError = err;
-             items = [];
-             displayItems = fixedItems;
-             offsetCount = 0;
-             actualCount = 0;
-             hasMore = false;
-             tooShort = false;
+
+             let result = createResult({
+                 fixedItems: fixedItems
+             });
+             displayItems = result.displayItems;
+             actualCount = result.actualCount;
+             tooShort = result.tooShort;
+             hasMore = result.more;
+
              previousQuery = null;
              previousFetch = currentFetch;
              activeFetch = null;
@@ -224,8 +217,6 @@
              fetchingMore = false;
 
              showFetching = false;
-
-             resolveItemMap(displayItems);
 
              if (inputVisible) {
                  inputEl.focus();
@@ -247,39 +238,6 @@
      previousFetch = null;
 
      return currentFetch;
- }
-
- function resolveItems(items) {
-     let off = 0;
-     let act = 0;
-
-     items.forEach(function(item) {
-         if (item.id) {
-             item.id = item.id.toString();
-         }
-
-         if (item.separator) {
-             // NOTE KI separator is ignored always
-         } else if (item.placeholder) {
-             // NOTE KI does not affect pagination
-             act += 1;
-         } else {
-             // NOTE KI normal or disabled affects pagination
-             off += 1;
-             act += 1;
-         }
-     });
-
-     offsetCount = off;
-     actualCount = act;
- }
-
- function resolveItemMap(displayItems) {
-     let newMap = {};
-     displayItems.forEach(function(item) {
-         newMap[item.id] = item;
-     });
-     itemMap = newMap;
  }
 
  function cancelFetch() {
@@ -398,30 +356,31 @@
          syncToReal
      }
 
-     let item = itemMap[id] || selectedMap[id];
+     let item = result.byId[id] || selection.byId[id];
 
      if (!item) {
          console.error("MISSING item=" + id);
          return;
      }
 
+     let byId = selection.byId;
+
      if (multiple) {
          if (item.id) {
-             delete selectedMap[''];
+             delete byId[''];
 
-             if (selectedMap[item.id]) {
-                 delete selectedMap[item.id];
-                 selectedMap = selectedMap;
+             if (byId[item.id]) {
+                 delete byId[item.id];
              } else {
-                 selectedMap[item.id] = item;
+                 byId[item.id] = item;
              }
          } else {
-             selectedMap = {
+             byId = {
                  [item.id]: item
              }
          }
      } else {
-         selectedMap = {
+         byId = {
              [item.id]: item
          }
 
@@ -431,10 +390,15 @@
          closePopup(true);
      }
 
-     selectedItems = Object.values(selectedMap);
+     selection = {
+         byId: byId,
+         items: Object.values(byId)
+     };
+     selectionById = selection.byId;
+     selectionItems = selection.items;
 
-     syncToReal(selectedMap);
-     real.dispatchEvent(new CustomEvent('select-select', { detail: selectedMap }));
+     syncToReal(selection);
+     real.dispatchEvent(new CustomEvent('select-select', { detail: selection }));
  }
 
  export function selectItem(id) {
@@ -461,7 +425,7 @@
  //
  $: {
      if (mounted) {
-         syncToReal(selectedMap);
+         syncToReal(selection);
      }
  }
 
@@ -470,25 +434,29 @@
          return;
      }
 
-     let newMap = {};
+     let byId = {};
 
      let options = real.selectedOptions;
      for (let i = options.length - 1; i >= 0; i--) {
          let item = createItemFromOption(options[i]);
-         newMap[item.id] = item;
+         byId[item.id] = item;
      }
 
-     selectedMap = newMap;
-     selectedItems = Object.values(newMap);
+     selection = {
+         byId: byId,
+         items: Object.values(byId)
+     };
+     selectionById = selection.byId;
+     selectionItems = selection.items;
  }
 
- function syncToReal(selectedMap) {
+ function syncToReal(selection) {
      let changed = false;
 
      // Insert missing values
      // NOTE KI all existing values are *assumed* to be in sync data-attr wise
      if (remote) {
-         selectedItems.forEach(function(item) {
+         selection.items.forEach(function(item) {
              let el = real.querySelector('option[value="' + item.id.trim() + '"]');
              if (!el) {
                  el = createOptionFromItem(item);
@@ -500,7 +468,7 @@
      let options = real.options;
      for (let i = options.length - 1; i >= 0; i--) {
          let el = options[i];
-         let curr = !!selectedMap[el.value];
+         let curr = !!selection.byId[el.value];
          if (el.selected !== curr) {
              changed = true;
          }
@@ -855,10 +823,6 @@
      handleEvent(event.code, toggleKeydownHandlers, event);
  }
 
- function handleToggleKeydown(event) {
-     handleEvent(event.code, toggleKeydownHandlers, event);
- }
-
  function handleSelectionClick(event) {
      if (event.button === 0 && !hasModifier(event)) {
          if (popupVisible) {
@@ -869,6 +833,10 @@
              fetchItems(false);
          }
      }
+ }
+
+ function handleToggleKeydown(event) {
+     handleEvent(event.code, toggleKeydownHandlers, event);
  }
 
  function handleToggleClick(event) {
@@ -1024,6 +992,84 @@
      return el;
  }
 
+ function createResult(data) {
+     let items;
+     let byId = {};
+     let off = 0;
+     let act = 0;
+
+     if (data.fixedItems && data.fetchedItems) {
+         items = [];
+         if (data.fixedItems) {
+             data.fixedItems.forEach(function(item) {
+                 items.push(item);
+             });
+         }
+
+         if (data.fetchedItems) {
+             if (items.length > 0) {
+                 items.push({ separator: true });
+             }
+             let wasClear = false;
+             data.fetchedItems.forEach(function(item) {
+                 if (wasClear) {
+                     items.push({ separator: true });
+                 }
+                 items.push(item);
+                 wasClear = !item.id;
+             });
+         }
+     } else {
+         items = data.fetchedItems || data.fixedItems || [];
+     }
+
+     items.forEach(function(item) {
+         byId[item.id] = item;
+     });
+
+     let counts = calculateCounts(data.fetchedItems || []);
+     let more = data.more === true && counts.offsetCount > 0 && !data.fetchedId;
+     let tooShort = data.tooShort === true;
+
+     return {
+         byId: byId,
+         displayItems: items,
+         fetchedItems: data.fetchedItems,
+         offsetCount: counts.offsetCount,
+         actualCount: counts.actualCount,
+         more: more,
+         tooShort: tooShort,
+     };
+ }
+
+ function calculateCounts(items) {
+     let act = 0;
+     let off = 0;
+
+     items.forEach(function(item) {
+         if (item.id) {
+             item.id = item.id.toString();
+         }
+
+         if (item.separator) {
+             // NOTE KI separator is ignored always
+         } else if (!item.id) {
+             //NOTE KI dummy items ignored
+         } else if (item.placeholder) {
+             // NOTE KI does not affect pagination
+             act += 1;
+         } else {
+             // NOTE KI normal or disabled affects pagination
+             off += 1;
+             act += 1;
+         }
+     });
+
+     return {
+         offsetCount: off,
+         actualCount: act
+     };
+ }
 </script>
 
 <!-- ------------------------------------------------------------ -->
@@ -1043,6 +1089,7 @@
      text-overflow: ellipsis;
  }
  :global(.ss-popup) {
+     padding-top: 0;
      max-height: 50vh;
      max-width: 90vw;
      overflow-y: auto;
@@ -1111,7 +1158,7 @@
            on:click={handleSelectionClick} >
 
         <span class="ss-no-click ss-selection text-dark d-flex">
-          {#each selectedItems as item, index (item.id)}
+          {#each selectionItems as item, index (item.id)}
             <span class="ss-no-click ss-selected-item {item.itemClass} {item.id ? '' : 'text-muted'}">{index > 0 ? ', ' : ''}{item.text}</span>
           {/each}
         </span>
@@ -1140,7 +1187,7 @@
             on:click={handleToggleClick}>
 
       <span class="ss-no-click ss-selection text-dark d-flex">
-        {#each selectedItems as item, index (item.id)}
+        {#each selectionItems as item, index (item.id)}
           <span class="ss-no-click ss-selected-item {item.itemClass} {item.id ? '' : 'text-muted'}">{index > 0 ? ', ' : ''}{item.text}</span>
         {/each}
         <span class="ml-auto">
@@ -1164,18 +1211,10 @@
         {translate('fetching')}
       </div>
       -->
-    {:else if actualCount === 0}
-      <div tabindex="-1" class="dropdown-item text-muted ss-item">
-        {#if tooShort }
-          {translate('too_short')}
-        {:else}
-          {translate('no_results')}
-        {/if}
-      </div>
     {/if}
 
     {#if typeahead}
-      {#each selectedItems as item, index (item.id)}
+      {#each selectionItems as item, index (item.id)}
         {#if item.id}
           <div tabindex=1
                class="ki-js-item dropdown-item ss-item"
@@ -1244,7 +1283,7 @@
 
       {:else}
         <div tabindex=1
-             class="ki-js-item dropdown-item ss-item {!item.id ? 'text-muted' : ''} {selectedMap[item.id] ? 'alert-primary' : ''}"
+             class="ki-js-item dropdown-item ss-item {!item.id ? 'text-muted' : ''} {selectionById[item.id] ? 'alert-primary' : ''}"
              data-id="{item.id}"
              on:blur={handleBlur}
              on:click={handleItemClick}
@@ -1255,7 +1294,7 @@
             {#if multiple}
               <div class="d-inline-block align-top">
                 {#if item.id}
-                  <i class="far {selectedMap[item.id] ? 'fa-check-square' : 'fa-square'}"></i>
+                  <i class="far {selectionById[item.id] ? 'fa-check-square' : 'fa-square'}"></i>
                 {/if}
               </div>
             {/if}
@@ -1285,6 +1324,16 @@
            class="dropdown-item text-muted"
            bind:this={moreEl}>
         {translate('has_more')}
+      </div>
+    {/if}
+    {console.log(actualCount, result.fetchedItems) || ''}
+    {#if actualCount === 0}
+      <div tabindex="-1" class="dropdown-item text-muted ss-item">
+        {#if tooShort }
+          {translate('too_short')}
+        {:else}
+          {translate('no_results')}
+        {/if}
       </div>
     {/if}
   </div>
