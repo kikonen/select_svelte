@@ -853,8 +853,24 @@
      handleEvent(event.code, inputKeyupHandlers, event);
  }
 
+ function handleSelectionKeydown(event) {
+     handleEvent(event.code, toggleKeydownHandlers, event);
+ }
+
  function handleToggleKeydown(event) {
      handleEvent(event.code, toggleKeydownHandlers, event);
+ }
+
+ function handleSelectionClick(event) {
+     if (event.button === 0 && !hasModifier(event)) {
+         if (popupVisible) {
+             toggle.focus();
+             openInput(true);
+         } else {
+             openPopup();
+             fetchItems(false);
+         }
+     }
  }
 
  function handleToggleClick(event) {
@@ -1091,8 +1107,8 @@
            tabindex="0"
            bind:this={selectionDisplay}
            on:blur={handleBlur}
-           on:keydown={handleToggleKeydown}
-           on:click={handleToggleClick} >
+           on:keydown={handleSelectionKeydown}
+           on:click={handleSelectionClick} >
 
         <span class="ss-no-click ss-selection text-dark d-flex">
           {#each selectedItems as item, index (item.id)}
