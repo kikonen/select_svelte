@@ -341,8 +341,9 @@ var Select = (function (exports) {
     if ($$.fragment !== null) {
       $$.update();
       run_all($$.before_update);
-      $$.fragment && $$.fragment.p($$.ctx, $$.dirty);
+      var dirty = $$.dirty;
       $$.dirty = [-1];
+      $$.fragment && $$.fragment.p($$.ctx, dirty);
       $$.after_update.forEach(add_render_callback);
     }
   }
