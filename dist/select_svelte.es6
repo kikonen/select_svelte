@@ -366,7 +366,7 @@ function get_each_context_2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (1203:2) {:else}
+// (1205:2) {:else}
 function create_else_block_4(ctx) {
 	let button;
 	let span1;
@@ -445,7 +445,7 @@ function create_else_block_4(ctx) {
 	};
 }
 
-// (1161:2) {#if typeahead}
+// (1163:2) {#if typeahead}
 function create_if_block_19(ctx) {
 	let div2;
 	let input;
@@ -571,7 +571,7 @@ function create_if_block_19(ctx) {
 	};
 }
 
-// (1213:8) {#each selectionItems as item, index (item.id)}
+// (1215:8) {#each selectionItems as item, index (item.id)}
 function create_each_block_3(key_1, ctx) {
 	let span;
 	let t0_value = (/*index*/ ctx[86] > 0 ? ", " : "") + "";
@@ -609,7 +609,7 @@ function create_each_block_3(key_1, ctx) {
 	};
 }
 
-// (1184:10) {#each selectionItems as item, index (item.id)}
+// (1186:10) {#each selectionItems as item, index (item.id)}
 function create_each_block_2(key_1, ctx) {
 	let span;
 	let t0_value = (/*index*/ ctx[86] > 0 ? ", " : "") + "";
@@ -647,12 +647,12 @@ function create_each_block_2(key_1, ctx) {
 	};
 }
 
-// (1231:43) 
+// (1233:43) 
 function create_if_block_18(ctx) {
 	return { c: noop, m: noop, p: noop, d: noop };
 }
 
-// (1226:4) {#if fetchError}
+// (1228:4) {#if fetchError}
 function create_if_block_17(ctx) {
 	let div;
 	let t;
@@ -677,7 +677,7 @@ function create_if_block_17(ctx) {
 	};
 }
 
-// (1239:4) {#if typeahead}
+// (1241:4) {#if typeahead}
 function create_if_block_10(ctx) {
 	let each_blocks = [];
 	let each_1_lookup = new Map();
@@ -742,7 +742,7 @@ function create_if_block_10(ctx) {
 	};
 }
 
-// (1241:8) {#if item.id}
+// (1243:8) {#if item.id}
 function create_if_block_12(ctx) {
 	let div3;
 	let div2;
@@ -858,7 +858,7 @@ function create_if_block_12(ctx) {
 	};
 }
 
-// (1252:14) {#if multiple}
+// (1254:14) {#if multiple}
 function create_if_block_15(ctx) {
 	let div;
 	let if_block = /*item*/ ctx[82].id && create_if_block_16();
@@ -892,7 +892,7 @@ function create_if_block_15(ctx) {
 	};
 }
 
-// (1254:18) {#if item.id}
+// (1256:18) {#if item.id}
 function create_if_block_16(ctx) {
 	let i;
 
@@ -910,7 +910,7 @@ function create_if_block_16(ctx) {
 	};
 }
 
-// (1264:18) {:else}
+// (1266:18) {:else}
 function create_else_block_3(ctx) {
 	let t_value = translate("clear") + "";
 	let t;
@@ -929,7 +929,7 @@ function create_else_block_3(ctx) {
 	};
 }
 
-// (1262:18) {#if item.id}
+// (1264:18) {#if item.id}
 function create_if_block_14(ctx) {
 	let t_value = /*item*/ ctx[82].text + "";
 	let t;
@@ -950,7 +950,7 @@ function create_if_block_14(ctx) {
 	};
 }
 
-// (1269:16) {#if item.desc}
+// (1271:16) {#if item.desc}
 function create_if_block_13(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[82].desc + "";
@@ -975,7 +975,7 @@ function create_if_block_13(ctx) {
 	};
 }
 
-// (1240:6) {#each selectionItems as item, index (item.id)}
+// (1242:6) {#each selectionItems as item, index (item.id)}
 function create_each_block_1(key_1, ctx) {
 	let first;
 	let if_block_anchor;
@@ -1017,7 +1017,7 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (1280:6) {#if selectionItems.length > 1 || (selectionItems.length == 1 && selectionItems[0].id)}
+// (1282:6) {#if selectionItems.length > 1 || (selectionItems.length == 1 && selectionItems[0].id)}
 function create_if_block_11(ctx) {
 	let div;
 	let dispose;
@@ -1040,7 +1040,7 @@ function create_if_block_11(ctx) {
 	};
 }
 
-// (1309:6) {:else}
+// (1311:6) {:else}
 function create_else_block_1(ctx) {
 	let div3;
 	let div2;
@@ -1166,7 +1166,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (1295:50) 
+// (1297:50) 
 function create_if_block_4(ctx) {
 	let div1;
 	let div0;
@@ -1224,7 +1224,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (1289:6) {#if item.separator}
+// (1291:6) {#if item.separator}
 function create_if_block_3(ctx) {
 	let div;
 	let dispose;
@@ -1247,7 +1247,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (1319:12) {#if multiple}
+// (1321:12) {#if multiple}
 function create_if_block_8(ctx) {
 	let div;
 	let if_block = /*item*/ ctx[82].id && create_if_block_9(ctx);
@@ -1283,7 +1283,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (1321:16) {#if item.id}
+// (1323:16) {#if item.id}
 function create_if_block_9(ctx) {
 	let i;
 	let i_class_value;
@@ -1312,7 +1312,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (1331:16) {:else}
+// (1333:16) {:else}
 function create_else_block_2(ctx) {
 	let t_value = translate("clear") + "";
 	let t;
@@ -1331,7 +1331,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (1329:16) {#if item.id}
+// (1331:16) {#if item.id}
 function create_if_block_7(ctx) {
 	let t_value = /*item*/ ctx[82].text + "";
 	let t;
@@ -1352,7 +1352,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (1336:14) {#if item.desc}
+// (1338:14) {#if item.desc}
 function create_if_block_6(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[82].desc + "";
@@ -1377,7 +1377,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (1302:10) {#if item.desc}
+// (1304:10) {#if item.desc}
 function create_if_block_5(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[82].desc + "";
@@ -1402,7 +1402,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (1288:4) {#each displayItems as item (item.id)}
+// (1290:4) {#each displayItems as item (item.id)}
 function create_each_block(key_1, ctx) {
 	let first;
 	let if_block_anchor;
@@ -1451,7 +1451,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (1347:4) {#if hasMore}
+// (1349:4) {#if hasMore}
 function create_if_block_2(ctx) {
 	let div;
 
@@ -1474,7 +1474,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (1354:4) {#if actualCount === 0}
+// (1356:4) {#if actualCount === 0}
 function create_if_block(ctx) {
 	let div;
 
@@ -1517,7 +1517,7 @@ function create_if_block(ctx) {
 	};
 }
 
-// (1358:8) {:else}
+// (1360:8) {:else}
 function create_else_block(ctx) {
 	let t_value = translate("no_results") + "";
 	let t;
@@ -1536,7 +1536,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (1356:8) {#if tooShort }
+// (1358:8) {#if tooShort }
 function create_if_block_1(ctx) {
 	let t_value = translate("too_short") + "";
 	let t;
@@ -2295,7 +2295,7 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	function containsElement(el) {
-		return el === inputEl || el === toggleEl || el === selectionEl || popupEl.contains(el);
+		return containerEl.contains(el) || popupEl.contains(el);
 	}
 
 	function syncFromReal() {
@@ -2643,12 +2643,14 @@ function instance($$self, $$props, $$invalidate) {
 	};
 
 	function handleBlur(event) {
-		if (!containsElement(event.relatedTarget)) {
-			console.log("BLUR", toggleEl);
+		if (!containsElement(event.relatedTarget || event.target)) {
+			console.log("BLUR", event);
 			cancelFetch();
 			clearQuery();
 			closePopup(false);
 			closeInput(false);
+		} else {
+			console.log("IGNORE_BLUR", event);
 		}
 	}
 

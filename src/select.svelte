@@ -429,7 +429,7 @@
  }
 
  function containsElement(el) {
-     return el === inputEl || el === toggleEl || el === selectionEl || popupEl.contains(el);
+     return containerEl.contains(el) || popupEl.contains(el);
  }
 
  ////////////////////////////////////////////////////////////
@@ -806,8 +806,8 @@
  }
 
  function handleBlur(event) {
-     if (!containsElement(event.relatedTarget)) {
-         if (DEBUG) console.log("BLUR", toggleEl);
+     if (!containsElement(event.relatedTarget || event.target)) {
+         if (DEBUG) console.log("BLUR", event);
 
          cancelFetch();
 
@@ -817,6 +817,8 @@
 
          // TODO KI *WHY* this redundant sync was done?!?
 //         syncFromReal();
+     } else {
+         if (DEBUG) console.log("IGNORE_BLUR", event);
      }
  }
 
