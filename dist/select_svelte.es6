@@ -2643,7 +2643,7 @@ function instance($$self, $$props, $$invalidate) {
 	};
 
 	function handleBlur(event) {
-		if (!containsElement(event.relatedTarget || event.target)) {
+		if (event.relatedTarget && !containsElement(event.relatedTarget)) {
 			console.log("BLUR", event);
 			cancelFetch();
 			clearQuery();

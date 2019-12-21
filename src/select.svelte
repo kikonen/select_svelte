@@ -806,7 +806,7 @@
  }
 
  function handleBlur(event) {
-     if (!containsElement(event.relatedTarget || event.target)) {
+     if (event.relatedTarget && !containsElement(event.relatedTarget)) {
          if (DEBUG) console.log("BLUR", event);
 
          cancelFetch();
