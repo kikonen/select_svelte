@@ -28,10 +28,6 @@
  let tooShort = false;
  let hasMore = false;
 
- let selection = {
-     byId: {},
-     items: [],
- };
  let selectionById = {};
  let selectionItems = [];
 
@@ -358,26 +354,32 @@
  function selectItemImpl(id) {
      id = id.toString();
 
+/*
      if (remote) {
-         syncToReal
+         syncToReal();
      }
+*/
 
-     let item = result.byId[id] || selection.byId[id];
+     let item = result.byId[id] || selectionById[id];
 
      if (!item) {
          console.error("MISSING item=" + id);
          return;
      }
 
-     let byId = selection.byId;
+     let blankItem = result.blankItem;
+     let byId = selectionById;
 
      if (multiple) {
          if (item.id) {
-             delete byId[''];
-
              if (byId[item.id]) {
                  delete byId[item.id];
+
+                 if (!blankItem) {
+                     blankItem = BLANK_ITEM;
+                 }
              } else {
+                 delete byId[blankItem.id];
                  byId[item.id] = item;
              }
          } else {
@@ -396,15 +398,19 @@
          closePopup(true);
      }
 
-     selection = {
-         byId: byId,
-         items: Object.values(byId)
-     };
-     selectionById = selection.byId;
-     selectionItems = selection.items;
+     let items = Object.values(byId);
+     if (items.length == 0 && blankItem) {
+         byId = {
+             [blankItem.id]: blankItem
+         }
+         items = [blankItem];
+     }
 
-     syncToReal(selection);
-     real.dispatchEvent(new CustomEvent('select-select', { detail: selection }));
+     selectionById = byId;
+     selectionItems = items;
+
+     syncToReal();
+     real.dispatchEvent(new CustomEvent('select-select', { detail: selectionItems }));
  }
 
  export function selectItem(id) {
@@ -415,7 +421,7 @@
 
  function selectElement(el) {
      selectItemImpl(el.dataset.id);
-     if (el.dataset.selection) {
+     if (el.dataset.selected) {
          if (!focusNextItem(el)) {
              focusPreviousItem(el);
          }
@@ -431,7 +437,7 @@
  //
  $: {
      if (mounted) {
-         syncToReal(selection);
+         syncToReal();
      }
  }
 
@@ -440,30 +446,31 @@
          return;
      }
 
+     let oldById = selectionById;
      let byId = {};
 
      let options = real.selectedOptions;
      for (let i = options.length - 1; i >= 0; i--) {
-         let item = createItemFromOption(options[i]);
+         let el = options[i];
+         let item = oldById[el.value || ''];
+         if (!item) {
+             item = createItemFromOption(el);
+         }
          byId[item.id] = item;
      }
 
-     selection = {
-         byId: byId,
-         items: Object.values(byId)
-     };
-     selectionById = selection.byId;
-     selectionItems = selection.items;
+     selectionById = byId;
+     selectionItems = Object.values(byId);
  }
 
- function syncToReal(selection) {
+ function syncToReal() {
      let changed = false;
 
      // Insert missing values
      // NOTE KI all existing values are *assumed* to be in sync data-attr wise
      if (remote) {
-         selection.items.forEach(function(item) {
-             let el = real.querySelector('option[value="' + item.id.trim() + '"]');
+         selectionItems.forEach(function(item) {
+             let el = real.querySelector('option[value="' + item.id + '"]');
              if (!el) {
                  el = createOptionFromItem(item);
                  real.appendChild(el);
@@ -474,7 +481,7 @@
      let options = real.options;
      for (let i = options.length - 1; i >= 0; i--) {
          let el = options[i];
-         let curr = !!selection.byId[el.value];
+         let curr = !!selectionById[el.value];
          if (el.selected !== curr) {
              changed = true;
          }
@@ -525,7 +532,7 @@
      real.addEventListener('change', function() {
          if (!isSyncToReal) {
              syncFromReal();
-             if (DEBUG) console.log("FROM_REAL", selection);
+             if (DEBUG) console.log("FROM_REAL", selectionItems);
          }
      });
 
@@ -808,7 +815,8 @@
          closePopup(false);
          closeInput(false);
 
-         syncFromReal();
+         // TODO KI *WHY* this redundant sync was done?!?
+//         syncFromReal();
      }
  }
 
@@ -893,6 +901,11 @@
  const FETCH_INDICATOR_DELAY = 150;
  const CARET_DOWN = 'fas fa-caret-down';
  const CARET_FETCHING = 'far fa-hourglass';
+
+ const BLANK_ITEM = {
+     id: '',
+     text: ''
+ };
 
  const META_KEYS = {
      Control: true,
@@ -1041,6 +1054,7 @@
      let tooShort = data.tooShort === true;
 
      return {
+         blankItem: byId[''] || null,
          byId: byId,
          displayItems: items,
          fetchedItems: data.fetchedItems,
@@ -1228,7 +1242,7 @@
           <div tabindex=1
                class="ki-js-item dropdown-item ss-item"
                data-id="{item.id}"
-               data-selection="true"
+               data-selected="true"
                on:blur={handleBlur}
                on:click={handleItemClick}
                on:keydown={handleItemKeydown}
@@ -1263,10 +1277,12 @@
         {/if}
       {/each}
 
-      <div tabindex="-1"
-           class="dropdown-divider ki-js-blank"
-           on:keydown={handleItemKeydown}>
-      </div>
+      {#if selectionItems.length > 1 || (selectionItems.length == 1 && selectionItems[0].id)}
+        <div tabindex="-1"
+             class="dropdown-divider ki-js-blank"
+             on:keydown={handleItemKeydown}>
+        </div>
+      {/if}
     {/if}
 
     {#each displayItems as item (item.id)}
