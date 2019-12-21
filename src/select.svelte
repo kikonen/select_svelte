@@ -29,6 +29,7 @@
 
  let selectionById = {};
  let selectionItems = [];
+ let selectionDropdownItems = [];
 
  let showFetching = false;
  let fetchingMore = false;
@@ -266,6 +267,8 @@
  }
 
  function closePopup(focusToggle) {
+     selectionDropdownItems = selectionItems;
+
      popupVisible = false;
      if (focusToggle) {
          toggleEl.focus();
@@ -314,7 +317,7 @@
          }
 
          // NOTE KI reset query only for single item
-         clearQuery();
+//         clearQuery();
          closePopup(containsElement(document.activeElement));
      }
 
@@ -327,7 +330,9 @@
      }
 
      selectionById = byId;
-     selectionItems = items;
+     selectionItems = items.sort(function(a, b) {
+         return a.text.localeCompare(b.text);
+     });
 
      syncToReal();
      real.dispatchEvent(new CustomEvent('select-select', { detail: selectionItems }));
@@ -341,10 +346,12 @@
 
  function selectElement(el) {
      selectItemImpl(el.dataset.id);
+
      if (el.dataset.selected) {
-         if (!focusNextItem(el)) {
-             focusPreviousItem(el);
-         }
+         selectionDropdownItems = selectionDropdownItems;
+//         if (!focusNextItem(el)) {
+//             focusPreviousItem(el);
+//         }
      }
  }
 
@@ -380,7 +387,9 @@
      }
 
      selectionById = byId;
-     selectionItems = Object.values(byId);
+     selectionItems = Object.values(byId).sort(function(a, b) {
+         return a.text.localeCompare(b.text);
+     });
  }
 
  function syncToReal() {
@@ -1082,7 +1091,7 @@
                on:keydown={handleInputKeydown}
                on:keyup={handleInputKeyup}>
 
-      {#each selectionItems as item, index (item.id)}
+      {#each selectionDropdownItems as item, index (item.id)}
         {#if item.id}
           <div tabindex=1
                class="ki-js-item dropdown-item ss-item"
@@ -1097,7 +1106,7 @@
               {#if multiple}
                 <div class="d-inline-block align-top">
                   {#if item.id}
-                    <i class="far fa-check-square"></i>
+                    <i class="far {selectionById[item.id] ? 'fa-check-square' : 'fa-square'}"></i>
                   {/if}
                 </div>
               {/if}
@@ -1122,7 +1131,7 @@
         {/if}
       {/each}
 
-      {#if selectionItems.length > 1 || (selectionItems.length == 1 && selectionItems[0].id)}
+      {#if selectionDropdownItems.length > 1 || (selectionDropdownItems.length == 1 && selectionDropdownItems[0].id)}
         <div tabindex="-1"
              class="dropdown-divider ki-js-blank"
              on:keydown={handleItemKeydown}>
