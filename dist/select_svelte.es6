@@ -366,7 +366,7 @@ function get_each_context_2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (1180:2) {:else}
+// (1184:2) {:else}
 function create_else_block_4(ctx) {
 	let button;
 	let span1;
@@ -445,7 +445,7 @@ function create_else_block_4(ctx) {
 	};
 }
 
-// (1138:2) {#if typeahead}
+// (1142:2) {#if typeahead}
 function create_if_block_18(ctx) {
 	let div2;
 	let input;
@@ -571,7 +571,7 @@ function create_if_block_18(ctx) {
 	};
 }
 
-// (1190:8) {#each selectionItems as item, index (item.id)}
+// (1194:8) {#each selectionItems as item, index (item.id)}
 function create_each_block_3(key_1, ctx) {
 	let span;
 	let t0_value = (/*index*/ ctx[87] > 0 ? ", " : "") + "";
@@ -609,7 +609,7 @@ function create_each_block_3(key_1, ctx) {
 	};
 }
 
-// (1161:10) {#each selectionItems as item, index (item.id)}
+// (1165:10) {#each selectionItems as item, index (item.id)}
 function create_each_block_2(key_1, ctx) {
 	let span;
 	let t0_value = (/*index*/ ctx[87] > 0 ? ", " : "") + "";
@@ -647,12 +647,12 @@ function create_each_block_2(key_1, ctx) {
 	};
 }
 
-// (1208:43) 
+// (1212:43) 
 function create_if_block_17(ctx) {
 	return { c: noop, m: noop, p: noop, d: noop };
 }
 
-// (1203:4) {#if fetchError}
+// (1207:4) {#if fetchError}
 function create_if_block_16(ctx) {
 	let div;
 	let t;
@@ -677,7 +677,7 @@ function create_if_block_16(ctx) {
 	};
 }
 
-// (1216:4) {#if typeahead}
+// (1220:4) {#if typeahead}
 function create_if_block_10(ctx) {
 	let each_blocks = [];
 	let each_1_lookup = new Map();
@@ -729,7 +729,7 @@ function create_if_block_10(ctx) {
 	};
 }
 
-// (1218:8) {#if item.id}
+// (1222:8) {#if item.id}
 function create_if_block_11(ctx) {
 	let div3;
 	let div2;
@@ -845,7 +845,7 @@ function create_if_block_11(ctx) {
 	};
 }
 
-// (1229:14) {#if multiple}
+// (1233:14) {#if multiple}
 function create_if_block_14(ctx) {
 	let div;
 	let if_block = /*item*/ ctx[83].id && create_if_block_15();
@@ -879,7 +879,7 @@ function create_if_block_14(ctx) {
 	};
 }
 
-// (1231:18) {#if item.id}
+// (1235:18) {#if item.id}
 function create_if_block_15(ctx) {
 	let i;
 
@@ -897,7 +897,7 @@ function create_if_block_15(ctx) {
 	};
 }
 
-// (1241:18) {:else}
+// (1245:18) {:else}
 function create_else_block_3(ctx) {
 	let t_value = translate("clear") + "";
 	let t;
@@ -916,7 +916,7 @@ function create_else_block_3(ctx) {
 	};
 }
 
-// (1239:18) {#if item.id}
+// (1243:18) {#if item.id}
 function create_if_block_13(ctx) {
 	let t_value = /*item*/ ctx[83].text + "";
 	let t;
@@ -937,7 +937,7 @@ function create_if_block_13(ctx) {
 	};
 }
 
-// (1246:16) {#if item.desc}
+// (1250:16) {#if item.desc}
 function create_if_block_12(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[83].desc + "";
@@ -962,7 +962,7 @@ function create_if_block_12(ctx) {
 	};
 }
 
-// (1217:6) {#each selectionItems as item, index (item.id)}
+// (1221:6) {#each selectionItems as item, index (item.id)}
 function create_each_block_1(key_1, ctx) {
 	let first;
 	let if_block_anchor;
@@ -1004,7 +1004,7 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (1284:6) {:else}
+// (1288:6) {:else}
 function create_else_block_1(ctx) {
 	let div3;
 	let div2;
@@ -1130,7 +1130,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (1270:50) 
+// (1274:50) 
 function create_if_block_4(ctx) {
 	let div1;
 	let div0;
@@ -1188,7 +1188,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (1264:6) {#if item.separator}
+// (1268:6) {#if item.separator}
 function create_if_block_3(ctx) {
 	let div;
 	let dispose;
@@ -1211,7 +1211,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (1294:12) {#if multiple}
+// (1298:12) {#if multiple}
 function create_if_block_8(ctx) {
 	let div;
 	let if_block = /*item*/ ctx[83].id && create_if_block_9(ctx);
@@ -1247,7 +1247,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (1296:16) {#if item.id}
+// (1300:16) {#if item.id}
 function create_if_block_9(ctx) {
 	let i;
 	let i_class_value;
@@ -1276,7 +1276,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (1306:16) {:else}
+// (1310:16) {:else}
 function create_else_block_2(ctx) {
 	let t_value = translate("clear") + "";
 	let t;
@@ -1295,7 +1295,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (1304:16) {#if item.id}
+// (1308:16) {#if item.id}
 function create_if_block_7(ctx) {
 	let t_value = /*item*/ ctx[83].text + "";
 	let t;
@@ -1316,7 +1316,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (1311:14) {#if item.desc}
+// (1315:14) {#if item.desc}
 function create_if_block_6(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[83].desc + "";
@@ -1341,7 +1341,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (1277:10) {#if item.desc}
+// (1281:10) {#if item.desc}
 function create_if_block_5(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[83].desc + "";
@@ -1366,7 +1366,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (1263:4) {#each displayItems as item (item.id)}
+// (1267:4) {#each displayItems as item (item.id)}
 function create_each_block(key_1, ctx) {
 	let first;
 	let if_block_anchor;
@@ -1415,7 +1415,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (1322:4) {#if hasMore}
+// (1326:4) {#if hasMore}
 function create_if_block_2(ctx) {
 	let div;
 
@@ -1438,7 +1438,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (1330:4) {#if actualCount === 0}
+// (1334:4) {#if actualCount === 0}
 function create_if_block(ctx) {
 	let div;
 
@@ -1481,7 +1481,7 @@ function create_if_block(ctx) {
 	};
 }
 
-// (1334:8) {:else}
+// (1338:8) {:else}
 function create_else_block(ctx) {
 	let t_value = translate("no_results") + "";
 	let t;
@@ -1500,7 +1500,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (1332:8) {#if tooShort }
+// (1336:8) {#if tooShort }
 function create_if_block_1(ctx) {
 	let t_value = translate("too_short") + "";
 	let t;
@@ -1896,6 +1896,7 @@ function focusNextItem(el) {
 }
 
 function handleEvent(code, handlers, event) {
+	console.debug(event);
 	(handlers[code] || handlers.base)(event);
 }
 
@@ -1938,6 +1939,7 @@ function instance($$self, $$props, $$invalidate) {
 	let isSyncToReal = false;
 
 	function inlineFetcher(offset, query) {
+		console.log("INLINE_SELECT_FETCH: " + query);
 
 		let promise = new Promise(function (resolve, reject) {
 				let items = [];
@@ -2083,6 +2085,7 @@ function instance($$self, $$props, $$invalidate) {
 		setTimeout(
 			function () {
 				if (activeFetch === currentFetch) {
+					console.log("fetching...");
 					$$invalidate(16, showFetching = true);
 				}
 			},
@@ -2119,13 +2122,18 @@ function instance($$self, $$props, $$invalidate) {
 	let passEvents = null;
 
 	function focusTarget(target) {
+		console.trace("request_Focus", target);
 		activeFocusRequest = null;
 
 		let handler = function () {
+			console.log("HANDLE: request_Focus", target, activeFocusRequest);
 
 			if (activeFocusRequest === handler) {
+				console.log("HANDLE_HIT: request_Focus", target);
 				activeFocusRequest = null;
 				target.focus();
+			} else {
+				console.log("HANDLE_MISS: request_Focus", target);
 			}
 		};
 
@@ -2157,6 +2165,7 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	function closeInput(focusToggle) {
+		console.trace("CLOSE_INPUT", focusToggle);
 
 		if (!typeahead) {
 			return;
@@ -2171,10 +2180,6 @@ function instance($$self, $$props, $$invalidate) {
 
 		if (focusToggle) {
 			focusTarget(selectionEl || toggleEl);
-		} else {
-			if (wasVisible) {
-				toggleEl.focus();
-			}
 		}
 	}
 
@@ -2340,6 +2345,7 @@ function instance($$self, $$props, $$invalidate) {
 		real.addEventListener("change", function () {
 			if (!isSyncToReal) {
 				syncFromReal();
+				console.log("FROM_REAL", selection);
 			}
 		});
 
@@ -2591,6 +2597,7 @@ function instance($$self, $$props, $$invalidate) {
 
 	function handleBlur(event) {
 		if (!containsElement(event.relatedTarget)) {
+			console.log("BLUR", toggleEl);
 			cancelFetch();
 			clearQuery();
 			closePopup(false);

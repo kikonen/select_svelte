@@ -668,7 +668,7 @@ var Select = (function (exports) {
     child_ctx[83] = list[i];
     child_ctx[87] = i;
     return child_ctx;
-  } // (1180:2) {:else}
+  } // (1184:2) {:else}
 
 
   function create_else_block_4(ctx) {
@@ -768,7 +768,7 @@ var Select = (function (exports) {
         run_all(dispose);
       }
     };
-  } // (1138:2) {#if typeahead}
+  } // (1142:2) {#if typeahead}
 
 
   function create_if_block_18(ctx) {
@@ -951,7 +951,7 @@ var Select = (function (exports) {
         run_all(dispose);
       }
     };
-  } // (1190:8) {#each selectionItems as item, index (item.id)}
+  } // (1194:8) {#each selectionItems as item, index (item.id)}
 
 
   function create_each_block_3(key_1, ctx) {
@@ -1010,7 +1010,7 @@ var Select = (function (exports) {
         if (detaching) detach(span);
       }
     };
-  } // (1161:10) {#each selectionItems as item, index (item.id)}
+  } // (1165:10) {#each selectionItems as item, index (item.id)}
 
 
   function create_each_block_2(key_1, ctx) {
@@ -1069,7 +1069,7 @@ var Select = (function (exports) {
         if (detaching) detach(span);
       }
     };
-  } // (1208:43) 
+  } // (1212:43) 
 
 
   function create_if_block_17(ctx) {
@@ -1079,7 +1079,7 @@ var Select = (function (exports) {
       p: noop,
       d: noop
     };
-  } // (1203:4) {#if fetchError}
+  } // (1207:4) {#if fetchError}
 
 
   function create_if_block_16(ctx) {
@@ -1109,7 +1109,7 @@ var Select = (function (exports) {
         if (detaching) detach(div);
       }
     };
-  } // (1216:4) {#if typeahead}
+  } // (1220:4) {#if typeahead}
 
 
   function create_if_block_10(ctx) {
@@ -1173,7 +1173,7 @@ var Select = (function (exports) {
         dispose();
       }
     };
-  } // (1218:8) {#if item.id}
+  } // (1222:8) {#if item.id}
 
 
   function create_if_block_11(ctx) {
@@ -1312,7 +1312,7 @@ var Select = (function (exports) {
         run_all(dispose);
       }
     };
-  } // (1229:14) {#if multiple}
+  } // (1233:14) {#if multiple}
 
 
   function create_if_block_14(ctx) {
@@ -1349,7 +1349,7 @@ var Select = (function (exports) {
         if (if_block) if_block.d();
       }
     };
-  } // (1231:18) {#if item.id}
+  } // (1235:18) {#if item.id}
 
 
   function create_if_block_15(ctx) {
@@ -1366,7 +1366,7 @@ var Select = (function (exports) {
         if (detaching) detach(i);
       }
     };
-  } // (1241:18) {:else}
+  } // (1245:18) {:else}
 
 
   function create_else_block_3(ctx) {
@@ -1384,7 +1384,7 @@ var Select = (function (exports) {
         if (detaching) detach(t);
       }
     };
-  } // (1239:18) {#if item.id}
+  } // (1243:18) {#if item.id}
 
 
   function create_if_block_13(ctx) {
@@ -1410,7 +1410,7 @@ var Select = (function (exports) {
         if (detaching) detach(t);
       }
     };
-  } // (1246:16) {#if item.desc}
+  } // (1250:16) {#if item.desc}
 
 
   function create_if_block_12(ctx) {
@@ -1440,7 +1440,7 @@ var Select = (function (exports) {
         if (detaching) detach(div);
       }
     };
-  } // (1217:6) {#each selectionItems as item, index (item.id)}
+  } // (1221:6) {#each selectionItems as item, index (item.id)}
 
 
   function create_each_block_1(key_1, ctx) {
@@ -1485,7 +1485,7 @@ var Select = (function (exports) {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1284:6) {:else}
+  } // (1288:6) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -1642,7 +1642,7 @@ var Select = (function (exports) {
         run_all(dispose);
       }
     };
-  } // (1270:50) 
+  } // (1274:50) 
 
 
   function create_if_block_4(ctx) {
@@ -1721,7 +1721,7 @@ var Select = (function (exports) {
         dispose();
       }
     };
-  } // (1264:6) {#if item.separator}
+  } // (1268:6) {#if item.separator}
 
 
   function create_if_block_3(ctx) {
@@ -1745,7 +1745,7 @@ var Select = (function (exports) {
         dispose();
       }
     };
-  } // (1294:12) {#if multiple}
+  } // (1298:12) {#if multiple}
 
 
   function create_if_block_8(ctx) {
@@ -1784,7 +1784,7 @@ var Select = (function (exports) {
         if (if_block) if_block.d();
       }
     };
-  } // (1296:16) {#if item.id}
+  } // (1300:16) {#if item.id}
 
 
   function create_if_block_9(ctx) {
@@ -1817,7 +1817,7 @@ var Select = (function (exports) {
         if (detaching) detach(i);
       }
     };
-  } // (1306:16) {:else}
+  } // (1310:16) {:else}
 
 
   function create_else_block_2(ctx) {
@@ -1835,7 +1835,7 @@ var Select = (function (exports) {
         if (detaching) detach(t);
       }
     };
-  } // (1304:16) {#if item.id}
+  } // (1308:16) {#if item.id}
 
 
   function create_if_block_7(ctx) {
@@ -1861,7 +1861,7 @@ var Select = (function (exports) {
         if (detaching) detach(t);
       }
     };
-  } // (1311:14) {#if item.desc}
+  } // (1315:14) {#if item.desc}
 
 
   function create_if_block_6(ctx) {
@@ -1891,7 +1891,7 @@ var Select = (function (exports) {
         if (detaching) detach(div);
       }
     };
-  } // (1277:10) {#if item.desc}
+  } // (1281:10) {#if item.desc}
 
 
   function create_if_block_5(ctx) {
@@ -1921,7 +1921,7 @@ var Select = (function (exports) {
         if (detaching) detach(div);
       }
     };
-  } // (1263:4) {#each displayItems as item (item.id)}
+  } // (1267:4) {#each displayItems as item (item.id)}
 
 
   function create_each_block(key_1, ctx) {
@@ -1975,7 +1975,7 @@ var Select = (function (exports) {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1322:4) {#if hasMore}
+  } // (1326:4) {#if hasMore}
 
 
   function create_if_block_2(ctx) {
@@ -2001,7 +2001,7 @@ var Select = (function (exports) {
         ctx[80](null);
       }
     };
-  } // (1330:4) {#if actualCount === 0}
+  } // (1334:4) {#if actualCount === 0}
 
 
   function create_if_block(ctx) {
@@ -2045,7 +2045,7 @@ var Select = (function (exports) {
         if_block.d();
       }
     };
-  } // (1334:8) {:else}
+  } // (1338:8) {:else}
 
 
   function create_else_block(ctx) {
@@ -2063,7 +2063,7 @@ var Select = (function (exports) {
         if (detaching) detach(t);
       }
     };
-  } // (1332:8) {#if tooShort }
+  } // (1336:8) {#if tooShort }
 
 
   function create_if_block_1(ctx) {
@@ -2520,6 +2520,7 @@ var Select = (function (exports) {
   }
 
   function handleEvent(code, handlers, event) {
+    console.debug(event);
     (handlers[code] || handlers.base)(event);
   }
 
@@ -2569,6 +2570,7 @@ var Select = (function (exports) {
     var isSyncToReal = false;
 
     function inlineFetcher(offset, query) {
+      console.log("INLINE_SELECT_FETCH: " + query);
       var promise = new Promise(function (resolve, reject) {
         var items = [];
         var pattern = query.toUpperCase().trim();
@@ -2716,6 +2718,7 @@ var Select = (function (exports) {
       });
       setTimeout(function () {
         if (activeFetch === currentFetch) {
+          console.log("fetching...");
           $$invalidate(16, showFetching = true);
         }
       }, FETCH_INDICATOR_DELAY);
@@ -2749,13 +2752,18 @@ var Select = (function (exports) {
     var passEvents = null;
 
     function focusTarget(target) {
+      console.trace("request_Focus", target);
       activeFocusRequest = null;
 
       var handler = function handler() {
+        console.log("HANDLE: request_Focus", target, activeFocusRequest);
 
         if (activeFocusRequest === handler) {
+          console.log("HANDLE_HIT: request_Focus", target);
           activeFocusRequest = null;
           target.focus();
+        } else {
+          console.log("HANDLE_MISS: request_Focus", target);
         }
       };
 
@@ -2787,6 +2795,7 @@ var Select = (function (exports) {
     }
 
     function closeInput(focusToggle) {
+      console.trace("CLOSE_INPUT", focusToggle);
 
       if (!typeahead) {
         return;
@@ -2801,10 +2810,6 @@ var Select = (function (exports) {
 
       if (focusToggle) {
         focusTarget(selectionEl || toggleEl);
-      } else {
-        if (wasVisible) {
-          toggleEl.focus();
-        }
       }
     }
 
@@ -2978,6 +2983,7 @@ var Select = (function (exports) {
       real.addEventListener("change", function () {
         if (!isSyncToReal) {
           syncFromReal();
+          console.log("FROM_REAL", selection);
         }
       });
       $$invalidate(42, mounted = true);
@@ -3219,6 +3225,7 @@ var Select = (function (exports) {
 
     function handleBlur(event) {
       if (!containsElement(event.relatedTarget)) {
+        console.log("BLUR", toggleEl);
         cancelFetch();
         clearQuery();
         closePopup(false);
