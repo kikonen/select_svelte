@@ -359,7 +359,7 @@ function get_each_context_2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (1047:6) {#each selectionItems as item, index (item.id)}
+// (1052:6) {#each selectionItems as item, index (item.id)}
 function create_each_block_2(key_1, ctx) {
 	let span;
 	let t0_value = (/*index*/ ctx[77] > 0 ? ", " : "") + "";
@@ -397,7 +397,7 @@ function create_each_block_2(key_1, ctx) {
 	};
 }
 
-// (1059:4) {#if fetchError}
+// (1064:4) {#if fetchError}
 function create_if_block_17(ctx) {
 	let div;
 	let t;
@@ -422,7 +422,7 @@ function create_if_block_17(ctx) {
 	};
 }
 
-// (1065:4) {#if typeahead}
+// (1070:4) {#if typeahead}
 function create_if_block_10(ctx) {
 	let input;
 	let t0;
@@ -521,7 +521,7 @@ function create_if_block_10(ctx) {
 	};
 }
 
-// (1081:8) {#if item.id}
+// (1086:8) {#if item.id}
 function create_if_block_12(ctx) {
 	let div3;
 	let div2;
@@ -637,7 +637,7 @@ function create_if_block_12(ctx) {
 	};
 }
 
-// (1092:14) {#if multiple}
+// (1097:14) {#if multiple}
 function create_if_block_15(ctx) {
 	let div;
 	let if_block = /*item*/ ctx[73].id && create_if_block_16();
@@ -671,7 +671,7 @@ function create_if_block_15(ctx) {
 	};
 }
 
-// (1094:18) {#if item.id}
+// (1099:18) {#if item.id}
 function create_if_block_16(ctx) {
 	let i;
 
@@ -689,7 +689,7 @@ function create_if_block_16(ctx) {
 	};
 }
 
-// (1104:18) {:else}
+// (1109:18) {:else}
 function create_else_block_3(ctx) {
 	let t_value = translate("clear") + "";
 	let t;
@@ -708,7 +708,7 @@ function create_else_block_3(ctx) {
 	};
 }
 
-// (1102:18) {#if item.id}
+// (1107:18) {#if item.id}
 function create_if_block_14(ctx) {
 	let t_value = /*item*/ ctx[73].text + "";
 	let t;
@@ -729,7 +729,7 @@ function create_if_block_14(ctx) {
 	};
 }
 
-// (1109:16) {#if item.desc}
+// (1114:16) {#if item.desc}
 function create_if_block_13(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[73].desc + "";
@@ -754,7 +754,7 @@ function create_if_block_13(ctx) {
 	};
 }
 
-// (1080:6) {#each selectionItems as item, index (item.id)}
+// (1085:6) {#each selectionItems as item, index (item.id)}
 function create_each_block_1(key_1, ctx) {
 	let first;
 	let if_block_anchor;
@@ -796,7 +796,7 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (1120:6) {#if selectionItems.length > 1 || (selectionItems.length == 1 && selectionItems[0].id)}
+// (1125:6) {#if selectionItems.length > 1 || (selectionItems.length == 1 && selectionItems[0].id)}
 function create_if_block_11(ctx) {
 	let div;
 	let dispose;
@@ -819,7 +819,7 @@ function create_if_block_11(ctx) {
 	};
 }
 
-// (1149:6) {:else}
+// (1154:6) {:else}
 function create_else_block_1(ctx) {
 	let div3;
 	let div2;
@@ -945,7 +945,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (1135:50) 
+// (1140:50) 
 function create_if_block_4(ctx) {
 	let div1;
 	let div0;
@@ -1003,7 +1003,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (1129:6) {#if item.separator}
+// (1134:6) {#if item.separator}
 function create_if_block_3(ctx) {
 	let div;
 	let dispose;
@@ -1026,7 +1026,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (1159:12) {#if multiple}
+// (1164:12) {#if multiple}
 function create_if_block_8(ctx) {
 	let div;
 	let if_block = /*item*/ ctx[73].id && create_if_block_9(ctx);
@@ -1062,7 +1062,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (1161:16) {#if item.id}
+// (1166:16) {#if item.id}
 function create_if_block_9(ctx) {
 	let i;
 	let i_class_value;
@@ -1091,7 +1091,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (1171:16) {:else}
+// (1176:16) {:else}
 function create_else_block_2(ctx) {
 	let t_value = translate("clear") + "";
 	let t;
@@ -1110,7 +1110,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (1169:16) {#if item.id}
+// (1174:16) {#if item.id}
 function create_if_block_7(ctx) {
 	let t_value = /*item*/ ctx[73].text + "";
 	let t;
@@ -1131,7 +1131,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (1176:14) {#if item.desc}
+// (1181:14) {#if item.desc}
 function create_if_block_6(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[73].desc + "";
@@ -1156,7 +1156,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (1142:10) {#if item.desc}
+// (1147:10) {#if item.desc}
 function create_if_block_5(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[73].desc + "";
@@ -1181,7 +1181,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (1128:4) {#each displayItems as item (item.id)}
+// (1133:4) {#each displayItems as item (item.id)}
 function create_each_block(key_1, ctx) {
 	let first;
 	let if_block_anchor;
@@ -1230,7 +1230,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (1187:4) {#if hasMore}
+// (1192:4) {#if hasMore}
 function create_if_block_2(ctx) {
 	let div;
 
@@ -1253,7 +1253,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (1194:4) {#if actualCount === 0}
+// (1199:4) {#if actualCount === 0}
 function create_if_block(ctx) {
 	let div;
 
@@ -1296,7 +1296,7 @@ function create_if_block(ctx) {
 	};
 }
 
-// (1198:8) {:else}
+// (1203:8) {:else}
 function create_else_block(ctx) {
 	let t_value = translate("no_results") + "";
 	let t;
@@ -1315,7 +1315,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (1196:8) {#if tooShort }
+// (1201:8) {#if tooShort }
 function create_if_block_1(ctx) {
 	let t_value = translate("too_short") + "";
 	let t;
@@ -2257,7 +2257,13 @@ function instance($$self, $$props, $$invalidate) {
 			}
 		},
 		Space(event) {
-			if (!hasModifier(event)) {
+			if (hasModifier(event)) {
+				return;
+			}
+
+			if (typeahead) {
+				inputEl.focus();
+			} else {
 				selectElement(event.target);
 				event.preventDefault();
 			}

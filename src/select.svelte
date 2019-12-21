@@ -632,7 +632,12 @@
          }
      },
      Space: function(event) {
-         if (!hasModifier(event)) {
+         if (hasModifier(event)) {
+             return;
+         }
+         if (typeahead) {
+             inputEl.focus();
+         } else {
              selectElement(event.target);
              event.preventDefault();
          }
