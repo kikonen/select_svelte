@@ -315,10 +315,6 @@
          byId = {
              [item.id]: item
          }
-
-         // NOTE KI reset query only for single item
-//         clearQuery();
-         closePopup(containsElement(document.activeElement));
      }
 
      let items = Object.values(byId);
@@ -333,6 +329,10 @@
      selectionItems = items.sort(function(a, b) {
          return a.text.localeCompare(b.text);
      });
+
+     if (!multiple) {
+         closePopup(containsElement(document.activeElement));
+     }
 
      syncToReal();
      real.dispatchEvent(new CustomEvent('select-select', { detail: selectionItems }));

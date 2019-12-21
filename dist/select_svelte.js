@@ -2547,7 +2547,6 @@ var Select = (function (exports) {
         }
       } else {
         byId = _defineProperty({}, item.id, item);
-        closePopup(containsElement(document.activeElement));
       }
 
       var items = Object.values(byId);
@@ -2561,6 +2560,11 @@ var Select = (function (exports) {
       $$invalidate(13, selectionItems = items.sort(function (a, b) {
         return a.text.localeCompare(b.text);
       }));
+
+      if (!multiple) {
+        closePopup(containsElement(document.activeElement));
+      }
+
       syncToReal();
       real.dispatchEvent(new CustomEvent("select-select", {
         detail: selectionItems

@@ -1982,7 +1982,6 @@ function instance($$self, $$props, $$invalidate) {
 			}
 		} else {
 			byId = { [item.id]: item };
-			closePopup(containsElement(document.activeElement));
 		}
 
 		let items = Object.values(byId);
@@ -1997,6 +1996,10 @@ function instance($$self, $$props, $$invalidate) {
 		$$invalidate(13, selectionItems = items.sort(function (a, b) {
 			return a.text.localeCompare(b.text);
 		}));
+
+		if (!multiple) {
+			closePopup(containsElement(document.activeElement));
+		}
 
 		syncToReal();
 		real.dispatchEvent(new CustomEvent("select-select", { detail: selectionItems }));
