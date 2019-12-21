@@ -328,10 +328,12 @@
      if (focusToggle) {
          focusTarget(selectionEl || toggleEl);
      } else {
-         if (wasVisible) {
+/*         if (wasVisible) {
              toggleEl.focus();
          }
+*/
      }
+
  }
 
  function openPopup() {
@@ -793,6 +795,8 @@
 
  function handleBlur(event) {
      if (!containsElement(event.relatedTarget)) {
+         if (DEBUG) console.log("BLUR", toggleEl);
+
          cancelFetch();
 
          clearQuery();
@@ -870,7 +874,7 @@
 </script>
 
 <script context="module">
- const DEBUG = false;
+ const DEBUG = true;
 
  const I18N_DEFAULTS = {
      clear: 'Clear',
