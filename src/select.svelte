@@ -195,6 +195,10 @@
              showFetching = false;
 //         } else {
 //             console.debug("ABORT fetch: " + currentQuery);
+
+             setTimeout(function() {
+                 fetchMoreIfneeded();
+             });
          }
      }).catch(function(err) {
          if (currentFetch === activeFetch) {
@@ -251,7 +255,7 @@
 
 
  function fetchMoreIfneeded() {
-     if (hasMore && !fetchingMore) {
+     if (hasMore && !fetchingMore && popupVisible) {
          if (popupEl.scrollTop + popupEl.clientHeight >= popupEl.scrollHeight - moreEl.clientHeight * 2 - 2) {
              fetchItems(true);
          }
@@ -672,6 +676,7 @@
      if (next) {
          next.focus();
      }
+
      return next;
  }
 
@@ -1330,7 +1335,6 @@
         {translate('has_more')}
       </div>
     {/if}
-    {console.log(actualCount, result.fetchedItems) || ''}
     {#if actualCount === 0}
       <div tabindex="-1" class="dropdown-item text-muted ss-item">
         {#if tooShort }
