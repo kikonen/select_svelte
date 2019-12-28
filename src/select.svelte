@@ -522,9 +522,7 @@
              while (next && next.classList.contains('ki-js-blank')) {
                  next = next.nextElementSibling;
              }
-             if (next) {
-                 next.focus();
-             }
+             focusItem(next);
          }
          event.preventDefault();
      },
@@ -566,9 +564,7 @@
          while (next && next.classList.contains('ki-js-blank')) {
              next = next.nextElementSibling;
          }
-         if (next) {
-             next.focus();
-         }
+         focusItem(next);
          event.preventDefault();
      },
      ArrowUp: function(event) {
@@ -613,6 +609,15 @@
      ContextMenu: nop,
  }
 
+ function focusItem(item) {
+     if (item) {
+         if (typeahead && popupEl.children[1] === item) {
+             popupEl.scroll(0, 0);
+         }
+         item.focus();
+     }
+ }
+
  function focusPreviousItem(el) {
      let next = el.previousElementSibling;
 
@@ -625,17 +630,11 @@
          }
      }
 
-     if (typeahead && popupEl.children[1] === next) {
-         if (DEBUG) console.log(popupEl.scrollTop);
-         popupEl.scroll(0, 0);
-     }
-
      if (!next) {
          next = typeahead ? inputEl : toggleEl;
      }
-     if (next) {
-         next.focus();
-     }
+
+     focusItem(next);
 
      return next;
  }
@@ -653,9 +652,7 @@
          }
      }
 
-     if (next) {
-         next.focus();
-     }
+     focusItem(next);
 
      return next;
  }
@@ -729,9 +726,7 @@
                  next = popupEl.querySelector('.ki-js-item:first-child');
              }
          }
-         if (next) {
-             next.focus();
-         }
+         focusItem(next);
          event.preventDefault();
      },
      PageDown: function(event) {
@@ -748,24 +743,17 @@
                  next = popupEl.querySelector('.ki-js-item:last-child');
              }
          }
-         if (next) {
-             next.focus();
-         }
-
+         focusItem(next);
          event.preventDefault();
      },
      Home: function(event) {
          let next = popupEl.querySelector('.ki-js-item:first-child');
-         if (next) {
-             next.focus();
-         }
+         focusItem(next);
          event.preventDefault();
      },
      End: function(event) {
          let next = popupEl.querySelector('.ki-js-item:last-child');
-         if (next) {
-             next.focus();
-         }
+         focusItem(next);
          event.preventDefault();
      },
  }
