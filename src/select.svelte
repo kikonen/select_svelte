@@ -1011,13 +1011,18 @@
  :global(.ss-selection) {
      width: 100%;
      height: 100%;
+
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
  }
  :global(.ss-selected-item) {
      white-space: nowrap;
+/*
      overflow: hidden;
      word-break: break-all;
      text-overflow: ellipsis;
- }
+*/ }
  :global(.ss-popup) {
      padding-top: 0;
      max-height: 50vh;
@@ -1081,11 +1086,12 @@
 
     <span class="ss-no-click ss-selection text-dark d-flex">
       {#each selectionItems as item, index (item.id)}
-        <span class="ss-no-click ss-selected-item {item.itemClass}">{index > 0 ? ', ' : ''}{item.text}</span>
+        {@html index > 0 ? ',&nbsp;' : ''}
+        <span class="ss-no-click ss-selected-item {item.itemClass}">{item.text}</span>
       {/each}
-      <span class="ml-auto">
-        <i class="text-dark {showFetching ? CARET_FETCHING : CARET_DOWN}"></i>
-      </span>
+    </span>
+    <span class="ml-auto">
+      <i class="text-dark {showFetching ? CARET_FETCHING : CARET_DOWN}"></i>
     </span>
   </button>
 
