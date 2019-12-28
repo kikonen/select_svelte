@@ -2657,7 +2657,7 @@ var Select = (function (exports) {
       $$invalidate(12, selectionItems = items.sort(function (a, b) {
         return a.text.localeCompare(b.text);
       }));
-      $$invalidate(14, selectionTitle = items.map(function (item) {
+      $$invalidate(14, selectionTitle = selectionItems.map(function (item) {
         return item.text;
       }).join(", "));
 
@@ -2731,7 +2731,7 @@ var Select = (function (exports) {
       $$invalidate(12, selectionItems = Object.values(byId).sort(function (a, b) {
         return a.text.localeCompare(b.text);
       }));
-      $$invalidate(14, selectionTitle = items.map(function (item) {
+      $$invalidate(14, selectionTitle = selectionItems.map(function (item) {
         return item.text;
       }).join(", "));
     }

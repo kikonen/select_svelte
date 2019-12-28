@@ -2054,7 +2054,7 @@ function instance($$self, $$props, $$invalidate) {
 			return a.text.localeCompare(b.text);
 		}));
 
-		$$invalidate(14, selectionTitle = items.map(function (item) {
+		$$invalidate(14, selectionTitle = selectionItems.map(function (item) {
 			return item.text;
 		}).join(", "));
 
@@ -2126,7 +2126,7 @@ function instance($$self, $$props, $$invalidate) {
 			return a.text.localeCompare(b.text);
 		}));
 
-		$$invalidate(14, selectionTitle = items.map(function (item) {
+		$$invalidate(14, selectionTitle = selectionItems.map(function (item) {
 			return item.text;
 		}).join(", "));
 	}

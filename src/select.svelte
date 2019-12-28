@@ -358,7 +358,7 @@
          return a.text.localeCompare(b.text);
      });
 
-     selectionTitle = items.map(function(item) {
+     selectionTitle = selectionItems.map(function(item) {
          return item.text;
      }).join(', ');
 
@@ -435,7 +435,7 @@
          return a.text.localeCompare(b.text);
      });
 
-     selectionTitle = items.map(function(item) {
+     selectionTitle = selectionItems.map(function(item) {
          return item.text;
      }).join(', ');
  }
