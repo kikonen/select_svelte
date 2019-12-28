@@ -34,6 +34,7 @@
  let selectionById = {};
  let selectionItems = [];
  let selectionDropdownItems = [];
+ let selectionTitle = '';
 
  let showFetching = false;
  let fetchingMore = false;
@@ -357,6 +358,10 @@
          return a.text.localeCompare(b.text);
      });
 
+     selectionTitle = items.map(function(item) {
+         return item.text;
+     }).join(', ');
+
      if (!multiple) {
          closePopup(containsElement(document.activeElement));
      }
@@ -429,6 +434,10 @@
      selectionItems = Object.values(byId).sort(function(a, b) {
          return a.text.localeCompare(b.text);
      });
+
+     selectionTitle = items.map(function(item) {
+         return item.text;
+     }).join(', ');
  }
 
  function syncToReal() {
@@ -484,6 +493,8 @@
      } else {
          fetcher = inlineFetcher
      }
+
+     jQuery(toggleEl).tooltip();
 
      Object.assign(setupStyles, STYLE_DEFAULTS);
      Object.assign(setupStyles, styles);
@@ -1089,6 +1100,7 @@
   <button class="form-control {setupStyles.control_class} d-flex"
           type="button"
           tabindex="0"
+          title="{selectionTitle}"
           bind:this={toggleEl}
           on:blur={handleBlur}
           on:keydown={handleToggleKeydown}
