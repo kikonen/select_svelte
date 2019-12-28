@@ -1,4 +1,5 @@
 <script>
+ import { beforeUpdate } from 'svelte';
  import {onMount} from 'svelte';
 
  export let real;
@@ -6,14 +7,17 @@
  export let remote;
  export let queryMinLen = 0;
  export let delay = 0;
- export let extraClass = '';
  export let typeahead = false;
+ export let styles = {};
 
  let containerEl;
  let inputEl;
  let toggleEl;
  let popupEl;
  let moreEl;
+
+ let setup = false;
+ let setupStyles = {};
 
  let mounted = false;
 
@@ -85,6 +89,26 @@
      });
 
      return promise;
+ }
+
+ function createItemFromOption(el) {
+     let ds = el.dataset;
+     let item = {
+         id: el.value || '',
+         text: el.text || '',
+     };
+
+     if (ds) {
+         if (ds.itemDesc) {
+             item.desc = ds.itemDesc;
+         }
+         if (ds.itemClass) {
+             item.itemClass = ds.itemClass;
+         } else {
+             item.itemClass = setupStyles[item.id === '' ? 'blank_item_class' : 'item_class'];
+         }
+     }
+     return item;
  }
 
  ////////////////////////////////////////////////////////////
@@ -444,7 +468,7 @@
      fixedItems = collectedItems;
  }
 
- onMount(function() {
+ function setupComponent() {
      real.classList.add('d-none');
      multiple = real.multiple;
 
@@ -454,7 +478,18 @@
          fetcher = inlineFetcher
      }
 
+     Object.assign(setupStyles, STYLE_DEFAULTS);
+     Object.assign(setupStyles, styles);
+ }
 
+ beforeUpdate(function() {
+     if (!setup) {
+         setupComponent();
+         setup = true;
+     }
+ });
+
+ onMount(function() {
      // Initial selection
      syncFromReal();
 
@@ -588,6 +623,11 @@
          if (next && !next.classList.contains('ki-js-item')) {
              next = null;
          }
+     }
+
+     if (typeahead && popupEl.children[1] === next) {
+         if (DEBUG) console.log(popupEl.scrollTop);
+         popupEl.scroll(0, 0);
      }
 
      if (!next) {
@@ -820,6 +860,15 @@
      fetching_more: 'Searching more...',
  };
 
+ const STYLE_DEFAULTS = {
+     container_class: '',
+     item_class: '',
+     item_desc_class: 'text-muted',
+     blank_item_class: 'text-muted',
+     typeahead_class: '',
+     control_class: '',
+ };
+
  const FETCH_INDICATOR_DELAY = 150;
  const CARET_DOWN = 'fas fa-caret-down';
  const CARET_FETCHING = 'far fa-hourglass';
@@ -869,24 +918,6 @@
 
  function isValidKey(event) {
      return !(META_KEYS[event.key] || META_KEYS[event.code])
- }
-
- function createItemFromOption(el) {
-     let ds = el.dataset;
-     let item = {
-         id: el.value || '',
-         text: el.text || '',
-     };
-
-     if (ds) {
-         if (ds.itemDesc) {
-             item.desc = ds.itemDesc;
-         }
-         if (ds.itemClass) {
-             item.itemClass = ds.itemClass;
-         }
-     }
-     return item;
  }
 
  function createOptionFromItem(item) {
@@ -1005,18 +1036,21 @@
      max-width: 90vw;
      overflow-y: auto;
  }
- :global(.ss-input) {
-     width: 100%;
-     position: sticky;
-     top: 0;
-/*
-     padding-left: 0.5rem;
-     padding-right: 0.5rem;
-*/
- }
  :global(.ss-item) {
      padding-left: 0.5rem;
      padding-right: 0.5rem;
+ }
+ :global(.ss-input-item) {
+     width: 100%;
+     position: sticky;
+     top: 0;
+     background-color: white;
+     padding-top: 0.2rem;
+     padding-bottom: 0.2rem;
+     padding-left: 0.2rem;
+     padding-right: 0.2rem;
+ }
+ :global(.ss-input) {
  }
  :global(.ss-no-click) {
      pointer-events: none;
@@ -1045,10 +1079,10 @@
 
 <!-- ------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------ -->
-<div class="ss-container form-control p-0 border-0 {extraClass}"
+<div class="ss-container form-control p-0 border-0 {setupStyles.container_class}"
      bind:this={containerEl}>
 
-  <button class="form-control d-flex"
+  <button class="form-control {setupStyles.control_class} d-flex"
           type="button"
           tabindex="0"
           bind:this={toggleEl}
@@ -1059,7 +1093,7 @@
 
     <span class="ss-no-click ss-selection text-dark d-flex">
       {#each selectionItems as item, index (item.id)}
-        <span class="ss-no-click ss-selected-item {item.itemClass} {item.id ? '' : 'text-muted'}">{index > 0 ? ', ' : ''}{item.text}</span>
+        <span class="ss-no-click ss-selected-item {item.itemClass}">{index > 0 ? ', ' : ''}{item.text}</span>
       {/each}
       <span class="ml-auto">
         <i class="text-dark {showFetching ? CARET_FETCHING : CARET_DOWN}"></i>
@@ -1077,25 +1111,28 @@
     {/if}
 
     {#if typeahead}
-        <input class="ss-input ss-item"
-               tabindex=1
-               autocomplete="new-password"
-               autocorrect=off
-               autocapitalize=off
-               spellcheck=off
+        <div class="ss-input-item" tabindex="-1">
+          <input class="ss-input form-control {setupStyles.typeahead_class}"
+                 tabindex=1
+                 autocomplete="new-password"
+                 autocorrect=off
+                 autocapitalize=off
+                 spellcheck=off
 
-               bind:this={inputEl}
-               bind:value={query}
-               on:blur={handleInputBlur}
-               on:keypress={handleInputKeypress}
-               on:keydown={handleInputKeydown}
-               on:keyup={handleInputKeyup}>
+                 bind:this={inputEl}
+                 bind:value={query}
+                 on:blur={handleInputBlur}
+                 on:keypress={handleInputKeypress}
+                 on:keydown={handleInputKeydown}
+                 on:keyup={handleInputKeyup}>
+          </div>
 
       {#each selectionDropdownItems as item, index (item.id)}
         {#if item.id}
           <div tabindex=1
                class="ki-js-item dropdown-item ss-item"
                data-id="{item.id}"
+               data-index="{index}"
                data-selected="true"
                on:blur={handleBlur}
                on:click={handleItemClick}
@@ -1121,7 +1158,7 @@
                 </div>
 
                 {#if item.desc}
-                  <div class="ss-no-click text-muted">
+                  <div class="ss-no-click {setupStyles.item_desc_class}">
                     {item.desc}
                   </div>
                 {/if}
@@ -1154,7 +1191,7 @@
           </div>
 
           {#if item.desc}
-            <div class="ss-no-click text-muted">
+            <div class="ss-no-click {setupStyles.item_desc_class}">
               {item.desc}
             </div>
           {/if}
@@ -1162,7 +1199,7 @@
 
       {:else}
         <div tabindex=1
-             class="ki-js-item dropdown-item ss-item {!item.id ? 'text-muted' : ''} {selectionById[item.id] ? 'alert-primary' : ''}"
+             class="ki-js-item dropdown-item ss-item {item.itemClass} {selectionById[item.id] ? 'alert-primary' : ''}"
              data-id="{item.id}"
              on:blur={handleBlur}
              on:click={handleItemClick}
@@ -1188,7 +1225,7 @@
               </div>
 
               {#if item.desc}
-                <div class="ss-no-click text-muted">
+                <div class="ss-no-click {setupStyles.item_desc_class}">
                   {item.desc}
                 </div>
               {/if}
