@@ -102,6 +102,9 @@
          if (ds.itemDesc) {
              item.desc = ds.itemDesc;
          }
+         if (ds.itemAction) {
+             item.action = ds.itemAction;
+         }
          if (ds.itemClass) {
              item.itemClass = ds.itemClass;
          } else {
@@ -362,6 +365,17 @@
      real.dispatchEvent(new CustomEvent('select-select', { detail: selectionItems }));
  }
 
+ function executeAction(id) {
+     let item = result.byId[id];
+
+     if (!item) {
+         console.error("MISSING action item=" + id);
+         return;
+     }
+     closePopup(containsElement(document.activeElement));
+     real.dispatchEvent(new CustomEvent('select-action', { detail: item }));
+ }
+
  export function selectItem(id) {
      return fetchItems(false, id).then(function(response) {
          selectItemImpl(id);
@@ -369,13 +383,14 @@
  }
 
  function selectElement(el) {
-     selectItemImpl(el.dataset.id);
+     if (el.dataset.action) {
+         executeAction(el.dataset.id);
+     } else {
+         selectItemImpl(el.dataset.id);
 
-     if (el.dataset.selected) {
-         selectionDropdownItems = selectionDropdownItems;
-//         if (!focusNextItem(el)) {
-//             focusPreviousItem(el);
-//         }
+         if (el.dataset.selected) {
+             selectionDropdownItems = selectionDropdownItems;
+         }
      }
  }
 
@@ -455,15 +470,7 @@
      let fixedOptions = real.querySelectorAll('option[data-select-fixed]');
      let collectedItems = [];
      fixedOptions.forEach(function(el) {
-         let ds = el.dataset;
-         let item = {
-             id: el.value,
-             text: el.text,
-         };
-         if (ds.desc) {
-             item.desc = ds.itemDesc;
-         }
-         collectedItems.push(item);
+         collectedItems.push(createItemFromOption(el));
      });
      fixedItems = collectedItems;
  }
@@ -853,6 +860,7 @@
      item_class: '',
      item_desc_class: 'text-muted',
      blank_item_class: 'text-muted',
+     missing_item_class: 'alert-primary',
      typeahead_class: '',
      control_class: '',
  };
@@ -916,6 +924,9 @@
      }
      if (item.itemClass) {
          el.setAttribute('data-item-class', item.itemClass);
+     }
+     if (item.action) {
+         el.setAttribute('data-item-action', item.action);
      }
      el.textContent = item.text;
      return el;
@@ -1126,7 +1137,6 @@
           <div tabindex=1
                class="ki-js-item dropdown-item ss-item"
                data-id="{item.id}"
-               data-index="{index}"
                data-selected="true"
                on:blur={handleBlur}
                on:click={handleItemClick}
@@ -1193,8 +1203,9 @@
 
       {:else}
         <div tabindex=1
-             class="ki-js-item dropdown-item ss-item {item.itemClass} {selectionById[item.id] ? 'alert-primary' : ''}"
+             class="ki-js-item dropdown-item ss-item {item.itemClass || ''} {selectionById[item.id] ? setupStyles.missing_item_class : ''}"
              data-id="{item.id}"
+             data-action="{item.action || ''}"
              on:blur={handleBlur}
              on:click={handleItemClick}
              on:keydown={handleItemKeydown}
