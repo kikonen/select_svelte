@@ -552,6 +552,23 @@
          closePopup(false);
      },
      Tab: nop,
+     // skip "meta" keys from triggering search
+     ArrowLeft: nop,
+     ArrowRight: nop,
+     PageDown: nop,
+     PageUp: nop,
+     Home: nop,
+     End: nop,
+     // disallow modifier keys to trigger search
+     ControlRight: nop,
+     ControlLeft: nop,
+     ShiftRight: nop,
+     ShiftLeft: nop,
+     AltGraph: nop,
+     AltRight: nop,
+     MetaRight: nop,
+     MetaLeft: nop,
+     ContextMenu: nop,
  };
 
  let toggleKeyupHandlers = {
@@ -609,10 +626,14 @@
      Home: nop,
      End: nop,
      // disallow modifier keys to trigger search
-     Control: nop,
-     Shift: nop,
+     ControlRight: nop,
+     ControlLeft: nop,
+     ShiftRight: nop,
+     ShiftLeft: nop,
      AltGraph: nop,
-     Meta: nop,
+     AltRight: nop,
+     MetaRight: nop,
+     MetaLeft: nop,
      ContextMenu: nop,
  }
 
@@ -710,10 +731,14 @@
          event.preventDefault();
      },
      // disallow modifier keys to trigger search
-     Control: nop,
-     Shift: nop,
+     ControlRight: nop,
+     ControlLeft: nop,
+     ShiftRight: nop,
+     ShiftLeft: nop,
      AltGraph: nop,
-     Meta: nop,
+     AltRight: nop,
+     MetaRight: nop,
+     MetaLeft: nop,
      ContextMenu: nop,
  };
 
