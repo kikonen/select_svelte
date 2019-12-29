@@ -1155,51 +1155,47 @@
                  on:keyup={handleInputKeyup}>
           </div>
 
-      {#each selectionDropdownItems as item, index (item.id)}
-        {#if item.id}
-          <div tabindex=1
-               class="ki-js-item dropdown-item ss-item"
-               data-id="{item.id}"
-               data-selected="true"
-               on:blur={handleBlur}
-               on:click={handleItemClick}
-               on:keydown={handleItemKeydown}
-               on:keyup={handleItemKeyup}>
+      {#if multiple}
+        {#each selectionDropdownItems as item, index (item.id)}
+          {#if item.id}
+            <div tabindex=1
+                 class="ki-js-item dropdown-item ss-item"
+                 data-id="{item.id}"
+                 data-selected="true"
+                 on:blur={handleBlur}
+                 on:click={handleItemClick}
+                 on:keydown={handleItemKeydown}
+                 on:keyup={handleItemKeyup}>
 
-            <div class="ss-no-click">
-              {#if multiple}
-                <div class="d-inline-block align-top">
-                  {#if item.id}
-                    <i class="far {selectionById[item.id] ? 'fa-check-square' : 'fa-square'}"></i>
-                  {/if}
-                </div>
-              {/if}
-
-              <div class="d-inline-block">
-                <div class="ss-no-click {item.itemClass}">
-                  {#if item.id}
-                    {item.text}
-                  {:else}
-                    {translate('clear')}
-                  {/if}
-                </div>
-
-                {#if item.desc}
-                  <div class="ss-no-click {setupStyles.item_desc_class}">
-                    {item.desc}
+              <div class="ss-no-click">
+                {#if multiple}
+                  <div class="d-inline-block align-top">
+                    {#if item.id}
+                      <i class="far {selectionById[item.id] ? 'fa-check-square' : 'fa-square'}"></i>
+                    {/if}
                   </div>
                 {/if}
+
+                <div class="d-inline-block">
+                  <div class="ss-no-click {item.itemClass}">
+                    {#if item.id}
+                      {item.text}
+                    {:else}
+                      {translate('clear')}
+                    {/if}
+                  </div>
+                </div>
               </div>
             </div>
+          {/if}
+        {/each}
+
+        {#if selectionDropdownItems.length > 1 || (selectionDropdownItems.length == 1 && selectionDropdownItems[0].id)}
+          <div tabindex="-1"
+               class="dropdown-divider ki-js-blank"
+               on:keydown={handleItemKeydown}>
           </div>
         {/if}
-      {/each}
-
-      {#if selectionDropdownItems.length > 1 || (selectionDropdownItems.length == 1 && selectionDropdownItems[0].id)}
-        <div tabindex="-1"
-             class="dropdown-divider ki-js-blank"
-             on:keydown={handleItemKeydown}>
-        </div>
       {/if}
     {/if}
 
