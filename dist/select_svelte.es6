@@ -494,7 +494,7 @@ function create_if_block_9(ctx) {
 			t1 = space();
 			if (if_block) if_block.c();
 			if_block_anchor = empty();
-			attr(input, "class", input_class_value = "ss-input form-control " + /*setupStyles*/ ctx[17].typeahead_class);
+			attr(input, "class", input_class_value = "ss-input form-control " + /*setupStyles*/ ctx[19].typeahead_class);
 			attr(input, "tabindex", "1");
 			attr(input, "autocomplete", "new-password");
 			attr(input, "autocorrect", "off");
@@ -505,10 +505,10 @@ function create_if_block_9(ctx) {
 
 			dispose = [
 				listen(input, "input", /*input_input_handler*/ ctx[75]),
-				listen(input, "blur", /*handleInputBlur*/ ctx[19]),
-				listen(input, "keypress", /*handleInputKeypress*/ ctx[20]),
-				listen(input, "keydown", /*handleInputKeydown*/ ctx[21]),
-				listen(input, "keyup", /*handleInputKeyup*/ ctx[22])
+				listen(input, "blur", /*handleInputBlur*/ ctx[21]),
+				listen(input, "keypress", /*handleInputKeypress*/ ctx[22]),
+				listen(input, "keydown", /*handleInputKeydown*/ ctx[23]),
+				listen(input, "keyup", /*handleInputKeyup*/ ctx[24])
 			];
 		},
 		m(target, anchor) {
@@ -575,7 +575,7 @@ function create_if_block_11(ctx) {
 	let t1;
 	let div3_data_id_value;
 	let dispose;
-	let if_block0 = /*multiple*/ ctx[16] && create_if_block_14(ctx);
+	let if_block0 = /*multiple*/ ctx[18] && create_if_block_14(ctx);
 
 	function select_block_type(ctx, dirty) {
 		if (/*item*/ ctx[78].id) return create_if_block_13;
@@ -606,10 +606,10 @@ function create_if_block_11(ctx) {
 			attr(div3, "data-selected", "true");
 
 			dispose = [
-				listen(div3, "blur", /*handleBlur*/ ctx[18]),
-				listen(div3, "click", /*handleItemClick*/ ctx[28]),
-				listen(div3, "keydown", /*handleItemKeydown*/ ctx[26]),
-				listen(div3, "keyup", /*handleItemKeyup*/ ctx[27])
+				listen(div3, "blur", /*handleBlur*/ ctx[20]),
+				listen(div3, "click", /*handleItemClick*/ ctx[30]),
+				listen(div3, "keydown", /*handleItemKeydown*/ ctx[28]),
+				listen(div3, "keyup", /*handleItemKeyup*/ ctx[29])
 			];
 		},
 		m(target, anchor) {
@@ -624,7 +624,7 @@ function create_if_block_11(ctx) {
 			if (if_block2) if_block2.m(div1, null);
 		},
 		p(ctx, dirty) {
-			if (/*multiple*/ ctx[16]) {
+			if (/*multiple*/ ctx[18]) {
 				if (if_block0) {
 					if_block0.p(ctx, dirty);
 				} else {
@@ -796,7 +796,7 @@ function create_if_block_12(ctx) {
 		c() {
 			div = element("div");
 			t = text(t_value);
-			attr(div, "class", div_class_value = "ss-no-click " + /*setupStyles*/ ctx[17].item_desc_class);
+			attr(div, "class", div_class_value = "ss-no-click " + /*setupStyles*/ ctx[19].item_desc_class);
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -863,7 +863,7 @@ function create_if_block_10(ctx) {
 			div = element("div");
 			attr(div, "tabindex", "-1");
 			attr(div, "class", "dropdown-divider ki-js-blank");
-			dispose = listen(div, "keydown", /*handleItemKeydown*/ ctx[26]);
+			dispose = listen(div, "keydown", /*handleItemKeydown*/ ctx[28]);
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -889,7 +889,7 @@ function create_else_block_1(ctx) {
 	let div3_data_id_value;
 	let div3_data_action_value;
 	let dispose;
-	let if_block0 = /*multiple*/ ctx[16] && create_if_block_7(ctx);
+	let if_block0 = /*multiple*/ ctx[18] && create_if_block_7(ctx);
 
 	function select_block_type_2(ctx, dirty) {
 		if (/*item*/ ctx[78].id) return create_if_block_6;
@@ -917,17 +917,17 @@ function create_else_block_1(ctx) {
 			attr(div3, "tabindex", "1");
 
 			attr(div3, "class", div3_class_value = "ki-js-item dropdown-item ss-item " + (/*item*/ ctx[78].itemClass || "") + " " + (/*selectionById*/ ctx[9][/*item*/ ctx[78].id]
-			? /*setupStyles*/ ctx[17].missing_item_class
+			? /*setupStyles*/ ctx[19].missing_item_class
 			: ""));
 
 			attr(div3, "data-id", div3_data_id_value = /*item*/ ctx[78].id);
 			attr(div3, "data-action", div3_data_action_value = /*item*/ ctx[78].action || "");
 
 			dispose = [
-				listen(div3, "blur", /*handleBlur*/ ctx[18]),
-				listen(div3, "click", /*handleItemClick*/ ctx[28]),
-				listen(div3, "keydown", /*handleItemKeydown*/ ctx[26]),
-				listen(div3, "keyup", /*handleItemKeyup*/ ctx[27])
+				listen(div3, "blur", /*handleBlur*/ ctx[20]),
+				listen(div3, "click", /*handleItemClick*/ ctx[30]),
+				listen(div3, "keydown", /*handleItemKeydown*/ ctx[28]),
+				listen(div3, "keyup", /*handleItemKeyup*/ ctx[29])
 			];
 		},
 		m(target, anchor) {
@@ -942,7 +942,7 @@ function create_else_block_1(ctx) {
 			if (if_block2) if_block2.m(div1, null);
 		},
 		p(ctx, dirty) {
-			if (/*multiple*/ ctx[16]) {
+			if (/*multiple*/ ctx[18]) {
 				if (if_block0) {
 					if_block0.p(ctx, dirty);
 				} else {
@@ -985,7 +985,7 @@ function create_else_block_1(ctx) {
 			}
 
 			if (dirty[0] & /*displayItems, selectionById*/ 576 && div3_class_value !== (div3_class_value = "ki-js-item dropdown-item ss-item " + (/*item*/ ctx[78].itemClass || "") + " " + (/*selectionById*/ ctx[9][/*item*/ ctx[78].id]
-			? /*setupStyles*/ ctx[17].missing_item_class
+			? /*setupStyles*/ ctx[19].missing_item_class
 			: ""))) {
 				attr(div3, "class", div3_class_value);
 			}
@@ -1029,7 +1029,7 @@ function create_if_block_3(ctx) {
 			attr(div0, "class", div0_class_value = "ss-no-click " + /*item*/ ctx[78].itemClass);
 			attr(div1, "tabindex", "-1");
 			attr(div1, "class", "dropdown-item text-muted ki-js-blank");
-			dispose = listen(div1, "keydown", /*handleItemKeydown*/ ctx[26]);
+			dispose = listen(div1, "keydown", /*handleItemKeydown*/ ctx[28]);
 		},
 		m(target, anchor) {
 			insert(target, div1, anchor);
@@ -1076,7 +1076,7 @@ function create_if_block_2(ctx) {
 			div = element("div");
 			attr(div, "tabindex", "-1");
 			attr(div, "class", "dropdown-divider ki-js-blank");
-			dispose = listen(div, "keydown", /*handleItemKeydown*/ ctx[26]);
+			dispose = listen(div, "keydown", /*handleItemKeydown*/ ctx[28]);
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -1205,7 +1205,7 @@ function create_if_block_5(ctx) {
 		c() {
 			div = element("div");
 			t = text(t_value);
-			attr(div, "class", div_class_value = "ss-no-click " + /*setupStyles*/ ctx[17].item_desc_class);
+			attr(div, "class", div_class_value = "ss-no-click " + /*setupStyles*/ ctx[19].item_desc_class);
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -1231,7 +1231,7 @@ function create_if_block_4(ctx) {
 		c() {
 			div = element("div");
 			t = text(t_value);
-			attr(div, "class", div_class_value = "ss-no-click " + /*setupStyles*/ ctx[17].item_desc_class);
+			attr(div, "class", div_class_value = "ss-no-click " + /*setupStyles*/ ctx[19].item_desc_class);
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -1295,7 +1295,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (1266:4) {#if actualCount === 0}
+// (1266:4) {#if actualCount === 0 && previousFetch || activeFetch}
 function create_if_block(ctx) {
 	let div;
 
@@ -1417,7 +1417,7 @@ function create_fragment(ctx) {
 		each1_lookup.set(key, each_blocks[i] = create_each_block(key, child_ctx));
 	}
 
-	let if_block2 = /*actualCount*/ ctx[7] === 0 && create_if_block(ctx);
+	let if_block2 = (/*actualCount*/ ctx[7] === 0 && /*previousFetch*/ ctx[17] || /*activeFetch*/ ctx[16]) && create_if_block(ctx);
 
 	return {
 		c() {
@@ -1448,19 +1448,19 @@ function create_fragment(ctx) {
 			attr(span0, "class", "ss-no-click ss-selection text-dark d-flex");
 			attr(i, "class", i_class_value = "text-dark " + (/*showFetching*/ ctx[13] ? CARET_FETCHING : CARET_DOWN));
 			attr(span1, "class", "ml-auto");
-			attr(button, "class", button_class_value = "form-control " + /*setupStyles*/ ctx[17].control_class + " d-flex");
+			attr(button, "class", button_class_value = "form-control " + /*setupStyles*/ ctx[19].control_class + " d-flex");
 			attr(button, "type", "button");
 			attr(button, "tabindex", "0");
 			attr(button, "title", /*selectionTitle*/ ctx[12]);
 			attr(div0, "class", div0_class_value = "dropdown-menu ss-popup " + (/*popupVisible*/ ctx[15] ? "show" : ""));
-			attr(div1, "class", div1_class_value = "ss-container form-control p-0 border-0 " + /*setupStyles*/ ctx[17].container_class);
+			attr(div1, "class", div1_class_value = "ss-container form-control p-0 border-0 " + /*setupStyles*/ ctx[19].container_class);
 
 			dispose = [
-				listen(button, "blur", /*handleBlur*/ ctx[18]),
-				listen(button, "keydown", /*handleToggleKeydown*/ ctx[23]),
-				listen(button, "keyup", /*handleToggleKeyup*/ ctx[24]),
-				listen(button, "click", /*handleToggleClick*/ ctx[25]),
-				listen(div0, "scroll", /*handlePopupScroll*/ ctx[29])
+				listen(button, "blur", /*handleBlur*/ ctx[20]),
+				listen(button, "keydown", /*handleToggleKeydown*/ ctx[25]),
+				listen(button, "keyup", /*handleToggleKeyup*/ ctx[26]),
+				listen(button, "click", /*handleToggleClick*/ ctx[27]),
+				listen(div0, "scroll", /*handlePopupScroll*/ ctx[31])
 			];
 		},
 		m(target, anchor) {
@@ -1533,7 +1533,7 @@ function create_fragment(ctx) {
 			const each_value = /*displayItems*/ ctx[6];
 			each_blocks = update_keyed_each(each_blocks, dirty, get_key_1, 1, ctx, each_value, each1_lookup, div0, destroy_block, create_each_block, t4, get_each_context);
 
-			if (/*actualCount*/ ctx[7] === 0) {
+			if (/*actualCount*/ ctx[7] === 0 && /*previousFetch*/ ctx[17] || /*activeFetch*/ ctx[16]) {
 				if (if_block2) {
 					if_block2.p(ctx, dirty);
 				} else {
@@ -1905,8 +1905,8 @@ function instance($$self, $$props, $$invalidate) {
 					previousQuery = currentQuery;
 				}
 
-				previousFetch = currentFetch;
-				activeFetch = null;
+				$$invalidate(17, previousFetch = currentFetch);
+				$$invalidate(16, activeFetch = null);
 				fetchingMore = false;
 				$$invalidate(13, showFetching = false);
 
@@ -1924,8 +1924,8 @@ function instance($$self, $$props, $$invalidate) {
 				$$invalidate(8, tooShort = result.tooShort);
 				hasMore = result.more;
 				previousQuery = null;
-				previousFetch = currentFetch;
-				activeFetch = null;
+				$$invalidate(17, previousFetch = currentFetch);
+				$$invalidate(16, activeFetch = null);
 				fetchingMore = false;
 				$$invalidate(13, showFetching = false);
 				toggleEl.focus();
@@ -1942,14 +1942,14 @@ function instance($$self, $$props, $$invalidate) {
 			FETCH_INDICATOR_DELAY
 		);
 
-		activeFetch = currentFetch;
-		previousFetch = null;
+		$$invalidate(16, activeFetch = currentFetch);
+		$$invalidate(17, previousFetch = null);
 		return currentFetch;
 	}
 
 	function cancelFetch() {
 		if (activeFetch !== null) {
-			activeFetch = null;
+			$$invalidate(16, activeFetch = null);
 			previousQuery = null;
 		}
 	}
@@ -2155,12 +2155,12 @@ function instance($$self, $$props, $$invalidate) {
 
 	function setupComponent() {
 		real.classList.add("d-none");
-		$$invalidate(16, multiple = real.multiple);
+		$$invalidate(18, multiple = real.multiple);
 
 		if (remote) {
 			setupRemote();
 		} else {
-			$$invalidate(30, fetcher = inlineFetcher);
+			$$invalidate(32, fetcher = inlineFetcher);
 		}
 
 		jQuery(toggleEl).tooltip();
@@ -2184,7 +2184,7 @@ function instance($$self, $$props, $$invalidate) {
 			}
 		});
 
-		$$invalidate(38, mounted = true);
+		$$invalidate(40, mounted = true);
 	});
 
 	let toggleKeydownHandlers = {
@@ -2551,17 +2551,17 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	$$self.$set = $$props => {
-		if ("real" in $$props) $$invalidate(31, real = $$props.real);
-		if ("fetcher" in $$props) $$invalidate(30, fetcher = $$props.fetcher);
-		if ("remote" in $$props) $$invalidate(32, remote = $$props.remote);
-		if ("queryMinLen" in $$props) $$invalidate(33, queryMinLen = $$props.queryMinLen);
-		if ("delay" in $$props) $$invalidate(34, delay = $$props.delay);
+		if ("real" in $$props) $$invalidate(33, real = $$props.real);
+		if ("fetcher" in $$props) $$invalidate(32, fetcher = $$props.fetcher);
+		if ("remote" in $$props) $$invalidate(34, remote = $$props.remote);
+		if ("queryMinLen" in $$props) $$invalidate(35, queryMinLen = $$props.queryMinLen);
+		if ("delay" in $$props) $$invalidate(36, delay = $$props.delay);
 		if ("typeahead" in $$props) $$invalidate(0, typeahead = $$props.typeahead);
-		if ("styles" in $$props) $$invalidate(35, styles = $$props.styles);
+		if ("styles" in $$props) $$invalidate(37, styles = $$props.styles);
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty[1] & /*mounted*/ 128) {
+		if ($$self.$$.dirty[1] & /*mounted*/ 512) {
 			 {
 				if (mounted) {
 					syncToReal();
@@ -2587,6 +2587,8 @@ function instance($$self, $$props, $$invalidate) {
 		showFetching,
 		fetchError,
 		popupVisible,
+		activeFetch,
+		previousFetch,
 		multiple,
 		setupStyles,
 		handleBlur,
@@ -2614,8 +2616,6 @@ function instance($$self, $$props, $$invalidate) {
 		result,
 		hasMore,
 		fetchingMore,
-		activeFetch,
-		previousFetch,
 		previousQuery,
 		isSyncToReal,
 		inlineFetcher,
@@ -2664,21 +2664,21 @@ class Select extends SvelteComponent {
 			create_fragment,
 			safe_not_equal,
 			{
-				real: 31,
-				fetcher: 30,
-				remote: 32,
-				queryMinLen: 33,
-				delay: 34,
+				real: 33,
+				fetcher: 32,
+				remote: 34,
+				queryMinLen: 35,
+				delay: 36,
 				typeahead: 0,
-				styles: 35,
-				selectItem: 36
+				styles: 37,
+				selectItem: 38
 			},
 			[-1, -1, -1]
 		);
 	}
 
 	get selectItem() {
-		return this.$$.ctx[36];
+		return this.$$.ctx[38];
 	}
 }
 

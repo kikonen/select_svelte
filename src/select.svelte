@@ -1263,7 +1263,7 @@
       {/if}
     {/each}
 
-    {#if actualCount === 0}
+    {#if actualCount === 0 && previousFetch || activeFetch}
       <div tabindex="-1" class="dropdown-item text-muted ss-item">
         {#if tooShort }
           {translate('too_short')}

@@ -858,7 +858,7 @@ var Select = (function (exports) {
         if_block_anchor = empty();
         attr(input, "class", input_class_value = "ss-input form-control " +
         /*setupStyles*/
-        ctx[17].typeahead_class);
+        ctx[19].typeahead_class);
         attr(input, "tabindex", "1");
         attr(input, "autocomplete", "new-password");
         attr(input, "autocorrect", "off");
@@ -870,13 +870,13 @@ var Select = (function (exports) {
         /*input_input_handler*/
         ctx[75]), listen(input, "blur",
         /*handleInputBlur*/
-        ctx[19]), listen(input, "keypress",
+        ctx[21]), listen(input, "keypress",
         /*handleInputKeypress*/
-        ctx[20]), listen(input, "keydown",
+        ctx[22]), listen(input, "keydown",
         /*handleInputKeydown*/
-        ctx[21]), listen(input, "keyup",
+        ctx[23]), listen(input, "keyup",
         /*handleInputKeyup*/
-        ctx[22])];
+        ctx[24])];
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -964,7 +964,7 @@ var Select = (function (exports) {
     var dispose;
     var if_block0 =
     /*multiple*/
-    ctx[16] && create_if_block_14(ctx);
+    ctx[18] && create_if_block_14(ctx);
 
     function select_block_type(ctx, dirty) {
       if (
@@ -1002,13 +1002,13 @@ var Select = (function (exports) {
         attr(div3, "data-selected", "true");
         dispose = [listen(div3, "blur",
         /*handleBlur*/
-        ctx[18]), listen(div3, "click",
+        ctx[20]), listen(div3, "click",
         /*handleItemClick*/
-        ctx[28]), listen(div3, "keydown",
+        ctx[30]), listen(div3, "keydown",
         /*handleItemKeydown*/
-        ctx[26]), listen(div3, "keyup",
+        ctx[28]), listen(div3, "keyup",
         /*handleItemKeyup*/
-        ctx[27])];
+        ctx[29])];
       },
       m: function m(target, anchor) {
         insert(target, div3, anchor);
@@ -1024,7 +1024,7 @@ var Select = (function (exports) {
       p: function p(ctx, dirty) {
         if (
         /*multiple*/
-        ctx[16]) {
+        ctx[18]) {
           if (if_block0) {
             if_block0.p(ctx, dirty);
           } else {
@@ -1220,7 +1220,7 @@ var Select = (function (exports) {
         t = text(t_value);
         attr(div, "class", div_class_value = "ss-no-click " +
         /*setupStyles*/
-        ctx[17].item_desc_class);
+        ctx[19].item_desc_class);
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -1295,7 +1295,7 @@ var Select = (function (exports) {
         attr(div, "class", "dropdown-divider ki-js-blank");
         dispose = listen(div, "keydown",
         /*handleItemKeydown*/
-        ctx[26]);
+        ctx[28]);
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -1323,7 +1323,7 @@ var Select = (function (exports) {
     var dispose;
     var if_block0 =
     /*multiple*/
-    ctx[16] && create_if_block_7(ctx);
+    ctx[18] && create_if_block_7(ctx);
 
     function select_block_type_2(ctx, dirty) {
       if (
@@ -1362,7 +1362,7 @@ var Select = (function (exports) {
         /*item*/
         ctx[78].id] ?
         /*setupStyles*/
-        ctx[17].missing_item_class : ""));
+        ctx[19].missing_item_class : ""));
         attr(div3, "data-id", div3_data_id_value =
         /*item*/
         ctx[78].id);
@@ -1371,13 +1371,13 @@ var Select = (function (exports) {
         ctx[78].action || "");
         dispose = [listen(div3, "blur",
         /*handleBlur*/
-        ctx[18]), listen(div3, "click",
+        ctx[20]), listen(div3, "click",
         /*handleItemClick*/
-        ctx[28]), listen(div3, "keydown",
+        ctx[30]), listen(div3, "keydown",
         /*handleItemKeydown*/
-        ctx[26]), listen(div3, "keyup",
+        ctx[28]), listen(div3, "keyup",
         /*handleItemKeyup*/
-        ctx[27])];
+        ctx[29])];
       },
       m: function m(target, anchor) {
         insert(target, div3, anchor);
@@ -1393,7 +1393,7 @@ var Select = (function (exports) {
       p: function p(ctx, dirty) {
         if (
         /*multiple*/
-        ctx[16]) {
+        ctx[18]) {
           if (if_block0) {
             if_block0.p(ctx, dirty);
           } else {
@@ -1451,7 +1451,7 @@ var Select = (function (exports) {
         /*item*/
         ctx[78].id] ?
         /*setupStyles*/
-        ctx[17].missing_item_class : ""))) {
+        ctx[19].missing_item_class : ""))) {
           attr(div3, "class", div3_class_value);
         }
 
@@ -1511,7 +1511,7 @@ var Select = (function (exports) {
         attr(div1, "class", "dropdown-item text-muted ki-js-blank");
         dispose = listen(div1, "keydown",
         /*handleItemKeydown*/
-        ctx[26]);
+        ctx[28]);
       },
       m: function m(target, anchor) {
         insert(target, div1, anchor);
@@ -1571,7 +1571,7 @@ var Select = (function (exports) {
         attr(div, "class", "dropdown-divider ki-js-blank");
         dispose = listen(div, "keydown",
         /*handleItemKeydown*/
-        ctx[26]);
+        ctx[28]);
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -1714,7 +1714,7 @@ var Select = (function (exports) {
         t = text(t_value);
         attr(div, "class", div_class_value = "ss-no-click " +
         /*setupStyles*/
-        ctx[17].item_desc_class);
+        ctx[19].item_desc_class);
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -1747,7 +1747,7 @@ var Select = (function (exports) {
         t = text(t_value);
         attr(div, "class", div_class_value = "ss-no-click " +
         /*setupStyles*/
-        ctx[17].item_desc_class);
+        ctx[19].item_desc_class);
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -1818,7 +1818,7 @@ var Select = (function (exports) {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1266:4) {#if actualCount === 0}
+  } // (1266:4) {#if actualCount === 0 && previousFetch || activeFetch}
 
 
   function create_if_block(ctx) {
@@ -1963,9 +1963,13 @@ var Select = (function (exports) {
       each1_lookup.set(_key, each_blocks[_i5] = create_each_block(_key, _child_ctx));
     }
 
-    var if_block2 =
+    var if_block2 = (
     /*actualCount*/
-    ctx[7] === 0 && create_if_block(ctx);
+    ctx[7] === 0 &&
+    /*previousFetch*/
+    ctx[17] ||
+    /*activeFetch*/
+    ctx[16]) && create_if_block(ctx);
     return {
       c: function c() {
         div1 = element("div");
@@ -1999,7 +2003,7 @@ var Select = (function (exports) {
         attr(span1, "class", "ml-auto");
         attr(button, "class", button_class_value = "form-control " +
         /*setupStyles*/
-        ctx[17].control_class + " d-flex");
+        ctx[19].control_class + " d-flex");
         attr(button, "type", "button");
         attr(button, "tabindex", "0");
         attr(button, "title",
@@ -2010,18 +2014,18 @@ var Select = (function (exports) {
         ctx[15] ? "show" : ""));
         attr(div1, "class", div1_class_value = "ss-container form-control p-0 border-0 " +
         /*setupStyles*/
-        ctx[17].container_class);
+        ctx[19].container_class);
         dispose = [listen(button, "blur",
         /*handleBlur*/
-        ctx[18]), listen(button, "keydown",
+        ctx[20]), listen(button, "keydown",
         /*handleToggleKeydown*/
-        ctx[23]), listen(button, "keyup",
+        ctx[25]), listen(button, "keyup",
         /*handleToggleKeyup*/
-        ctx[24]), listen(button, "click",
+        ctx[26]), listen(button, "click",
         /*handleToggleClick*/
-        ctx[25]), listen(div0, "scroll",
+        ctx[27]), listen(div0, "scroll",
         /*handlePopupScroll*/
-        ctx[29])];
+        ctx[31])];
       },
       m: function m(target, anchor) {
         insert(target, div1, anchor);
@@ -2117,7 +2121,11 @@ var Select = (function (exports) {
 
         if (
         /*actualCount*/
-        ctx[7] === 0) {
+        ctx[7] === 0 &&
+        /*previousFetch*/
+        ctx[17] ||
+        /*activeFetch*/
+        ctx[16]) {
           if (if_block2) {
             if_block2.p(ctx, dirty);
           } else {
@@ -2504,8 +2512,8 @@ var Select = (function (exports) {
             previousQuery = currentQuery;
           }
 
-          previousFetch = currentFetch;
-          activeFetch = null;
+          $$invalidate(17, previousFetch = currentFetch);
+          $$invalidate(16, activeFetch = null);
           fetchingMore = false;
           $$invalidate(13, showFetching = false);
           setTimeout(function () {
@@ -2526,8 +2534,8 @@ var Select = (function (exports) {
           $$invalidate(8, tooShort = _result.tooShort);
           hasMore = _result.more;
           previousQuery = null;
-          previousFetch = currentFetch;
-          activeFetch = null;
+          $$invalidate(17, previousFetch = currentFetch);
+          $$invalidate(16, activeFetch = null);
           fetchingMore = false;
           $$invalidate(13, showFetching = false);
           toggleEl.focus();
@@ -2539,14 +2547,14 @@ var Select = (function (exports) {
           $$invalidate(13, showFetching = true);
         }
       }, FETCH_INDICATOR_DELAY);
-      activeFetch = currentFetch;
-      previousFetch = null;
+      $$invalidate(16, activeFetch = currentFetch);
+      $$invalidate(17, previousFetch = null);
       return currentFetch;
     }
 
     function cancelFetch() {
       if (activeFetch !== null) {
-        activeFetch = null;
+        $$invalidate(16, activeFetch = null);
         previousQuery = null;
       }
     }
@@ -2750,12 +2758,12 @@ var Select = (function (exports) {
 
     function setupComponent() {
       real.classList.add("d-none");
-      $$invalidate(16, multiple = real.multiple);
+      $$invalidate(18, multiple = real.multiple);
 
       if (remote) {
         setupRemote();
       } else {
-        $$invalidate(30, fetcher = inlineFetcher);
+        $$invalidate(32, fetcher = inlineFetcher);
       }
 
       jQuery(toggleEl).tooltip();
@@ -2776,7 +2784,7 @@ var Select = (function (exports) {
           syncFromReal();
         }
       });
-      $$invalidate(38, mounted = true);
+      $$invalidate(40, mounted = true);
     });
     var toggleKeydownHandlers = {
       base: function base(event) {
@@ -3138,19 +3146,19 @@ var Select = (function (exports) {
     }
 
     $$self.$set = function ($$props) {
-      if ("real" in $$props) $$invalidate(31, real = $$props.real);
-      if ("fetcher" in $$props) $$invalidate(30, fetcher = $$props.fetcher);
-      if ("remote" in $$props) $$invalidate(32, remote = $$props.remote);
-      if ("queryMinLen" in $$props) $$invalidate(33, queryMinLen = $$props.queryMinLen);
-      if ("delay" in $$props) $$invalidate(34, delay = $$props.delay);
+      if ("real" in $$props) $$invalidate(33, real = $$props.real);
+      if ("fetcher" in $$props) $$invalidate(32, fetcher = $$props.fetcher);
+      if ("remote" in $$props) $$invalidate(34, remote = $$props.remote);
+      if ("queryMinLen" in $$props) $$invalidate(35, queryMinLen = $$props.queryMinLen);
+      if ("delay" in $$props) $$invalidate(36, delay = $$props.delay);
       if ("typeahead" in $$props) $$invalidate(0, typeahead = $$props.typeahead);
-      if ("styles" in $$props) $$invalidate(35, styles = $$props.styles);
+      if ("styles" in $$props) $$invalidate(37, styles = $$props.styles);
     };
 
     $$self.$$.update = function () {
       if ($$self.$$.dirty[1] &
       /*mounted*/
-      128) {
+      512) {
          {
           if (mounted) {
             syncToReal();
@@ -3159,7 +3167,7 @@ var Select = (function (exports) {
       }
     };
 
-    return [typeahead, containerEl, inputEl, toggleEl, popupEl, query, displayItems, actualCount, tooShort, selectionById, selectionItems, selectionDropdownItems, selectionTitle, showFetching, fetchError, popupVisible, multiple, setupStyles, handleBlur, handleInputBlur, handleInputKeypress, handleInputKeydown, handleInputKeyup, handleToggleKeydown, handleToggleKeyup, handleToggleClick, handleItemKeydown, handleItemKeyup, handleItemClick, handlePopupScroll, fetcher, real, remote, queryMinLen, delay, styles, selectItem, setup, mounted, fixedItems, result, hasMore, fetchingMore, activeFetch, previousFetch, previousQuery, isSyncToReal, inlineFetcher, createItemFromOption, fetchItems, cancelFetch, fetchMoreIfneeded, clearQuery, openPopup, closePopup, selectItemImpl, executeAction, selectElement, containsElement, syncFromReal, syncToReal, setupRemote, setupComponent, toggleKeydownHandlers, toggleKeyupHandlers, inputKeypressHandlers, inputKeydownHandlers, inputKeyupHandlers, focusItem, focusPreviousItem, focusNextItem, itemKeydownHandlers, itemKeyupHandlers, button_binding, input_binding, input_input_handler, div0_binding, div1_binding];
+    return [typeahead, containerEl, inputEl, toggleEl, popupEl, query, displayItems, actualCount, tooShort, selectionById, selectionItems, selectionDropdownItems, selectionTitle, showFetching, fetchError, popupVisible, activeFetch, previousFetch, multiple, setupStyles, handleBlur, handleInputBlur, handleInputKeypress, handleInputKeydown, handleInputKeyup, handleToggleKeydown, handleToggleKeyup, handleToggleClick, handleItemKeydown, handleItemKeyup, handleItemClick, handlePopupScroll, fetcher, real, remote, queryMinLen, delay, styles, selectItem, setup, mounted, fixedItems, result, hasMore, fetchingMore, previousQuery, isSyncToReal, inlineFetcher, createItemFromOption, fetchItems, cancelFetch, fetchMoreIfneeded, clearQuery, openPopup, closePopup, selectItemImpl, executeAction, selectElement, containsElement, syncFromReal, syncToReal, setupRemote, setupComponent, toggleKeydownHandlers, toggleKeyupHandlers, inputKeypressHandlers, inputKeydownHandlers, inputKeyupHandlers, focusItem, focusPreviousItem, focusNextItem, itemKeydownHandlers, itemKeyupHandlers, button_binding, input_binding, input_input_handler, div0_binding, div1_binding];
   }
 
   var Select =
@@ -3174,14 +3182,14 @@ var Select = (function (exports) {
 
       _this = _possibleConstructorReturn(this, _getPrototypeOf(Select).call(this));
       init(_assertThisInitialized(_this), options, instance, create_fragment, safe_not_equal, {
-        real: 31,
-        fetcher: 30,
-        remote: 32,
-        queryMinLen: 33,
-        delay: 34,
+        real: 33,
+        fetcher: 32,
+        remote: 34,
+        queryMinLen: 35,
+        delay: 36,
         typeahead: 0,
-        styles: 35,
-        selectItem: 36
+        styles: 37,
+        selectItem: 38
       }, [-1, -1, -1]);
       return _this;
     }
@@ -3189,7 +3197,7 @@ var Select = (function (exports) {
     _createClass(Select, [{
       key: "selectItem",
       get: function get() {
-        return this.$$.ctx[36];
+        return this.$$.ctx[38];
       }
     }]);
 
