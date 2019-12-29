@@ -5,6 +5,7 @@
  export let real;
  export let fetcher;
  export let remote;
+ export let maxItems = 100;
  export let queryMinLen = 0;
  export let delay = 0;
  export let typeahead = false;
@@ -322,6 +323,11 @@
                      blankItem = BLANK_ITEM;
                  }
              } else {
+                 if (selectionItems.length >= maxItems) {
+                     console.warn("IGNORE: maxItems=" + maxItems);
+                     return;
+                 }
+
                  delete byId[blankItem.id];
                  byId[item.id] = item;
              }
