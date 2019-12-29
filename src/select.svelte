@@ -48,8 +48,6 @@
 
  let multiple = false;
 
- let wasDown = false;
-
  let isSyncToReal = false;
 
 
@@ -567,9 +565,7 @@
  };
 
  let inputKeydownHandlers = {
-     base: function(event) {
-         wasDown = true;
-     },
+     base: nop,
      ArrowDown: function(event) {
          let next = popupEl.querySelectorAll('.ki-js-item')[0];
          while (next && next.classList.contains('ki-js-blank')) {
@@ -596,7 +592,7 @@
 
  let inputKeyupHandlers = {
      base: function(event) {
-         if (wasDown) {
+         if (isValidKey(event)) {
              fetchItems();
          }
      },
