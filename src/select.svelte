@@ -43,14 +43,12 @@
  let popupVisible = false;
 
  let activeFetch = null;
- let fetched = false;
 
  let previousFetch = null;
  let previousQuery = null;
 
  let multiple = false;
 
- let downQuery = null;
  let wasDown = false;
 
  let isSyncToReal = false;
@@ -143,7 +141,6 @@
      } else {
          tooShort = false;
          hasMore = false;
-         fetched = false;
      }
      fetchingMore = fetchMore;
      fetchError = null;
@@ -213,7 +210,6 @@
              }
              previousFetch = currentFetch;
              activeFetch = null;
-             fetched = true;
              fetchingMore = false;
              showFetching = false;
 //         } else {
@@ -240,7 +236,6 @@
              previousQuery = null;
              previousFetch = currentFetch;
              activeFetch = null;
-             fetched = false;
              fetchingMore = false;
 
              showFetching = false;
@@ -267,7 +262,6 @@
      if (activeFetch !== null) {
          activeFetch = null;
          // no result fetched; since it doesn't match input any longer
-         fetched = false;
          previousQuery = null;
      }
  }
