@@ -14,7 +14,6 @@
  let inputEl;
  let toggleEl;
  let popupEl;
- let moreEl;
 
  let setup = false;
  let setupStyles = {};
@@ -269,7 +268,8 @@
 
  function fetchMoreIfneeded() {
      if (hasMore && !fetchingMore && popupVisible) {
-         if (popupEl.scrollTop + popupEl.clientHeight >= popupEl.scrollHeight - moreEl.clientHeight * 2 - 2) {
+         let last
+         if (popupEl.scrollTop + popupEl.clientHeight >= popupEl.scrollHeight - popupEl.lastElementChild.clientHeight * 2 - 2) {
              fetchItems(true);
          }
      }
@@ -853,11 +853,8 @@
 
  const I18N_DEFAULTS = {
      clear: 'Clear',
-     fetching: 'Searching..',
      no_results: 'No results',
      too_short: 'Too short',
-     has_more: 'More...',
-     fetching_more: 'Searching more...',
  };
 
  const STYLE_DEFAULTS = {
@@ -1246,13 +1243,6 @@
       {/if}
     {/each}
 
-    {#if hasMore}
-      <div tabindex="-1"
-           class="dropdown-item text-muted"
-           bind:this={moreEl}>
-        {translate('has_more')}
-      </div>
-    {/if}
     {#if actualCount === 0}
       <div tabindex="-1" class="dropdown-item text-muted ss-item">
         {#if tooShort }
