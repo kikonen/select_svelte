@@ -822,6 +822,7 @@
  const I18N_DEFAULTS = {
      clear: 'Clear',
      no_results: 'No results',
+     max_limit: 'Max limit reached',
  };
 
  const STYLE_DEFAULTS = {
@@ -1043,11 +1044,20 @@
 */ }
  :global(.ss-popup) {
      padding-top: 0;
+     padding-bottom: 0;
      max-height: 50vh;
      max-width: 90vw;
      overflow-y: auto;
  }
  :global(.ss-item) {
+     padding-left: 0.5rem;
+     padding-right: 0.5rem;
+ }
+ :global(.ss-sticky-item) {
+     width: 100%;
+     position: sticky;
+     bottom: 0;
+     background-color: white;
      padding-left: 0.5rem;
      padding-right: 0.5rem;
  }
@@ -1118,12 +1128,6 @@
        class:show={popupVisible}
        bind:this={popupEl}
        on:scroll={handlePopupScroll}>
-    {#if fetchError}
-      <div tabindex="-1" class="dropdown-item text-danger ss-item">
-        {fetchError}
-      </div>
-    {/if}
-
     {#if typeahead}
         <div class="ss-input-item" tabindex="-1">
           <input class="ss-input form-control {setupStyles.typeahead_class}"
@@ -1246,8 +1250,20 @@
     {/each}
 
     {#if actualCount === 0 && previousFetch || activeFetch}
-      <div tabindex="-1" class="dropdown-item text-muted ss-item">
+      <div tabindex="-1" class="dropdown-item text-muted ss-no-click ss-js-blank">
         {translate('no_results')}
+      </div>
+    {/if}
+
+    {#if fetchError}
+      <div tabindex="-1" class="dropdown-item border-top text-danger ss-no-click ss-js-blank ss-sticky-item">
+        {fetchError}
+      </div>
+    {/if}
+
+    {#if selectionItems.length >= maxItems}
+      <div tabindex="-1" class="dropdown-item border-top text-danger ss-no-click ss-js-blank ss-sticky-item">
+        {translate('max_limit')}
       </div>
     {/if}
   </div>
