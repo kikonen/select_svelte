@@ -389,7 +389,7 @@ function get_each_context_2(ctx, list, i) {
 	return child_ctx;
 }
 
-// (1117:6) {#each selectionItems as item, index (item.id)}
+// (1119:6) {#each selectionItems as item, index (item.id)}
 function create_each_block_2(key_1, ctx) {
 	let first;
 	let html_tag;
@@ -436,7 +436,7 @@ function create_each_block_2(key_1, ctx) {
 	};
 }
 
-// (1131:4) {#if typeahead}
+// (1133:4) {#if typeahead}
 function create_if_block_10(ctx) {
 	let div;
 	let input;
@@ -508,7 +508,7 @@ function create_if_block_10(ctx) {
 	};
 }
 
-// (1148:6) {#if multiple}
+// (1150:6) {#if multiple}
 function create_if_block_11(ctx) {
 	let each_blocks = [];
 	let each_1_lookup = new Map();
@@ -573,7 +573,7 @@ function create_if_block_11(ctx) {
 	};
 }
 
-// (1150:10) {#if item.id}
+// (1152:10) {#if item.id}
 function create_if_block_13(ctx) {
 	let div3;
 	let div2;
@@ -669,7 +669,7 @@ function create_if_block_13(ctx) {
 	};
 }
 
-// (1161:16) {#if multiple}
+// (1163:16) {#if multiple}
 function create_if_block_15(ctx) {
 	let div;
 	let if_block = /*item*/ ctx[75].id && create_if_block_16(ctx);
@@ -705,7 +705,7 @@ function create_if_block_15(ctx) {
 	};
 }
 
-// (1163:20) {#if item.id}
+// (1165:20) {#if item.id}
 function create_if_block_16(ctx) {
 	let i;
 	let i_class_value;
@@ -734,7 +734,7 @@ function create_if_block_16(ctx) {
 	};
 }
 
-// (1173:20) {:else}
+// (1175:20) {:else}
 function create_else_block_2(ctx) {
 	let t_value = translate("clear") + "";
 	let t;
@@ -753,7 +753,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (1171:20) {#if item.id}
+// (1173:20) {#if item.id}
 function create_if_block_14(ctx) {
 	let t_value = /*item*/ ctx[75].text + "";
 	let t;
@@ -774,7 +774,7 @@ function create_if_block_14(ctx) {
 	};
 }
 
-// (1149:8) {#each selectionDropdownItems as item (item.id)}
+// (1151:8) {#each selectionDropdownItems as item (item.id)}
 function create_each_block_1(key_1, ctx) {
 	let first;
 	let if_block_anchor;
@@ -816,7 +816,7 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (1183:8) {#if selectionDropdownItems.length > 1 || (selectionDropdownItems.length == 1 && selectionDropdownItems[0].id)}
+// (1185:8) {#if selectionDropdownItems.length > 1 || (selectionDropdownItems.length == 1 && selectionDropdownItems[0].id)}
 function create_if_block_12(ctx) {
 	let div;
 	let dispose;
@@ -839,7 +839,7 @@ function create_if_block_12(ctx) {
 	};
 }
 
-// (1213:6) {:else}
+// (1215:6) {:else}
 function create_else_block(ctx) {
 	let div3;
 	let div2;
@@ -971,7 +971,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (1199:50) 
+// (1201:50) 
 function create_if_block_4(ctx) {
 	let div1;
 	let div0;
@@ -1029,7 +1029,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (1193:6) {#if item.separator}
+// (1195:6) {#if item.separator}
 function create_if_block_3(ctx) {
 	let div;
 	let dispose;
@@ -1052,7 +1052,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (1224:12) {#if multiple}
+// (1226:12) {#if multiple}
 function create_if_block_8(ctx) {
 	let div;
 	let if_block = /*item*/ ctx[75].id && create_if_block_9(ctx);
@@ -1088,7 +1088,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (1226:16) {#if item.id}
+// (1228:16) {#if item.id}
 function create_if_block_9(ctx) {
 	let i;
 	let i_class_value;
@@ -1117,7 +1117,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (1236:16) {:else}
+// (1238:16) {:else}
 function create_else_block_1(ctx) {
 	let t_value = translate("clear") + "";
 	let t;
@@ -1136,7 +1136,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (1234:16) {#if item.id}
+// (1236:16) {#if item.id}
 function create_if_block_7(ctx) {
 	let t_value = /*item*/ ctx[75].text + "";
 	let t;
@@ -1157,7 +1157,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (1241:14) {#if item.desc}
+// (1243:14) {#if item.desc}
 function create_if_block_6(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[75].desc + "";
@@ -1183,7 +1183,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (1206:10) {#if item.desc}
+// (1208:10) {#if item.desc}
 function create_if_block_5(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[75].desc + "";
@@ -1209,7 +1209,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (1192:4) {#each displayItems as item (item.id)}
+// (1194:4) {#each displayItems as item (item.id)}
 function create_each_block(key_1, ctx) {
 	let first;
 	let if_block_anchor;
@@ -1258,7 +1258,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (1252:4) {#if actualCount === 0 && previousFetch || activeFetch}
+// (1254:4) {#if actualCount === 0 && previousFetch || activeFetch}
 function create_if_block_2(ctx) {
 	let div;
 
@@ -1279,7 +1279,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (1258:4) {#if fetchError}
+// (1260:4) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -1304,7 +1304,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (1264:4) {#if selectionItems.length >= maxItems}
+// (1266:4) {#if selectionItems.length >= maxItems}
 function create_if_block(ctx) {
 	let div;
 
@@ -2086,13 +2086,14 @@ function instance($$self, $$props, $$invalidate) {
 
 		for (let i = options.length - 1; i >= 0; i--) {
 			let el = options[i];
-			let curr = !!selectionById[el.value];
+			let selected = !!selectionById[el.value];
+			changed = changed || el.selected !== selected;
 
-			if (el.selected !== curr) {
-				changed = true;
+			if (selected) {
+				el.setAttribute("selected", "");
+			} else {
+				el.removeAttribute("selected");
 			}
-
-			el.selected = curr;
 		}
 
 		if (changed) {
@@ -2106,7 +2107,7 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	function setupRemote() {
-		let fixedOptions = real.querySelectorAll("option[data-select-fixed]");
+		let fixedOptions = real.querySelectorAll("option[data-item-fixed]");
 		let collectedItems = [];
 
 		fixedOptions.forEach(function (el) {

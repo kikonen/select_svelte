@@ -715,7 +715,7 @@ var Select = (function (exports) {
     child_ctx[75] = list[i];
     child_ctx[81] = i;
     return child_ctx;
-  } // (1117:6) {#each selectionItems as item, index (item.id)}
+  } // (1119:6) {#each selectionItems as item, index (item.id)}
 
 
   function create_each_block_2(key_1, ctx) {
@@ -779,7 +779,7 @@ var Select = (function (exports) {
         if (detaching) detach(span);
       }
     };
-  } // (1131:4) {#if typeahead}
+  } // (1133:4) {#if typeahead}
 
 
   function create_if_block_10(ctx) {
@@ -871,7 +871,7 @@ var Select = (function (exports) {
         run_all(dispose);
       }
     };
-  } // (1148:6) {#if multiple}
+  } // (1150:6) {#if multiple}
 
 
   function create_if_block_11(ctx) {
@@ -957,7 +957,7 @@ var Select = (function (exports) {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1150:10) {#if item.id}
+  } // (1152:10) {#if item.id}
 
 
   function create_if_block_13(ctx) {
@@ -1072,7 +1072,7 @@ var Select = (function (exports) {
         run_all(dispose);
       }
     };
-  } // (1161:16) {#if multiple}
+  } // (1163:16) {#if multiple}
 
 
   function create_if_block_15(ctx) {
@@ -1111,7 +1111,7 @@ var Select = (function (exports) {
         if (if_block) if_block.d();
       }
     };
-  } // (1163:20) {#if item.id}
+  } // (1165:20) {#if item.id}
 
 
   function create_if_block_16(ctx) {
@@ -1144,7 +1144,7 @@ var Select = (function (exports) {
         if (detaching) detach(i);
       }
     };
-  } // (1173:20) {:else}
+  } // (1175:20) {:else}
 
 
   function create_else_block_2(ctx) {
@@ -1162,7 +1162,7 @@ var Select = (function (exports) {
         if (detaching) detach(t);
       }
     };
-  } // (1171:20) {#if item.id}
+  } // (1173:20) {#if item.id}
 
 
   function create_if_block_14(ctx) {
@@ -1188,7 +1188,7 @@ var Select = (function (exports) {
         if (detaching) detach(t);
       }
     };
-  } // (1149:8) {#each selectionDropdownItems as item (item.id)}
+  } // (1151:8) {#each selectionDropdownItems as item (item.id)}
 
 
   function create_each_block_1(key_1, ctx) {
@@ -1233,7 +1233,7 @@ var Select = (function (exports) {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1183:8) {#if selectionDropdownItems.length > 1 || (selectionDropdownItems.length == 1 && selectionDropdownItems[0].id)}
+  } // (1185:8) {#if selectionDropdownItems.length > 1 || (selectionDropdownItems.length == 1 && selectionDropdownItems[0].id)}
 
 
   function create_if_block_12(ctx) {
@@ -1257,7 +1257,7 @@ var Select = (function (exports) {
         dispose();
       }
     };
-  } // (1213:6) {:else}
+  } // (1215:6) {:else}
 
 
   function create_else_block(ctx) {
@@ -1430,7 +1430,7 @@ var Select = (function (exports) {
         run_all(dispose);
       }
     };
-  } // (1199:50) 
+  } // (1201:50) 
 
 
   function create_if_block_4(ctx) {
@@ -1509,7 +1509,7 @@ var Select = (function (exports) {
         dispose();
       }
     };
-  } // (1193:6) {#if item.separator}
+  } // (1195:6) {#if item.separator}
 
 
   function create_if_block_3(ctx) {
@@ -1533,7 +1533,7 @@ var Select = (function (exports) {
         dispose();
       }
     };
-  } // (1224:12) {#if multiple}
+  } // (1226:12) {#if multiple}
 
 
   function create_if_block_8(ctx) {
@@ -1572,7 +1572,7 @@ var Select = (function (exports) {
         if (if_block) if_block.d();
       }
     };
-  } // (1226:16) {#if item.id}
+  } // (1228:16) {#if item.id}
 
 
   function create_if_block_9(ctx) {
@@ -1605,7 +1605,7 @@ var Select = (function (exports) {
         if (detaching) detach(i);
       }
     };
-  } // (1236:16) {:else}
+  } // (1238:16) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -1623,7 +1623,7 @@ var Select = (function (exports) {
         if (detaching) detach(t);
       }
     };
-  } // (1234:16) {#if item.id}
+  } // (1236:16) {#if item.id}
 
 
   function create_if_block_7(ctx) {
@@ -1649,7 +1649,7 @@ var Select = (function (exports) {
         if (detaching) detach(t);
       }
     };
-  } // (1241:14) {#if item.desc}
+  } // (1243:14) {#if item.desc}
 
 
   function create_if_block_6(ctx) {
@@ -1682,7 +1682,7 @@ var Select = (function (exports) {
         if (detaching) detach(div);
       }
     };
-  } // (1206:10) {#if item.desc}
+  } // (1208:10) {#if item.desc}
 
 
   function create_if_block_5(ctx) {
@@ -1715,7 +1715,7 @@ var Select = (function (exports) {
         if (detaching) detach(div);
       }
     };
-  } // (1192:4) {#each displayItems as item (item.id)}
+  } // (1194:4) {#each displayItems as item (item.id)}
 
 
   function create_each_block(key_1, ctx) {
@@ -1769,7 +1769,7 @@ var Select = (function (exports) {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1252:4) {#if actualCount === 0 && previousFetch || activeFetch}
+  } // (1254:4) {#if actualCount === 0 && previousFetch || activeFetch}
 
 
   function create_if_block_2(ctx) {
@@ -1789,7 +1789,7 @@ var Select = (function (exports) {
         if (detaching) detach(div);
       }
     };
-  } // (1258:4) {#if fetchError}
+  } // (1260:4) {#if fetchError}
 
 
   function create_if_block_1(ctx) {
@@ -1819,7 +1819,7 @@ var Select = (function (exports) {
         if (detaching) detach(div);
       }
     };
-  } // (1264:4) {#if selectionItems.length >= maxItems}
+  } // (1266:4) {#if selectionItems.length >= maxItems}
 
 
   function create_if_block(ctx) {
@@ -2691,13 +2691,14 @@ var Select = (function (exports) {
 
       for (var i = options.length - 1; i >= 0; i--) {
         var el = options[i];
-        var curr = !!selectionById[el.value];
+        var selected = !!selectionById[el.value];
+        changed = changed || el.selected !== selected;
 
-        if (el.selected !== curr) {
-          changed = true;
+        if (selected) {
+          el.setAttribute("selected", "");
+        } else {
+          el.removeAttribute("selected");
         }
-
-        el.selected = curr;
       }
 
       if (changed) {
@@ -2711,7 +2712,7 @@ var Select = (function (exports) {
     }
 
     function setupRemote() {
-      var fixedOptions = real.querySelectorAll("option[data-select-fixed]");
+      var fixedOptions = real.querySelectorAll("option[data-item-fixed]");
       var collectedItems = [];
       fixedOptions.forEach(function (el) {
         collectedItems.push(createItemFromOption(el, setupStyles));
