@@ -1142,7 +1142,7 @@
           </div>
 
       {#if multiple}
-        {#each selectionDropdownItems as item, index (item.id)}
+        {#each selectionDropdownItems as item (item.id)}
           {#if item.id}
             <div tabindex=1
                  class="ss-js-item dropdown-item ss-item"
