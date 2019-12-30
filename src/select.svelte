@@ -829,6 +829,7 @@
      item_class: '',
      item_desc_class: 'text-muted',
      blank_item_class: 'text-muted',
+     selected_item_class: 'alert-primary',
      typeahead_class: '',
      control_class: '',
  };
@@ -1207,7 +1208,7 @@
 
       {:else}
         <div tabindex=1
-             class="ss-js-item dropdown-item ss-item {item.itemClass}"
+             class="ss-js-item dropdown-item ss-item {item.itemClass} {selectionById[item.id] ? setupStyles.selected_item_class : ''}"
              data-id="{item.id}"
              data-action="{item.action || ''}"
              on:blur={handleBlur}
