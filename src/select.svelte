@@ -6,8 +6,6 @@
  export let fetcher;
  export let remote;
  export let maxItems = 100;
- export let queryMinLen = 0;
- export let delay = 0;
  export let typeahead = false;
  export let styles = {};
 
@@ -28,7 +26,6 @@
  let result = createResult({});
  let displayItems = [];
  let actualCount = 0;
- let tooShort = false;
  let hasMore = false;
 
  let selectionById = {};
@@ -67,8 +64,9 @@
 
          let options = real.options;
          for (let i = 0; i < options.length; i++) {
-             let item = createItemFromOption(options[i]);
-             let match = !item.id ||
+             let item = createItemFromOption(options[i], setupStyles);
+             let match = item.separator ||
+                         item.blank ||
                          item.text.toUpperCase().includes(pattern) ||
                          item.desc.toUpperCase().includes(pattern);
              if (match) {
@@ -88,31 +86,11 @@
      return promise;
  }
 
- function createItemFromOption(el) {
-     let ds = el.dataset;
-     let item = {
-         id: el.value || '',
-         text: el.text || '',
-     };
-
-     if (ds) {
-         if (ds.itemDesc) {
-             item.desc = ds.itemDesc;
-         }
-         if (ds.itemAction) {
-             item.action = ds.itemAction;
-         }
-         if (ds.itemClass) {
-             item.itemClass = ds.itemClass;
-         } else {
-             item.itemClass = setupStyles[item.id === '' ? 'blank_item_class' : 'item_class'];
-         }
-     }
-     return item;
- }
-
  ////////////////////////////////////////////////////////////
  //
+ /**
+  * @return Promise
+  */
  function fetchItems(fetchMore, fetchId) {
      let currentQuery;
      if (fetchId) {
@@ -137,7 +115,6 @@
      if (fetchMore) {
          currentFetchOffset = result.offsetCount;
      } else {
-         tooShort = false;
          hasMore = false;
      }
      fetchingMore = fetchMore;
@@ -146,40 +123,10 @@
 
      let currentFetchingMore = fetchingMore;
 
-     let currentFetch = new Promise(function(resolve, reject) {
-         if (currentFetchingMore) {
-//             console.debug("MOR hit: " + currentQuery);
-             resolve(fetcher(currentFetchOffset, currentQuery, fetchId));
-         } else {
-             if (currentQuery.length < queryMinLen && !fetchId) {
-//                 console.debug("TOO_SHORT fetch: " + currentQuery + ", limit: " + queryMinLen);
-                 resolve({
-                     items: [],
-                     info: {
-                         more: false,
-                         too_short: true,
-                     }
-                 });
-             } else {
-//                 console.debug("TIMER start: " + currentQuery);
-                 setTimeout(function() {
-                     if (currentFetch === activeFetch) {
-//                         console.debug("TIMER hit: " + currentQuery);
-                         resolve(fetcher(currentFetchOffset, currentQuery, fetchId));
-                     } else {
-//                         console.debug("TIMER reject: " + currentQuery);
-                         reject("cancel");
-                     }
-                 }, delay);
-             }
-         }
-     }).then(function(response) {
+     let currentFetch = fetcher(currentFetchOffset, currentQuery, fetchId).then(function(response) {
          if (currentFetch === activeFetch) {
              let responseItems = response.items || [];
              let info = response.info || {};
-
-//             console.debug("APPLY fetch: " + currentQuery + ", isMore: " + currentFetchingMore + ", offset: " + currentFetchOffset + ", resultSize: " + fetchedItems.length + ", oldSize: " + items.length);
-//             console.debug(info);
 
              let fetchedItems = responseItems;
              if (currentFetchingMore) {
@@ -194,11 +141,9 @@
                  fixedItems: fixedItems,
                  fetchedId: fetchId,
                  more: info.more,
-                 tooShort: info.too_short === true,
              });
              displayItems = result.displayItems;
              actualCount = result.actualCount;
-             tooShort = result.tooShort;
              hasMore = result.more;
 
              if (fetchId) {
@@ -210,8 +155,6 @@
              activeFetch = null;
              fetchingMore = false;
              showFetching = false;
-//         } else {
-//             console.debug("ABORT fetch: " + currentQuery);
 
              setTimeout(function() {
                  fetchMoreIfneeded();
@@ -228,7 +171,6 @@
              });
              displayItems = result.displayItems;
              actualCount = result.actualCount;
-             tooShort = result.tooShort;
              hasMore = result.more;
 
              previousQuery = null;
@@ -422,7 +364,7 @@
          let el = options[i];
          let item = oldById[el.value || ''];
          if (!item) {
-             item = createItemFromOption(el);
+             item = createItemFromOption(el, setupStyles);
          }
          byId[item.id] = item;
      }
@@ -476,7 +418,7 @@
      let fixedOptions = real.querySelectorAll('option[data-select-fixed]');
      let collectedItems = [];
      fixedOptions.forEach(function(el) {
-         collectedItems.push(createItemFromOption(el));
+         collectedItems.push(createItemFromOption(el, setupStyles));
      });
      fixedItems = collectedItems;
  }
@@ -533,8 +475,8 @@
          if (typeahead) {
              inputEl.focus();
          } else {
-             let next = popupEl.querySelectorAll('.ki-js-item')[0];
-             while (next && next.classList.contains('ki-js-blank')) {
+             let next = popupEl.querySelectorAll('.ss-js-item')[0];
+             while (next && next.classList.contains('ss-js-blank')) {
                  next = next.nextElementSibling;
              }
              focusItem(next);
@@ -590,8 +532,8 @@
  let inputKeydownHandlers = {
      base: nop,
      ArrowDown: function(event) {
-         let next = popupEl.querySelectorAll('.ki-js-item')[0];
-         while (next && next.classList.contains('ki-js-blank')) {
+         let next = popupEl.querySelectorAll('.ss-js-item')[0];
+         while (next && next.classList.contains('ss-js-blank')) {
              next = next.nextElementSibling;
          }
          focusItem(next);
@@ -656,10 +598,10 @@
      let next = el.previousElementSibling;
 
      if (next) {
-         while (next && next.classList.contains('ki-js-blank')) {
+         while (next && next.classList.contains('ss-js-blank')) {
              next = next.previousElementSibling;
          }
-         if (next && !next.classList.contains('ki-js-item')) {
+         if (next && !next.classList.contains('ss-js-item')) {
              next = null;
          }
      }
@@ -677,11 +619,11 @@
      let next = el.nextElementSibling;
 
      if (next) {
-         while (next && next.classList.contains('ki-js-blank')) {
+         while (next && next.classList.contains('ss-js-blank')) {
              next = next.nextElementSibling;
          }
 
-         if (next && !next.classList.contains('ki-js-item')) {
+         if (next && !next.classList.contains('ss-js-item')) {
              next = null;
          }
      }
@@ -758,10 +700,10 @@
          let rect = popupEl.getBoundingClientRect();
          let next = document.elementFromPoint(scrollLeft + rect.x + 10, scrollTop + rect.top + 1);
          if (!next) {
-             next = popupEl.querySelector('.ki-js-item:first-child');
+             next = popupEl.querySelector('.ss-js-item:first-child');
          } else {
-             if (!next.classList.contains('ki-js-item')) {
-                 next = popupEl.querySelector('.ki-js-item:first-child');
+             if (!next.classList.contains('ss-js-item')) {
+                 next = popupEl.querySelector('.ss-js-item:first-child');
              }
          }
          focusItem(next);
@@ -775,22 +717,22 @@
          let rect = popupEl.getBoundingClientRect();
          let next = document.elementFromPoint(scrollLeft + rect.x + 10, scrollTop + rect.top + h - 10);
          if (!next) {
-             next = popupEl.querySelector('.ki-js-item:last-child');
+             next = popupEl.querySelector('.ss-js-item:last-child');
          } else {
-             if (!next.classList.contains('ki-js-item')) {
-                 next = popupEl.querySelector('.ki-js-item:last-child');
+             if (!next.classList.contains('ss-js-item')) {
+                 next = popupEl.querySelector('.ss-js-item:last-child');
              }
          }
          focusItem(next);
          event.preventDefault();
      },
      Home: function(event) {
-         let next = popupEl.querySelector('.ki-js-item:first-child');
+         let next = popupEl.querySelector('.ss-js-item:first-child');
          focusItem(next);
          event.preventDefault();
      },
      End: function(event) {
-         let next = popupEl.querySelector('.ki-js-item:last-child');
+         let next = popupEl.querySelector('.ss-js-item:last-child');
          focusItem(next);
          event.preventDefault();
      },
@@ -880,7 +822,6 @@
  const I18N_DEFAULTS = {
      clear: 'Clear',
      no_results: 'No results',
-     too_short: 'Too short',
  };
 
  const STYLE_DEFAULTS = {
@@ -888,7 +829,6 @@
      item_class: '',
      item_desc_class: 'text-muted',
      blank_item_class: 'text-muted',
-     missing_item_class: 'alert-primary',
      typeahead_class: '',
      control_class: '',
  };
@@ -944,6 +884,39 @@
      return !(META_KEYS[event.key] || META_KEYS[event.code])
  }
 
+ function createItemFromOption(el, styles) {
+     let ds = el.dataset;
+     let item = {
+         id: el.value || '',
+         text: el.text || '',
+     };
+
+     if (ds) {
+         if (ds.itemSeparator) {
+             item.separator = true;
+         }
+         if (ds.itemDesc) {
+             item.desc = ds.itemDesc;
+         }
+         if (ds.itemAction) {
+             item.action = ds.itemAction;
+         }
+         if (ds.itemClass) {
+             item.itemClass = ds.itemClass;
+         } else {
+         }
+     }
+     if (!item.separator) {
+         if (item.id === '') {
+             item.blank = true;
+         }
+         if (!item.itemClass) {
+             item.itemClass = item.blank ? styles.blank_item_class : styles.item_class;
+         }
+     }
+     return item;
+ }
+
  function createOptionFromItem(item) {
      let el = document.createElement('option');
      el.setAttribute('value', item.id);
@@ -992,22 +965,27 @@
      }
 
      items.forEach(function(item) {
-         byId[item.id] = item;
+         if (!item.separator) {
+             byId[item.id] = item;
+         }
      });
 
      let counts = calculateCounts(data.fetchedItems || []);
      let more = data.more === true && counts.offsetCount > 0 && !data.fetchedId;
-     let tooShort = data.tooShort === true;
+
+     let blankItem = byId[''] || null;
+     if (blankItem) {
+         blankItem.blank = true;
+     }
 
      return {
-         blankItem: byId[''] || null,
+         blankItem: blankItem,
          byId: byId,
          displayItems: items,
          fetchedItems: data.fetchedItems,
          offsetCount: counts.offsetCount,
          actualCount: counts.actualCount,
          more: more,
-         tooShort: tooShort,
      };
  }
 
@@ -1135,7 +1113,8 @@
     </span>
   </button>
 
-  <div class="dropdown-menu ss-popup {popupVisible ? 'show' : ''}"
+  <div class="dropdown-menu ss-popup"
+       class:show={popupVisible}
        bind:this={popupEl}
        on:scroll={handlePopupScroll}>
     {#if fetchError}
@@ -1165,7 +1144,7 @@
         {#each selectionDropdownItems as item, index (item.id)}
           {#if item.id}
             <div tabindex=1
-                 class="ki-js-item dropdown-item ss-item"
+                 class="ss-js-item dropdown-item ss-item"
                  data-id="{item.id}"
                  data-selected="true"
                  on:blur={handleBlur}
@@ -1198,7 +1177,7 @@
 
         {#if selectionDropdownItems.length > 1 || (selectionDropdownItems.length == 1 && selectionDropdownItems[0].id)}
           <div tabindex="-1"
-               class="dropdown-divider ki-js-blank"
+               class="dropdown-divider ss-js-blank"
                on:keydown={handleItemKeydown}>
           </div>
         {/if}
@@ -1208,12 +1187,12 @@
     {#each displayItems as item (item.id)}
       {#if item.separator}
         <div tabindex="-1"
-             class="dropdown-divider ki-js-blank"
+             class="dropdown-divider ss-js-blank"
              on:keydown={handleItemKeydown}>
         </div>
 
       {:else if item.disabled || item.placeholder}
-        <div tabindex="-1" class="dropdown-item text-muted ki-js-blank"
+        <div tabindex="-1" class="dropdown-item text-muted ss-js-blank"
              on:keydown={handleItemKeydown}>
           <div class="ss-no-click {item.itemClass}">
             {item.display_text || item.text}
@@ -1228,7 +1207,7 @@
 
       {:else}
         <div tabindex=1
-             class="ki-js-item dropdown-item ss-item {item.itemClass || ''} {selectionById[item.id] ? setupStyles.missing_item_class : ''}"
+             class="ss-js-item dropdown-item ss-item {item.itemClass}"
              data-id="{item.id}"
              data-action="{item.action || ''}"
              on:blur={handleBlur}
@@ -1267,11 +1246,7 @@
 
     {#if actualCount === 0 && previousFetch || activeFetch}
       <div tabindex="-1" class="dropdown-item text-muted ss-item">
-        {#if tooShort }
-          {translate('too_short')}
-        {:else}
-          {translate('no_results')}
-        {/if}
+        {translate('no_results')}
       </div>
     {/if}
   </div>
