@@ -397,11 +397,13 @@
      let options = real.options;
      for (let i = options.length - 1; i >= 0; i--) {
          let el = options[i];
-         let curr = !!selectionById[el.value];
-         if (el.selected !== curr) {
-             changed = true;
+         let selected = !!selectionById[el.value];
+         changed = changed || el.selected !== selected;
+         if (selected) {
+             el.setAttribute('selected', '');
+         } else {
+             el.removeAttribute('selected');
          }
-         el.selected = curr;
      }
 
      if (changed) {
@@ -415,7 +417,7 @@
  }
 
  function setupRemote() {
-     let fixedOptions = real.querySelectorAll('option[data-select-fixed]');
+     let fixedOptions = real.querySelectorAll('option[data-item-fixed]');
      let collectedItems = [];
      fixedOptions.forEach(function(el) {
          collectedItems.push(createItemFromOption(el, setupStyles));
