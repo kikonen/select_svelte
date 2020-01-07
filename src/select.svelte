@@ -43,6 +43,7 @@
  let fetchError = null;
 
  let popupVisible = false;
+ let popupTop = false;
 
  let activeFetch = null;
 
@@ -341,6 +342,10 @@
          popupVisible = true;
          let w = containerEl.offsetWidth;
          popupEl.style.minWidth = w + "px";
+
+         let bounds = containerEl.getBoundingClientRect();
+         let middle = window.innerHeight / 2;
+         popupTop = bounds.y > middle + 40;
      }
  }
 
@@ -1130,9 +1135,13 @@
  :global(.ss-popup) {
      padding-top: 0;
      padding-bottom: 0;
-     max-height: 50vh;
+     max-height: 40vh;
      max-width: 90vw;
      overflow-y: auto;
+ }
+ :global(.ss-popup-top) {
+     top: unset;
+     bottom: 100%;
  }
  :global(.ss-item) {
      padding-left: 0.5rem;
@@ -1212,6 +1221,7 @@
 
   <div class="dropdown-menu ss-popup"
        class:show={popupVisible}
+       class:ss-popup-top={popupTop}
        bind:this={popupEl}
        on:scroll={handlePopupScroll}>
     {#if typeahead}
