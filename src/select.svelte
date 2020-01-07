@@ -22,15 +22,18 @@
  let query = '';
 
  let fixedItems = [];
+ let fixedById = {};
 
  let result = createResult({});
- let displayItems = [];
+
  let actualCount = 0;
  let hasMore = false;
 
+ let display = createDisplay({});
+ let displayItems = [];
+
  let selectionById = {};
  let selectionItems = [];
- let selectionDropdownItems = [];
  let selectionTitle = '';
 
  let showFetching = false;
@@ -65,10 +68,17 @@
          let options = real.options;
          for (let i = 0; i < options.length; i++) {
              let item = createItemFromOption(options[i], setupStyles);
-             let match = item.separator ||
-                         item.blank ||
+             let match;
+
+             // NOTE KI "blank" is handled as fixed item
+             if (item.blank) {
+                 match = false;
+             } else {
+                 match = item.separator ||
                          item.text.toUpperCase().includes(pattern) ||
                          item.desc.toUpperCase().includes(pattern);
+             }
+
              if (match) {
                  items.push(item);
              }
@@ -84,6 +94,110 @@
      });
 
      return promise;
+ }
+
+ ////////////////////////////////////////////////////////////
+ // sync/update
+ //
+ function syncFromRealSelection() {
+     if (isSyncToReal) {
+         return;
+     }
+
+     let oldById = selectionById;
+     let byId = {};
+
+     let options = real.selectedOptions;
+     for (let i = options.length - 1; i >= 0; i--) {
+         let el = options[i];
+         let item = oldById[el.value || ''];
+         if (!item) {
+             item = createItemFromOption(el, setupStyles);
+         }
+         byId[item.id] = item;
+     }
+
+     selectionById = byId;
+     selectionItems = Object.values(byId).sort(function(a, b) {
+         return a.text.localeCompare(b.text);
+     });
+
+     selectionTitle = selectionItems.map(function(item) {
+         return item.text;
+     }).join(', ');
+ }
+
+ function syncToRealSelection() {
+     let changed = false;
+
+     // Insert missing values
+     // NOTE KI all existing values are *assumed* to be in sync data-attr wise
+     if (remote) {
+         selectionItems.forEach(function(item) {
+             let el = real.querySelector('option[value="' + item.id + '"]');
+             if (!el) {
+                 el = createOptionFromItem(item);
+                 real.appendChild(el);
+             }
+         });
+     }
+
+     let options = real.options;
+     for (let i = options.length - 1; i >= 0; i--) {
+         let el = options[i];
+         let selected = !!selectionById[el.value];
+         changed = changed || el.selected !== selected;
+         if (selected) {
+             el.setAttribute('selected', '');
+         } else {
+             el.removeAttribute('selected');
+         }
+     }
+
+     if (changed) {
+         try {
+             isSyncToReal = true;
+             real.dispatchEvent(new Event('change'));
+         } finally {
+             isSyncToReal = false;
+         }
+     }
+ }
+
+ function updateFixedItems() {
+     let byId = {}
+     let items = [];
+     let options = real.options;
+     for (let i = 0; i < options.length; i++) {
+         let el = options[i];
+         if (!el.value || el.dataset.itemFixed != null) {
+             let item = createItemFromOption(el, setupStyles);
+             item.fixed = true;
+             byId[item.id] = item;
+             items.push(item);
+         }
+     }
+
+     let blankItem = byId[''];
+     if (blankItem) {
+         blankItem.blank = true;
+     }
+
+     fixedItems = items;
+     fixedById = byId;
+ }
+
+ function updateDisplay() {
+     display = createDisplay({
+         fixedItems: fixedItems,
+         fixedById: fixedById,
+         fetchedItems: result.fetchedItems,
+         fetchedById: result.fetchedById,
+         selectionItems: selectionItems,
+         selectionById: selectionById,
+         filterBySelection: multiple,
+     });
+     displayItems = display.displayItems;
  }
 
  ////////////////////////////////////////////////////////////
@@ -138,13 +252,14 @@
 
              result = createResult({
                  fetchedItems: fetchedItems,
-                 fixedItems: fixedItems,
                  fetchedId: fetchId,
                  more: info.more,
              });
-             displayItems = result.displayItems;
+
              actualCount = result.actualCount;
              hasMore = result.more;
+
+             updateDisplay();
 
              if (fetchId) {
                  previousQuery = null;
@@ -166,12 +281,11 @@
 
              fetchError = err;
 
-             let result = createResult({
-                 fixedItems: fixedItems
-             });
-             displayItems = result.displayItems;
+             let result = createResult({});
              actualCount = result.actualCount;
              hasMore = result.more;
+
+             updateDisplay();
 
              previousQuery = null;
              previousFetch = currentFetch;
@@ -229,9 +343,8 @@
  }
 
  function closePopup(focusToggle) {
-     selectionDropdownItems = selectionItems;
-
      popupVisible = false;
+     updateDisplay();
      if (focusToggle) {
          toggleEl.focus();
      }
@@ -242,18 +355,18 @@
 
 /*
      if (remote) {
-         syncToReal();
+         syncToRealSelection();
      }
 */
 
-     let item = result.byId[id] || selectionById[id];
+     let item = display.byId[id];
 
      if (!item) {
          console.error("MISSING item=" + id);
          return;
      }
 
-     let blankItem = result.blankItem;
+     let blankItem = display.blankItem;
      let byId = selectionById;
 
      if (multiple) {
@@ -305,12 +418,13 @@
          closePopup(containsElement(document.activeElement));
      }
 
-     syncToReal();
+     syncToRealSelection();
+
      real.dispatchEvent(new CustomEvent('select-select', { detail: selectionItems }));
  }
 
  function executeAction(id) {
-     let item = result.byId[id];
+     let item = display.byId[id];
 
      if (!item) {
          console.error("MISSING action item=" + id);
@@ -333,7 +447,7 @@
          selectItemImpl(el.dataset.id);
 
          if (el.dataset.selected) {
-             selectionDropdownItems = selectionDropdownItems;
+//             selectionDropdownItems = selectionDropdownItems;
          }
      }
  }
@@ -347,91 +461,15 @@
  //
  $: {
      if (mounted) {
-         syncToReal();
+         syncToRealSelection();
      }
- }
-
- function syncFromReal() {
-     if (isSyncToReal) {
-         return;
-     }
-
-     let oldById = selectionById;
-     let byId = {};
-
-     let options = real.selectedOptions;
-     for (let i = options.length - 1; i >= 0; i--) {
-         let el = options[i];
-         let item = oldById[el.value || ''];
-         if (!item) {
-             item = createItemFromOption(el, setupStyles);
-         }
-         byId[item.id] = item;
-     }
-
-     selectionById = byId;
-     selectionItems = Object.values(byId).sort(function(a, b) {
-         return a.text.localeCompare(b.text);
-     });
-
-     selectionTitle = selectionItems.map(function(item) {
-         return item.text;
-     }).join(', ');
- }
-
- function syncToReal() {
-     let changed = false;
-
-     // Insert missing values
-     // NOTE KI all existing values are *assumed* to be in sync data-attr wise
-     if (remote) {
-         selectionItems.forEach(function(item) {
-             let el = real.querySelector('option[value="' + item.id + '"]');
-             if (!el) {
-                 el = createOptionFromItem(item);
-                 real.appendChild(el);
-             }
-         });
-     }
-
-     let options = real.options;
-     for (let i = options.length - 1; i >= 0; i--) {
-         let el = options[i];
-         let selected = !!selectionById[el.value];
-         changed = changed || el.selected !== selected;
-         if (selected) {
-             el.setAttribute('selected', '');
-         } else {
-             el.removeAttribute('selected');
-         }
-     }
-
-     if (changed) {
-         try {
-             isSyncToReal = true;
-             real.dispatchEvent(new Event('change'));
-         } finally {
-             isSyncToReal = false;
-         }
-     }
- }
-
- function setupRemote() {
-     let fixedOptions = real.querySelectorAll('option[data-item-fixed]');
-     let collectedItems = [];
-     fixedOptions.forEach(function(el) {
-         collectedItems.push(createItemFromOption(el, setupStyles));
-     });
-     fixedItems = collectedItems;
  }
 
  function setupComponent() {
      real.classList.add('d-none');
      multiple = real.multiple;
 
-     if (remote) {
-         setupRemote();
-     } else {
+     if (!remote) {
          fetcher = inlineFetcher
      }
 
@@ -439,6 +477,9 @@
 
      Object.assign(setupStyles, STYLE_DEFAULTS);
      Object.assign(setupStyles, styles);
+
+     updateFixedItems();
+     updateDisplay();
  }
 
  beforeUpdate(function() {
@@ -450,11 +491,11 @@
 
  onMount(function() {
      // Initial selection
-     syncFromReal();
+     syncFromRealSelection();
 
      real.addEventListener('change', function() {
          if (!isSyncToReal) {
-             syncFromReal();
+             syncFromRealSelection();
              if (DEBUG) console.log("FROM_REAL", selectionItems);
          }
      });
@@ -758,7 +799,7 @@
          closePopup(false);
 
          // TODO KI *WHY* this redundant sync was done?!?
-//         syncFromReal();
+//         syncFromRealSelection();
      } else {
          if (DEBUG) console.log("IGNORE_BLUR", event);
      }
@@ -937,44 +978,87 @@
      return el;
  }
 
- function createResult(data) {
-     let items;
+ function createDisplay(data) {
      let byId = {};
-     let off = 0;
-     let act = 0;
+     let items = [];
+     let blankItem = null;
 
-     if (data.fixedItems && data.fetchedItems) {
-         items = [];
-         if (data.fixedItems) {
-             data.fixedItems.forEach(function(item) {
-                 items.push(item);
-             });
-         }
+     let fixedItems = data.fixedItems || [];
+     let fetchedItems = data.fetchedItems || [];
+     let selectionItems = data.selectionItems || [];
 
-         if (data.fetchedItems) {
-             if (items.length > 0) {
-                 items.push({ separator: true });
-             }
-             let wasClear = false;
-             data.fetchedItems.forEach(function(item) {
-                 if (wasClear) {
-                     items.push({ separator: true });
-                 }
-                 items.push(item);
-                 wasClear = !item.id;
-             });
-         }
-     } else {
-         items = data.fetchedItems || data.fixedItems || [];
-     }
+     let fixedById = data.fixedById || {};
+     let fetchedById = data.fetchedById || {};
+     let selectionById = data.selectionById || {};
 
-     items.forEach(function(item) {
+     fixedItems.forEach(function(item) {
+         items.push(item);
          if (!item.separator) {
              byId[item.id] = item;
          }
      });
 
-     let counts = calculateCounts(data.fetchedItems || []);
+     let otherItems = [];
+
+     if (data.filterBySelection) {
+         selectionItems.forEach(function(item) {
+             if (!byId[item.id] || item.separator) {
+                 otherItems.push(item);
+                 if (!item.separator) {
+                     byId[item.id] = item;
+                 }
+             }
+         });
+     }
+
+     if (otherItems.length) {
+         otherItems.push({ id: 'selection_sep', separator: true })
+     }
+
+     fetchedItems.forEach(function(item) {
+         if (!data.filterBySelection || !byId[item.id] || item.separator) {
+             otherItems.push(item);
+             if (!item.separator) {
+                 byId[item.id] = item;
+             }
+         }
+     });
+
+     if (otherItems.length && items.length) {
+         items.push({ id: 'fixed_sep', separator: true })
+     }
+
+     otherItems.forEach(function(item) {
+         items.push(item);
+     });
+
+     items.forEach(function(item) {
+         if (item.blank) {
+             blankItem = item;
+         }
+     });
+
+     return {
+         blankItem: blankItem,
+         byId: byId,
+         displayItems: items
+     };
+ };
+
+ function createResult(data) {
+     let byId = {};
+     let fetchedItems = data.fetchedItems || [];
+
+     fetchedItems.forEach(function(item) {
+         if (item.id) {
+             item.id = item.id.toString();
+         }
+         if (!item.separator) {
+             byId[item.id] = item;
+         }
+     });
+
+     let counts = calculateCounts(fetchedItems);
      let more = data.more === true && counts.offsetCount > 0 && !data.fetchedId;
 
      let blankItem = byId[''] || null;
@@ -984,9 +1068,8 @@
 
      return {
          blankItem: blankItem,
-         byId: byId,
-         displayItems: items,
-         fetchedItems: data.fetchedItems,
+         fetchedItems: fetchedItems,
+         fetchedById: byId,
          offsetCount: counts.offsetCount,
          actualCount: counts.actualCount,
          more: more,
@@ -998,10 +1081,6 @@
      let off = 0;
 
      items.forEach(function(item) {
-         if (item.id) {
-             item.id = item.id.toString();
-         }
-
          if (item.separator) {
              // NOTE KI separator is ignored always
          } else if (!item.id) {
@@ -1146,49 +1225,6 @@
                  on:keydown={handleInputKeydown}
                  on:keyup={handleInputKeyup}>
           </div>
-
-      {#if multiple}
-        {#each selectionDropdownItems as item (item.id)}
-          {#if item.id}
-            <div tabindex=1
-                 class="ss-js-item dropdown-item ss-item"
-                 data-id="{item.id}"
-                 data-selected="true"
-                 on:blur={handleBlur}
-                 on:click={handleItemClick}
-                 on:keydown={handleItemKeydown}
-                 on:keyup={handleItemKeyup}>
-
-              <div class="ss-no-click">
-                {#if multiple}
-                  <div class="d-inline-block align-top">
-                    {#if item.id}
-                      <i class="far {selectionById[item.id] ? 'fa-check-square' : 'fa-square'}"></i>
-                    {/if}
-                  </div>
-                {/if}
-
-                <div class="d-inline-block">
-                  <div class="ss-no-click {item.itemClass}">
-                    {#if item.id}
-                      {item.text}
-                    {:else}
-                      {translate('clear')}
-                    {/if}
-                  </div>
-                </div>
-              </div>
-            </div>
-          {/if}
-        {/each}
-
-        {#if selectionDropdownItems.length > 1 || (selectionDropdownItems.length == 1 && selectionDropdownItems[0].id)}
-          <div tabindex="-1"
-               class="dropdown-divider ss-js-blank"
-               on:keydown={handleItemKeydown}>
-          </div>
-        {/if}
-      {/if}
     {/if}
 
     {#each displayItems as item (item.id)}
