@@ -76,7 +76,7 @@
              } else {
                  match = item.separator ||
                          item.text.toUpperCase().includes(pattern) ||
-                         item.desc.toUpperCase().includes(pattern);
+                         (item.desc && item.desc.toUpperCase().includes(pattern));
              }
 
              if (match) {

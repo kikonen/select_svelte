@@ -1468,7 +1468,7 @@ function instance($$self, $$props, $$invalidate) {
 					if (item.blank) {
 						match = false;
 					} else {
-						match = item.separator || item.text.toUpperCase().includes(pattern) || item.desc.toUpperCase().includes(pattern);
+						match = item.separator || item.text.toUpperCase().includes(pattern) || item.desc && item.desc.toUpperCase().includes(pattern);
 					}
 
 					if (match) {
