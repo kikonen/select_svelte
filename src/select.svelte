@@ -17,6 +17,8 @@
  let setup = false;
  let setupStyles = {};
 
+ let selectId = '';
+
  let mounted = false;
 
  let query = '';
@@ -477,6 +479,8 @@
 
      Object.assign(setupStyles, STYLE_DEFAULTS);
      Object.assign(setupStyles, styles);
+
+     selectId = "ss_" + real.id;
 
      updateFixedItems();
      updateDisplay();
@@ -1182,6 +1186,7 @@
 <!-- ------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------ -->
 <div class="ss-container form-control p-0 border-0 {setupStyles.container_class}"
+     id="{selectId}"
      bind:this={containerEl}>
 
   <button class="form-control {setupStyles.control_class} d-flex"
