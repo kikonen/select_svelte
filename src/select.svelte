@@ -516,7 +516,7 @@
  //
  let toggleKeydownHandlers = {
      base: function(event) {
-         if (typeahead && popupVisible) {
+         if (typeahead && popupVisible && !isMetaKey(event)) {
              inputEl.focus();
          }
      },
@@ -551,29 +551,10 @@
          clearQuery();
          closePopup(false);
      },
-     Tab: nop,
-     // skip "meta" keys from triggering search
-     ArrowLeft: nop,
-     ArrowRight: nop,
-     PageDown: nop,
-     PageUp: nop,
-     Home: nop,
-     End: nop,
-     // disallow modifier keys to trigger search
-     ControlRight: nop,
-     ControlLeft: nop,
-     ShiftRight: nop,
-     ShiftLeft: nop,
-     AltGraph: nop,
-     AltRight: nop,
-     MetaRight: nop,
-     MetaLeft: nop,
-     ContextMenu: nop,
  };
 
  let toggleKeyupHandlers = {
      base: nop,
-     Tab: nop,
  }
 
  let inputKeypressHandlers = {
@@ -609,32 +590,10 @@
 
  let inputKeyupHandlers = {
      base: function(event) {
-         if (isValidKey(event)) {
+         if (!isMetaKey(event)) {
              fetchItems();
          }
      },
-     Enter: nop,
-     Escape: nop,
-     Tab: nop,
-     // skip "meta" keys from triggering search
-     ArrowDown: nop,
-     ArrowUp: nop,
-     ArrowLeft: nop,
-     ArrowRight: nop,
-     PageDown: nop,
-     PageUp: nop,
-     Home: nop,
-     End: nop,
-     // disallow modifier keys to trigger search
-     ControlRight: nop,
-     ControlLeft: nop,
-     ShiftRight: nop,
-     ShiftLeft: nop,
-     AltGraph: nop,
-     AltRight: nop,
-     MetaRight: nop,
-     MetaLeft: nop,
-     ContextMenu: nop,
  }
 
  function focusItem(item) {
@@ -687,7 +646,7 @@
 
  let itemKeydownHandlers = {
      base: function(event) {
-         if (typeahead) {
+         if (typeahead && !isMetaKey(event)) {
              inputEl.focus();
          }
      },
@@ -721,25 +680,10 @@
          clearQuery();
          closePopup(true);
      },
-     // allow "meta" keys to navigate in items
-     PageUp: nop,
-     PageDown: nop,
-     Home: nop,
-     End: nop,
      Tab: function(event) {
          toggleEl.focus();
          event.preventDefault();
      },
-     // disallow modifier keys to trigger search
-     ControlRight: nop,
-     ControlLeft: nop,
-     ShiftRight: nop,
-     ShiftLeft: nop,
-     AltGraph: nop,
-     AltRight: nop,
-     MetaRight: nop,
-     MetaLeft: nop,
-     ContextMenu: nop,
  };
 
  let itemKeyupHandlers = {
@@ -793,9 +737,9 @@
 
  ////////////////////////////////////////////////////////////
  //
- function handleEvent(code, handlers, event) {
+ function handleKeyEvent(event, handlers) {
      if (DEBUG) console.debug(event);
-     (handlers[code] || handlers.base)(event);
+     (handlers[event.key] || handlers[event.code] || handlers.base)(event);
  }
 
  function handleBlur(event) {
@@ -819,23 +763,23 @@
  }
 
  function handleInputKeypress(event) {
-     handleEvent(event.code, inputKeypressHandlers, event);
+     handleKeyEvent(event, inputKeypressHandlers);
  }
 
  function handleInputKeydown(event) {
-     handleEvent(event.code, inputKeydownHandlers, event);
+     handleKeyEvent(event, inputKeydownHandlers);
  }
 
  function handleInputKeyup(event) {
-     handleEvent(event.code, inputKeyupHandlers, event);
+     handleKeyEvent(event, inputKeyupHandlers);
  }
 
  function handleToggleKeydown(event) {
-     handleEvent(event.code, toggleKeydownHandlers, event);
+     handleKeyEvent(event, toggleKeydownHandlers);
  }
 
  function handleToggleKeyup(event) {
-     handleEvent(event.code, toggleKeyupHandlers, event);
+     handleKeyEvent(event, toggleKeyupHandlers);
  }
 
  function handleToggleClick(event) {
@@ -850,11 +794,11 @@
  }
 
  function handleItemKeydown(event) {
-     handleEvent(event.code, itemKeydownHandlers, event);
+     handleKeyEvent(event, itemKeydownHandlers);
  }
 
  function handleItemKeyup(event) {
-     handleEvent(event.code, itemKeyupHandlers, event);
+     handleKeyEvent(event, itemKeyupHandlers);
  }
 
  function handleItemClick(event) {
@@ -896,16 +840,39 @@
      text: ''
  };
 
+ const EDIT_KEYS = {
+     // Edit keys
+     Enter: true,
+     Backspace: true,
+     Delete: true,
+     Insert: true,
+ }
+
  const META_KEYS = {
+     // Modifiers
      Control: true,
      Shift: true,
      Alt: true,
      AltGraph: true,
      Meta: true,
+     // Special keys
      ContextMenu: true,
      PrintScreen: true,
+     ScrollLock: true,
      Pause: true,
      CapsLock: true,
+     Numlock: true,
+     // Nav keys
+     Escape: true,
+     Tab: true,
+     ArrowDown: true,
+     ArrowUp: true,
+     ArrowLeft: true,
+     ArrowRight: true,
+     PageDown: true,
+     PageUp: true,
+     Home: true,
+     End: true,
      // Ignore function keys
      F1: true,
      F2: true,
@@ -918,6 +885,7 @@
      F9: true,
      F10: true,
      F11: true,
+     F12: true,
  }
 
  export const config = {
@@ -934,8 +902,8 @@
      return event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
  }
 
- function isValidKey(event) {
-     return !(META_KEYS[event.key] || META_KEYS[event.code])
+ function isMetaKey(event) {
+     return META_KEYS[event.key] || META_KEYS[event.code]
  }
 
  function createItemFromOption(el, styles) {
