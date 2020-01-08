@@ -17,6 +17,7 @@
      control_class: '',
  };
 
+ const MAX_ITEMS_DEFAULT = 100;
  const FETCH_INDICATOR_DELAY = 150;
 
  const FA_CARET_DOWN = 'text-dark fas fa-caret-down';
@@ -79,15 +80,7 @@
      F12: true,
  }
 
- export const config = {
-     translations: I18N_DEFAULTS
- };
-
  function nop() {};
-
- function translate(key) {
-     return config.translations[key] || I18N_DEFAULTS[key];
- }
 
  function hasModifier(event) {
      return event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
@@ -279,25 +272,26 @@
 </script>
 
 <script>
- import { beforeUpdate } from 'svelte';
+ import {beforeUpdate} from 'svelte';
  import {onMount} from 'svelte';
 
  export let real;
- export let fetcher;
- export let remote;
- export let maxItems = 100;
- export let typeahead = false;
- export let styles = {};
+ export let config = {};
 
  let containerEl;
  let inputEl;
  let toggleEl;
  let popupEl;
 
- let setup = false;
- let setupStyles = {};
+ let setupDone = false;
+ let translations = {};
+ let styles = {};
+ let basename = '';
 
- let selectId = '';
+ let fetcher = inlineFetcher;
+ let remote = false;
+ let maxItems = MAX_ITEMS_DEFAULT;
+ let typeahead = false;
 
  let mounted = false;
 
@@ -336,47 +330,147 @@
 
 
  ////////////////////////////////////////////////////////////
+ // API
  //
+ export function selectItem(id) {
+     return fetchItems(false, id).then(function(response) {
+         selectItemImpl(id);
+     });
+ }
 
  ////////////////////////////////////////////////////////////
- // select
+ // Utils
 
- function inlineFetcher(offset, query) {
-     if (DEBUG) console.log("INLINE_SELECT_FETCH: " + query);
+ function translate(key) {
+     return translations[key];
+ }
 
-     let promise = new Promise(function(resolve, reject) {
-         let items = []
-         let pattern = query.toUpperCase().trim();
+ function clearQuery() {
+     query = '';
+     previousQuery = null;
+ }
 
-         let options = real.options;
-         for (let i = 0; i < options.length; i++) {
-             let item = createItemFromOption(options[i], setupStyles);
-             let match;
+ function openPopup() {
+     if (!popupVisible) {
+         popupVisible = true;
+         let w = containerEl.offsetWidth;
+         popupEl.style.minWidth = w + "px";
 
-             // NOTE KI "blank" is handled as fixed item
-             if (item.blank) {
-                 match = false;
+         let bounds = containerEl.getBoundingClientRect();
+         let middle = window.innerHeight / 2;
+         popupTop = bounds.y > middle;
+     }
+ }
+
+ function closePopup(focusToggle) {
+     popupVisible = false;
+     updateDisplay();
+     if (focusToggle) {
+         toggleEl.focus();
+     }
+ }
+
+ function selectItemImpl(id) {
+     id = id.toString();
+
+/*
+     if (remote) {
+         syncToRealSelection();
+     }
+*/
+
+     let item = display.byId[id];
+
+     if (!item) {
+         console.error("MISSING item=" + id);
+         return;
+     }
+
+     let blankItem = display.blankItem;
+     let byId = selectionById;
+
+     if (DEBUG) console.log("SELECT", item);
+
+     if (multiple) {
+         if (item.id) {
+             if (byId[item.id]) {
+                 delete byId[item.id];
+
+                 if (!blankItem) {
+                     blankItem = BLANK_ITEM;
+                 }
              } else {
-                 match = item.separator ||
-                         item.text.toUpperCase().includes(pattern) ||
-                         (item.desc && item.desc.toUpperCase().includes(pattern));
-             }
+                 if (selectionItems.length >= maxItems) {
+                     console.warn("IGNORE: maxItems=" + maxItems);
+                     return;
+                 }
 
-             if (match) {
-                 items.push(item);
+                 delete byId[blankItem.id];
+                 byId[item.id] = item;
+             }
+         } else {
+             byId = {
+                 [item.id]: item
              }
          }
-
-         let response = {
-             items: items,
-             info: {
-                 more: false,
-             }
+     } else {
+         byId = {
+             [item.id]: item
          }
-         resolve(response);
+     }
+
+     let items = Object.values(byId);
+     if (items.length == 0 && blankItem) {
+         byId = {
+             [blankItem.id]: blankItem
+         }
+         items = [blankItem];
+     }
+
+     selectionById = byId;
+     selectionItems = items.sort(function(a, b) {
+         return a.text.localeCompare(b.text);
      });
 
-     return promise;
+     selectionTitle = selectionItems.map(function(item) {
+         return item.text;
+     }).join(', ');
+
+     if (!multiple || item.blank) {
+         clearQuery();
+         closePopup(containsElement(document.activeElement));
+     }
+
+     syncToRealSelection();
+
+     real.dispatchEvent(new CustomEvent('select-select', { detail: selectionItems }));
+ }
+
+ function executeAction(id) {
+     let item = display.byId[id];
+
+     if (!item) {
+         console.error("MISSING action item=" + id);
+         return;
+     }
+     closePopup(containsElement(document.activeElement));
+     real.dispatchEvent(new CustomEvent('select-action', { detail: item }));
+ }
+
+ function selectElement(el) {
+     if (el.dataset.action) {
+         executeAction(el.dataset.id);
+     } else {
+         selectItemImpl(el.dataset.id);
+
+         if (el.dataset.selected) {
+//             selectionDropdownItems = selectionDropdownItems;
+         }
+     }
+ }
+
+ function containsElement(el) {
+     return containerEl.contains(el) || popupEl.contains(el);
  }
 
  ////////////////////////////////////////////////////////////
@@ -395,7 +489,7 @@
          let el = options[i];
          let item = oldById[el.value || ''];
          if (!item) {
-             item = createItemFromOption(el, setupStyles);
+             item = createItemFromOption(el, styles);
          }
          byId[item.id] = item;
      }
@@ -454,7 +548,7 @@
      for (let i = 0; i < options.length; i++) {
          let el = options[i];
          if (!el.value || el.dataset.itemFixed != null) {
-             let item = createItemFromOption(el, setupStyles);
+             let item = createItemFromOption(el, styles);
              item.fixed = true;
              byId[item.id] = item;
              items.push(item);
@@ -485,7 +579,46 @@
  }
 
  ////////////////////////////////////////////////////////////
+ // Fetch
  //
+ function inlineFetcher(offset, query) {
+     if (DEBUG) console.log("INLINE_SELECT_FETCH: " + query);
+
+     let promise = new Promise(function(resolve, reject) {
+         let items = []
+         let pattern = query.toUpperCase().trim();
+
+         let options = real.options;
+         for (let i = 0; i < options.length; i++) {
+             let item = createItemFromOption(options[i], styles);
+             let match;
+
+             // NOTE KI "blank" is handled as fixed item
+             if (item.blank) {
+                 match = false;
+             } else {
+                 match = item.separator ||
+                         item.text.toUpperCase().includes(pattern) ||
+                         (item.desc && item.desc.toUpperCase().includes(pattern));
+             }
+
+             if (match) {
+                 items.push(item);
+             }
+         }
+
+         let response = {
+             items: items,
+             info: {
+                 more: false,
+             }
+         }
+         resolve(response);
+     });
+
+     return promise;
+ }
+
  /**
   * @return Promise
   */
@@ -604,7 +737,6 @@
      }
  }
 
-
  function fetchMoreIfneeded() {
      if (hasMore && !fetchingMore && popupVisible) {
          if (popupEl.scrollTop + popupEl.clientHeight >= popupEl.scrollHeight - popupEl.lastElementChild.clientHeight * 2 - 2) {
@@ -613,142 +745,8 @@
      }
  }
 
- function clearQuery() {
-     query = '';
-     previousQuery = null;
- }
-
- function openPopup() {
-     if (!popupVisible) {
-         popupVisible = true;
-         let w = containerEl.offsetWidth;
-         popupEl.style.minWidth = w + "px";
-
-         let bounds = containerEl.getBoundingClientRect();
-         let middle = window.innerHeight / 2;
-         popupTop = bounds.y > middle;
-     }
- }
-
- function closePopup(focusToggle) {
-     popupVisible = false;
-     updateDisplay();
-     if (focusToggle) {
-         toggleEl.focus();
-     }
- }
-
- function selectItemImpl(id) {
-     id = id.toString();
-
-/*
-     if (remote) {
-         syncToRealSelection();
-     }
-*/
-
-     let item = display.byId[id];
-
-     if (!item) {
-         console.error("MISSING item=" + id);
-         return;
-     }
-
-     let blankItem = display.blankItem;
-     let byId = selectionById;
-
-     if (DEBUG) console.log("SELECT", item);
-
-     if (multiple) {
-         if (item.id) {
-             if (byId[item.id]) {
-                 delete byId[item.id];
-
-                 if (!blankItem) {
-                     blankItem = BLANK_ITEM;
-                 }
-             } else {
-                 if (selectionItems.length >= maxItems) {
-                     console.warn("IGNORE: maxItems=" + maxItems);
-                     return;
-                 }
-
-                 delete byId[blankItem.id];
-                 byId[item.id] = item;
-             }
-         } else {
-             byId = {
-                 [item.id]: item
-             }
-         }
-     } else {
-         byId = {
-             [item.id]: item
-         }
-     }
-
-     let items = Object.values(byId);
-     if (items.length == 0 && blankItem) {
-         byId = {
-             [blankItem.id]: blankItem
-         }
-         items = [blankItem];
-     }
-
-     selectionById = byId;
-     selectionItems = items.sort(function(a, b) {
-         return a.text.localeCompare(b.text);
-     });
-
-     selectionTitle = selectionItems.map(function(item) {
-         return item.text;
-     }).join(', ');
-
-     if (!multiple || item.blank) {
-         clearQuery();
-         closePopup(containsElement(document.activeElement));
-     }
-
-     syncToRealSelection();
-
-     real.dispatchEvent(new CustomEvent('select-select', { detail: selectionItems }));
- }
-
- function executeAction(id) {
-     let item = display.byId[id];
-
-     if (!item) {
-         console.error("MISSING action item=" + id);
-         return;
-     }
-     closePopup(containsElement(document.activeElement));
-     real.dispatchEvent(new CustomEvent('select-action', { detail: item }));
- }
-
- export function selectItem(id) {
-     return fetchItems(false, id).then(function(response) {
-         selectItemImpl(id);
-     });
- }
-
- function selectElement(el) {
-     if (el.dataset.action) {
-         executeAction(el.dataset.id);
-     } else {
-         selectItemImpl(el.dataset.id);
-
-         if (el.dataset.selected) {
-//             selectionDropdownItems = selectionDropdownItems;
-         }
-     }
- }
-
- function containsElement(el) {
-     return containerEl.contains(el) || popupEl.contains(el);
- }
-
  ////////////////////////////////////////////////////////////
- // HANDLERS
+ // Setup
  //
  $: {
      if (mounted) {
@@ -756,31 +754,53 @@
      }
  }
 
+ onMount(function() {
+     // Initial selection
+     syncFromRealSelection();
+
+     Object.keys(eventListeners).forEach(function(ev) {
+         real.addEventListener(ev, eventListeners[ev]);
+     });
+
+     mounted = true;
+ });
+
+ beforeUpdate(function() {
+     if (!setupDone) {
+         setupComponent();
+         setupDone = true;
+     }
+ });
+
  function setupComponent() {
      real.classList.add('d-none');
      multiple = real.multiple;
 
-     if (!remote) {
-         fetcher = inlineFetcher
+     if (config.remote) {
+         remote = true;
+         fetcher = config.fetcher;
+     }
+     typeahead = config.typeahead || false;
+     maxItems = config.maxItems || MAX_ITEMS_DEFAULT;
+
+     Object.assign(translations, I18N_DEFAULTS);
+     if (config.translations) {
+         Object.assign(translations, config.translations);
      }
 
+     Object.assign(styles, STYLE_DEFAULTS);
+     if (config.styles) {
+         Object.assign(styles, config.styles);
+     }
+
+     basename = "ss_" + real.name;
+     maxItems = config.maxItems || MAX_ITEMS_DEFAULT;
+
      jQuery(toggleEl).tooltip();
-
-     Object.assign(setupStyles, STYLE_DEFAULTS);
-     Object.assign(setupStyles, styles);
-
-     selectId = "ss_" + real.id;
 
      updateFixedItems();
      updateDisplay();
  }
-
- beforeUpdate(function() {
-     if (!setup) {
-         setupComponent();
-         setup = true;
-     }
- });
 
  let eventListeners = {
      change: function(event) {
@@ -808,18 +828,8 @@
      },
  }
 
- onMount(function() {
-     // Initial selection
-     syncFromRealSelection();
-
-     Object.keys(eventListeners).forEach(function(ev) {
-         real.addEventListener(ev, eventListeners[ev]);
-     });
-
-     mounted = true;
- });
-
  ////////////////////////////////////////////////////////////
+ // Handlers
  //
  let toggleKeydownHandlers = {
      base: function(event) {
@@ -1202,11 +1212,12 @@
 
 <!-- ------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------ -->
-<div class="ss-container form-control p-0 border-0 {setupStyles.container_class}"
-     id="{selectId}"
+<div class="ss-container form-control p-0 border-0 {styles.container_class}"
+     name="{basename}_container"
      bind:this={containerEl}>
 
-  <button class="form-control {setupStyles.control_class} d-flex"
+  <button class="form-control {styles.control_class} d-flex"
+          name="{basename}_control"
           type="button"
           tabindex="0"
           title="{selectionTitle}"
@@ -1234,7 +1245,8 @@
        on:scroll={handlePopupScroll}>
     {#if typeahead}
         <div class="ss-input-item" tabindex="-1">
-          <input class="ss-input form-control {setupStyles.typeahead_class}"
+          <input class="ss-input form-control {styles.typeahead_class}"
+                 name="{basename}_typeahead"
                  tabindex=1
                  autocomplete="new-password"
                  autocorrect=off
@@ -1265,7 +1277,7 @@
           </div>
 
           {#if item.desc}
-            <div class="ss-no-click {setupStyles.item_desc_class}">
+            <div class="ss-no-click {styles.item_desc_class}">
               {item.desc}
             </div>
           {/if}
@@ -1273,7 +1285,7 @@
 
       {:else}
         <div tabindex=1
-             class="ss-js-item dropdown-item ss-item {item.itemClass} {!item.blank && selectionById[item.id] ? setupStyles.selected_item_class : ''}"
+             class="ss-js-item dropdown-item ss-item {item.itemClass} {!item.blank && selectionById[item.id] ? styles.selected_item_class : ''}"
              data-id="{item.id}"
              data-action="{item.action || ''}"
              on:blur={handleBlur}
@@ -1300,7 +1312,7 @@
               </div>
 
               {#if item.desc}
-                <div class="ss-no-click {setupStyles.item_desc_class}">
+                <div class="ss-no-click {styles.item_desc_class}">
                   {item.desc}
                 </div>
               {/if}
