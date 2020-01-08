@@ -346,7 +346,7 @@
 
          let bounds = containerEl.getBoundingClientRect();
          let middle = window.innerHeight / 2;
-         popupTop = bounds.y > middle + 40;
+         popupTop = bounds.y > middle;
      }
  }
 
