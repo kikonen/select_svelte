@@ -377,6 +377,8 @@
      let blankItem = display.blankItem;
      let byId = selectionById;
 
+     if (DEBUG) console.log("SELECT", item);
+
      if (multiple) {
          if (item.id) {
              if (byId[item.id]) {
@@ -500,15 +502,38 @@
      }
  });
 
+ let eventListeners = {
+     change: function(event) {
+         if (DEBUG) console.log(event);
+         if (!isSyncToReal) {
+             syncFromRealSelection();
+         }
+     },
+     'select-reload': function(event) {
+         if (DEBUG) console.log(event);
+         if (!isSyncToReal) {
+             updateFixedItems();
+             syncFromRealSelection();
+
+             // NOTE KI need to force refetch immediately (or lazily in popup open)
+             previousQuery = null;
+             if (popupVisible) {
+                 fetchItems(false, null);
+             } else {
+                 updateDisplay();
+             }
+
+             if (DEBUG) console.log(display);
+         }
+     },
+ }
+
  onMount(function() {
      // Initial selection
      syncFromRealSelection();
 
-     real.addEventListener('change', function() {
-         if (!isSyncToReal) {
-             syncFromRealSelection();
-             if (DEBUG) console.log("FROM_REAL", selectionItems);
-         }
+     Object.keys(eventListeners).forEach(function(ev) {
+         real.addEventListener(ev, eventListeners[ev]);
      });
 
      mounted = true;
@@ -932,7 +957,6 @@
          }
          if (ds.itemClass) {
              item.itemClass = ds.itemClass;
-         } else {
          }
      }
      if (!item.separator) {
