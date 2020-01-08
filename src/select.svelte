@@ -97,6 +97,10 @@
      return META_KEYS[event.key] || META_KEYS[event.code]
  }
 
+ function toUnderscore(key) {
+     return key.split(/(?=[A-Z])/).join('_').toLowerCase();
+ }
+
  function createItemFromOption(el, styles) {
      let ds = el.dataset;
      let item = {
@@ -117,6 +121,11 @@
          if (ds.itemClass) {
              item.itemClass = ds.itemClass;
          }
+
+         item.data = {};
+         Object.keys(ds).forEach(function(key) {
+             item.data[toUnderscore(key)] = ds[key];
+         });
      }
      if (!item.separator) {
          if (item.id === '') {
