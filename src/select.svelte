@@ -836,7 +836,7 @@
  const FETCH_INDICATOR_DELAY = 150;
 
  const FA_CARET_DOWN = 'text-dark fas fa-caret-down';
- const FA_CARET_FETCHING = 'text-dark far fa-hourglass';
+ const FA_CARET_FETCHING = 'text-muted far fa-hourglass';
 
  const FA_SELECTED = 'text-muted far fa-check-square';
  const FA_NOT_SELECTED = 'text-muted far fa-square';
@@ -1277,7 +1277,7 @@
       {/if}
     {/each}
 
-    {#if actualCount === 0 && previousFetch || activeFetch}
+    {#if actualCount === 0 && previousFetch && !activeFetch}
       <div tabindex="-1" class="dropdown-item text-muted ss-no-click ss-js-blank">
         {translate('no_results')}
       </div>
