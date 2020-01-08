@@ -1,3 +1,274 @@
+<script context="module">
+ const DEBUG = false;
+
+ const I18N_DEFAULTS = {
+     clear: 'Clear',
+     no_results: 'No results',
+     max_limit: 'Max limit reached',
+ };
+
+ const STYLE_DEFAULTS = {
+     container_class: '',
+     item_class: '',
+     item_desc_class: 'text-muted',
+     blank_item_class: 'text-muted',
+     selected_item_class: 'alert-primary',
+     typeahead_class: '',
+     control_class: '',
+ };
+
+ const FETCH_INDICATOR_DELAY = 150;
+
+ const FA_CARET_DOWN = 'text-dark fas fa-caret-down';
+ const FA_CARET_FETCHING = 'text-muted far fa-hourglass';
+
+ const FA_SELECTED = 'text-muted far fa-check-square';
+ const FA_NOT_SELECTED = 'text-muted far fa-square';
+
+
+ const BLANK_ITEM = {
+     id: '',
+     text: ''
+ };
+
+ const EDIT_KEYS = {
+     // Edit keys
+     Enter: true,
+     Backspace: true,
+     Delete: true,
+     Insert: true,
+ }
+
+ const META_KEYS = {
+     // Modifiers
+     Control: true,
+     Shift: true,
+     Alt: true,
+     AltGraph: true,
+     Meta: true,
+     // Special keys
+     ContextMenu: true,
+     PrintScreen: true,
+     ScrollLock: true,
+     Pause: true,
+     CapsLock: true,
+     Numlock: true,
+     // Nav keys
+     Escape: true,
+     Tab: true,
+     ArrowDown: true,
+     ArrowUp: true,
+     ArrowLeft: true,
+     ArrowRight: true,
+     PageDown: true,
+     PageUp: true,
+     Home: true,
+     End: true,
+     // Ignore function keys
+     F1: true,
+     F2: true,
+     F3: true,
+     F4: true,
+     F5: true,
+     F6: true,
+     F7: true,
+     F8: true,
+     F9: true,
+     F10: true,
+     F11: true,
+     F12: true,
+ }
+
+ export const config = {
+     translations: I18N_DEFAULTS
+ };
+
+ function nop() {};
+
+ function translate(key) {
+     return config.translations[key] || I18N_DEFAULTS[key];
+ }
+
+ function hasModifier(event) {
+     return event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
+ }
+
+ function isMetaKey(event) {
+     return META_KEYS[event.key] || META_KEYS[event.code]
+ }
+
+ function createItemFromOption(el, styles) {
+     let ds = el.dataset;
+     let item = {
+         id: el.value || '',
+         text: el.text || '',
+     };
+
+     if (ds) {
+         if (ds.itemSeparator) {
+             item.separator = true;
+         }
+         if (ds.itemDesc) {
+             item.desc = ds.itemDesc;
+         }
+         if (ds.itemAction) {
+             item.action = ds.itemAction;
+         }
+         if (ds.itemClass) {
+             item.itemClass = ds.itemClass;
+         }
+     }
+     if (!item.separator) {
+         if (item.id === '') {
+             item.blank = true;
+         }
+         if (!item.itemClass) {
+             item.itemClass = item.blank ? styles.blank_item_class : styles.item_class;
+         }
+     }
+     return item;
+ }
+
+ function createOptionFromItem(item) {
+     let el = document.createElement('option');
+     el.setAttribute('value', item.id);
+     if (item.desc) {
+         el.setAttribute('data-item-desc', item.desc);
+     }
+     if (item.itemClass) {
+         el.setAttribute('data-item-class', item.itemClass);
+     }
+     if (item.action) {
+         el.setAttribute('data-item-action', item.action);
+     }
+     el.textContent = item.text;
+     return el;
+ }
+
+ function createDisplay(data) {
+     let byId = {};
+     let items = [];
+     let blankItem = null;
+
+     let fixedItems = data.fixedItems || [];
+     let fetchedItems = data.fetchedItems || [];
+     let selectionItems = data.selectionItems || [];
+
+     let fixedById = data.fixedById || {};
+     let fetchedById = data.fetchedById || {};
+     let selectionById = data.selectionById || {};
+
+     fixedItems.forEach(function(item) {
+         items.push(item);
+         if (!item.separator) {
+             byId[item.id] = item;
+         }
+     });
+
+     let otherItems = [];
+
+     if (data.multiple) {
+         selectionItems.forEach(function(item) {
+             if (!byId[item.id] || item.separator) {
+                 otherItems.push(item);
+                 if (!item.separator) {
+                     byId[item.id] = item;
+                 }
+             }
+         });
+     }
+
+     if (otherItems.length) {
+         otherItems.push({ id: 'selection_sep', separator: true })
+     }
+
+     fetchedItems.forEach(function(item) {
+         if (!data.multiple || !byId[item.id] || item.separator) {
+             otherItems.push(item);
+             if (!item.separator) {
+                 byId[item.id] = item;
+             }
+         }
+     });
+
+     if (data.typeahead && otherItems.length && items.length) {
+         items.push({ id: 'fixed_sep', separator: true })
+     }
+
+     otherItems.forEach(function(item) {
+         items.push(item);
+     });
+
+     items.forEach(function(item) {
+         if (item.blank) {
+             blankItem = item;
+         }
+     });
+
+     return {
+         blankItem: blankItem,
+         byId: byId,
+         displayItems: items
+     };
+ };
+
+ function createResult(data) {
+     let byId = {};
+     let fetchedItems = data.fetchedItems || [];
+
+     fetchedItems.forEach(function(item) {
+         if (item.id) {
+             item.id = item.id.toString();
+         }
+         if (!item.separator) {
+             byId[item.id] = item;
+         }
+     });
+
+     let counts = calculateCounts(fetchedItems);
+     let more = data.more === true && counts.offsetCount > 0 && !data.fetchedId;
+
+     let blankItem = byId[''] || null;
+     if (blankItem) {
+         blankItem.blank = true;
+     }
+
+     return {
+         blankItem: blankItem,
+         fetchedItems: fetchedItems,
+         fetchedById: byId,
+         offsetCount: counts.offsetCount,
+         actualCount: counts.actualCount,
+         more: more,
+     };
+ }
+
+ function calculateCounts(items) {
+     let act = 0;
+     let off = 0;
+
+     items.forEach(function(item) {
+         if (item.separator) {
+             // NOTE KI separator is ignored always
+         } else if (!item.id) {
+             //NOTE KI dummy items ignored
+         } else if (item.placeholder) {
+             // NOTE KI does not affect pagination
+             act += 1;
+         } else {
+             // NOTE KI normal or disabled affects pagination
+             off += 1;
+             act += 1;
+         }
+     });
+
+     return {
+         offsetCount: off,
+         actualCount: act
+     };
+ }
+</script>
+
 <script>
  import { beforeUpdate } from 'svelte';
  import {onMount} from 'svelte';
@@ -836,277 +1107,6 @@
 
  function handlePopupScroll(event) {
      fetchMoreIfneeded();
- }
-</script>
-
-<script context="module">
- const DEBUG = false;
-
- const I18N_DEFAULTS = {
-     clear: 'Clear',
-     no_results: 'No results',
-     max_limit: 'Max limit reached',
- };
-
- const STYLE_DEFAULTS = {
-     container_class: '',
-     item_class: '',
-     item_desc_class: 'text-muted',
-     blank_item_class: 'text-muted',
-     selected_item_class: 'alert-primary',
-     typeahead_class: '',
-     control_class: '',
- };
-
- const FETCH_INDICATOR_DELAY = 150;
-
- const FA_CARET_DOWN = 'text-dark fas fa-caret-down';
- const FA_CARET_FETCHING = 'text-muted far fa-hourglass';
-
- const FA_SELECTED = 'text-muted far fa-check-square';
- const FA_NOT_SELECTED = 'text-muted far fa-square';
-
-
- const BLANK_ITEM = {
-     id: '',
-     text: ''
- };
-
- const EDIT_KEYS = {
-     // Edit keys
-     Enter: true,
-     Backspace: true,
-     Delete: true,
-     Insert: true,
- }
-
- const META_KEYS = {
-     // Modifiers
-     Control: true,
-     Shift: true,
-     Alt: true,
-     AltGraph: true,
-     Meta: true,
-     // Special keys
-     ContextMenu: true,
-     PrintScreen: true,
-     ScrollLock: true,
-     Pause: true,
-     CapsLock: true,
-     Numlock: true,
-     // Nav keys
-     Escape: true,
-     Tab: true,
-     ArrowDown: true,
-     ArrowUp: true,
-     ArrowLeft: true,
-     ArrowRight: true,
-     PageDown: true,
-     PageUp: true,
-     Home: true,
-     End: true,
-     // Ignore function keys
-     F1: true,
-     F2: true,
-     F3: true,
-     F4: true,
-     F5: true,
-     F6: true,
-     F7: true,
-     F8: true,
-     F9: true,
-     F10: true,
-     F11: true,
-     F12: true,
- }
-
- export const config = {
-     translations: I18N_DEFAULTS
- };
-
- function nop() {};
-
- function translate(key) {
-     return config.translations[key] || I18N_DEFAULTS[key];
- }
-
- function hasModifier(event) {
-     return event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
- }
-
- function isMetaKey(event) {
-     return META_KEYS[event.key] || META_KEYS[event.code]
- }
-
- function createItemFromOption(el, styles) {
-     let ds = el.dataset;
-     let item = {
-         id: el.value || '',
-         text: el.text || '',
-     };
-
-     if (ds) {
-         if (ds.itemSeparator) {
-             item.separator = true;
-         }
-         if (ds.itemDesc) {
-             item.desc = ds.itemDesc;
-         }
-         if (ds.itemAction) {
-             item.action = ds.itemAction;
-         }
-         if (ds.itemClass) {
-             item.itemClass = ds.itemClass;
-         }
-     }
-     if (!item.separator) {
-         if (item.id === '') {
-             item.blank = true;
-         }
-         if (!item.itemClass) {
-             item.itemClass = item.blank ? styles.blank_item_class : styles.item_class;
-         }
-     }
-     return item;
- }
-
- function createOptionFromItem(item) {
-     let el = document.createElement('option');
-     el.setAttribute('value', item.id);
-     if (item.desc) {
-         el.setAttribute('data-item-desc', item.desc);
-     }
-     if (item.itemClass) {
-         el.setAttribute('data-item-class', item.itemClass);
-     }
-     if (item.action) {
-         el.setAttribute('data-item-action', item.action);
-     }
-     el.textContent = item.text;
-     return el;
- }
-
- function createDisplay(data) {
-     let byId = {};
-     let items = [];
-     let blankItem = null;
-
-     let fixedItems = data.fixedItems || [];
-     let fetchedItems = data.fetchedItems || [];
-     let selectionItems = data.selectionItems || [];
-
-     let fixedById = data.fixedById || {};
-     let fetchedById = data.fetchedById || {};
-     let selectionById = data.selectionById || {};
-
-     fixedItems.forEach(function(item) {
-         items.push(item);
-         if (!item.separator) {
-             byId[item.id] = item;
-         }
-     });
-
-     let otherItems = [];
-
-     if (data.multiple) {
-         selectionItems.forEach(function(item) {
-             if (!byId[item.id] || item.separator) {
-                 otherItems.push(item);
-                 if (!item.separator) {
-                     byId[item.id] = item;
-                 }
-             }
-         });
-     }
-
-     if (otherItems.length) {
-         otherItems.push({ id: 'selection_sep', separator: true })
-     }
-
-     fetchedItems.forEach(function(item) {
-         if (!data.multiple || !byId[item.id] || item.separator) {
-             otherItems.push(item);
-             if (!item.separator) {
-                 byId[item.id] = item;
-             }
-         }
-     });
-
-     if (data.typeahead && otherItems.length && items.length) {
-         items.push({ id: 'fixed_sep', separator: true })
-     }
-
-     otherItems.forEach(function(item) {
-         items.push(item);
-     });
-
-     items.forEach(function(item) {
-         if (item.blank) {
-             blankItem = item;
-         }
-     });
-
-     return {
-         blankItem: blankItem,
-         byId: byId,
-         displayItems: items
-     };
- };
-
- function createResult(data) {
-     let byId = {};
-     let fetchedItems = data.fetchedItems || [];
-
-     fetchedItems.forEach(function(item) {
-         if (item.id) {
-             item.id = item.id.toString();
-         }
-         if (!item.separator) {
-             byId[item.id] = item;
-         }
-     });
-
-     let counts = calculateCounts(fetchedItems);
-     let more = data.more === true && counts.offsetCount > 0 && !data.fetchedId;
-
-     let blankItem = byId[''] || null;
-     if (blankItem) {
-         blankItem.blank = true;
-     }
-
-     return {
-         blankItem: blankItem,
-         fetchedItems: fetchedItems,
-         fetchedById: byId,
-         offsetCount: counts.offsetCount,
-         actualCount: counts.actualCount,
-         more: more,
-     };
- }
-
- function calculateCounts(items) {
-     let act = 0;
-     let off = 0;
-
-     items.forEach(function(item) {
-         if (item.separator) {
-             // NOTE KI separator is ignored always
-         } else if (!item.id) {
-             //NOTE KI dummy items ignored
-         } else if (item.placeholder) {
-             // NOTE KI does not affect pagination
-             act += 1;
-         } else {
-             // NOTE KI normal or disabled affects pagination
-             off += 1;
-             act += 1;
-         }
-     });
-
-     return {
-         offsetCount: off,
-         actualCount: act
-     };
  }
 </script>
 
