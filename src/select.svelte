@@ -421,7 +421,8 @@
          return item.text;
      }).join(', ');
 
-     if (!multiple) {
+     if (!multiple || item.blank) {
+         clearQuery();
          closePopup(containsElement(document.activeElement));
      }
 
