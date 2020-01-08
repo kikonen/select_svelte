@@ -192,13 +192,14 @@
 
  function updateDisplay() {
      display = createDisplay({
+         typeahead: typeahead,
+         multiple: multiple,
          fixedItems: fixedItems,
          fixedById: fixedById,
          fetchedItems: result.fetchedItems,
          fetchedById: result.fetchedById,
          selectionItems: selectionItems,
          selectionById: selectionById,
-         filterBySelection: multiple,
      });
      displayItems = display.displayItems;
  }
@@ -833,8 +834,13 @@
  };
 
  const FETCH_INDICATOR_DELAY = 150;
- const CARET_DOWN = 'fas fa-caret-down';
- const CARET_FETCHING = 'far fa-hourglass';
+
+ const FA_CARET_DOWN = 'text-dark fas fa-caret-down';
+ const FA_CARET_FETCHING = 'text-dark far fa-hourglass';
+
+ const FA_SELECTED = 'text-muted far fa-check-square';
+ const FA_NOT_SELECTED = 'text-muted far fa-square';
+
 
  const BLANK_ITEM = {
      id: '',
@@ -978,7 +984,7 @@
 
      let otherItems = [];
 
-     if (data.filterBySelection) {
+     if (data.multiple) {
          selectionItems.forEach(function(item) {
              if (!byId[item.id] || item.separator) {
                  otherItems.push(item);
@@ -994,7 +1000,7 @@
      }
 
      fetchedItems.forEach(function(item) {
-         if (!data.filterBySelection || !byId[item.id] || item.separator) {
+         if (!data.multiple || !byId[item.id] || item.separator) {
              otherItems.push(item);
              if (!item.separator) {
                  byId[item.id] = item;
@@ -1002,7 +1008,7 @@
          }
      });
 
-     if (otherItems.length && items.length) {
+     if (data.typeahead && otherItems.length && items.length) {
          items.push({ id: 'fixed_sep', separator: true })
      }
 
@@ -1184,7 +1190,7 @@
       {/each}
     </span>
     <span class="ml-auto">
-      <i class="text-dark {showFetching ? CARET_FETCHING : CARET_DOWN}"></i>
+      <i class="{showFetching ? FA_CARET_FETCHING : FA_CARET_DOWN}"></i>
     </span>
   </button>
 
@@ -1234,7 +1240,7 @@
 
       {:else}
         <div tabindex=1
-             class="ss-js-item dropdown-item ss-item {item.itemClass} {selectionById[item.id] ? setupStyles.selected_item_class : ''}"
+             class="ss-js-item dropdown-item ss-item {item.itemClass} {!item.blank && selectionById[item.id] ? setupStyles.selected_item_class : ''}"
              data-id="{item.id}"
              data-action="{item.action || ''}"
              on:blur={handleBlur}
@@ -1245,18 +1251,18 @@
           <div class="ss-no-click">
             {#if multiple}
               <div class="d-inline-block align-top">
-                {#if item.id}
-                  <i class="far {selectionById[item.id] ? 'fa-check-square' : 'fa-square'}"></i>
+                {#if !item.blank}
+                  <i class="pr-1 {selectionById[item.id] ? FA_SELECTED : FA_NOT_SELECTED}"></i>
                 {/if}
               </div>
             {/if}
 
             <div class="d-inline-block">
               <div class="ss-no-click {item.itemClass}">
-                {#if item.id}
-                  {item.text}
-                {:else}
+                {#if item.blank}
                   {translate('clear')}
+                {:else}
+                  {item.text}
                 {/if}
               </div>
 
