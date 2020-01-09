@@ -709,7 +709,7 @@ var Select = (function () {
     child_ctx[83] = list[i];
     child_ctx[87] = i;
     return child_ctx;
-  } // (1260:6) {#each selectionItems as item, index (item.id)}
+  } // (1262:6) {#each selectionItems as item, index (item.id)}
 
 
   function create_each_block_1(key_1, ctx) {
@@ -773,7 +773,7 @@ var Select = (function () {
         if (detaching) detach(span);
       }
     };
-  } // (1275:4) {#if typeahead}
+  } // (1277:4) {#if typeahead}
 
 
   function create_if_block_10(ctx) {
@@ -836,7 +836,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1314:6) {:else}
+  } // (1316:6) {:else}
 
 
   function create_else_block(ctx) {
@@ -1013,7 +1013,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1300:50) 
+  } // (1302:50) 
 
 
   function create_if_block_4(ctx) {
@@ -1092,7 +1092,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1294:6) {#if item.separator}
+  } // (1296:6) {#if item.separator}
 
 
   function create_if_block_3(ctx) {
@@ -1116,7 +1116,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1325:12) {#if multiple}
+  } // (1327:12) {#if multiple}
 
 
   function create_if_block_8(ctx) {
@@ -1155,7 +1155,7 @@ var Select = (function () {
         if (if_block) if_block.d();
       }
     };
-  } // (1327:16) {#if !item.blank}
+  } // (1329:16) {#if !item.blank}
 
 
   function create_if_block_9(ctx) {
@@ -1188,7 +1188,7 @@ var Select = (function () {
         if (detaching) detach(i);
       }
     };
-  } // (1337:16) {:else}
+  } // (1339:16) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -1214,7 +1214,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1335:16) {#if item.blank}
+  } // (1337:16) {#if item.blank}
 
 
   function create_if_block_7(ctx) {
@@ -1234,7 +1234,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1342:14) {#if item.desc}
+  } // (1344:14) {#if item.desc}
 
 
   function create_if_block_6(ctx) {
@@ -1267,7 +1267,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1307:10) {#if item.desc}
+  } // (1309:10) {#if item.desc}
 
 
   function create_if_block_5(ctx) {
@@ -1300,7 +1300,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1293:4) {#each displayItems as item (item.id)}
+  } // (1295:4) {#each displayItems as item (item.id)}
 
 
   function create_each_block(key_1, ctx) {
@@ -1354,7 +1354,7 @@ var Select = (function () {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1353:4) {#if actualCount === 0 && previousFetch && !activeFetch}
+  } // (1355:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
 
 
   function create_if_block_2(ctx) {
@@ -1366,7 +1366,7 @@ var Select = (function () {
         /*translate*/
         ctx[21]("no_results"));
         attr(div, "tabindex", "-1");
-        attr(div, "class", "dropdown-item text-muted ss-no-click ss-js-blank");
+        attr(div, "class", "dropdown-item ss-message-item text-muted ss-no-click ss-js-blank");
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -1376,7 +1376,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1359:4) {#if fetchError}
+  } // (1361:4) {#if fetchError}
 
 
   function create_if_block_1(ctx) {
@@ -1389,7 +1389,7 @@ var Select = (function () {
         /*fetchError*/
         ctx[14]);
         attr(div, "tabindex", "-1");
-        attr(div, "class", "dropdown-item border-top text-danger ss-no-click ss-js-blank ss-sticky-item");
+        attr(div, "class", "dropdown-item ss-message-item border-top text-danger ss-no-click ss-js-blank ss-sticky-item");
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -1406,7 +1406,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1365:4) {#if selectionItems.length >= maxItems}
+  } // (1367:4) {#if selectionItems.length >= maxItems}
 
 
   function create_if_block(ctx) {
@@ -1418,7 +1418,7 @@ var Select = (function () {
         /*translate*/
         ctx[21]("max_limit"));
         attr(div, "tabindex", "-1");
-        attr(div, "class", "dropdown-item border-top text-danger ss-no-click ss-js-blank ss-sticky-item");
+        attr(div, "class", "dropdown-item ss-message-item border-top text-danger ss-no-click ss-js-blank ss-sticky-item");
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -1493,6 +1493,8 @@ var Select = (function () {
     }
 
     var if_block1 =
+    /*typeahead*/
+    ctx[6] &&
     /*actualCount*/
     ctx[8] === 0 &&
     /*previousFetch*/
@@ -1664,6 +1666,8 @@ var Select = (function () {
         each_blocks = update_keyed_each(each_blocks, dirty, get_key_1, 1, ctx, each_value, each1_lookup, div0, destroy_block, create_each_block, t3, get_each_context);
 
         if (
+        /*typeahead*/
+        ctx[6] &&
         /*actualCount*/
         ctx[8] === 0 &&
         /*previousFetch*/
