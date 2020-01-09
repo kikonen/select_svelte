@@ -854,9 +854,11 @@
      },
      ArrowUp: nop,
      Enter: function(event) {
-         openPopup();
-         fetchItems(false);
-         event.preventDefault();
+         if (!hasModifier(event)) {
+             openPopup();
+             fetchItems(false);
+             event.preventDefault();
+         }
      },
      Space: function(event) {
          openPopup();
