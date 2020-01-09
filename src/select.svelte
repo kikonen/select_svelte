@@ -1194,13 +1194,15 @@
      padding-left: 0.5rem;
      padding-right: 0.5rem;
  }
+ :global(.ss-message-item) {
+     padding-left: 0.5rem;
+     padding-right: 0.5rem;
+ }
  :global(.ss-sticky-item) {
      width: 100%;
      position: sticky;
      bottom: 0;
      background-color: white;
-     padding-left: 0.5rem;
-     padding-right: 0.5rem;
  }
  :global(.ss-input-item) {
      width: 100%;
@@ -1350,20 +1352,20 @@
       {/if}
     {/each}
 
-    {#if actualCount === 0 && previousFetch && !activeFetch}
-      <div tabindex="-1" class="dropdown-item text-muted ss-no-click ss-js-blank">
+    {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
+      <div tabindex="-1" class="dropdown-item ss-message-item text-muted ss-no-click ss-js-blank">
         {translate('no_results')}
       </div>
     {/if}
 
     {#if fetchError}
-      <div tabindex="-1" class="dropdown-item border-top text-danger ss-no-click ss-js-blank ss-sticky-item">
+      <div tabindex="-1" class="dropdown-item ss-message-item border-top text-danger ss-no-click ss-js-blank ss-sticky-item">
         {fetchError}
       </div>
     {/if}
 
     {#if selectionItems.length >= maxItems}
-      <div tabindex="-1" class="dropdown-item border-top text-danger ss-no-click ss-js-blank ss-sticky-item">
+      <div tabindex="-1" class="dropdown-item ss-message-item border-top text-danger ss-no-click ss-js-blank ss-sticky-item">
         {translate('max_limit')}
       </div>
     {/if}
