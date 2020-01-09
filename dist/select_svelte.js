@@ -709,7 +709,7 @@ var Select = (function () {
     child_ctx[83] = list[i];
     child_ctx[87] = i;
     return child_ctx;
-  } // (1262:6) {#each selectionItems as item, index (item.id)}
+  } // (1259:6) {#each selectionItems as item, index (item.id)}
 
 
   function create_each_block_1(key_1, ctx) {
@@ -773,7 +773,7 @@ var Select = (function () {
         if (detaching) detach(span);
       }
     };
-  } // (1277:4) {#if typeahead}
+  } // (1274:4) {#if typeahead}
 
 
   function create_if_block_10(ctx) {
@@ -836,7 +836,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1316:6) {:else}
+  } // (1313:6) {:else}
 
 
   function create_else_block(ctx) {
@@ -1013,7 +1013,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1302:50) 
+  } // (1299:50) 
 
 
   function create_if_block_4(ctx) {
@@ -1092,7 +1092,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1296:6) {#if item.separator}
+  } // (1293:6) {#if item.separator}
 
 
   function create_if_block_3(ctx) {
@@ -1116,7 +1116,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1327:12) {#if multiple}
+  } // (1324:12) {#if multiple}
 
 
   function create_if_block_8(ctx) {
@@ -1155,7 +1155,7 @@ var Select = (function () {
         if (if_block) if_block.d();
       }
     };
-  } // (1329:16) {#if !item.blank}
+  } // (1326:16) {#if !item.blank}
 
 
   function create_if_block_9(ctx) {
@@ -1188,7 +1188,7 @@ var Select = (function () {
         if (detaching) detach(i);
       }
     };
-  } // (1339:16) {:else}
+  } // (1336:16) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -1214,7 +1214,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1337:16) {#if item.blank}
+  } // (1334:16) {#if item.blank}
 
 
   function create_if_block_7(ctx) {
@@ -1234,7 +1234,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1344:14) {#if item.desc}
+  } // (1341:14) {#if item.desc}
 
 
   function create_if_block_6(ctx) {
@@ -1267,7 +1267,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1309:10) {#if item.desc}
+  } // (1306:10) {#if item.desc}
 
 
   function create_if_block_5(ctx) {
@@ -1300,7 +1300,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1295:4) {#each displayItems as item (item.id)}
+  } // (1292:4) {#each displayItems as item (item.id)}
 
 
   function create_each_block(key_1, ctx) {
@@ -1354,7 +1354,7 @@ var Select = (function () {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1355:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
+  } // (1352:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
 
 
   function create_if_block_2(ctx) {
@@ -1376,7 +1376,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1361:4) {#if fetchError}
+  } // (1358:4) {#if fetchError}
 
 
   function create_if_block_1(ctx) {
@@ -1406,7 +1406,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1367:4) {#if selectionItems.length >= maxItems}
+  } // (1364:4) {#if selectionItems.length >= maxItems}
 
 
   function create_if_block(ctx) {
@@ -1916,11 +1916,8 @@ var Select = (function () {
     var fixedById = data.fixedById || {};
     var fetchedById = data.fetchedById || {};
     var selectionById = data.selectionById || {};
-    var isBlankSelection = selectionItems.length == 0 || selectionItems[0].blank;
     fixedItems.forEach(function (item) {
-      if (item.id || !isBlankSelection || data.multiple) {
-        items.push(item);
-      }
+      items.push(item);
 
       if (!item.separator) {
         byId[item.id] = item;
@@ -2503,6 +2500,7 @@ var Select = (function () {
       $$invalidate(4, basename = real.name);
       $$invalidate(5, maxItems = config.maxItems || MAX_ITEMS_DEFAULT);
       placeholderItem.text = config.placeholder || "";
+      placeholderItem.item_class = styles.blank_item_class;
       jQuery(toggleEl).tooltip();
       updateFixedItems();
       updateDisplay();

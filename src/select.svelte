@@ -156,12 +156,8 @@
      let fetchedById = data.fetchedById || {};
      let selectionById = data.selectionById || {};
 
-     let isBlankSelection = selectionItems.length == 0 || selectionItems[0].blank;
-
      fixedItems.forEach(function(item) {
-         if (item.id || !isBlankSelection || data.multiple) {
-             items.push(item);
-         }
+         items.push(item);
          if (!item.separator) {
              byId[item.id] = item;
          }
@@ -816,6 +812,7 @@
      basename = real.name;
      maxItems = config.maxItems || MAX_ITEMS_DEFAULT;
      placeholderItem.text = config.placeholder || '';
+     placeholderItem.item_class = styles.blank_item_class;
 
      jQuery(toggleEl).tooltip();
 
