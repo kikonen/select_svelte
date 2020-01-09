@@ -27,11 +27,6 @@
  const FA_NOT_SELECTED = 'text-muted far fa-square';
 
 
- const BLANK_ITEM = {
-     id: '',
-     text: ''
- };
-
  const EDIT_KEYS = {
      // Edit keys
      Enter: true,
@@ -296,6 +291,11 @@
  let remote = false;
  let maxItems = MAX_ITEMS_DEFAULT;
  let typeahead = false;
+ let placeholderItem = {
+     id: '',
+     text: '',
+     blank: true
+ };
 
  let mounted = false;
 
@@ -401,7 +401,7 @@
                  delete byId[item.id];
 
                  if (!blankItem) {
-                     blankItem = BLANK_ITEM;
+                     blankItem = placeholderItem;
                  }
              } else {
                  if (selectionItems.length >= maxItems) {
@@ -503,6 +503,11 @@
          return a.text.localeCompare(b.text);
      });
 
+     if (selectionItems.length == 0 && multiple) {
+         selectionById[''] == placeholderItem;
+         selectionItems.push(placeholderItem);
+     }
+
      selectionTitle = selectionItems.map(function(item) {
          return item.text;
      }).join(', ');
@@ -515,6 +520,11 @@
      // NOTE KI all existing values are *assumed* to be in sync data-attr wise
      if (remote) {
          selectionItems.forEach(function(item) {
+             if (multiple && item.blank) {
+                 // NOTE KI no "blank" item in multiselection
+                 return;
+             }
+
              let el = real.querySelector('option[value="' + item.id + '"]');
              if (!el) {
                  el = createOptionFromItem(item);
@@ -548,6 +558,11 @@
  function updateFixedItems() {
      let byId = {}
      let items = [];
+
+     if (multiple) {
+         items.push(placeholderItem);
+     }
+
      let options = real.options;
      for (let i = 0; i < options.length; i++) {
          let el = options[i];
@@ -799,6 +814,7 @@
 
      basename = "ss_" + real.name;
      maxItems = config.maxItems || MAX_ITEMS_DEFAULT;
+     placeholderItem.text = config.placeholder || '';
 
      jQuery(toggleEl).tooltip();
 
@@ -1252,7 +1268,6 @@
     {#if typeahead}
         <div class="ss-input-item" tabindex="-1">
           <input class="ss-input form-control {styles.typeahead_class}"
-                 name="{basename}_typeahead"
                  tabindex=1
                  autocomplete="new-password"
                  autocorrect=off
