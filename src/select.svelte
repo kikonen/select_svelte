@@ -160,8 +160,12 @@
      let fetchedById = data.fetchedById || {};
      let selectionById = data.selectionById || {};
 
+     let isBlankSelection = selectionItems.length == 0 || selectionItems[0].blank;
+
      fixedItems.forEach(function(item) {
-         items.push(item);
+         if (item.id || !isBlankSelection || data.multiple) {
+             items.push(item);
+         }
          if (!item.separator) {
              byId[item.id] = item;
          }
