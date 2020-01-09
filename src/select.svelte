@@ -107,7 +107,7 @@
              item.action = ds.itemAction;
          }
          if (ds.itemClass) {
-             item.itemClass = ds.itemClass;
+             item.item_class = ds.itemClass;
          }
 
          item.data = {};
@@ -119,8 +119,8 @@
          if (item.id === '') {
              item.blank = true;
          }
-         if (!item.itemClass) {
-             item.itemClass = item.blank ? styles.blank_item_class : styles.item_class;
+         if (!item.item_class) {
+             item.item_class = item.blank ? styles.blank_item_class : styles.item_class;
          }
      }
      return item;
@@ -132,12 +132,13 @@
      if (item.desc) {
          el.setAttribute('data-item-desc', item.desc);
      }
-     if (item.itemClass) {
-         el.setAttribute('data-item-class', item.itemClass);
+     if (item.item_class) {
+         el.setAttribute('data-item-class', item.item_class);
      }
      if (item.action) {
          el.setAttribute('data-item-action', item.action);
      }
+     // TODO KI assign all data attributes
      el.textContent = item.text;
      return el;
  }
@@ -812,7 +813,7 @@
          Object.assign(styles, config.styles);
      }
 
-     basename = "ss_" + real.name;
+     basename = real.name;
      maxItems = config.maxItems || MAX_ITEMS_DEFAULT;
      placeholderItem.text = config.placeholder || '';
 
@@ -889,6 +890,12 @@
          cancelFetch();
          clearQuery();
          closePopup(false);
+     },
+     Delete: function(event) {
+         selectItem('');
+     },
+     Backspace: function(event) {
+         selectItem('');
      },
  };
 
@@ -1235,11 +1242,11 @@
 <!-- ------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------ -->
 <div class="ss-container form-control p-0 border-0 {styles.container_class}"
-     name="{basename}_container"
+     name="ss_container_{basename}"
      bind:this={containerEl}>
 
   <button class="form-control {styles.control_class} d-flex"
-          name="{basename}_control"
+          name="ss_control_{basename}"
           type="button"
           tabindex="0"
           title="{selectionTitle}"
@@ -1252,7 +1259,7 @@
     <span class="ss-no-click ss-selection text-dark d-flex">
       {#each selectionItems as item, index (item.id)}
         {@html index > 0 ? ',&nbsp;' : ''}
-        <span class="ss-no-click ss-selected-item {item.itemClass}">{item.text}</span>
+        <span class="ss-no-click ss-selected-item {item.item_class}">{item.text}</span>
       {/each}
     </span>
     <span class="ml-auto">
@@ -1293,7 +1300,7 @@
       {:else if item.disabled || item.placeholder}
         <div tabindex="-1" class="dropdown-item text-muted ss-js-blank"
              on:keydown={handleItemKeydown}>
-          <div class="ss-no-click {item.itemClass}">
+          <div class="ss-no-click {item.item_class}">
             {item.display_text || item.text}
           </div>
 
@@ -1306,7 +1313,7 @@
 
       {:else}
         <div tabindex=1
-             class="ss-js-item dropdown-item ss-item {item.itemClass} {!item.blank && selectionById[item.id] ? styles.selected_item_class : ''}"
+             class="ss-js-item dropdown-item ss-item {item.item_class} {!item.blank && selectionById[item.id] ? styles.selected_item_class : ''}"
              data-id="{item.id}"
              data-action="{item.action || ''}"
              on:blur={handleBlur}
@@ -1324,7 +1331,7 @@
             {/if}
 
             <div class="d-inline-block">
-              <div class="ss-no-click {item.itemClass}">
+              <div class="ss-no-click {item.item_class}">
                 {#if item.blank}
                   {translate('clear')}
                 {:else}
