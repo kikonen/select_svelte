@@ -493,7 +493,7 @@ function create_else_block(ctx) {
 	let if_block0 = /*multiple*/ ctx[19] && create_if_block_8(ctx);
 
 	function select_block_type_1(ctx, dirty) {
-		if (/*item*/ ctx[83].blank) return create_if_block_7;
+		if (/*item*/ ctx[83].blank && /*multiple*/ ctx[19]) return create_if_block_7;
 		return create_else_block_1;
 	}
 
@@ -776,7 +776,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (1352:16) {#if item.blank}
+// (1352:16) {#if item.blank && multiple}
 function create_if_block_7(ctx) {
 	let t_value = /*translate*/ ctx[21]("clear") + "";
 	let t;

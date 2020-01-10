@@ -1349,7 +1349,7 @@
 
             <div class="d-inline-block">
               <div class="ss-no-click {item.item_class}">
-                {#if item.blank}
+                {#if item.blank && multiple}
                   {translate('clear')}
                 {:else}
                   {item.text}

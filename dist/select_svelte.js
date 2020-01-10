@@ -858,7 +858,9 @@ var Select = (function () {
     function select_block_type_1(ctx, dirty) {
       if (
       /*item*/
-      ctx[83].blank) return create_if_block_7;
+      ctx[83].blank &&
+      /*multiple*/
+      ctx[19]) return create_if_block_7;
       return create_else_block_1;
     }
 
@@ -1214,7 +1216,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1352:16) {#if item.blank}
+  } // (1352:16) {#if item.blank && multiple}
 
 
   function create_if_block_7(ctx) {
