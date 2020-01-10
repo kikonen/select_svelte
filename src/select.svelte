@@ -537,8 +537,10 @@
          changed = changed || el.selected !== selected;
          if (selected) {
              el.setAttribute('selected', '');
+             el.selected = true;
          } else {
              el.removeAttribute('selected');
+             el.selected = false;
          }
      }
 
