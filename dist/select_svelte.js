@@ -709,7 +709,7 @@ var Select = (function () {
     child_ctx[83] = list[i];
     child_ctx[87] = i;
     return child_ctx;
-  } // (1261:6) {#each selectionItems as item, index (item.id)}
+  } // (1277:6) {#each selectionItems as item, index (item.id)}
 
 
   function create_each_block_1(key_1, ctx) {
@@ -773,7 +773,7 @@ var Select = (function () {
         if (detaching) detach(span);
       }
     };
-  } // (1276:4) {#if typeahead}
+  } // (1292:4) {#if typeahead}
 
 
   function create_if_block_10(ctx) {
@@ -836,7 +836,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1315:6) {:else}
+  } // (1331:6) {:else}
 
 
   function create_else_block(ctx) {
@@ -1013,7 +1013,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1301:50) 
+  } // (1317:50) 
 
 
   function create_if_block_4(ctx) {
@@ -1092,7 +1092,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1295:6) {#if item.separator}
+  } // (1311:6) {#if item.separator}
 
 
   function create_if_block_3(ctx) {
@@ -1116,7 +1116,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1326:12) {#if multiple}
+  } // (1342:12) {#if multiple}
 
 
   function create_if_block_8(ctx) {
@@ -1155,7 +1155,7 @@ var Select = (function () {
         if (if_block) if_block.d();
       }
     };
-  } // (1328:16) {#if !item.blank}
+  } // (1344:16) {#if !item.blank}
 
 
   function create_if_block_9(ctx) {
@@ -1188,7 +1188,7 @@ var Select = (function () {
         if (detaching) detach(i);
       }
     };
-  } // (1338:16) {:else}
+  } // (1354:16) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -1214,7 +1214,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1336:16) {#if item.blank}
+  } // (1352:16) {#if item.blank}
 
 
   function create_if_block_7(ctx) {
@@ -1234,7 +1234,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1343:14) {#if item.desc}
+  } // (1359:14) {#if item.desc}
 
 
   function create_if_block_6(ctx) {
@@ -1267,7 +1267,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1308:10) {#if item.desc}
+  } // (1324:10) {#if item.desc}
 
 
   function create_if_block_5(ctx) {
@@ -1300,7 +1300,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1294:4) {#each displayItems as item (item.id)}
+  } // (1310:4) {#each displayItems as item (item.id)}
 
 
   function create_each_block(key_1, ctx) {
@@ -1354,7 +1354,7 @@ var Select = (function () {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1354:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
+  } // (1370:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
 
 
   function create_if_block_2(ctx) {
@@ -1376,7 +1376,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1360:4) {#if fetchError}
+  } // (1376:4) {#if fetchError}
 
 
   function create_if_block_1(ctx) {
@@ -1406,7 +1406,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1366:4) {#if selectionItems.length >= maxItems}
+  } // (1382:4) {#if selectionItems.length >= maxItems}
 
 
   function create_if_block(ctx) {
@@ -2556,15 +2556,33 @@ var Select = (function () {
       },
       ArrowUp: nop,
       Enter: function Enter(event) {
-        if (!hasModifier(event)) {
+        if (hasModifier(event)) {
+          return;
+        }
+
+        if (popupVisible) {
+          clearQuery();
+          closePopup(false);
+        } else {
           openPopup();
           fetchItems(false);
-          event.preventDefault();
         }
+
+        event.preventDefault();
       },
       Space: function Space(event) {
-        openPopup();
-        fetchItems(false);
+        if (hasModifier(event)) {
+          return;
+        }
+
+        if (popupVisible) {
+          clearQuery();
+          closePopup(false);
+        } else {
+          openPopup();
+          fetchItems(false);
+        }
+
         event.preventDefault();
       },
       Escape: function Escape(event) {

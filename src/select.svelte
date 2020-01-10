@@ -874,15 +874,31 @@
      },
      ArrowUp: nop,
      Enter: function(event) {
-         if (!hasModifier(event)) {
+         if (hasModifier(event)) {
+             return;
+         }
+         if (popupVisible) {
+             // NOTE KI don't cancel fetch
+             clearQuery();
+             closePopup(false);
+         } else {
              openPopup();
              fetchItems(false);
-             event.preventDefault();
          }
+         event.preventDefault();
      },
      Space: function(event) {
-         openPopup();
-         fetchItems(false);
+         if (hasModifier(event)) {
+             return;
+         }
+         if (popupVisible) {
+             // NOTE KI don't cancel fetch
+             clearQuery();
+             closePopup(false);
+         } else {
+             openPopup();
+             fetchItems(false);
+         }
          event.preventDefault();
      },
      Escape: function(event) {
