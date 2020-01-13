@@ -5,6 +5,7 @@
      clear: 'Clear',
      no_results: 'No results',
      max_limit: 'Max limit reached',
+     selected_count: 'selected',
  };
 
  const STYLE_DEFAULTS = {
@@ -20,12 +21,13 @@
  const MAX_ITEMS_DEFAULT = 100;
  const FETCH_INDICATOR_DELAY = 150;
 
+ const SUMMARY_LEN = 2;
+
  const FA_CARET_DOWN = 'text-dark fas fa-caret-down';
  const FA_CARET_FETCHING = 'text-muted far fa-hourglass';
 
  const FA_SELECTED = 'text-muted far fa-check-square';
  const FA_NOT_SELECTED = 'text-muted far fa-square';
-
 
  const EDIT_KEYS = {
      // Edit keys
@@ -279,6 +281,7 @@
  let remote = false;
  let maxItems = MAX_ITEMS_DEFAULT;
  let typeahead = false;
+ let summaryLen = SUMMARY_LEN;
  let placeholderItem = {
      id: '',
      text: '',
@@ -302,7 +305,8 @@
 
  let selectionById = {};
  let selectionItems = [];
- let selectionTitle = '';
+ let selectionTip = '';
+ let selectionText = [];
 
  let showFetching = false;
  let fetchingMore = false;
@@ -411,22 +415,7 @@
          }
      }
 
-     let items = Object.values(byId);
-     if (items.length == 0 && blankItem) {
-         byId = {
-             [blankItem.id]: blankItem
-         }
-         items = [blankItem];
-     }
-
-     selectionById = byId;
-     selectionItems = items.sort(function(a, b) {
-         return a.sort_key.localeCompare(b.sort_key);
-     });
-
-     selectionTitle = selectionItems.map(function(item) {
-         return item.text;
-     }).join(', ');
+     updateSelection(byId);
 
      if (!multiple || item.blank) {
          clearQuery();
@@ -486,19 +475,7 @@
          byId[item.id] = item;
      }
 
-     selectionById = byId;
-     selectionItems = Object.values(byId).sort(function(a, b) {
-         return a.sort_key.localeCompare(b.sort_key);
-     });
-
-     if (selectionItems.length == 0 && multiple) {
-         selectionById[''] == placeholderItem;
-         selectionItems.push(placeholderItem);
-     }
-
-     selectionTitle = selectionItems.map(function(item) {
-         return item.text;
-     }).join(', ');
+     updateSelection(byId);
  }
 
  function syncToRealSelection() {
@@ -582,6 +559,42 @@
          selectionItems: selectionItems,
      });
      displayItems = display.displayItems;
+ }
+
+ function updateSelection(byId) {
+     let items = Object.values(byId);
+     if (items.length == 0) {
+         let blankItem = display.blankItem;
+         byId = {
+             [blankItem.id]: blankItem
+         }
+         items = [blankItem];
+     }
+
+     selectionById = byId;
+     selectionItems = items.sort(function(a, b) {
+         return a.sort_key.localeCompare(b.sort_key);
+     });
+
+     let tip = selectionItems.map(function(item) {
+         return item.text;
+     }).join(', ');
+
+     let len = selectionItems.length;
+     if (len > 1) {
+         let summary = [];
+         for (let i = 0; i < summaryLen && i < selectionItems.length; i++ ) {
+             summary.push(selectionItems[i].text);
+         }
+         if (selectionItems.length > summary.length) {
+             summary.push('…');
+         }
+         selectionText = `${summary.join(', ')} (${len} ${translate('selected_count')})`
+         selectionTip = `${len} ${translate('selected_count')}: ${tip}`
+     } else {
+         selectionText = selectionItems[0].text;
+         selectionTip = selectionText;
+     }
  }
 
  ////////////////////////////////////////////////////////////
@@ -796,6 +809,7 @@
      }
      typeahead = config.typeahead || false;
      maxItems = config.maxItems || MAX_ITEMS_DEFAULT;
+     summaryLen = config.summaryLen || SUMMARY_LEN;
 
      Object.assign(translations, I18N_DEFAULTS);
      if (config.translations) {
@@ -1259,18 +1273,15 @@
           name="ss_control_{basename}"
           type="button"
           tabindex="0"
-          title="{selectionTitle}"
+          title="{selectionTip}"
           bind:this={toggleEl}
           on:blur={handleBlur}
           on:keydown={handleToggleKeydown}
           on:keyup={handleToggleKeyup}
           on:click={handleToggleClick}>
 
-    <span class="ss-no-click ss-selection text-dark d-flex">
-      {#each selectionItems as item, index (item.id)}
-        {@html index > 0 ? ',&nbsp;' : ''}
-        <span class="ss-no-click ss-selected-item {item.item_class}">{item.text}</span>
-      {/each}
+    <span class="ss-no-eclick ss-selection text-dark d-flex">
+      {selectionText}
     </span>
     <span class="ml-auto">
       <i class="{showFetching ? FA_CARET_FETCHING : FA_CARET_DOWN}"></i>
