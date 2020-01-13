@@ -1385,7 +1385,7 @@
 
     {#if selectionItems.length >= maxItems}
       <div tabindex="-1" class="dropdown-item ss-message-item border-top text-danger ss-no-click ss-js-blank ss-sticky-item">
-        {translate('max_limit')}
+        {translate('max_limit')} ({maxItems})
       </div>
     {/if}
   </div>
