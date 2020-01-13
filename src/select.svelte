@@ -566,8 +566,6 @@
 
  function updateSelection(byId) {
      let items = Object.values(byId);
-     console.trace(byId);
-     console.log(display);
      if (items.length == 0) {
          let blankItem = display.blankItem || placeholderItem;
          byId = {
