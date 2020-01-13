@@ -1204,7 +1204,7 @@
  :global(.ss-popup) {
      padding-top: 0;
      padding-bottom: 0;
-     max-height: 40vh;
+     max-height: 45vh;
      max-width: 90vw;
      overflow-y: auto;
  }
