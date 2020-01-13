@@ -95,8 +95,13 @@
          id: el.value || '',
          text: el.text || '',
      };
+     item.sort_key = item.text;
 
      if (ds) {
+         if (ds.sortKey) {
+             item.sort_key = ds.sortKey;
+         }
+
          if (ds.itemSeparator) {
              item.separator = true;
          }
@@ -213,6 +218,7 @@
          if (item.id) {
              item.id = item.id.toString();
          }
+         item.sort_key = item.sort_key || item.text;
      });
 
      let counts = calculateCounts(fetchedItems);
@@ -415,7 +421,7 @@
 
      selectionById = byId;
      selectionItems = items.sort(function(a, b) {
-         return a.text.localeCompare(b.text);
+         return a.sort_key.localeCompare(b.sort_key);
      });
 
      selectionTitle = selectionItems.map(function(item) {
@@ -482,7 +488,7 @@
 
      selectionById = byId;
      selectionItems = Object.values(byId).sort(function(a, b) {
-         return a.text.localeCompare(b.text);
+         return a.sort_key.localeCompare(b.sort_key);
      });
 
      if (selectionItems.length == 0 && multiple) {
@@ -1305,7 +1311,7 @@
         <div tabindex="-1" class="dropdown-item text-muted ss-js-blank"
              on:keydown={handleItemKeydown}>
           <div class="ss-no-click {item.item_class}">
-            {item.display_text || item.text}
+            {item.text}
           </div>
 
           {#if item.desc}
