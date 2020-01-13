@@ -152,10 +152,6 @@
      let fetchedItems = data.fetchedItems || [];
      let selectionItems = data.selectionItems || [];
 
-     let fixedById = data.fixedById || {};
-     let fetchedById = data.fetchedById || {};
-     let selectionById = data.selectionById || {};
-
      fixedItems.forEach(function(item) {
          items.push(item);
          if (!item.separator) {
@@ -211,30 +207,19 @@
  };
 
  function createResult(data) {
-     let byId = {};
      let fetchedItems = data.fetchedItems || [];
 
      fetchedItems.forEach(function(item) {
          if (item.id) {
              item.id = item.id.toString();
          }
-         if (!item.separator) {
-             byId[item.id] = item;
-         }
      });
 
      let counts = calculateCounts(fetchedItems);
      let more = data.more === true && counts.offsetCount > 0 && !data.fetchedId;
 
-     let blankItem = byId[''] || null;
-     if (blankItem) {
-         blankItem.blank = true;
-     }
-
      return {
-         blankItem: blankItem,
          fetchedItems: fetchedItems,
-         fetchedById: byId,
          offsetCount: counts.offsetCount,
          actualCount: counts.actualCount,
          more: more,
@@ -587,11 +572,8 @@
          typeahead: typeahead,
          multiple: multiple,
          fixedItems: fixedItems,
-         fixedById: fixedById,
          fetchedItems: result.fetchedItems,
-         fetchedById: result.fetchedById,
          selectionItems: selectionItems,
-         selectionById: selectionById,
      });
      displayItems = display.displayItems;
  }
@@ -694,7 +676,15 @@
              actualCount = result.actualCount;
              hasMore = result.more;
 
-             updateDisplay();
+             if (currentFetchingMore) {
+                 responseItems.forEach(function(item) {
+                     display.displayItems.push(item);
+                     display.byId[item.id] = item;
+                 });
+                 displayItems = display.displayItems;
+             } else {
+                 updateDisplay();
+             }
 
              if (fetchId) {
                  previousQuery = null;
