@@ -14,6 +14,8 @@
      item_desc_class: 'text-muted',
      blank_item_class: 'text-muted',
      selected_item_class: 'alert-primary',
+     control_blank_item_class: 'text-muted',
+     control_selected_item_class: 'text-dark',
      typeahead_class: '',
      control_class: '',
  };
@@ -307,6 +309,7 @@
  let selectionItems = [];
  let selectionTip = '';
  let selectionText = [];
+ let selectionTextClass = '';
 
  let showFetching = false;
  let fetchingMore = false;
@@ -563,8 +566,10 @@
 
  function updateSelection(byId) {
      let items = Object.values(byId);
+     console.trace(byId);
+     console.log(display);
      if (items.length == 0) {
-         let blankItem = display.blankItem;
+         let blankItem = display.blankItem || placeholderItem;
          byId = {
              [blankItem.id]: blankItem
          }
@@ -575,6 +580,12 @@
      selectionItems = items.sort(function(a, b) {
          return a.sort_key.localeCompare(b.sort_key);
      });
+
+     if (selectionItems.length === 1) {
+         selectionTextClass = selectionItems[0].item_class;
+     } else {
+         selectionTextClass = styles.control_selection_item_class;
+     }
 
      let tip = selectionItems.map(function(item) {
          return item.text;
@@ -1269,7 +1280,7 @@
      name="ss_container_{basename}"
      bind:this={containerEl}>
 
-  <button class="form-control {styles.control_class} d-flex"
+  <button class="form-control d-flex {styles.control_class} {selectionTextClass}"
           name="ss_control_{basename}"
           type="button"
           tabindex="0"
@@ -1280,7 +1291,7 @@
           on:keyup={handleToggleKeyup}
           on:click={handleToggleClick}>
 
-    <span class="ss-no-eclick ss-selection text-dark d-flex">
+    <span class="ss-no-eclick ss-selection d-flex">
       {selectionText}
     </span>
     <span class="ml-auto">
