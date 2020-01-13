@@ -909,9 +909,6 @@
      Delete: function(event) {
          selectItem('');
      },
-     Backspace: function(event) {
-         selectItem('');
-     },
  };
 
  let toggleKeyupHandlers = {
