@@ -1249,6 +1249,7 @@
  }
  :global(.ss-no-click) {
      pointer-events: none;
+     user-select: none;
  }
 
 /*
@@ -1343,7 +1344,7 @@
 
       {:else}
         <div tabindex=1
-             class="ss-js-item dropdown-item ss-item {item.item_class} {!item.blank && selectionById[item.id] ? styles.selected_item_class : ''}"
+             class="ss-js-item dropdown-item ss-item {item.item_class || ''} {!item.blank && selectionById[item.id] ? styles.selected_item_class : ''}"
              data-id="{item.id}"
              data-action="{item.action || ''}"
              on:blur={handleBlur}
@@ -1361,7 +1362,7 @@
             {/if}
 
             <div class="d-inline-block">
-              <div class="ss-no-click {item.item_class}">
+              <div class="ss-no-click {item.item_class || ''}">
                 {#if item.blank && multiple}
                   {translate('clear')}
                 {:else}
