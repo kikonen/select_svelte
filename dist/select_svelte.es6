@@ -352,7 +352,7 @@ function get_each_context(ctx, list, i) {
 	return child_ctx;
 }
 
-// (1307:4) {#if typeahead}
+// (1305:4) {#if typeahead}
 function create_if_block_10(ctx) {
 	let div;
 	let input;
@@ -399,7 +399,7 @@ function create_if_block_10(ctx) {
 	};
 }
 
-// (1346:6) {:else}
+// (1344:6) {:else}
 function create_else_block(ctx) {
 	let div3;
 	let div2;
@@ -531,7 +531,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (1332:50) 
+// (1330:50) 
 function create_if_block_4(ctx) {
 	let div1;
 	let div0;
@@ -589,7 +589,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (1326:6) {#if item.separator}
+// (1324:6) {#if item.separator}
 function create_if_block_3(ctx) {
 	let div;
 	let dispose;
@@ -612,7 +612,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (1357:12) {#if multiple}
+// (1355:12) {#if multiple}
 function create_if_block_8(ctx) {
 	let div;
 	let if_block = !/*item*/ ctx[87].blank && create_if_block_9(ctx);
@@ -648,7 +648,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (1359:16) {#if !item.blank}
+// (1357:16) {#if !item.blank}
 function create_if_block_9(ctx) {
 	let i;
 	let i_class_value;
@@ -677,7 +677,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (1369:16) {:else}
+// (1367:16) {:else}
 function create_else_block_1(ctx) {
 	let t_value = /*item*/ ctx[87].text + "";
 	let t;
@@ -698,7 +698,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (1367:16) {#if item.blank && multiple}
+// (1365:16) {#if item.blank && multiple}
 function create_if_block_7(ctx) {
 	let t_value = /*translate*/ ctx[23]("clear") + "";
 	let t;
@@ -717,7 +717,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (1374:14) {#if item.desc}
+// (1372:14) {#if item.desc}
 function create_if_block_6(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[87].desc + "";
@@ -743,7 +743,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (1339:10) {#if item.desc}
+// (1337:10) {#if item.desc}
 function create_if_block_5(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[87].desc + "";
@@ -769,7 +769,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (1325:4) {#each displayItems as item (item.id)}
+// (1323:4) {#each displayItems as item (item.id)}
 function create_each_block(key_1, ctx) {
 	let first;
 	let if_block_anchor;
@@ -818,7 +818,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (1385:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
+// (1383:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
 function create_if_block_2(ctx) {
 	let div;
 
@@ -839,7 +839,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (1391:4) {#if fetchError}
+// (1389:4) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -864,7 +864,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (1397:4) {#if selectionItems.length >= maxItems}
+// (1395:4) {#if selectionItems.length >= maxItems}
 function create_if_block(ctx) {
 	let div;
 	let t0_value = /*translate*/ ctx[23]("max_limit") + "";
@@ -1427,7 +1427,6 @@ function instance($$self, $$props, $$invalidate) {
 
 	function clearQuery() {
 		$$invalidate(7, query = "");
-		previousQuery = null;
 	}
 
 	function openPopup() {
@@ -1635,8 +1634,6 @@ function instance($$self, $$props, $$invalidate) {
 
 	function updateSelection(byId) {
 		let items = Object.values(byId);
-		console.trace(byId);
-		console.log(display);
 
 		if (items.length == 0) {
 			let blankItem = display.blankItem || placeholderItem;
