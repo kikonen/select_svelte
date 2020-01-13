@@ -452,6 +452,17 @@
      }
  }
 
+ function clickElement(el) {
+     let id = el.dataset.id
+     if (id) {
+         let item = display.byId[id];
+
+         if (item) {
+             real.dispatchEvent(new CustomEvent('select-click', { detail: item }));
+         }
+     }
+ }
+
  function containsElement(el) {
      return containerEl.contains(el) || popupEl.contains(el);
  }
@@ -1179,8 +1190,12 @@
  }
 
  function handleItemClick(event) {
-     if (event.button === 0 && !hasModifier(event)) {
-         selectElement(event.target)
+     if (event.button === 0) {
+         if (!hasModifier(event)) {
+             selectElement(event.target)
+         } else if (event.ctrlKey || event.metaKey) {
+             clickElement(event.target)
+         }
      }
  }
 
