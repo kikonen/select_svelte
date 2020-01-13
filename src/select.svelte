@@ -346,7 +346,6 @@
 
  function clearQuery() {
      query = '';
-     previousQuery = null;
  }
 
  function openPopup() {
@@ -768,6 +767,7 @@
  function cancelFetch() {
      if (activeFetch !== null) {
          activeFetch = null;
+
          // no result fetched; since it doesn't match input any longer
          previousQuery = null;
      }
