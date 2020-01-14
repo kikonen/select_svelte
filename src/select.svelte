@@ -6,6 +6,7 @@
      no_results: 'No results',
      max_limit: 'Max limit reached',
      selected_count: 'selected',
+     selected_more: 'more',
  };
 
  const STYLE_DEFAULTS = {
@@ -609,8 +610,10 @@
          }
          if (selectionItems.length > summary.length) {
              summary.push('…');
+             selectionText = `${summary.join(', ')} (${len - summaryLen} ${translate('selected_more')})`
+         } else {
+             selectionText = `${summary.join(', ')}`
          }
-         selectionText = `${summary.join(', ')} (${len} ${translate('selected_count')})`
          selectionTip = `${len} ${translate('selected_count')}: ${tip}`
      } else {
          selectionText = selectionItems[0].text;
@@ -1377,11 +1380,9 @@
              on:keyup={handleItemKeyup}>
 
           <div class="ss-no-click">
-            {#if multiple}
+            {#if multiple && !item.blank}
               <div class="d-inline-block align-top">
-                {#if !item.blank}
-                  <i class="pr-1 {selectionById[item.id] ? FA_SELECTED : FA_NOT_SELECTED}"></i>
-                {/if}
+                <i class="pr-1 {selectionById[item.id] ? FA_SELECTED : FA_NOT_SELECTED}"></i>
               </div>
             {/if}
 
