@@ -24,6 +24,7 @@
  const FETCH_INDICATOR_DELAY = 150;
 
  const SUMMARY_LEN = 2;
+ const SUMMARY_WRAP = false;
 
  const FA_CARET_DOWN = 'text-dark fas fa-caret-down';
  const FA_CARET_FETCHING = 'text-muted far fa-hourglass';
@@ -284,6 +285,7 @@
  let maxItems = MAX_ITEMS_DEFAULT;
  let typeahead = false;
  let summaryLen = SUMMARY_LEN;
+ let summaryWrap = SUMMARY_WRAP;
  let placeholderItem = {
      id: '',
      text: '',
@@ -830,6 +832,7 @@
      typeahead = config.typeahead || false;
      maxItems = config.maxItems || MAX_ITEMS_DEFAULT;
      summaryLen = config.summaryLen || SUMMARY_LEN;
+     summaryWrap = config.summaryWrap != null ? config.summaryWrap : SUMMARY_WRAP;
 
      Object.assign(translations, I18N_DEFAULTS);
      if (config.translations) {
@@ -1209,22 +1212,26 @@
 <style>
  :global(.ss-container) {
      position: relative;
+     width: 100%;
+     height: unset;
+ }
+ :global(.ss-control) {
+     width: 100%;
+     height: unset;
  }
  :global(.ss-selection) {
      width: 100%;
      height: 100%;
-
+     text-align: left;
+ }
+ :global(.ss-selection-nowrap) {
      white-space: nowrap;
      overflow: hidden;
      text-overflow: ellipsis;
  }
  :global(.ss-selected-item) {
      white-space: nowrap;
-/*
-     overflow: hidden;
-     word-break: break-all;
-     text-overflow: ellipsis;
-*/ }
+ }
  :global(.ss-popup) {
      padding-top: 0;
      padding-bottom: 0;
@@ -1295,7 +1302,7 @@
      name="ss_container_{basename}"
      bind:this={containerEl}>
 
-  <button class="form-control d-flex {styles.control_class} {selectionTextClass}"
+  <button class="form-control d-flex ss-control {styles.control_class || ''} {selectionTextClass || ''}"
           name="ss_control_{basename}"
           type="button"
           tabindex="0"
@@ -1306,7 +1313,8 @@
           on:keyup={handleToggleKeyup}
           on:click={handleToggleClick}>
 
-    <span class="ss-no-eclick ss-selection d-flex">
+    <span class="ss-no-eclick ss-selection d-flex"
+          class:ss-selection-nowrap={!summaryWrap}>
       {selectionText}
     </span>
     <span class="ml-auto">
