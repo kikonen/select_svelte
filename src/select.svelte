@@ -1231,6 +1231,7 @@
      max-height: 45vh;
      max-width: 90vw;
      overflow-y: auto;
+     overscroll-behavior: contain;
  }
  :global(.ss-popup-top) {
      top: unset;

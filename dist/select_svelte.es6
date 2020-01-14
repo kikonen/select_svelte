@@ -341,8 +341,8 @@ const { document: document_1 } = globals;
 
 function add_css() {
 	var style = element("style");
-	style.id = "svelte-1pp7jor-style";
-	style.textContent = ".ss-container{position:relative}.ss-selection{width:100%;height:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ss-selected-item{white-space:nowrap}.ss-popup{padding-top:0;padding-bottom:0;max-height:45vh;max-width:90vw;overflow-y:auto}.ss-popup-top{top:unset;bottom:100%}.ss-item{padding-left:0.5rem;padding-right:0.5rem}.ss-message-item{padding-left:0.5rem;padding-right:0.5rem}.ss-sticky-item{width:100%;position:sticky;bottom:0;background-color:white}.ss-input-item{width:100%;position:sticky;top:0;background-color:white;padding-top:0.2rem;padding-bottom:0.2rem;padding-left:0.2rem;padding-right:0.2rem}.ss-no-click{pointer-events:none;user-select:none}";
+	style.id = "svelte-1jgo5m2-style";
+	style.textContent = ".ss-container{position:relative}.ss-selection{width:100%;height:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ss-selected-item{white-space:nowrap}.ss-popup{padding-top:0;padding-bottom:0;max-height:45vh;max-width:90vw;overflow-y:auto;overscroll-behavior:contain}.ss-popup-top{top:unset;bottom:100%}.ss-item{padding-left:0.5rem;padding-right:0.5rem}.ss-message-item{padding-left:0.5rem;padding-right:0.5rem}.ss-sticky-item{width:100%;position:sticky;bottom:0;background-color:white}.ss-input-item{width:100%;position:sticky;top:0;background-color:white;padding-top:0.2rem;padding-bottom:0.2rem;padding-left:0.2rem;padding-right:0.2rem}.ss-no-click{pointer-events:none;user-select:none}";
 	append(document_1.head, style);
 }
 
@@ -352,7 +352,7 @@ function get_each_context(ctx, list, i) {
 	return child_ctx;
 }
 
-// (1321:4) {#if typeahead}
+// (1322:4) {#if typeahead}
 function create_if_block_10(ctx) {
 	let div;
 	let input;
@@ -399,7 +399,7 @@ function create_if_block_10(ctx) {
 	};
 }
 
-// (1360:6) {:else}
+// (1361:6) {:else}
 function create_else_block(ctx) {
 	let div3;
 	let div2;
@@ -531,7 +531,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (1346:50) 
+// (1347:50) 
 function create_if_block_4(ctx) {
 	let div1;
 	let div0;
@@ -589,7 +589,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (1340:6) {#if item.separator}
+// (1341:6) {#if item.separator}
 function create_if_block_3(ctx) {
 	let div;
 	let dispose;
@@ -612,7 +612,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (1371:12) {#if multiple}
+// (1372:12) {#if multiple}
 function create_if_block_8(ctx) {
 	let div;
 	let if_block = !/*item*/ ctx[88].blank && create_if_block_9(ctx);
@@ -648,7 +648,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (1373:16) {#if !item.blank}
+// (1374:16) {#if !item.blank}
 function create_if_block_9(ctx) {
 	let i;
 	let i_class_value;
@@ -677,7 +677,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (1383:16) {:else}
+// (1384:16) {:else}
 function create_else_block_1(ctx) {
 	let t_value = /*item*/ ctx[88].text + "";
 	let t;
@@ -698,7 +698,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (1381:16) {#if item.blank && multiple}
+// (1382:16) {#if item.blank && multiple}
 function create_if_block_7(ctx) {
 	let t_value = /*translate*/ ctx[23]("clear") + "";
 	let t;
@@ -717,7 +717,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (1388:14) {#if item.desc}
+// (1389:14) {#if item.desc}
 function create_if_block_6(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[88].desc + "";
@@ -743,7 +743,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (1353:10) {#if item.desc}
+// (1354:10) {#if item.desc}
 function create_if_block_5(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[88].desc + "";
@@ -769,7 +769,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (1339:4) {#each displayItems as item (item.id)}
+// (1340:4) {#each displayItems as item (item.id)}
 function create_each_block(key_1, ctx) {
 	let first;
 	let if_block_anchor;
@@ -818,7 +818,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (1399:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
+// (1400:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
 function create_if_block_2(ctx) {
 	let div;
 
@@ -839,7 +839,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (1405:4) {#if fetchError}
+// (1406:4) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -864,7 +864,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (1411:4) {#if selectionItems.length >= maxItems}
+// (1412:4) {#if selectionItems.length >= maxItems}
 function create_if_block(ctx) {
 	let div;
 	let t0_value = /*translate*/ ctx[23]("max_limit") + "";
@@ -2370,7 +2370,7 @@ function instance($$self, $$props, $$invalidate) {
 class Select extends SvelteComponent {
 	constructor(options) {
 		super();
-		if (!document_1.getElementById("svelte-1pp7jor-style")) add_css();
+		if (!document_1.getElementById("svelte-1jgo5m2-style")) add_css();
 		init(this, options, instance, create_fragment, safe_not_equal, { real: 36, config: 37, selectItem: 38 }, [-1, -1, -1]);
 	}
 
