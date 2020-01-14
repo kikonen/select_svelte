@@ -311,8 +311,9 @@
  let selectionById = {};
  let selectionItems = [];
  let selectionTip = '';
- let selectionText = [];
- let selectionTextClass = '';
+
+ let summaryPlain = true;
+ let summaryItems = [];
 
  let showFetching = false;
  let fetchingMore = false;
@@ -592,33 +593,26 @@
          return a.sort_key.localeCompare(b.sort_key);
      });
 
-     if (selectionItems.length === 1) {
-         selectionTextClass = selectionItems[0].item_class;
-     } else {
-         selectionTextClass = styles.control_selection_item_class;
-     }
-
      let tip = selectionItems.map(function(item) {
          return item.text;
      }).join(', ');
 
      let len = selectionItems.length;
      if (len > 1) {
-         let summary = [];
-         for (let i = 0; i < summaryLen && i < selectionItems.length; i++ ) {
-             summary.push(selectionItems[i].text);
+         summaryItems = selectionItems.slice(0, summaryLen);
+         if (summaryItems.length < len) {
+             summaryItems.push({
+                 id: 'more',
+                 text: `${len - summaryLen} ${translate('selected_more')}`
+             });
          }
-         if (selectionItems.length > summary.length) {
-             summary.push('…');
-             selectionText = `${summary.join(', ')} (${len - summaryLen} ${translate('selected_more')})`
-         } else {
-             selectionText = `${summary.join(', ')}`
-         }
+
          selectionTip = `${len} ${translate('selected_count')}: ${tip}`
      } else {
-         selectionText = selectionItems[0].text;
-         selectionTip = selectionText;
+         summaryItems = selectionItems;
+         selectionTip = summaryItems[0].text;
      }
+     summaryPlain = summaryItems[0].blank;
  }
 
  ////////////////////////////////////////////////////////////
@@ -680,7 +674,8 @@
          return activeFetch || previousFetch;
      }
 
-//     console.debug("START fetch: " + currentQuery);
+     if (DEBUG) console.debug("START fetch: " + currentQuery, document.activeElement, result.fetchedItems.slice());
+     if (DEBUG) console.debug("START DISPLAY", displayItems.slice());
 
      cancelFetch();
 
@@ -699,6 +694,8 @@
 
      let currentFetch = fetcher(currentFetchOffset, currentQuery, fetchId).then(function(response) {
          if (currentFetch === activeFetch) {
+             if (DEBUG) console.debug("DONE fetch: " + currentQuery, document.activeElement, response.items.slice());
+
              let responseItems = response.items || [];
              let info = response.info || {};
 
@@ -716,6 +713,8 @@
                  more: info.more,
              });
 
+             if (DEBUG) console.debug("NEW RESULT", result.fetchedItems.slice());
+
              actualCount = result.actualCount;
              hasMore = result.more;
 
@@ -728,6 +727,8 @@
              } else {
                  updateDisplay();
              }
+
+             if (DEBUG) console.debug("NEW DISPLAY", displayItems.slice());
 
              if (fetchId) {
                  previousQuery = null;
@@ -1221,11 +1222,14 @@
  :global(.ss-control) {
      width: 100%;
      height: unset;
+     padding-left: 0.5rem;
+     padding-right: 0.5rem;
  }
  :global(.ss-selection) {
      width: 100%;
      height: 100%;
      text-align: left;
+     margin: -6px -6px;
  }
  :global(.ss-selection-nowrap) {
      white-space: nowrap;
@@ -1234,6 +1238,7 @@
  }
  :global(.ss-selected-item) {
      white-space: nowrap;
+     margin: 5px 1px 2px 5px;
  }
  :global(.ss-popup) {
      padding-top: 0;
@@ -1305,7 +1310,7 @@
      name="ss_container_{basename}"
      bind:this={containerEl}>
 
-  <button class="form-control d-flex ss-control {styles.control_class || ''} {selectionTextClass || ''}"
+  <button class="form-control d-flex ss-control {styles.control_class || ''}"
           name="ss_control_{basename}"
           type="button"
           tabindex="0"
@@ -1316,9 +1321,15 @@
           on:keyup={handleToggleKeyup}
           on:click={handleToggleClick}>
 
-    <span class="ss-no-eclick ss-selection d-flex"
+    <span class="ss-no-click ss-selection d-flex"
+          class:flex-wrap={summaryWrap}
           class:ss-selection-nowrap={!summaryWrap}>
-      {selectionText}
+      {#each summaryItems as item, index (item.id)}
+        <span class="ss-no-click ss-selected-item {item.item_class || ''} {!summaryPlain && multiple ? 'border border-primary rounded pr-1 pl-1' : ''}"
+              >
+          {item.text}
+        </span>
+      {/each}
     </span>
     <span class="ml-auto">
       <i class="{showFetching ? FA_CARET_FETCHING : FA_CARET_DOWN}"></i>
