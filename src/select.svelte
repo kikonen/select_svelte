@@ -11,14 +11,6 @@
 
  const STYLE_DEFAULTS = {
      container_class: '',
-     item_class: '',
-     item_desc_class: 'text-muted',
-     blank_item_class: 'text-muted',
-     selected_item_class: 'alert-primary',
-     control_blank_item_class: 'text-muted',
-     control_selected_item_class: 'text-dark',
-     typeahead_class: '',
-     control_class: '',
  };
 
  const MAX_ITEMS_DEFAULT = 100;
@@ -27,11 +19,11 @@
  const SUMMARY_LEN = 2;
  const SUMMARY_WRAP = false;
 
- const FA_CARET_DOWN = 'text-dark fas fa-caret-down';
- const FA_CARET_FETCHING = 'text-muted far fa-hourglass';
+ const FA_CARET_DOWN = 'fas fa-caret-down';
+ const FA_CARET_FETCHING = 'far fa-hourglass';
 
- const FA_SELECTED = 'text-muted far fa-check-square';
- const FA_NOT_SELECTED = 'text-muted far fa-square';
+ const FA_SELECTED = 'far fa-check-square';
+ const FA_NOT_SELECTED = 'far fa-square';
 
  const EDIT_KEYS = {
      // Edit keys
@@ -129,9 +121,6 @@
      if (!item.separator) {
          if (item.id === '') {
              item.blank = true;
-         }
-         if (!item.item_class) {
-             item.item_class = item.blank ? styles.blank_item_class : styles.item_class;
          }
      }
      return item;
@@ -851,7 +840,6 @@
      basename = real.name;
      maxItems = config.maxItems || MAX_ITEMS_DEFAULT;
      placeholderItem.text = config.placeholder || '';
-     placeholderItem.item_class = styles.blank_item_class;
 
      jQuery(toggleEl).tooltip();
 
@@ -902,7 +890,7 @@
              inputEl.focus();
          } else {
              let next = popupEl.querySelectorAll('.ss-js-item')[0];
-             while (next && next.classList.contains('ss-js-blank')) {
+             while (next && next.classList.contains('ss-js-dead')) {
                  next = next.nextElementSibling;
              }
              focusItem(next);
@@ -961,7 +949,7 @@
      base: nop,
      ArrowDown: function(event) {
          let next = popupEl.querySelectorAll('.ss-js-item')[0];
-         while (next && next.classList.contains('ss-js-blank')) {
+         while (next && next.classList.contains('ss-js-dead')) {
              next = next.nextElementSibling;
          }
          focusItem(next);
@@ -1004,7 +992,7 @@
      let next = el.previousElementSibling;
 
      if (next) {
-         while (next && next.classList.contains('ss-js-blank')) {
+         while (next && next.classList.contains('ss-js-dead')) {
              next = next.previousElementSibling;
          }
          if (next && !next.classList.contains('ss-js-item')) {
@@ -1025,7 +1013,7 @@
      let next = el.nextElementSibling;
 
      if (next) {
-         while (next && next.classList.contains('ss-js-blank')) {
+         while (next && next.classList.contains('ss-js-dead')) {
              next = next.nextElementSibling;
          }
 
@@ -1218,11 +1206,11 @@
 
 <!-- ------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------ -->
-<div class="ss-container form-control p-0 border-0 {styles.container_class}"
+<div class="ss-container form-control {styles.container_class}"
      name="ss_container_{basename}"
      bind:this={containerEl}>
 
-  <button class="form-control d-flex ss-control {styles.control_class || ''}"
+  <button class="form-control ss-control"
           name="ss_control_{basename}"
           type="button"
           tabindex="0"
@@ -1233,18 +1221,17 @@
           on:keyup={handleToggleKeyup}
           on:click={handleToggleClick}>
 
-    <span class="ss-no-click ss-selection d-flex"
-          class:flex-wrap={summaryWrap}
-          class:ss-selection-nowrap={!summaryWrap}>
+    <span class="ss-summary"
+          class:ss-summary-wrap={summaryWrap}
+          class:ss-summary-nowrap={!summaryWrap}>
       {#each summaryItems as item, index (item.id)}
-        <span class="ss-no-click ss-selected-item {item.item_class || ''} {!summaryPlain && multiple ? 'border border-primary rounded pr-1 pl-1' : ''}"
+        <span class="ss-summary-item {item.item_class || ''} {!summaryPlain && multiple ? 'ss-summary-item-block' : ''}"
               >
           {item.text}
         </span>
       {/each}
     </span>
-    <span class="ml-auto">
-      <i class="{showFetching ? FA_CARET_FETCHING : FA_CARET_DOWN}"></i>
+    <span class="ml-auto ss-icon {showFetching ? FA_CARET_FETCHING : FA_CARET_DOWN}">
     </span>
   </button>
 
@@ -1255,7 +1242,7 @@
        on:scroll={handlePopupScroll}>
     {#if typeahead}
         <div class="ss-input-item" tabindex="-1">
-          <input class="ss-input form-control {styles.typeahead_class}"
+          <input class="form-control ss-input"
                  tabindex=1
                  autocomplete="new-password"
                  autocorrect=off
@@ -1274,19 +1261,19 @@
     {#each displayItems as item (item.id)}
       {#if item.separator}
         <div tabindex="-1"
-             class="dropdown-divider ss-js-blank"
+             class="dropdown-divider ss-js-dead"
              on:keydown={handleItemKeydown}>
         </div>
 
       {:else if item.disabled || item.placeholder}
-        <div tabindex="-1" class="dropdown-item text-muted ss-js-blank"
+        <div tabindex="-1" class="dropdown-item ss-item-muted ss-js-dead"
              on:keydown={handleItemKeydown}>
-          <div class="ss-no-click {item.item_class}">
+          <div class="ss-item-text {item.item_class}">
             {item.text}
           </div>
 
           {#if item.desc}
-            <div class="ss-no-click {styles.item_desc_class}">
+            <div class="ss-item-desc">
               {item.desc}
             </div>
           {/if}
@@ -1294,7 +1281,8 @@
 
       {:else}
         <div tabindex=1
-             class="ss-js-item dropdown-item ss-item {item.item_class || ''} {!item.blank && selectionById[item.id] ? styles.selected_item_class : ''}"
+             class="dropdown-item ss-item ss-js-item {item.item_class || ''}"
+             class:ss-item-selected={!item.blank && selectionById[item.id]}
              data-id="{item.id}"
              data-action="{item.action || ''}"
              on:blur={handleBlur}
@@ -1305,23 +1293,29 @@
           <div class="ss-no-click">
             {#if multiple && !item.blank}
               <div class="d-inline-block align-top">
-                <i class="pr-1 {selectionById[item.id] ? FA_SELECTED : FA_NOT_SELECTED}"></i>
+                <i class="ss-marker {selectionById[item.id] ? FA_SELECTED : FA_NOT_SELECTED}"></i>
               </div>
             {/if}
 
             <div class="d-inline-block">
-              <div class="ss-no-click {item.item_class || ''}">
-                {#if item.blank && multiple}
-                  {translate('clear')}
-                {:else}
-                  {item.text}
-                {/if}
-              </div>
-
-              {#if item.desc}
-                <div class="ss-no-click {styles.item_desc_class}">
-                  {item.desc}
+              {#if item.blank}
+                <div class="ss-item-muted">
+                  {#if multiple}
+                    {translate('clear')}
+                  {:else}
+                    {item.text}
+                  {/if}
                 </div>
+              {:else}
+                <div class="ss-item-text {item.item_class || ''}">
+                  {item.text}
+                </div>
+
+                {#if item.desc}
+                  <div class="ss-item-desc">
+                    {item.desc}
+                  </div>
+                {/if}
               {/if}
             </div>
           </div>
@@ -1330,19 +1324,19 @@
     {/each}
 
     {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
-      <div tabindex="-1" class="dropdown-item ss-message-item text-muted ss-no-click ss-js-blank">
+      <div tabindex="-1" class="dropdown-item ss-message-item ss-item-muted ss-js-dead">
         {translate('no_results')}
       </div>
     {/if}
 
     {#if fetchError}
-      <div tabindex="-1" class="dropdown-item ss-message-item border-top text-danger ss-no-click ss-js-blank ss-sticky-item">
+      <div tabindex="-1" class="dropdown-item border-top text-danger ss-message-item ss-sticky-item ss-js-dead">
         {fetchError}
       </div>
     {/if}
 
     {#if selectionItems.length >= maxItems}
-      <div tabindex="-1" class="dropdown-item ss-message-item border-top text-danger ss-no-click ss-js-blank ss-sticky-item">
+      <div tabindex="-1" class="dropdown-item border-top text-danger ss-message-item ss-sticky-item ss-js-dead">
         {translate('max_limit')} ({maxItems})
       </div>
     {/if}
