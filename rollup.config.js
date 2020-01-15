@@ -5,7 +5,7 @@ import svelte from 'rollup-plugin-svelte';
 //import { scss } from 'svelte-preprocess';
 import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
-import copy from 'rollup-plugin-copy';
+//import copy from 'rollup-plugin-copy';
 
 export default {
   input: 'src/select.svelte',
@@ -95,11 +95,5 @@ export default {
         ]
       ]
     }),
-    copy({
-      targets: [
-        { src: 'src/_select_svelte.scss', dest: 'dist' },
-      ]
-    })
-
   ]
 };
