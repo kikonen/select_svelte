@@ -4,7 +4,8 @@ import resolve from 'rollup-plugin-node-resolve';
 import svelte from 'rollup-plugin-svelte';
 //import { scss } from 'svelte-preprocess';
 import babel from 'rollup-plugin-babel';
-import commonjs from 'rollup-plugin-commonjs'
+import commonjs from 'rollup-plugin-commonjs';
+import copy from 'rollup-plugin-copy';
 
 export default {
   input: 'src/select.svelte',
@@ -44,7 +45,7 @@ export default {
       // Extract CSS into a separate file (recommended).
       // See note below
 
-      css: function (css) {
+/*      css: function (css) {
 //        console.log(css.code); // the concatenated CSS
 //        console.log(css.map); // a sourcemap
 
@@ -52,7 +53,7 @@ export default {
         // as the second argument if you don't want the sourcemap
         css.write('dist/select_svelte.css', false);
       },
-
+*/
       // Warnings are normally passed straight to Rollup. You can
       // optionally handle them here, for example to squelch
       // warnings with a particular code
@@ -94,5 +95,11 @@ export default {
         ]
       ]
     }),
+    copy({
+      targets: [
+        { src: 'src/_select_svelte.scss', dest: 'dist' },
+      ]
+    })
+
   ]
-}
+};
