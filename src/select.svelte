@@ -265,6 +265,8 @@
  let toggleEl;
  let popupEl;
 
+ const mutationObserver = new MutationObserver(handleMutation);
+
  let setupDone = false;
  let translations = {};
  let styles = {};
@@ -605,6 +607,24 @@
      summarySingle = summaryItems[0].blank || !multiple;
  }
 
+ function reload() {
+     if (isSyncToReal) {
+         return;
+     }
+     updateFixedItems();
+     syncFromRealSelection();
+
+     // NOTE KI need to force refetch immediately (or lazily in popup open)
+     previousQuery = null;
+     if (popupVisible) {
+         fetchItems(false, null);
+     } else {
+         updateDisplay();
+     }
+
+     if (DEBUG) console.log(display);
+ }
+
  ////////////////////////////////////////////////////////////
  // Fetch
  //
@@ -844,8 +864,18 @@
 
      jQuery(toggleEl).tooltip();
 
+     mutationObserver.observe(real, { childList: true });
+
      updateFixedItems();
      updateDisplay();
+ }
+
+ function handleMutation(mutationsList, observer) {
+     for (let mutation of mutationsList) {
+         if (mutation.type === 'childList') {
+             reload();
+         }
+     }
  }
 
  let eventListeners = {
@@ -857,22 +887,10 @@
      },
      'select-reload': function(event) {
          if (DEBUG) console.log(event);
-         if (!isSyncToReal) {
-             updateFixedItems();
-             syncFromRealSelection();
-
-             // NOTE KI need to force refetch immediately (or lazily in popup open)
-             previousQuery = null;
-             if (popupVisible) {
-                 fetchItems(false, null);
-             } else {
-                 updateDisplay();
-             }
-
-             if (DEBUG) console.log(display);
-         }
+         reload();
      },
  }
+
 
  ////////////////////////////////////////////////////////////
  // Handlers
