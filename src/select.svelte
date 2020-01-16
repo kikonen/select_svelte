@@ -301,7 +301,7 @@
  let selectionItems = [];
  let selectionTip = '';
 
- let summaryPlain = true;
+ let summarySingle = true;
  let summaryItems = [];
 
  let showFetching = false;
@@ -592,7 +592,8 @@
          if (summaryItems.length < len) {
              summaryItems.push({
                  id: 'more',
-                 text: `${len - summaryLen} ${translate('selected_more')}`
+                 text: `${len - summaryLen} ${translate('selected_more')}`,
+                 item_class: 'ss-summary-more',
              });
          }
 
@@ -601,7 +602,7 @@
          summaryItems = selectionItems;
          selectionTip = summaryItems[0].text;
      }
-     summaryPlain = summaryItems[0].blank;
+     summarySingle = summaryItems[0].blank || !multiple;
  }
 
  ////////////////////////////////////////////////////////////
@@ -1221,11 +1222,12 @@
           on:keyup={handleToggleKeyup}
           on:click={handleToggleClick}>
 
-    <span class="ss-summary"
-          class:ss-summary-wrap={summaryWrap}
-          class:ss-summary-nowrap={!summaryWrap}>
+    <span class:ss-summary-multiple={!summarySingle}
+          class:ss-summary-single={summarySingle}>
       {#each summaryItems as item, index (item.id)}
-        <span class="ss-summary-item {item.item_class || ''} {!summaryPlain && multiple ? 'ss-summary-item-block' : ''}"
+        <span class="{item.item_class || ''}"
+              class:ss-summary-item-multiple={!summarySingle}
+              class:ss-summary-item-single={summarySingle}
               >
           {item.text}
         </span>

@@ -5,7 +5,6 @@
 
 .ss-container {
   position: relative;
-  display: flex;
   width: 100%;
   height: unset;
   border: 0;
@@ -19,39 +18,62 @@
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 }
-.ss-summary {
+
+@mixin ss-summary {
   @include ss-no-click;
 
   display: flex;
   width: 100%;
   height: 100%;
   text-align: left;
-  margin: -6px -6px;
 }
-.ss-summary-wrap {
+
+.ss-summary-multiple {
+  @include ss-summary;
+
+  max-width: 97%;
+  margin-top: -3px;
+  margin-left: -1px;
+  margin-bottom: -3px;
   flex-wrap: wrap;
 }
-.ss-summary-nowrap {
+.ss-summary-single {
+  @include ss-summary;
+
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.ss-summary-item {
+
+@mixin ss-summary-item {
   @include ss-no-click;
 
   white-space: nowrap;
   padding-left: 0.25rem;
   padding-right: 0.25rem;
-
-  margin: 5px 1px 2px 5px;
-  max-width: 95%;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.ss-summary-item-block {
-  border-radius: 0.25rem;
-  border: 1px solid $primary;
+
+.ss-summary-item-multiple {
+  @include ss-summary-item;
+
+  margin: 2px 4px 2px 1px;
+
+  color: theme-color-level("primary", $alert-color-level);
+  background-color: theme-color-level("primary", $alert-bg-level);
+
+  border-radius: $border-radius;
+  border: 1px solid theme-color-level("primary", $alert-border-level);
 }
+.ss-summary-item-single {
+  @include ss-summary-item;
+}
+.ss-summary-more {
+  color: $text-muted;
+  background-color: unset;
+}
+
 .ss-caret {
   margin-left: auto;
   color: $dark;
@@ -79,6 +101,7 @@
 .ss-item-selected {
   color: theme-color-level("primary", $alert-color-level);
   background-color: theme-color-level("primary", $alert-bg-level);
+  border: 1px solid theme-color-level("primary", $alert-border-level);
 }
 .ss-item-muted {
   color: $text-muted;
