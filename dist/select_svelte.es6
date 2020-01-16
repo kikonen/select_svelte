@@ -348,7 +348,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (1245:6) {#each summaryItems as item, index (item.id)}
+// (1246:6) {#each summaryItems as item, index (item.id)}
 function create_each_block_1(key_1, ctx) {
 	let span;
 	let t0_value = /*item*/ ctx[92].text + "";
@@ -394,7 +394,7 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (1263:4) {#if typeahead}
+// (1264:4) {#if typeahead}
 function create_if_block_10(ctx) {
 	let div;
 	let input;
@@ -440,7 +440,7 @@ function create_if_block_10(ctx) {
 	};
 }
 
-// (1302:6) {:else}
+// (1303:6) {:else}
 function create_else_block(ctx) {
 	let div2;
 	let div1;
@@ -542,7 +542,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (1288:50) 
+// (1289:50) 
 function create_if_block_4(ctx) {
 	let div1;
 	let div0;
@@ -600,7 +600,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (1282:6) {#if item.separator}
+// (1283:6) {#if item.separator}
 function create_if_block_3(ctx) {
 	let div;
 	let dispose;
@@ -623,7 +623,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (1314:12) {#if multiple && !item.blank}
+// (1315:12) {#if multiple && !item.blank}
 function create_if_block_9(ctx) {
 	let div;
 	let i;
@@ -657,7 +657,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (1329:14) {:else}
+// (1330:14) {:else}
 function create_else_block_2(ctx) {
 	let div;
 	let t0_value = /*item*/ ctx[92].text + "";
@@ -712,7 +712,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (1321:14) {#if item.blank}
+// (1322:14) {#if item.blank}
 function create_if_block_6(ctx) {
 	let div;
 
@@ -754,7 +754,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (1334:16) {#if item.desc}
+// (1335:16) {#if item.desc}
 function create_if_block_8(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[92].desc + "";
@@ -779,7 +779,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (1325:18) {:else}
+// (1326:18) {:else}
 function create_else_block_1(ctx) {
 	let t_value = /*item*/ ctx[92].text + "";
 	let t;
@@ -800,7 +800,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (1323:18) {#if multiple}
+// (1324:18) {#if multiple}
 function create_if_block_7(ctx) {
 	let t_value = /*translate*/ ctx[23]("clear") + "";
 	let t;
@@ -819,7 +819,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (1295:10) {#if item.desc}
+// (1296:10) {#if item.desc}
 function create_if_block_5(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[92].desc + "";
@@ -844,7 +844,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (1281:4) {#each displayItems as item (item.id)}
+// (1282:4) {#each displayItems as item (item.id)}
 function create_each_block(key_1, ctx) {
 	let first;
 	let if_block_anchor;
@@ -893,7 +893,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (1346:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
+// (1347:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
 function create_if_block_2(ctx) {
 	let div;
 
@@ -914,7 +914,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (1352:4) {#if fetchError}
+// (1353:4) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -939,7 +939,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (1358:4) {#if selectionItems.length >= maxItems}
+// (1359:4) {#if selectionItems.length >= maxItems}
 function create_if_block(ctx) {
 	let div;
 	let t0_value = /*translate*/ ctx[23]("max_limit") + "";
@@ -1273,6 +1273,8 @@ const META_KEYS = {
 	F11: true,
 	F12: true
 };
+
+const MUTATIONS = { childList: true };
 
 function nop() {
 	
@@ -1647,6 +1649,7 @@ function instance($$self, $$props, $$invalidate) {
 
 	function syncToRealSelection() {
 		let changed = false;
+		mutationObserver.disconnect();
 
 		if (remote) {
 			selectionItems.forEach(function (item) {
@@ -1678,6 +1681,8 @@ function instance($$self, $$props, $$invalidate) {
 				el.selected = false;
 			}
 		}
+
+		mutationObserver.observe(real, MUTATIONS);
 
 		if (changed) {
 			try {
@@ -1993,7 +1998,7 @@ function instance($$self, $$props, $$invalidate) {
 		$$invalidate(5, maxItems = config.maxItems || MAX_ITEMS_DEFAULT);
 		placeholderItem.text = config.placeholder || "";
 		jQuery(toggleEl).tooltip();
-		mutationObserver.observe(real, { childList: true });
+		mutationObserver.observe(real, MUTATIONS);
 		updateFixedItems();
 		updateDisplay();
 	}

@@ -662,7 +662,7 @@ var Select = (function () {
     child_ctx[92] = list[i];
     child_ctx[96] = i;
     return child_ctx;
-  } // (1245:6) {#each summaryItems as item, index (item.id)}
+  } // (1246:6) {#each summaryItems as item, index (item.id)}
 
 
   function create_each_block_1(key_1, ctx) {
@@ -731,7 +731,7 @@ var Select = (function () {
         if (detaching) detach(span);
       }
     };
-  } // (1263:4) {#if typeahead}
+  } // (1264:4) {#if typeahead}
 
 
   function create_if_block_10(ctx) {
@@ -791,7 +791,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1302:6) {:else}
+  } // (1303:6) {:else}
 
 
   function create_else_block(ctx) {
@@ -936,7 +936,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1288:50) 
+  } // (1289:50) 
 
 
   function create_if_block_4(ctx) {
@@ -1011,7 +1011,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1282:6) {#if item.separator}
+  } // (1283:6) {#if item.separator}
 
 
   function create_if_block_3(ctx) {
@@ -1035,7 +1035,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1314:12) {#if multiple && !item.blank}
+  } // (1315:12) {#if multiple && !item.blank}
 
 
   function create_if_block_9(ctx) {
@@ -1072,7 +1072,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1329:14) {:else}
+  } // (1330:14) {:else}
 
 
   function create_else_block_2(ctx) {
@@ -1142,7 +1142,7 @@ var Select = (function () {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1321:14) {#if item.blank}
+  } // (1322:14) {#if item.blank}
 
 
   function create_if_block_6(ctx) {
@@ -1185,7 +1185,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1334:16) {#if item.desc}
+  } // (1335:16) {#if item.desc}
 
 
   function create_if_block_8(ctx) {
@@ -1215,7 +1215,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1325:18) {:else}
+  } // (1326:18) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -1241,7 +1241,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1323:18) {#if multiple}
+  } // (1324:18) {#if multiple}
 
 
   function create_if_block_7(ctx) {
@@ -1261,7 +1261,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1295:10) {#if item.desc}
+  } // (1296:10) {#if item.desc}
 
 
   function create_if_block_5(ctx) {
@@ -1291,7 +1291,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1281:4) {#each displayItems as item (item.id)}
+  } // (1282:4) {#each displayItems as item (item.id)}
 
 
   function create_each_block(key_1, ctx) {
@@ -1345,7 +1345,7 @@ var Select = (function () {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1346:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
+  } // (1347:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
 
 
   function create_if_block_2(ctx) {
@@ -1367,7 +1367,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1352:4) {#if fetchError}
+  } // (1353:4) {#if fetchError}
 
 
   function create_if_block_1(ctx) {
@@ -1397,7 +1397,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1358:4) {#if selectionItems.length >= maxItems}
+  } // (1359:4) {#if selectionItems.length >= maxItems}
 
 
   function create_if_block(ctx) {
@@ -1851,6 +1851,9 @@ var Select = (function () {
     F11: true,
     F12: true
   };
+  var MUTATIONS = {
+    childList: true
+  };
 
   function nop() {}
 
@@ -2236,6 +2239,7 @@ var Select = (function () {
 
     function syncToRealSelection() {
       var changed = false;
+      mutationObserver.disconnect();
 
       if (remote) {
         selectionItems.forEach(function (item) {
@@ -2267,6 +2271,8 @@ var Select = (function () {
           el.selected = false;
         }
       }
+
+      mutationObserver.observe(real, MUTATIONS);
 
       if (changed) {
         try {
@@ -2567,9 +2573,7 @@ var Select = (function () {
       $$invalidate(5, maxItems = config.maxItems || MAX_ITEMS_DEFAULT);
       placeholderItem.text = config.placeholder || "";
       jQuery(toggleEl).tooltip();
-      mutationObserver.observe(real, {
-        childList: true
-      });
+      mutationObserver.observe(real, MUTATIONS);
       updateFixedItems();
       updateDisplay();
     }
