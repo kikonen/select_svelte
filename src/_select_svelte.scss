@@ -33,7 +33,7 @@
 
   max-width: 97%;
   margin-top: -3px;
-  margin-left: -1px;
+  margin-left: -2px;
   margin-bottom: -3px;
   flex-wrap: wrap;
 }
@@ -58,13 +58,14 @@
 .ss-summary-item-multiple {
   @include ss-summary-item;
 
-  margin: 2px 4px 2px 1px;
+  margin: 2px 4px 2px 2px;
 
-  color: theme-color-level("primary", $alert-color-level);
-  background-color: theme-color-level("primary", $alert-bg-level);
+//  color: theme-color-level("primary", $alert-color-level);
+//  background-color: theme-color-level("primary", $alert-bg-level);
 
   border-radius: $border-radius;
-  border: 1px solid theme-color-level("primary", $alert-border-level);
+//  border: 1px solid theme-color-level("primary", $alert-border-level);
+  border: 1px solid $gray-500;
 }
 .ss-summary-item-single {
   @include ss-summary-item;
@@ -72,6 +73,7 @@
 .ss-summary-more {
   color: $text-muted;
   background-color: unset;
+  border-color: transparent;
 }
 
 .ss-caret {
@@ -101,7 +103,7 @@
 .ss-item-selected {
   color: theme-color-level("primary", $alert-color-level);
   background-color: theme-color-level("primary", $alert-bg-level);
-  border: 1px solid theme-color-level("primary", $alert-border-level);
+//  border: 1px solid theme-color-level("primary", $alert-border-level);
 }
 .ss-item-muted {
   color: $text-muted;
