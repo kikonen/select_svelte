@@ -73,6 +73,9 @@
      F12: true,
  }
 
+ const MUTATIONS = { childList: true };
+
+
  function nop() {};
 
  function hasModifier(event) {
@@ -366,12 +369,6 @@
  function selectItemImpl(id) {
      id = id.toString();
 
-/*
-     if (remote) {
-         syncToRealSelection();
-     }
-*/
-
      let item = display.byId[id];
 
      if (!item) {
@@ -489,6 +486,8 @@
  function syncToRealSelection() {
      let changed = false;
 
+     mutationObserver.disconnect();
+
      // Insert missing values
      // NOTE KI all existing values are *assumed* to be in sync data-attr wise
      if (remote) {
@@ -519,6 +518,8 @@
              el.selected = false;
          }
      }
+
+     mutationObserver.observe(real, MUTATIONS);
 
      if (changed) {
          try {
@@ -864,7 +865,7 @@
 
      jQuery(toggleEl).tooltip();
 
-     mutationObserver.observe(real, { childList: true });
+     mutationObserver.observe(real, MUTATIONS);
 
      updateFixedItems();
      updateDisplay();
