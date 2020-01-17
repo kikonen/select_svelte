@@ -93,6 +93,10 @@
   overflow-y: auto;
   overscroll-behavior: contain;
 }
+.ss-popup-left {
+  right: 0;
+  left: unset;
+}
 .ss-popup-top {
   top: unset;
   bottom: 100%;

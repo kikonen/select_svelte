@@ -316,6 +316,7 @@
 
  let popupVisible = false;
  let popupTop = false;
+ let popupLeft = false;
 
  let activeFetch = null;
 
@@ -354,8 +355,11 @@
          popupEl.style.minWidth = w + "px";
 
          let bounds = containerEl.getBoundingClientRect();
-         let middle = window.innerHeight / 2;
-         popupTop = bounds.y > middle;
+         let middleY = window.innerHeight / 2;
+         let middleX = window.innerWidth / 2;
+
+         popupTop = bounds.y > middleY;
+         popupLeft = bounds.x > middleX;
      }
  }
 
@@ -1313,6 +1317,7 @@
   <div class="dropdown-menu ss-popup"
        class:show={popupVisible}
        class:ss-popup-top={popupTop}
+       class:ss-popup-left={popupLeft}
        bind:this={popupEl}
        on:scroll={handlePopupScroll}>
     {#if typeahead}
