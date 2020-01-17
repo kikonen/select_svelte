@@ -13,6 +13,8 @@
      container_class: '',
  };
 
+ const FIXED_SORT_KEY = '_';
+
  const MAX_ITEMS_DEFAULT = 100;
  const FETCH_INDICATOR_DELAY = 150;
 
@@ -543,6 +545,7 @@
          let el = options[i];
          if (!el.value || el.dataset.itemFixed != null) {
              let item = createItemFromOption(el, styles);
+             item.sort_key = FIXED_SORT_KEY + item.sort_key;
              item.fixed = true;
              byId[item.id] = item;
              items.push(item);
