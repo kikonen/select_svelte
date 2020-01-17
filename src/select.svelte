@@ -1256,7 +1256,7 @@
         </span>
       {/each}
     </span>
-    <span class="ml-auto ss-icon {showFetching ? FA_CARET_FETCHING : FA_CARET_DOWN}">
+    <span class="ss-caret {showFetching ? FA_CARET_FETCHING : FA_CARET_DOWN}">
     </span>
   </button>
 
