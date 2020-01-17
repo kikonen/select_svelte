@@ -273,7 +273,6 @@
  let setupDone = false;
  let translations = {};
  let styles = {};
- let basename = '';
 
  let fetcher = inlineFetcher;
  let remote = false;
@@ -863,7 +862,6 @@
          Object.assign(styles, config.styles);
      }
 
-     basename = real.name;
      maxItems = config.maxItems || MAX_ITEMS_DEFAULT;
      placeholderItem.text = config.placeholder || '';
 
@@ -1231,11 +1229,12 @@
 <!-- ------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------ -->
 <div class="ss-container form-control {styles.container_class}"
-     name="ss_container_{basename}"
+     id="ss_container_{real.id}"
+     name="ss_container_{real.name}"
      bind:this={containerEl}>
 
   <button class="form-control ss-control"
-          name="ss_control_{basename}"
+          name="ss_control_{real.name}"
           type="button"
           tabindex="0"
           title="{selectionTip}"
