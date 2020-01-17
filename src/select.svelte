@@ -903,8 +903,13 @@
  //
  let toggleKeydownHandlers = {
      base: function(event) {
-         if (typeahead && popupVisible && !isMetaKey(event)) {
+         if (!popupVisible || isMetaKey(event)) {
+             return;
+         }
+         if (typeahead) {
              inputEl.focus();
+         } else {
+             focusNextByKey(event.key);
          }
      },
      ArrowDown: function(event) {
@@ -1004,11 +1009,48 @@
      },
  }
 
+ function focusNextByKey(ch) {
+     ch = ch.toUpperCase();
+
+     let nodes = popupEl.querySelectorAll('.ss-js-item');
+
+     let curr = document.activeElement;
+     if (curr.classList.contains('ss-js-item')) {
+         curr = curr.nextElementSibling;
+     } else {
+         curr = null;
+     }
+     if (!curr) {
+         curr = nodes[0];
+     }
+
+     let start = curr;
+     let rolled = false;
+     let found = false;
+     let idx = 0;
+     while (curr && !found && idx < nodes.length) {
+         let item = curr.dataset && display.byId[curr.dataset.id];
+         found = item && item.text && item.text.toUpperCase().startsWith(ch);
+         idx++;
+         if (!found) {
+             curr = curr.nextElementSibling;
+             if (!curr) {
+                 curr = nodes[0];
+             }
+         }
+     }
+     if (idx >= nodes.length) {
+         curr = null;
+     }
+     focusItem(curr);
+ }
+
  function focusItem(item) {
      if (item) {
          if (typeahead && popupEl.children[1] === item) {
              popupEl.scroll(0, 0);
          }
+         item.scrollIntoView();
          item.focus();
      }
  }
@@ -1054,8 +1096,13 @@
 
  let itemKeydownHandlers = {
      base: function(event) {
-         if (typeahead && !isMetaKey(event)) {
+         if (isMetaKey(event)) {
+             return;
+         }
+         if (typeahead) {
              inputEl.focus();
+         } else {
+             focusNextByKey(event.key);
          }
      },
      ArrowDown: function(event) {
