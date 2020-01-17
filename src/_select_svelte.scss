@@ -5,15 +5,15 @@
 
 .ss-container {
   position: relative;
-  width: 100%;
+  width: 100% !important;
   height: unset;
   border: 0;
   padding: 0;
 }
 .ss-control {
-  display: flex;
+  display: flex !important;
 
-  width: 100%;
+  width: 100% !important;
   height: unset;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
