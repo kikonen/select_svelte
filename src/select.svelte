@@ -603,7 +603,11 @@
          selectionTip = `${len} ${translate('selected_count')}: ${tip}`
      } else {
          summaryItems = selectionItems;
-         selectionTip = summaryItems[0].text;
+         if (summaryItems[0].blank) {
+             selectionTip = '';
+         } else {
+             selectionTip = summaryItems[0].text;
+         }
      }
      summarySingle = summaryItems[0].blank || !multiple;
  }
@@ -1245,6 +1249,7 @@
           class:ss-summary-single={summarySingle}>
       {#each summaryItems as item, index (item.id)}
         <span class="{item.item_class || ''}"
+              class:ss-blank={item.blank}
               class:ss-summary-item-multiple={!summarySingle}
               class:ss-summary-item-single={summarySingle}
               >
@@ -1320,7 +1325,7 @@
 
             <div class="d-inline-block">
               {#if item.blank}
-                <div class="ss-item-muted">
+                <div class="ss-blank">
                   {#if multiple}
                     {translate('clear')}
                   {:else}

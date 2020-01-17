@@ -22,6 +22,7 @@
 @mixin ss-summary {
   @include ss-no-click;
 
+  color: $input-color;
   display: flex;
   width: 100%;
   height: 100%;
@@ -104,6 +105,9 @@
   color: theme-color-level("primary", $alert-color-level);
   background-color: theme-color-level("primary", $alert-bg-level);
 //  border: 1px solid theme-color-level("primary", $alert-border-level);
+}
+.ss-blank {
+  color: $text-muted;
 }
 .ss-item-muted {
   color: $text-muted;
