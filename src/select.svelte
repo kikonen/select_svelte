@@ -1132,7 +1132,10 @@
          }
      },
      ArrowDown: function(event) {
-         focusNextItem(event.target);
+         if (!fetchingMore) {
+//             console.log("BLOCKED down");
+             focusNextItem(event.target);
+         }
          event.preventDefault();
      },
      ArrowUp: function(event) {
