@@ -92,6 +92,16 @@
      return key.split(/(?=[A-Z])/).join('_').toLowerCase();
  }
 
+ function toDash(key) {
+     return key.replace(/_/g, '-');
+ }
+
+ function toCamel(key) {
+     return key.split(/_/).map(function(e) {
+         return e[0].toUppserCase() + e[1, e.length];
+     }).join('_').toLowerCase();
+ }
+
  function createItemFromOption(el, styles) {
      let ds = el.dataset;
      let item = {
@@ -143,7 +153,11 @@
      if (item.action) {
          el.setAttribute('data-item-action', item.action);
      }
-     // TODO KI assign all data attributes
+     if (item.data) {
+         Object.keys(item.data).forEach(function(key) {
+             el.setAttribute(`data-${toDash(key)}`, item.data[key]);
+         });
+     }
      el.textContent = item.text;
      return el;
  }
@@ -1054,7 +1068,7 @@
          if (typeahead && popupEl.children[1] === item) {
              popupEl.scroll(0, 0);
          }
-         item.scrollIntoView();
+//         item.scrollIntoView();
          item.focus();
      }
  }
