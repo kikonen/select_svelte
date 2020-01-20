@@ -296,6 +296,7 @@
  let typeahead = false;
  let summaryLen = SUMMARY_LEN;
  let summaryWrap = SUMMARY_WRAP;
+ let keepResult = true;
  let placeholderItem = {
      id: '',
      text: '',
@@ -360,6 +361,9 @@
 
  function clearQuery() {
      query = '';
+     if (!keepResult) {
+         previousQuery = null;
+     }
  }
 
  function openPopup() {
@@ -872,6 +876,8 @@
      maxItems = config.maxItems || MAX_ITEMS_DEFAULT;
      summaryLen = config.summaryLen || SUMMARY_LEN;
      summaryWrap = config.summaryWrap != null ? config.summaryWrap : SUMMARY_WRAP;
+
+     keepResult = config.keepResult != null ? config.keepResult : true;
 
      Object.assign(translations, I18N_DEFAULTS);
      if (config.translations) {
