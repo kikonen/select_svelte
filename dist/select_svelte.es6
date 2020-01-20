@@ -348,7 +348,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (1303:6) {#each summaryItems as item, index (item.id)}
+// (1317:6) {#each summaryItems as item, index (item.id)}
 function create_each_block_1(key_1, ctx) {
 	let span;
 	let t0_value = /*item*/ ctx[93].text + "";
@@ -399,7 +399,7 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (1323:4) {#if typeahead}
+// (1337:4) {#if typeahead}
 function create_if_block_10(ctx) {
 	let div;
 	let input;
@@ -445,7 +445,7 @@ function create_if_block_10(ctx) {
 	};
 }
 
-// (1362:6) {:else}
+// (1376:6) {:else}
 function create_else_block(ctx) {
 	let div2;
 	let div1;
@@ -547,7 +547,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (1348:50) 
+// (1362:50) 
 function create_if_block_4(ctx) {
 	let div1;
 	let div0;
@@ -605,7 +605,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (1342:6) {#if item.separator}
+// (1356:6) {#if item.separator}
 function create_if_block_3(ctx) {
 	let div;
 	let dispose;
@@ -628,7 +628,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (1374:12) {#if multiple && !item.blank}
+// (1388:12) {#if multiple && !item.blank}
 function create_if_block_9(ctx) {
 	let div;
 	let i;
@@ -662,7 +662,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (1389:14) {:else}
+// (1403:14) {:else}
 function create_else_block_2(ctx) {
 	let div;
 	let t0_value = /*item*/ ctx[93].text + "";
@@ -717,7 +717,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (1381:14) {#if item.blank}
+// (1395:14) {#if item.blank}
 function create_if_block_6(ctx) {
 	let div;
 
@@ -759,7 +759,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (1394:16) {#if item.desc}
+// (1408:16) {#if item.desc}
 function create_if_block_8(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[93].desc + "";
@@ -784,7 +784,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (1385:18) {:else}
+// (1399:18) {:else}
 function create_else_block_1(ctx) {
 	let t_value = /*item*/ ctx[93].text + "";
 	let t;
@@ -805,7 +805,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (1383:18) {#if multiple}
+// (1397:18) {#if multiple}
 function create_if_block_7(ctx) {
 	let t_value = /*translate*/ ctx[24]("clear") + "";
 	let t;
@@ -824,7 +824,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (1355:10) {#if item.desc}
+// (1369:10) {#if item.desc}
 function create_if_block_5(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[93].desc + "";
@@ -849,7 +849,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (1341:4) {#each displayItems as item (item.id)}
+// (1355:4) {#each displayItems as item (item.id)}
 function create_each_block(key_1, ctx) {
 	let first;
 	let if_block_anchor;
@@ -898,7 +898,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (1406:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
+// (1420:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
 function create_if_block_2(ctx) {
 	let div;
 
@@ -919,7 +919,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (1412:4) {#if fetchError}
+// (1426:4) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -944,7 +944,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (1418:4) {#if selectionItems.length >= maxItems}
+// (1432:4) {#if selectionItems.length >= maxItems}
 function create_if_block(ctx) {
 	let div;
 	let t0_value = /*translate*/ ctx[24]("max_limit") + "";
@@ -1311,6 +1311,10 @@ function toUnderscore(key) {
 	return key.split(/(?=[A-Z])/).join("_").toLowerCase();
 }
 
+function toDash(key) {
+	return key.replace(/_/g, "-");
+}
+
 function createItemFromOption(el, styles) {
 	let ds = el.dataset;
 	let item = { id: el.value || "", text: el.text || "" };
@@ -1367,6 +1371,12 @@ function createOptionFromItem(item) {
 
 	if (item.action) {
 		el.setAttribute("data-item-action", item.action);
+	}
+
+	if (item.data) {
+		Object.keys(item.data).forEach(function (key) {
+			el.setAttribute(`data-${toDash(key)}`, item.data[key]);
+		});
 	}
 
 	el.textContent = item.text;
@@ -2204,7 +2214,6 @@ function instance($$self, $$props, $$invalidate) {
 				popupEl.scroll(0, 0);
 			}
 
-			item.scrollIntoView();
 			item.focus();
 		}
 	}
