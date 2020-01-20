@@ -642,13 +642,13 @@
      }
      updateFixedItems();
      syncFromRealSelection();
+     result = createResult({});
+     updateDisplay();
+     previousQuery = null;
 
      // NOTE KI need to force refetch immediately (or lazily in popup open)
-     previousQuery = null;
      if (popupVisible) {
          fetchItems(false, null);
-     } else {
-         updateDisplay();
      }
 
      if (DEBUG) console.log(display);
@@ -660,7 +660,7 @@
  function inlineFetcher(offset, query) {
      if (DEBUG) console.log("INLINE_SELECT_FETCH: " + query);
 
-     let promise = new Promise(function(resolve, reject) {
+     function createItems() {
          let items = []
          let pattern = query.toUpperCase().trim();
 
@@ -682,14 +682,16 @@
                  items.push(item);
              }
          }
+         return items;
+     }
 
-         let response = {
-             items: items,
+     let promise = new Promise(function(resolve, reject) {
+         resolve({
+             items: createItems(),
              info: {
                  more: false,
              }
-         }
-         resolve(response);
+         });
      });
 
      return promise;
