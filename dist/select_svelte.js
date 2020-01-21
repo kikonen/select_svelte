@@ -662,7 +662,7 @@ var Select = (function () {
     child_ctx[94] = list[i];
     child_ctx[98] = i;
     return child_ctx;
-  } // (1325:6) {#each summaryItems as item, index (item.id)}
+  } // (1330:6) {#each summaryItems as item, index (item.id)}
 
 
   function create_each_block_1(key_1, ctx) {
@@ -742,7 +742,7 @@ var Select = (function () {
         if (detaching) detach(span);
       }
     };
-  } // (1345:4) {#if typeahead}
+  } // (1350:4) {#if typeahead}
 
 
   function create_if_block_10(ctx) {
@@ -802,7 +802,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1384:6) {:else}
+  } // (1389:6) {:else}
 
 
   function create_else_block(ctx) {
@@ -947,7 +947,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1370:50) 
+  } // (1375:50) 
 
 
   function create_if_block_4(ctx) {
@@ -1022,7 +1022,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1364:6) {#if item.separator}
+  } // (1369:6) {#if item.separator}
 
 
   function create_if_block_3(ctx) {
@@ -1046,7 +1046,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1396:12) {#if multiple && !item.blank}
+  } // (1401:12) {#if multiple && !item.blank}
 
 
   function create_if_block_9(ctx) {
@@ -1083,7 +1083,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1411:14) {:else}
+  } // (1416:14) {:else}
 
 
   function create_else_block_2(ctx) {
@@ -1153,7 +1153,7 @@ var Select = (function () {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1403:14) {#if item.blank}
+  } // (1408:14) {#if item.blank}
 
 
   function create_if_block_6(ctx) {
@@ -1196,7 +1196,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1416:16) {#if item.desc}
+  } // (1421:16) {#if item.desc}
 
 
   function create_if_block_8(ctx) {
@@ -1226,7 +1226,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1407:18) {:else}
+  } // (1412:18) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -1252,7 +1252,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1405:18) {#if multiple}
+  } // (1410:18) {#if multiple}
 
 
   function create_if_block_7(ctx) {
@@ -1272,7 +1272,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1377:10) {#if item.desc}
+  } // (1382:10) {#if item.desc}
 
 
   function create_if_block_5(ctx) {
@@ -1302,7 +1302,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1363:4) {#each displayItems as item (item.id)}
+  } // (1368:4) {#each displayItems as item (item.id)}
 
 
   function create_each_block(key_1, ctx) {
@@ -1356,7 +1356,7 @@ var Select = (function () {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1428:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
+  } // (1433:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
 
 
   function create_if_block_2(ctx) {
@@ -1378,7 +1378,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1434:4) {#if fetchError}
+  } // (1439:4) {#if fetchError}
 
 
   function create_if_block_1(ctx) {
@@ -1408,7 +1408,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1440:4) {#if selectionItems.length >= maxItems}
+  } // (1445:4) {#if selectionItems.length >= maxItems}
 
 
   function create_if_block(ctx) {
@@ -1585,7 +1585,7 @@ var Select = (function () {
         toggle_class(div0, "ss-popup-left",
         /*popupLeft*/
         ctx[19]);
-        attr(div1, "class", div1_class_value = "ss-container form-control " +
+        attr(div1, "class", div1_class_value = "form-control ss-container " +
         /*styles*/
         ctx[23].container_class);
         attr(div1, "id", div1_id_value = "ss_container_" +
@@ -1852,17 +1852,20 @@ var Select = (function () {
   var FA_SELECTED = "far fa-check-square";
   var FA_NOT_SELECTED = "far fa-square";
   var META_KEYS = {
+    // Modifiers
     Control: true,
     Shift: true,
     Alt: true,
     AltGraph: true,
     Meta: true,
+    // Special keys
     ContextMenu: true,
     PrintScreen: true,
     ScrollLock: true,
     Pause: true,
     CapsLock: true,
     Numlock: true,
+    // Nav keys
     Escape: true,
     Tab: true,
     ArrowDown: true,
@@ -1873,6 +1876,7 @@ var Select = (function () {
     PageUp: true,
     Home: true,
     End: true,
+    // Ignore function keys
     F1: true,
     F2: true,
     F3: true,
@@ -2069,8 +2073,10 @@ var Select = (function () {
     var off = 0;
     items.forEach(function (item) {
       if (item.separator) ; else if (!item.id) ; else if (item.placeholder) {
-        act += 1;
+        // NOTE KI does not affect pagination
+        act += 1; // NOTE KI separator is ignored always //NOTE KI dummy items ignored
       } else {
+        // NOTE KI normal or disabled affects pagination
         off += 1;
         act += 1;
       }
@@ -2139,7 +2145,9 @@ var Select = (function () {
       return fetchItems(false, id).then(function (response) {
         selectItemImpl(id);
       });
-    }
+    } ////////////////////////////////////////////////////////////
+    // Utils
+
 
     function translate(key) {
       return translations[key];
@@ -2162,7 +2170,7 @@ var Select = (function () {
         var middleY = window.innerHeight / 2;
         var middleX = window.innerWidth / 2;
         $$invalidate(18, popupTop = bounds.y > middleY);
-        $$invalidate(19, popupLeft = bounds.x > middleX);
+        $$invalidate(19, popupLeft = bounds.x + bounds.width > middleX);
       }
     }
 
@@ -2244,7 +2252,8 @@ var Select = (function () {
       } else {
         selectItemImpl(el.dataset.id);
 
-        if (el.dataset.selected) ;
+        if (el.dataset.selected) ; //             selectionDropdownItems = selectionDropdownItems;
+
       }
     }
 
@@ -2264,7 +2273,10 @@ var Select = (function () {
 
     function containsElement(el) {
       return containerEl.contains(el) || popupEl.contains(el);
-    }
+    } ////////////////////////////////////////////////////////////
+    // sync/update
+    //
+
 
     function syncFromRealSelection() {
       if (isSyncToReal) {
@@ -2291,11 +2303,13 @@ var Select = (function () {
 
     function syncToRealSelection() {
       var changed = false;
-      mutationObserver.disconnect();
+      mutationObserver.disconnect(); // Insert missing values
+      // NOTE KI all existing values are *assumed* to be in sync data-attr wise
 
       if (remote) {
         selectionItems.forEach(function (item) {
           if (multiple && item.blank) {
+            // NOTE KI no "blank" item in multiselection
             return;
           }
 
@@ -2431,12 +2445,15 @@ var Select = (function () {
       syncFromRealSelection();
       result = createResult({});
       updateDisplay();
-      previousQuery = null;
+      previousQuery = null; // NOTE KI need to force refetch immediately (or lazily in popup open)
 
       if (popupVisible) {
         fetchItems(false, null);
       }
-    }
+    } ////////////////////////////////////////////////////////////
+    // Fetch
+    //
+
 
     function inlineFetcher(offset, query) {
 
@@ -2447,7 +2464,7 @@ var Select = (function () {
 
         for (var i = 0; i < options.length; i++) {
           var item = createItemFromOption(options[i]);
-          var match = void 0;
+          var match = void 0; // NOTE KI "blank" is handled as fixed item
 
           if (item.blank) {
             match = false;
@@ -2473,6 +2490,10 @@ var Select = (function () {
       });
       return promise;
     }
+    /**
+    * @return Promise
+    */
+
 
     function fetchItems(fetchMore, fetchId) {
       var currentQuery;
@@ -2579,7 +2600,8 @@ var Select = (function () {
 
     function cancelFetch() {
       if (activeFetch !== null) {
-        $$invalidate(20, activeFetch = null);
+        $$invalidate(20, activeFetch = null); // no result fetched; since it doesn't match input any longer
+
         previousQuery = null;
       }
     }
@@ -2593,6 +2615,7 @@ var Select = (function () {
     }
 
     onMount(function () {
+      // Initial selection
       syncFromRealSelection();
       Object.keys(eventListeners).forEach(function (ev) {
         real.addEventListener(ev, eventListeners[ev]);
@@ -2634,7 +2657,11 @@ var Select = (function () {
 
       $$invalidate(5, maxItems = config.maxItems || MAX_ITEMS_DEFAULT);
       placeholderItem.text = config.placeholder || "";
-      jQuery(toggleEl).tooltip();
+
+      if (jQuery.tooltip) {
+        jQuery(toggleEl).tooltip();
+      }
+
       mutationObserver.observe(real, MUTATIONS);
       updateFixedItems();
       updateDisplay();
@@ -2679,7 +2706,10 @@ var Select = (function () {
       "select-reload": function selectReload(event) {
         reload();
       }
-    };
+    }; ////////////////////////////////////////////////////////////
+    // Handlers
+    //
+
     var toggleKeydownHandlers = {
       base: function base(event) {
         if (!popupVisible || isMetaKey(event)) {
@@ -2717,6 +2747,7 @@ var Select = (function () {
         }
 
         if (popupVisible) {
+          // NOTE KI don't cancel fetch
           clearQuery();
           closePopup(false);
         } else {
@@ -2732,6 +2763,7 @@ var Select = (function () {
         }
 
         if (popupVisible) {
+          // NOTE KI don't cancel fetch
           clearQuery();
           closePopup(false);
         } else {
@@ -2769,6 +2801,8 @@ var Select = (function () {
         event.preventDefault();
       },
       ArrowUp: function ArrowUp(event) {
+        // NOTE KI closing popup here is *irritating* i.e. if one is trying to select
+        // first entry in dropdown
         event.preventDefault();
       },
       Escape: function Escape(event) {
@@ -2831,7 +2865,8 @@ var Select = (function () {
       if (item) {
         if (typeahead && popupEl.children[1] === item) {
           popupEl.scroll(0, 0);
-        }
+        } //         item.scrollIntoView();
+
 
         item.focus();
       }
@@ -2888,7 +2923,11 @@ var Select = (function () {
         }
       },
       ArrowDown: function ArrowDown(event) {
-        focusNextItem(event.target);
+        if (!fetchingMore) {
+          //             console.log("BLOCKED down");
+          focusNextItem(event.target);
+        }
+
         event.preventDefault();
       },
       ArrowUp: function ArrowUp(event) {
@@ -2925,6 +2964,7 @@ var Select = (function () {
     };
     var itemKeyupHandlers = {
       base: nop,
+      // allow "meta" keys to navigate in items
       PageUp: function PageUp(event) {
         var scrollLeft = document.body.scrollLeft;
         var scrollTop = document.body.scrollTop;
@@ -3075,6 +3115,9 @@ var Select = (function () {
       if ($$self.$$.dirty[1] &
       /*mounted*/
       32768) {
+        ////////////////////////////////////////////////////////////
+        // Setup
+        //
          {
           if (mounted) {
             syncToRealSelection();
