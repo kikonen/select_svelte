@@ -1,5 +1,5 @@
 // rollup.config.js
-import resolve from 'rollup-plugin-node-resolve';
+import resolve from '@rollup/plugin-node-resolve';
 import svelte from 'rollup-plugin-svelte';
 
 export default {
