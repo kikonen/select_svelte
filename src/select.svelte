@@ -172,43 +172,59 @@
      let selectionItems = data.selectionItems || [];
 
      fixedItems.forEach(function(item) {
+         if (byId[item.id]) {
+             console.warn("DUPLICATE: fixed", item);
+             return;
+         }
+
          items.push(item);
          if (!item.separator) {
              byId[item.id] = item;
          }
      });
 
-     let otherItems = [];
+     let filteredSelection = [];
+     let filteredFetched = [];
 
      if (data.multiple) {
          selectionItems.forEach(function(item) {
-             if (!byId[item.id] || item.separator) {
-                 otherItems.push(item);
-                 if (!item.separator) {
-                     byId[item.id] = item;
-                 }
+             if (byId[item.id]) {
+                 console.warn("DUPLICATE: selected", item);
+                 return;
+             }
+
+             filteredSelection.push(item);
+             if (!item.separator) {
+                 byId[item.id] = item;
              }
          });
      }
 
-     if (otherItems.length) {
-         otherItems.push({ id: 'selection_sep', separator: true })
-     }
-
      fetchedItems.forEach(function(item) {
-         if (!data.multiple || !byId[item.id] || item.separator) {
-             otherItems.push(item);
-             if (!item.separator) {
-                 byId[item.id] = item;
-             }
+         if (byId[item.id]) {
+             console.warn("DUPLICATE: fetched", item);
+             return;
+         }
+
+         filteredFetched.push(item);
+         if (!item.separator) {
+             byId[item.id] = item;
          }
      });
 
-     if (data.typeahead && otherItems.length && items.length) {
+     if (data.typeahead && items.length && filteredSelection.length && filteredFetched.length) {
          items.push({ id: 'fixed_sep', separator: true })
      }
 
-     otherItems.forEach(function(item) {
+     filteredSelection.forEach(function(item) {
+         items.push(item);
+     });
+
+     if (filteredSelection.length && filteredFetched.length) {
+         items.push({ id: 'selection_sep', separator: true })
+     }
+
+     filteredFetched.forEach(function(item) {
          items.push(item);
      });
 
@@ -594,6 +610,24 @@
      displayItems = display.displayItems;
  }
 
+ function appendFetchedToDisplay(fetchedItems) {
+     let byId = display.byId;
+     let displayItems = display.displayItems;
+
+     fetchedItems.forEach(function(item) {
+         if (byId[item.id]) {
+             console.warn("DUPLICATE: fetched-append", item);
+             return;
+         }
+
+         displayItems.push(item);
+         if (!item.separator) {
+             byId[item.id] = item;
+         }
+     });
+     displayItems = display.displayItems;
+ }
+
  function updateSelection(byId) {
      let items = Object.values(byId);
      if (items.length == 0) {
@@ -760,11 +794,7 @@
              hasMore = result.more;
 
              if (currentFetchingMore) {
-                 responseItems.forEach(function(item) {
-                     display.displayItems.push(item);
-                     display.byId[item.id] = item;
-                 });
-                 displayItems = display.displayItems;
+                 appendFetchedToDisplay(responseItems)
              } else {
                  updateDisplay();
              }
@@ -1398,7 +1428,7 @@
              on:keyup={handleItemKeyup}>
 
           <div class="ss-no-click">
-            {#if multiple && !item.blank}
+            {#if multiple && !item.blank && !item.action}
               <div class="d-inline-block align-top">
                 <i class="ss-marker {selectionById[item.id] ? FA_SELECTED : FA_NOT_SELECTED}"></i>
               </div>
