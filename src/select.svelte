@@ -894,7 +894,9 @@
      maxItems = config.maxItems || MAX_ITEMS_DEFAULT;
      placeholderItem.text = config.placeholder || '';
 
-     jQuery(toggleEl).tooltip();
+     if (jQuery.tooltip) {
+         jQuery(toggleEl).tooltip();
+     }
 
      mutationObserver.observe(real, MUTATIONS);
 
