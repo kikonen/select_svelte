@@ -377,7 +377,7 @@
          let middleX = window.innerWidth / 2;
 
          popupTop = bounds.y > middleY;
-         popupLeft = bounds.x > middleX;
+         popupLeft = bounds.x + bounds.width > middleX;
      }
  }
 
@@ -1307,7 +1307,7 @@
 
 <!-- ------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------ -->
-<div class="ss-container form-control {styles.container_class}"
+<div class="form-control ss-container {styles.container_class}"
      id="ss_container_{real.id}"
      name="ss_container_{real.name}"
      bind:this={containerEl}>
