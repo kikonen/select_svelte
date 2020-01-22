@@ -102,7 +102,7 @@
      }).join('_').toLowerCase();
  }
 
- function createItemFromOption(el, styles) {
+ function createItemFromOption(el, styles, baseHref) {
      let ds = el.dataset;
      let item = {
          id: el.value || '',
@@ -127,6 +127,7 @@
          if (ds.itemClass) {
              item.item_class = ds.itemClass;
          }
+
          if (ds.itemHref) {
              item.href = ds.itemHref;
          }
@@ -139,6 +140,10 @@
      if (!item.separator) {
          if (item.id === '') {
              item.blank = true;
+         } else {
+             if (!item.href && baseHref) {
+                 item.href = baseHref.replace(/:id/, item.id);
+             }
          }
      }
      return item;
@@ -325,6 +330,7 @@
      text: '',
      blank: true
  };
+ let baseHref = null;
 
  let mounted = false;
 
@@ -510,7 +516,7 @@
          let el = options[i];
          let item = oldById[el.value || ''];
          if (!item) {
-             item = createItemFromOption(el, styles);
+             item = createItemFromOption(el, styles, baseHref);
          }
          byId[item.id] = item;
      }
@@ -578,7 +584,7 @@
      for (let i = 0; i < options.length; i++) {
          let el = options[i];
          if (!el.value || el.dataset.itemFixed != null) {
-             let item = createItemFromOption(el, styles);
+             let item = createItemFromOption(el, styles, baseHref);
              item.sort_key = FIXED_SORT_KEY + item.sort_key;
              item.fixed = true;
              byId[item.id] = item;
@@ -703,7 +709,7 @@
 
          let options = real.options;
          for (let i = 0; i < options.length; i++) {
-             let item = createItemFromOption(options[i], styles);
+             let item = createItemFromOption(options[i], styles, baseHref);
              let match;
 
              // NOTE KI "blank" is handled as fixed item
@@ -914,6 +920,7 @@
      summaryLen = config.summaryLen || SUMMARY_LEN;
      summaryWrap = config.summaryWrap != null ? config.summaryWrap : SUMMARY_WRAP;
 
+     baseHref = config.baseHref;
      keepResult = config.keepResult != null ? config.keepResult : true;
 
      Object.assign(translations, I18N_DEFAULTS);
