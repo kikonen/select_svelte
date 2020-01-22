@@ -662,7 +662,7 @@ var Select = (function () {
     child_ctx[95] = list[i];
     child_ctx[99] = i;
     return child_ctx;
-  } // (1360:6) {#each summaryItems as item, index (item.id)}
+  } // (1374:6) {#each summaryItems as item, index (item.id)}
 
 
   function create_each_block_1(key_1, ctx) {
@@ -742,7 +742,7 @@ var Select = (function () {
         if (detaching) detach(span);
       }
     };
-  } // (1380:4) {#if typeahead}
+  } // (1395:4) {#if typeahead}
 
 
   function create_if_block_10(ctx) {
@@ -802,7 +802,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1419:6) {:else}
+  } // (1434:6) {:else}
 
 
   function create_else_block(ctx) {
@@ -951,7 +951,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1405:50) 
+  } // (1420:50) 
 
 
   function create_if_block_4(ctx) {
@@ -1026,7 +1026,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1399:6) {#if item.separator}
+  } // (1414:6) {#if item.separator}
 
 
   function create_if_block_3(ctx) {
@@ -1050,7 +1050,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1431:12) {#if multiple && !item.blank && !item.action}
+  } // (1446:12) {#if multiple && !item.blank && !item.action}
 
 
   function create_if_block_9(ctx) {
@@ -1087,7 +1087,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1446:14) {:else}
+  } // (1461:14) {:else}
 
 
   function create_else_block_2(ctx) {
@@ -1157,7 +1157,7 @@ var Select = (function () {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1438:14) {#if item.blank}
+  } // (1453:14) {#if item.blank}
 
 
   function create_if_block_6(ctx) {
@@ -1200,7 +1200,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1451:16) {#if item.desc}
+  } // (1466:16) {#if item.desc}
 
 
   function create_if_block_8(ctx) {
@@ -1230,7 +1230,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1442:18) {:else}
+  } // (1457:18) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -1256,7 +1256,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1440:18) {#if multiple}
+  } // (1455:18) {#if multiple}
 
 
   function create_if_block_7(ctx) {
@@ -1276,7 +1276,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1412:10) {#if item.desc}
+  } // (1427:10) {#if item.desc}
 
 
   function create_if_block_5(ctx) {
@@ -1306,7 +1306,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1398:4) {#each displayItems as item (item.id)}
+  } // (1413:4) {#each displayItems as item (item.id)}
 
 
   function create_each_block(key_1, ctx) {
@@ -1360,7 +1360,7 @@ var Select = (function () {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1463:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
+  } // (1478:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
 
 
   function create_if_block_2(ctx) {
@@ -1382,7 +1382,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1469:4) {#if fetchError}
+  } // (1484:4) {#if fetchError}
 
 
   function create_if_block_1(ctx) {
@@ -1412,7 +1412,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1475:4) {#if selectionItems.length >= maxItems}
+  } // (1490:4) {#if selectionItems.length >= maxItems}
 
 
   function create_if_block(ctx) {
@@ -1580,6 +1580,7 @@ var Select = (function () {
         /*selectionTip*/
         ctx[12]);
         attr(div0, "class", "dropdown-menu ss-popup");
+        attr(div0, "tabindex", "-1");
         toggle_class(div0, "show",
         /*popupVisible*/
         ctx[17]);
@@ -2011,7 +2012,11 @@ var Select = (function () {
     if (data.multiple) {
       selectionItems.forEach(function (item) {
         if (byId[item.id]) {
-          console.warn("DUPLICATE: selected", item);
+          // NOTE KI "placeholder" is pushed into fixed items; don't complain about it
+          if (!item.blank) {
+            console.warn("DUPLICATE: selected", item);
+          }
+
           return;
         }
 
@@ -2065,7 +2070,8 @@ var Select = (function () {
     return {
       blankItem: blankItem,
       byId: byId,
-      displayItems: items
+      displayItems: items,
+      dirty: false
     };
   }
 
@@ -2403,6 +2409,11 @@ var Select = (function () {
     }
 
     function updateDisplay() {
+
+      if (!display.dirty) {
+        return;
+      }
+
       display = createDisplay({
         typeahead: typeahead,
         multiple: multiple,
@@ -2472,6 +2483,7 @@ var Select = (function () {
       }
 
       $$invalidate(13, summarySingle = summaryItems[0].blank || !multiple);
+      display.dirty = true;
     }
 
     function reload() {
@@ -2482,6 +2494,7 @@ var Select = (function () {
       updateFixedItems();
       syncFromRealSelection();
       result = createResult({});
+      display.dirty = true;
       updateDisplay();
       previousQuery = null; // NOTE KI need to force refetch immediately (or lazily in popup open)
 
@@ -2586,6 +2599,7 @@ var Select = (function () {
           if (currentFetchingMore) {
             appendFetchedToDisplay(responseItems);
           } else {
+            display.dirty = true;
             updateDisplay();
           }
 
@@ -2612,6 +2626,7 @@ var Select = (function () {
 
           $$invalidate(8, actualCount = _result.actualCount);
           hasMore = _result.more;
+          display.dirty = true;
           updateDisplay();
           previousQuery = null;
           $$invalidate(21, previousFetch = currentFetch);
@@ -2698,6 +2713,7 @@ var Select = (function () {
 
       mutationObserver.observe(real, MUTATIONS);
       updateFixedItems();
+      display.dirty = true;
       updateDisplay();
     }
 
@@ -3047,7 +3063,9 @@ var Select = (function () {
     };
 
     function handleBlur(event) {
-      if (event.sourceCapabilities && !containsElement(event.relatedTarget)) {
+      if (
+      /*event.sourceCapabilities &&*/
+      !containsElement(event.relatedTarget)) {
         cancelFetch();
         clearQuery();
         closePopup(false);

@@ -348,7 +348,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (1360:6) {#each summaryItems as item, index (item.id)}
+// (1374:6) {#each summaryItems as item, index (item.id)}
 function create_each_block_1(key_1, ctx) {
 	let span;
 	let t0_value = /*item*/ ctx[95].text + "";
@@ -399,7 +399,7 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (1380:4) {#if typeahead}
+// (1395:4) {#if typeahead}
 function create_if_block_10(ctx) {
 	let div;
 	let input;
@@ -445,7 +445,7 @@ function create_if_block_10(ctx) {
 	};
 }
 
-// (1419:6) {:else}
+// (1434:6) {:else}
 function create_else_block(ctx) {
 	let div2;
 	let div1;
@@ -547,7 +547,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (1405:50) 
+// (1420:50) 
 function create_if_block_4(ctx) {
 	let div1;
 	let div0;
@@ -605,7 +605,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (1399:6) {#if item.separator}
+// (1414:6) {#if item.separator}
 function create_if_block_3(ctx) {
 	let div;
 	let dispose;
@@ -628,7 +628,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (1431:12) {#if multiple && !item.blank && !item.action}
+// (1446:12) {#if multiple && !item.blank && !item.action}
 function create_if_block_9(ctx) {
 	let div;
 	let i;
@@ -662,7 +662,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (1446:14) {:else}
+// (1461:14) {:else}
 function create_else_block_2(ctx) {
 	let div;
 	let t0_value = /*item*/ ctx[95].text + "";
@@ -717,7 +717,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (1438:14) {#if item.blank}
+// (1453:14) {#if item.blank}
 function create_if_block_6(ctx) {
 	let div;
 
@@ -759,7 +759,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (1451:16) {#if item.desc}
+// (1466:16) {#if item.desc}
 function create_if_block_8(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[95].desc + "";
@@ -784,7 +784,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (1442:18) {:else}
+// (1457:18) {:else}
 function create_else_block_1(ctx) {
 	let t_value = /*item*/ ctx[95].text + "";
 	let t;
@@ -805,7 +805,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (1440:18) {#if multiple}
+// (1455:18) {#if multiple}
 function create_if_block_7(ctx) {
 	let t_value = /*translate*/ ctx[24]("clear") + "";
 	let t;
@@ -824,7 +824,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (1412:10) {#if item.desc}
+// (1427:10) {#if item.desc}
 function create_if_block_5(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[95].desc + "";
@@ -849,7 +849,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (1398:4) {#each displayItems as item (item.id)}
+// (1413:4) {#each displayItems as item (item.id)}
 function create_each_block(key_1, ctx) {
 	let first;
 	let if_block_anchor;
@@ -898,7 +898,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (1463:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
+// (1478:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
 function create_if_block_2(ctx) {
 	let div;
 
@@ -919,7 +919,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (1469:4) {#if fetchError}
+// (1484:4) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -944,7 +944,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (1475:4) {#if selectionItems.length >= maxItems}
+// (1490:4) {#if selectionItems.length >= maxItems}
 function create_if_block(ctx) {
 	let div;
 	let t0_value = /*translate*/ ctx[24]("max_limit") + "";
@@ -1064,6 +1064,7 @@ function create_fragment(ctx) {
 			attr(button, "tabindex", "0");
 			attr(button, "title", /*selectionTip*/ ctx[12]);
 			attr(div0, "class", "dropdown-menu ss-popup");
+			attr(div0, "tabindex", "-1");
 			toggle_class(div0, "show", /*popupVisible*/ ctx[17]);
 			toggle_class(div0, "ss-popup-top", /*popupTop*/ ctx[18]);
 			toggle_class(div0, "ss-popup-left", /*popupLeft*/ ctx[19]);
@@ -1414,7 +1415,11 @@ function createDisplay(data) {
 	if (data.multiple) {
 		selectionItems.forEach(function (item) {
 			if (byId[item.id]) {
-				console.warn("DUPLICATE: selected", item);
+				// NOTE KI "placeholder" is pushed into fixed items; don't complain about it
+				if (!item.blank) {
+					console.warn("DUPLICATE: selected", item);
+				}
+
 				return;
 			}
 
@@ -1461,7 +1466,12 @@ function createDisplay(data) {
 		}
 	});
 
-	return { blankItem, byId, displayItems: items };
+	return {
+		blankItem,
+		byId,
+		displayItems: items,
+		dirty: false
+	};
 }
 
 
@@ -1792,6 +1802,11 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	function updateDisplay() {
+
+		if (!display.dirty) {
+			return;
+		}
+
 		display = createDisplay({
 			typeahead,
 			multiple,
@@ -1867,6 +1882,7 @@ function instance($$self, $$props, $$invalidate) {
 		}
 
 		$$invalidate(13, summarySingle = summaryItems[0].blank || !multiple);
+		display.dirty = true;
 	}
 
 	function reload() {
@@ -1877,6 +1893,7 @@ function instance($$self, $$props, $$invalidate) {
 		updateFixedItems();
 		syncFromRealSelection();
 		result = createResult({});
+		display.dirty = true;
 		updateDisplay();
 		previousQuery = null;
 
@@ -1983,6 +2000,7 @@ function instance($$self, $$props, $$invalidate) {
 				if (currentFetchingMore) {
 					appendFetchedToDisplay(responseItems);
 				} else {
+					display.dirty = true;
 					updateDisplay();
 				}
 
@@ -2008,6 +2026,7 @@ function instance($$self, $$props, $$invalidate) {
 				let result = createResult({});
 				$$invalidate(8, actualCount = result.actualCount);
 				hasMore = result.more;
+				display.dirty = true;
 				updateDisplay();
 				previousQuery = null;
 				$$invalidate(21, previousFetch = currentFetch);
@@ -2107,6 +2126,7 @@ function instance($$self, $$props, $$invalidate) {
 
 		mutationObserver.observe(real, MUTATIONS);
 		updateFixedItems();
+		display.dirty = true;
 		updateDisplay();
 	}
 
@@ -2443,7 +2463,8 @@ function instance($$self, $$props, $$invalidate) {
 	};
 
 	function handleBlur(event) {
-		if (event.sourceCapabilities && !containsElement(event.relatedTarget)) {
+		if (/*event.sourceCapabilities &&*/
+		!containsElement(event.relatedTarget)) {
 			cancelFetch();
 			clearQuery();
 			closePopup(false);
