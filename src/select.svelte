@@ -240,7 +240,8 @@
      return {
          blankItem: blankItem,
          byId: byId,
-         displayItems: items
+         displayItems: items,
+         dirty: false
      };
  };
 
@@ -603,6 +604,11 @@
  }
 
  function updateDisplay() {
+     if (DEBUG) console.log("UPDATE_DISPLAY: dirty=" + display.dirty, display);
+     if (!display.dirty) {
+         return;
+     }
+
      display = createDisplay({
          typeahead: typeahead,
          multiple: multiple,
@@ -671,6 +677,7 @@
          }
      }
      summarySingle = summaryItems[0].blank || !multiple;
+     display.dirty = true;
  }
 
  function reload() {
@@ -680,6 +687,7 @@
      updateFixedItems();
      syncFromRealSelection();
      result = createResult({});
+     display.dirty = true;
      updateDisplay();
      previousQuery = null;
 
@@ -799,6 +807,7 @@
              if (currentFetchingMore) {
                  appendFetchedToDisplay(responseItems)
              } else {
+                 display.dirty = true;
                  updateDisplay();
              }
 
@@ -828,6 +837,7 @@
              actualCount = result.actualCount;
              hasMore = result.more;
 
+             display.dirty = true;
              updateDisplay();
 
              previousQuery = null;
@@ -934,6 +944,7 @@
      mutationObserver.observe(real, MUTATIONS);
 
      updateFixedItems();
+     display.dirty = true;
      updateDisplay();
  }
 
