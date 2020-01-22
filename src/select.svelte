@@ -1259,7 +1259,7 @@
  }
 
  function handleBlur(event) {
-     if (event.sourceCapabilities && !containsElement(event.relatedTarget)) {
+     if (/*event.sourceCapabilities &&*/ !containsElement(event.relatedTarget)) {
          if (DEBUG) console.log("BLUR", event);
 
          cancelFetch();
@@ -1376,6 +1376,7 @@
        class:ss-popup-top={popupTop}
        class:ss-popup-left={popupLeft}
        bind:this={popupEl}
+       tabindex="-1"
        on:scroll={handlePopupScroll}>
     {#if typeahead}
         <div class="ss-input-item" tabindex="-1">
