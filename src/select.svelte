@@ -1332,19 +1332,20 @@
  }
 
  function handleToggleLinkClick(event) {
+     toggleEl.focus();
      if (!hasModifier(event)) {
          event.preventDefault();
      }
  }
 
  function handleItemLinkClick(event) {
+     let el = event.target.closest('.ss-item');
+     el.focus();
      if (!hasModifier(event)) {
          event.preventDefault();
          event.stopPropagation();
          if (event.button === 0) {
              if (!hasModifier(event)) {
-                 let el = event.target.closest('.ss-item');
-                 el.focus();
                  selectElement(el)
              }
          }
