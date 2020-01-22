@@ -123,6 +123,9 @@
   @include ss-no-click;
   color: $text-muted;
 }
+.ss-item-link {
+  pointer-events: all;
+}
 .ss-message-item {
   @include ss-no-click;
 

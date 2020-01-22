@@ -127,6 +127,9 @@
          if (ds.itemClass) {
              item.item_class = ds.itemClass;
          }
+         if (ds.itemHref) {
+             item.href = ds.itemHref;
+         }
 
          item.data = {};
          Object.keys(ds).forEach(function(key) {
@@ -483,17 +486,6 @@
 
          if (el.dataset.selected) {
 //             selectionDropdownItems = selectionDropdownItems;
-         }
-     }
- }
-
- function clickElement(el) {
-     let id = el.dataset.id
-     if (id) {
-         let item = display.byId[id];
-
-         if (item) {
-             real.dispatchEvent(new CustomEvent('select-click', { detail: item }));
          }
      }
  }
@@ -1335,9 +1327,29 @@
      if (event.button === 0) {
          if (!hasModifier(event)) {
              selectElement(event.target)
-         } else if (event.ctrlKey || event.metaKey) {
-             clickElement(event.target)
          }
+     }
+ }
+
+ function handleToggleLinkClick(event) {
+     if (!hasModifier(event)) {
+         event.preventDefault();
+     }
+ }
+
+ function handleItemLinkClick(event) {
+     if (!hasModifier(event)) {
+         event.preventDefault();
+         event.stopPropagation();
+         if (event.button === 0) {
+             if (!hasModifier(event)) {
+                 let el = event.target.closest('.ss-item');
+                 el.focus();
+                 selectElement(el)
+             }
+         }
+     } else {
+         // activate link
      }
  }
 
@@ -1377,7 +1389,16 @@
               class:ss-summary-item-multiple={!summarySingle}
               class:ss-summary-item-single={summarySingle}
               >
-          {item.text}
+
+          {#if item.href}
+            <a class="ss-item-link" href="{item.href}" target="_blank"
+               tabindex="-1"
+               on:click={handleToggleLinkClick}>
+              {item.text}
+            </a>
+          {:else}
+            {item.text}
+          {/if}
         </span>
       {/each}
     </span>
@@ -1459,9 +1480,17 @@
                   {/if}
                 </div>
               {:else}
-                <div class="ss-item-text {item.item_class || ''}">
-                  {item.text}
-                </div>
+                {#if item.href}
+                  <a class="ss-item-link" href="{item.href}"
+                     tabindex="-1"
+                     on:click={handleItemLinkClick}>
+                    {item.text}
+                  </a>
+                {:else}
+                  <div class="ss-item-text {item.item_class || ''}">
+                    {item.text}
+                  </div>
+                {/if}
 
                 {#if item.desc}
                   <div class="ss-item-desc">
