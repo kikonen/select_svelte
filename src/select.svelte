@@ -189,7 +189,10 @@
      if (data.multiple) {
          selectionItems.forEach(function(item) {
              if (byId[item.id]) {
-                 console.warn("DUPLICATE: selected", item);
+                 // NOTE KI "placeholder" is pushed into fixed items; don't complain about it
+                 if (!item.blank) {
+                     console.warn("DUPLICATE: selected", item);
+                 }
                  return;
              }
 
