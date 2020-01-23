@@ -141,7 +141,7 @@
          if (item.id === '') {
              item.blank = true;
          } else {
-             if (!item.href && baseHref) {
+             if (!item.action && !item.href && baseHref) {
                  item.href = baseHref.replace(/:id/, item.id);
              }
          }
