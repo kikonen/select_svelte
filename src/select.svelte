@@ -1061,6 +1061,14 @@
          // first entry in dropdown
          event.preventDefault();
      },
+     PageUp: function(event) {
+//         blockScrollUpIfNeeded(event);
+         event.preventDefault();
+     },
+     PageDown: function(event) {
+//         blockScrollDownIfNeeded(event);
+         event.preventDefault();
+     },
      Escape: function(event) {
          cancelFetch();
          clearQuery();
@@ -1165,6 +1173,78 @@
      return next;
  }
 
+ function focusPageUp(event) {
+     let scrollLeft = document.body.scrollLeft;
+     let scrollTop = document.body.scrollTop;
+
+     let popupRect = popupEl.getBoundingClientRect();
+
+     let x = scrollLeft + popupRect.left + 10;
+     let y;
+
+     if (typeahead) {
+         let inputRect = inputEl.getBoundingClientRect();
+         y = scrollTop + inputRect.bottom + 10;
+     } else {
+         y = scrollTop + popupRect.top + 10;
+     }
+
+     let next = document.elementFromPoint(x, y);
+     if (!next) {
+         let nodes = popupEl.querySelectorAll('.ss-js-item');
+         let next = nodes.length ? nodes[0] : null;
+     } else {
+         if (!next.classList.contains('ss-js-item')) {
+             let nodes = popupEl.querySelectorAll('.ss-js-item');
+             let next = nodes.length ? nodes[0] : null;
+         }
+     }
+     focusItem(next);
+     event.preventDefault();
+ }
+
+ function focusPageDown(event) {
+     let scrollLeft = document.body.scrollLeft;
+     let scrollTop = document.body.scrollTop;
+
+     let popupRect = popupEl.getBoundingClientRect();
+
+     let x = scrollLeft + popupRect.left + 10;
+     let y = scrollTop + popupRect.bottom - 10;
+
+     let next = document.elementFromPoint(x, y);
+     if (!next) {
+         let nodes = popupEl.querySelectorAll('.ss-js-item');
+         let next = nodes.length ? nodes[nodes.length -1] : null;
+     } else {
+         if (!next.classList.contains('ss-js-item')) {
+             let nodes = popupEl.querySelectorAll('.ss-js-item');
+             let next = nodes.length ? nodes[nodes.length - 1] : null;
+         }
+     }
+     focusItem(next);
+     event.preventDefault();
+ }
+
+ function blockScrollUpIfNeeded(event) {
+     if (popupEl.scrollTop === 0) {
+         event.preventDefault();
+     }
+ }
+
+ function blockScrollDownIfNeeded(event) {
+     if (fetchingMore) {
+         event.preventDefault();
+         return;
+     }
+
+     let popupRect = popupEl.getBoundingClientRect();
+
+     if (popupEl.scrollTop + popupRect.height >= popupEl.scrollHeight) {
+         event.preventDefault();
+     }
+ }
+
  let itemKeydownHandlers = {
      base: function(event) {
          if (isMetaKey(event)) {
@@ -1178,7 +1258,6 @@
      },
      ArrowDown: function(event) {
          if (!fetchingMore) {
-//             console.log("BLOCKED down");
              focusNextItem(event.target);
          }
          event.preventDefault();
@@ -1188,21 +1267,16 @@
          event.preventDefault();
      },
      PageUp: function(event) {
-         if (popupEl.scrollTop === 0) {
-             event.preventDefault();
-         }
+         blockScrollUpIfNeeded(event);
      },
      PageDown: function(event) {
-         if (fetchingMore) {
-             event.preventDefault();
-             return;
-         }
-
-         let rect = popupEl.getBoundingClientRect();
-         if (rect.top === 0) {
-             console.log("HIT_BOTTOM");
-             event.preventDefault();
-         }
+         blockScrollDownIfNeeded(event);
+     },
+     Home: function(event) {
+         blockScrollUpIfNeeded(event);
+     },
+     End: function(event) {
+         blockScrollDownIfNeeded(event);
      },
      Enter: function(event) {
          if (!hasModifier(event)) {
@@ -1236,59 +1310,20 @@
      base: nop,
      // allow "meta" keys to navigate in items
      PageUp: function(event) {
-         let scrollLeft = document.body.scrollLeft;
-         let scrollTop = document.body.scrollTop;
-
-         let popupRect = popupEl.getBoundingClientRect();
-         let inputRect = inputEl.getBoundingClientRect();
-
-         let x = scrollLeft + popupRect.left + 10;
-         let y;
-
-         if (typeahead) {
-             y = scrollTop + inputRect.bottom + 10;
-         } else {
-             y = scrollTop + popupRect.top + 10;
-         }
-
-         let next = document.elementFromPoint(x, y);
-         if (!next) {
-             next = popupEl.querySelector('.ss-js-item:first-child');
-         } else {
-             if (!next.classList.contains('ss-js-item')) {
-                 next = popupEl.querySelector('.ss-js-item:first-child');
-             }
-         }
-         focusItem(next);
-         event.preventDefault();
+         focusPageUp(event);
      },
      PageDown: function(event) {
-         let scrollLeft = document.body.scrollLeft;
-         let scrollTop = document.body.scrollTop;
-
-         let popupRect = popupEl.getBoundingClientRect();
-
-         let x = scrollLeft + popupRect.left + 10;
-         let y = scrollTop + popupRect.bottom - 10;
-
-         let next = document.elementFromPoint(x, y);
-         if (!next) {
-             next = popupEl.querySelector('.ss-js-item:last-child');
-         } else {
-             if (!next.classList.contains('ss-js-item')) {
-                 next = popupEl.querySelector('.ss-js-item:last-child');
-             }
-         }
-         focusItem(next);
-         event.preventDefault();
+         focusPageDown(event);
      },
      Home: function(event) {
-         let next = popupEl.querySelector('.ss-js-item:first-child');
+         let nodes = popupEl.querySelectorAll('.ss-js-item');
+         let next = nodes.length ? nodes[0] : null;
          focusItem(next);
          event.preventDefault();
      },
      End: function(event) {
-         let next = popupEl.querySelector('.ss-js-item:last-child');
+         let nodes = popupEl.querySelectorAll('.ss-js-item');
+         let next = nodes.length ? nodes[nodes.length - 1] : null;
          focusItem(next);
          event.preventDefault();
      },
