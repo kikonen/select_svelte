@@ -1187,6 +1187,23 @@
          focusPreviousItem(event.target);
          event.preventDefault();
      },
+     PageUp: function(event) {
+         if (popupEl.scrollTop === 0) {
+             event.preventDefault();
+         }
+     },
+     PageDown: function(event) {
+         if (fetchingMore) {
+             event.preventDefault();
+             return;
+         }
+
+         let rect = popupEl.getBoundingClientRect();
+         if (rect.top === 0) {
+             console.log("HIT_BOTTOM");
+             event.preventDefault();
+         }
+     },
      Enter: function(event) {
          if (!hasModifier(event)) {
              selectElement(event.target);
@@ -1222,8 +1239,19 @@
          let scrollLeft = document.body.scrollLeft;
          let scrollTop = document.body.scrollTop;
 
-         let rect = popupEl.getBoundingClientRect();
-         let next = document.elementFromPoint(scrollLeft + rect.x + 10, scrollTop + rect.top + 1);
+         let popupRect = popupEl.getBoundingClientRect();
+         let inputRect = inputEl.getBoundingClientRect();
+
+         let x = scrollLeft + popupRect.left + 10;
+         let y;
+
+         if (typeahead) {
+             y = scrollTop + inputRect.bottom + 10;
+         } else {
+             y = scrollTop + popupRect.top + 10;
+         }
+
+         let next = document.elementFromPoint(x, y);
          if (!next) {
              next = popupEl.querySelector('.ss-js-item:first-child');
          } else {
@@ -1237,10 +1265,13 @@
      PageDown: function(event) {
          let scrollLeft = document.body.scrollLeft;
          let scrollTop = document.body.scrollTop;
-         let h = popupEl.offsetHeight;
 
-         let rect = popupEl.getBoundingClientRect();
-         let next = document.elementFromPoint(scrollLeft + rect.x + 10, scrollTop + rect.top + h - 10);
+         let popupRect = popupEl.getBoundingClientRect();
+
+         let x = scrollLeft + popupRect.left + 10;
+         let y = scrollTop + popupRect.bottom - 10;
+
+         let next = document.elementFromPoint(x, y);
          if (!next) {
              next = popupEl.querySelector('.ss-js-item:last-child');
          } else {
