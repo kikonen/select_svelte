@@ -665,7 +665,7 @@ var Select = (function () {
     child_ctx[103] = list[i];
     child_ctx[107] = i;
     return child_ctx;
-  } // (1478:10) {:else}
+  } // (1481:10) {:else}
 
 
   function create_else_block_4(ctx) {
@@ -691,7 +691,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1472:10) {#if item.href}
+  } // (1475:10) {#if item.href}
 
 
   function create_if_block_12(ctx) {
@@ -740,7 +740,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1465:6) {#each summaryItems as item, index (item.id)}
+  } // (1468:6) {#each summaryItems as item, index (item.id)}
 
 
   function create_each_block_1(key_1, ctx) {
@@ -833,7 +833,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1495:4) {#if typeahead}
+  } // (1498:4) {#if typeahead}
 
 
   function create_if_block_11(ctx) {
@@ -893,7 +893,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1534:6) {:else}
+  } // (1537:6) {:else}
 
 
   function create_else_block(ctx) {
@@ -1042,7 +1042,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1520:50) 
+  } // (1523:50) 
 
 
   function create_if_block_4(ctx) {
@@ -1117,7 +1117,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1514:6) {#if item.separator}
+  } // (1517:6) {#if item.separator}
 
 
   function create_if_block_3(ctx) {
@@ -1141,7 +1141,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1546:12) {#if multiple && !item.blank && !item.action}
+  } // (1549:12) {#if multiple && !item.blank && !item.action}
 
 
   function create_if_block_10(ctx) {
@@ -1178,7 +1178,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1561:14) {:else}
+  } // (1564:14) {:else}
 
 
   function create_else_block_2(ctx) {
@@ -1245,7 +1245,7 @@ var Select = (function () {
         if (detaching) detach(if_block1_anchor);
       }
     };
-  } // (1553:14) {#if item.blank}
+  } // (1556:14) {#if item.blank}
 
 
   function create_if_block_6(ctx) {
@@ -1288,7 +1288,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1568:16) {:else}
+  } // (1571:16) {:else}
 
 
   function create_else_block_3(ctx) {
@@ -1329,7 +1329,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1562:16) {#if item.href}
+  } // (1565:16) {#if item.href}
 
 
   function create_if_block_9(ctx) {
@@ -1377,7 +1377,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1574:16) {#if item.desc}
+  } // (1577:16) {#if item.desc}
 
 
   function create_if_block_8(ctx) {
@@ -1407,7 +1407,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1557:18) {:else}
+  } // (1560:18) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -1433,7 +1433,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1555:18) {#if multiple}
+  } // (1558:18) {#if multiple}
 
 
   function create_if_block_7(ctx) {
@@ -1453,7 +1453,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1527:10) {#if item.desc}
+  } // (1530:10) {#if item.desc}
 
 
   function create_if_block_5(ctx) {
@@ -1483,7 +1483,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1513:4) {#each displayItems as item (item.id)}
+  } // (1516:4) {#each displayItems as item (item.id)}
 
 
   function create_each_block(key_1, ctx) {
@@ -1537,7 +1537,7 @@ var Select = (function () {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1586:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
+  } // (1589:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
 
 
   function create_if_block_2(ctx) {
@@ -1559,7 +1559,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1592:4) {#if fetchError}
+  } // (1595:4) {#if fetchError}
 
 
   function create_if_block_1(ctx) {
@@ -1589,7 +1589,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1598:4) {#if selectionItems.length >= maxItems}
+  } // (1601:4) {#if selectionItems.length >= maxItems}
 
 
   function create_if_block(ctx) {
@@ -2852,7 +2852,7 @@ var Select = (function () {
     });
 
     function setupComponent() {
-      real.classList.add("d-none");
+      real.classList.add("ss-select-hidden");
       $$invalidate(24, multiple = real.multiple);
       $$invalidate(7, containerId = real.id ? "ss_container_".concat(real.id) : null);
       $$invalidate(8, containerName = real.name ? "ss_container_".concat(real.name) : null);
@@ -2931,6 +2931,9 @@ var Select = (function () {
       },
       "select-reload": function selectReload(event) {
         reload();
+      },
+      "focus": function focus(event) {
+        toggleEl.focus();
       }
     }; ////////////////////////////////////////////////////////////
     // Handlers
