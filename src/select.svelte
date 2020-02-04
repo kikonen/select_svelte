@@ -910,7 +910,7 @@
  });
 
  function setupComponent() {
-     real.classList.add('d-none');
+     real.classList.add('ss-select-hidden');
      multiple = real.multiple;
 
      containerId = real.id ? `ss_container_${real.id}` : null;
@@ -970,6 +970,9 @@
      'select-reload': function(event) {
          if (DEBUG) console.log(event);
          reload();
+     },
+     'focus': function(event) {
+         toggleEl.focus();
      },
  }
 

@@ -3,6 +3,21 @@
   user-select: none;
 }
 
+// NOTE KI MUST keep original select accessible, so that "focus" event can be catched
+// Basically borrowing logic from select2
+.ss-select-hidden {
+  border: 0 !important;
+  clip: rect(0 0 0 0) !important;
+  -webkit-clip-path: inset(50%) !important;
+  clip-path: inset(50%) !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+  white-space: nowrap !important;
+}
+
 .ss-container {
   position: relative;
   width: 100% !important;
