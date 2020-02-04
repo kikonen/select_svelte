@@ -333,6 +333,8 @@
  let baseHref = null;
 
  let mounted = false;
+ let containerId = null;
+ let containerName = null;
 
  let query = '';
 
@@ -911,6 +913,9 @@
      real.classList.add('d-none');
      multiple = real.multiple;
 
+     containerId = real.id ? `ss_container_${real.id}` : null;
+     containerName = real.name ? `ss_container_${real.name}` : null;
+
      if (config.remote) {
          remote = true;
          fetcher = config.fetcher;
@@ -1440,8 +1445,8 @@
 <!-- ------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------ -->
 <div class="form-control ss-container {styles.container_class}"
-     id="ss_container_{real.id}"
-     name="ss_container_{real.name}"
+     id={containerId}
+     name={containerName}
      bind:this={containerEl}>
 
   <button class="form-control ss-control"
