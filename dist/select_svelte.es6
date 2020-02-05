@@ -349,7 +349,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (1482:10) {:else}
+// (1490:10) {:else}
 function create_else_block_4(ctx) {
 	let t_value = /*item*/ ctx[103].text + "";
 	let t;
@@ -370,7 +370,7 @@ function create_else_block_4(ctx) {
 	};
 }
 
-// (1476:10) {#if item.href}
+// (1484:10) {#if item.href}
 function create_if_block_12(ctx) {
 	let a;
 	let t_value = /*item*/ ctx[103].text + "";
@@ -406,7 +406,7 @@ function create_if_block_12(ctx) {
 	};
 }
 
-// (1469:6) {#each summaryItems as item, index (item.id)}
+// (1477:6) {#each summaryItems as item, index (item.id)}
 function create_each_block_1(key_1, ctx) {
 	let span;
 	let t;
@@ -474,7 +474,7 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (1499:4) {#if typeahead}
+// (1507:4) {#if typeahead}
 function create_if_block_11(ctx) {
 	let div;
 	let input;
@@ -520,7 +520,7 @@ function create_if_block_11(ctx) {
 	};
 }
 
-// (1538:6) {:else}
+// (1546:6) {:else}
 function create_else_block(ctx) {
 	let div2;
 	let div1;
@@ -622,7 +622,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (1524:50) 
+// (1532:50) 
 function create_if_block_4(ctx) {
 	let div1;
 	let div0;
@@ -680,7 +680,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (1518:6) {#if item.separator}
+// (1526:6) {#if item.separator}
 function create_if_block_3(ctx) {
 	let div;
 	let dispose;
@@ -703,7 +703,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (1550:12) {#if multiple && !item.blank && !item.action}
+// (1558:12) {#if multiple && !item.blank && !item.action}
 function create_if_block_10(ctx) {
 	let div;
 	let i;
@@ -737,7 +737,7 @@ function create_if_block_10(ctx) {
 	};
 }
 
-// (1565:14) {:else}
+// (1573:14) {:else}
 function create_else_block_2(ctx) {
 	let t;
 	let if_block1_anchor;
@@ -799,7 +799,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (1557:14) {#if item.blank}
+// (1565:14) {#if item.blank}
 function create_if_block_6(ctx) {
 	let div;
 
@@ -841,7 +841,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (1572:16) {:else}
+// (1580:16) {:else}
 function create_else_block_3(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[103].text + "";
@@ -871,7 +871,7 @@ function create_else_block_3(ctx) {
 	};
 }
 
-// (1566:16) {#if item.href}
+// (1574:16) {#if item.href}
 function create_if_block_9(ctx) {
 	let a;
 	let t_value = /*item*/ ctx[103].text + "";
@@ -906,7 +906,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (1578:16) {#if item.desc}
+// (1586:16) {#if item.desc}
 function create_if_block_8(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[103].desc + "";
@@ -931,7 +931,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (1561:18) {:else}
+// (1569:18) {:else}
 function create_else_block_1(ctx) {
 	let t_value = /*item*/ ctx[103].text + "";
 	let t;
@@ -952,7 +952,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (1559:18) {#if multiple}
+// (1567:18) {#if multiple}
 function create_if_block_7(ctx) {
 	let t_value = /*translate*/ ctx[26]("clear") + "";
 	let t;
@@ -971,7 +971,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (1531:10) {#if item.desc}
+// (1539:10) {#if item.desc}
 function create_if_block_5(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[103].desc + "";
@@ -996,7 +996,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (1517:4) {#each displayItems as item (item.id)}
+// (1525:4) {#each displayItems as item (item.id)}
 function create_each_block(key_1, ctx) {
 	let first;
 	let if_block_anchor;
@@ -1045,7 +1045,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (1590:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
+// (1598:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
 function create_if_block_2(ctx) {
 	let div;
 
@@ -1066,7 +1066,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (1596:4) {#if fetchError}
+// (1604:4) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -1091,7 +1091,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (1602:4) {#if selectionItems.length >= maxItems}
+// (1610:4) {#if selectionItems.length >= maxItems}
 function create_if_block(ctx) {
 	let div;
 	let t0_value = /*translate*/ ctx[26]("max_limit") + "";
@@ -2539,6 +2539,10 @@ function instance($$self, $$props, $$invalidate) {
 			let nodes = popupEl.querySelectorAll(".ss-js-item");
 			let next = nodes.length ? nodes[0] : null;
 		} else {
+			if (next.classList.contains("ss-item-link")) {
+				next = next.closest(".ss-js-item");
+			}
+
 			if (!next.classList.contains("ss-js-item")) {
 				let nodes = popupEl.querySelectorAll(".ss-js-item");
 				let next = nodes.length ? nodes[0] : null;
@@ -2561,6 +2565,10 @@ function instance($$self, $$props, $$invalidate) {
 			let nodes = popupEl.querySelectorAll(".ss-js-item");
 			let next = nodes.length ? nodes[nodes.length - 1] : null;
 		} else {
+			if (next.classList.contains("ss-item-link")) {
+				next = next.closest(".ss-js-item");
+			}
+
 			if (!next.classList.contains("ss-js-item")) {
 				let nodes = popupEl.querySelectorAll(".ss-js-item");
 				let next = nodes.length ? nodes[nodes.length - 1] : null;

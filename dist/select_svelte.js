@@ -665,7 +665,7 @@ var Select = (function () {
     child_ctx[103] = list[i];
     child_ctx[107] = i;
     return child_ctx;
-  } // (1482:10) {:else}
+  } // (1490:10) {:else}
 
 
   function create_else_block_4(ctx) {
@@ -691,7 +691,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1476:10) {#if item.href}
+  } // (1484:10) {#if item.href}
 
 
   function create_if_block_12(ctx) {
@@ -740,7 +740,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1469:6) {#each summaryItems as item, index (item.id)}
+  } // (1477:6) {#each summaryItems as item, index (item.id)}
 
 
   function create_each_block_1(key_1, ctx) {
@@ -833,7 +833,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1499:4) {#if typeahead}
+  } // (1507:4) {#if typeahead}
 
 
   function create_if_block_11(ctx) {
@@ -893,7 +893,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1538:6) {:else}
+  } // (1546:6) {:else}
 
 
   function create_else_block(ctx) {
@@ -1042,7 +1042,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1524:50) 
+  } // (1532:50) 
 
 
   function create_if_block_4(ctx) {
@@ -1117,7 +1117,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1518:6) {#if item.separator}
+  } // (1526:6) {#if item.separator}
 
 
   function create_if_block_3(ctx) {
@@ -1141,7 +1141,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1550:12) {#if multiple && !item.blank && !item.action}
+  } // (1558:12) {#if multiple && !item.blank && !item.action}
 
 
   function create_if_block_10(ctx) {
@@ -1178,7 +1178,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1565:14) {:else}
+  } // (1573:14) {:else}
 
 
   function create_else_block_2(ctx) {
@@ -1245,7 +1245,7 @@ var Select = (function () {
         if (detaching) detach(if_block1_anchor);
       }
     };
-  } // (1557:14) {#if item.blank}
+  } // (1565:14) {#if item.blank}
 
 
   function create_if_block_6(ctx) {
@@ -1288,7 +1288,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1572:16) {:else}
+  } // (1580:16) {:else}
 
 
   function create_else_block_3(ctx) {
@@ -1329,7 +1329,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1566:16) {#if item.href}
+  } // (1574:16) {#if item.href}
 
 
   function create_if_block_9(ctx) {
@@ -1377,7 +1377,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1578:16) {#if item.desc}
+  } // (1586:16) {#if item.desc}
 
 
   function create_if_block_8(ctx) {
@@ -1407,7 +1407,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1561:18) {:else}
+  } // (1569:18) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -1433,7 +1433,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1559:18) {#if multiple}
+  } // (1567:18) {#if multiple}
 
 
   function create_if_block_7(ctx) {
@@ -1453,7 +1453,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1531:10) {#if item.desc}
+  } // (1539:10) {#if item.desc}
 
 
   function create_if_block_5(ctx) {
@@ -1483,7 +1483,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1517:4) {#each displayItems as item (item.id)}
+  } // (1525:4) {#each displayItems as item (item.id)}
 
 
   function create_each_block(key_1, ctx) {
@@ -1537,7 +1537,7 @@ var Select = (function () {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1590:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
+  } // (1598:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
 
 
   function create_if_block_2(ctx) {
@@ -1559,7 +1559,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1596:4) {#if fetchError}
+  } // (1604:4) {#if fetchError}
 
 
   function create_if_block_1(ctx) {
@@ -1589,7 +1589,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1602:4) {#if selectionItems.length >= maxItems}
+  } // (1610:4) {#if selectionItems.length >= maxItems}
 
 
   function create_if_block(ctx) {
@@ -3169,6 +3169,10 @@ var Select = (function () {
 
         var _next = nodes.length ? nodes[0] : null;
       } else {
+        if (next.classList.contains("ss-item-link")) {
+          next = next.closest(".ss-js-item");
+        }
+
         if (!next.classList.contains("ss-js-item")) {
           var _nodes = popupEl.querySelectorAll(".ss-js-item");
 
@@ -3193,6 +3197,10 @@ var Select = (function () {
 
         var _next3 = nodes.length ? nodes[nodes.length - 1] : null;
       } else {
+        if (next.classList.contains("ss-item-link")) {
+          next = next.closest(".ss-js-item");
+        }
+
         if (!next.classList.contains("ss-js-item")) {
           var _nodes2 = popupEl.querySelectorAll(".ss-js-item");
 
