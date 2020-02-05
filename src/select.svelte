@@ -1203,6 +1203,10 @@
          let nodes = popupEl.querySelectorAll('.ss-js-item');
          let next = nodes.length ? nodes[0] : null;
      } else {
+         if (next.classList.contains('ss-item-link')) {
+             next = next.closest('.ss-js-item');
+         }
+
          if (!next.classList.contains('ss-js-item')) {
              let nodes = popupEl.querySelectorAll('.ss-js-item');
              let next = nodes.length ? nodes[0] : null;
@@ -1226,6 +1230,10 @@
          let nodes = popupEl.querySelectorAll('.ss-js-item');
          let next = nodes.length ? nodes[nodes.length -1] : null;
      } else {
+         if (next.classList.contains('ss-item-link')) {
+             next = next.closest('.ss-js-item');
+         }
+
          if (!next.classList.contains('ss-js-item')) {
              let nodes = popupEl.querySelectorAll('.ss-js-item');
              let next = nodes.length ? nodes[nodes.length - 1] : null;
