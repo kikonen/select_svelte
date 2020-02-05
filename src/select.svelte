@@ -911,6 +911,7 @@
 
  function setupComponent() {
      real.classList.add('ss-select-hidden');
+     real.setAttribute('tabindex', '-1');
      multiple = real.multiple;
 
      containerId = real.id ? `ss_container_${real.id}` : null;
