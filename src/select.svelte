@@ -175,6 +175,7 @@
      let items = [];
      let blankItem = null;
 
+     let query = (data.query || '').trim();
      let fixedItems = data.fixedItems || [];
      let fetchedItems = data.fetchedItems || [];
      let selectionItems = data.selectionItems || [];
@@ -194,7 +195,7 @@
      let filteredSelection = [];
      let filteredFetched = [];
 
-     if (data.multiple) {
+     if (data.multiple && !query) {
          selectionItems.forEach(function(item) {
              if (byId[item.id]) {
                  // NOTE KI "placeholder" is pushed into fixed items; don't complain about it
@@ -610,6 +611,7 @@
      }
 
      display = createDisplay({
+         query: query,
          typeahead: typeahead,
          multiple: multiple,
          fixedItems: fixedItems,
