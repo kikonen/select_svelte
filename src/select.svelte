@@ -1597,15 +1597,13 @@
       {/if}
     {/each}
 
-    {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
-      <div tabindex="-1" class="dropdown-item ss-message-item ss-item-muted ss-js-dead">
-        {translate('no_results')}
-      </div>
-    {/if}
-
     {#if fetchError}
       <div tabindex="-1" class="dropdown-item border-top text-danger ss-message-item ss-sticky-item ss-js-dead">
         {fetchError}
+      </div>
+    {:else if typeahead && actualCount === 0 && previousFetch && !activeFetch}
+      <div tabindex="-1" class="dropdown-item ss-message-item ss-item-muted ss-js-dead">
+        {translate('no_results')}
       </div>
     {/if}
 
