@@ -1977,7 +1977,7 @@ function instance($$self, $$props, $$invalidate) {
 
 	function appendFetchedToDisplay(fetchedItems) {
 		let byId = display.byId;
-		let displayItems = display.displayItems;
+		let items = display.displayItems;
 
 		fetchedItems.forEach(function (item) {
 			if (byId[item.id]) {
@@ -1985,14 +1985,14 @@ function instance($$self, $$props, $$invalidate) {
 				return;
 			}
 
-			displayItems.push(item);
+			items.push(item);
 
 			if (!item.separator) {
 				byId[item.id] = item;
 			}
 		});
 
-		displayItems = display.displayItems;
+		$$invalidate(11, displayItems = display.displayItems);
 	}
 
 	function updateSelection(byId) {

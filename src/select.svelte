@@ -623,7 +623,7 @@
 
  function appendFetchedToDisplay(fetchedItems) {
      let byId = display.byId;
-     let displayItems = display.displayItems;
+     let items = display.displayItems;
 
      fetchedItems.forEach(function(item) {
          if (byId[item.id]) {
@@ -631,7 +631,7 @@
              return;
          }
 
-         displayItems.push(item);
+         items.push(item);
          if (!item.separator) {
              byId[item.id] = item;
          }

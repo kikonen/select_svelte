@@ -2620,20 +2620,20 @@ var Select = (function () {
 
     function appendFetchedToDisplay(fetchedItems) {
       var byId = display.byId;
-      var displayItems = display.displayItems;
+      var items = display.displayItems;
       fetchedItems.forEach(function (item) {
         if (byId[item.id]) {
           console.warn("DUPLICATE: fetched-append", item);
           return;
         }
 
-        displayItems.push(item);
+        items.push(item);
 
         if (!item.separator) {
           byId[item.id] = item;
         }
       });
-      displayItems = display.displayItems;
+      $$invalidate(11, displayItems = display.displayItems);
     }
 
     function updateSelection(byId) {
