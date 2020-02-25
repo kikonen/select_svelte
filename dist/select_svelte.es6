@@ -355,7 +355,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (1492:10) {:else}
+// (1494:10) {:else}
 function create_else_block_4(ctx) {
 	let t_value = /*item*/ ctx[103].text + "";
 	let t;
@@ -376,7 +376,7 @@ function create_else_block_4(ctx) {
 	};
 }
 
-// (1486:10) {#if item.href}
+// (1488:10) {#if item.href}
 function create_if_block_12(ctx) {
 	let a;
 	let t_value = /*item*/ ctx[103].text + "";
@@ -412,7 +412,7 @@ function create_if_block_12(ctx) {
 	};
 }
 
-// (1479:6) {#each summaryItems as item, index (item.id)}
+// (1481:6) {#each summaryItems as item, index (item.id)}
 function create_each_block_1(key_1, ctx) {
 	let span;
 	let t;
@@ -480,7 +480,7 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (1509:4) {#if typeahead}
+// (1511:4) {#if typeahead}
 function create_if_block_11(ctx) {
 	let div;
 	let input;
@@ -526,7 +526,7 @@ function create_if_block_11(ctx) {
 	};
 }
 
-// (1548:6) {:else}
+// (1550:6) {:else}
 function create_else_block(ctx) {
 	let div2;
 	let div1;
@@ -628,7 +628,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (1534:50) 
+// (1536:50) 
 function create_if_block_4(ctx) {
 	let div1;
 	let div0;
@@ -686,7 +686,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (1528:6) {#if item.separator}
+// (1530:6) {#if item.separator}
 function create_if_block_3(ctx) {
 	let div;
 	let dispose;
@@ -709,7 +709,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (1560:12) {#if multiple && !item.blank && !item.action}
+// (1562:12) {#if multiple && !item.blank && !item.action}
 function create_if_block_10(ctx) {
 	let div;
 	let i;
@@ -743,7 +743,7 @@ function create_if_block_10(ctx) {
 	};
 }
 
-// (1575:14) {:else}
+// (1577:14) {:else}
 function create_else_block_2(ctx) {
 	let t;
 	let if_block1_anchor;
@@ -805,7 +805,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (1567:14) {#if item.blank}
+// (1569:14) {#if item.blank}
 function create_if_block_6(ctx) {
 	let div;
 
@@ -847,7 +847,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (1582:16) {:else}
+// (1584:16) {:else}
 function create_else_block_3(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[103].text + "";
@@ -877,7 +877,7 @@ function create_else_block_3(ctx) {
 	};
 }
 
-// (1576:16) {#if item.href}
+// (1578:16) {#if item.href}
 function create_if_block_9(ctx) {
 	let a;
 	let t_value = /*item*/ ctx[103].text + "";
@@ -912,7 +912,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (1588:16) {#if item.desc}
+// (1590:16) {#if item.desc}
 function create_if_block_8(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[103].desc + "";
@@ -937,7 +937,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (1571:18) {:else}
+// (1573:18) {:else}
 function create_else_block_1(ctx) {
 	let t_value = /*item*/ ctx[103].text + "";
 	let t;
@@ -958,7 +958,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (1569:18) {#if multiple}
+// (1571:18) {#if multiple}
 function create_if_block_7(ctx) {
 	let t_value = /*translate*/ ctx[26]("clear") + "";
 	let t;
@@ -977,7 +977,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (1541:10) {#if item.desc}
+// (1543:10) {#if item.desc}
 function create_if_block_5(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[103].desc + "";
@@ -1002,7 +1002,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (1527:4) {#each displayItems as item (item.id)}
+// (1529:4) {#each displayItems as item (item.id)}
 function create_each_block(key_1, ctx) {
 	let first;
 	let if_block_anchor;
@@ -1051,7 +1051,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (1600:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
+// (1606:78) 
 function create_if_block_2(ctx) {
 	let div;
 
@@ -1072,7 +1072,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (1606:4) {#if fetchError}
+// (1602:4) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -1149,7 +1149,6 @@ function create_fragment(ctx) {
 	let each1_lookup = new Map();
 	let t3;
 	let t4;
-	let t5;
 	let div1_class_value;
 	let dispose;
 	let each_value_1 = /*summaryItems*/ ctx[16];
@@ -1171,9 +1170,14 @@ function create_fragment(ctx) {
 		each1_lookup.set(key, each_blocks[i] = create_each_block(key, child_ctx));
 	}
 
-	let if_block1 = /*typeahead*/ ctx[6] && /*actualCount*/ ctx[10] === 0 && /*previousFetch*/ ctx[23] && !/*activeFetch*/ ctx[22] && create_if_block_2(ctx);
-	let if_block2 = /*fetchError*/ ctx[18] && create_if_block_1(ctx);
-	let if_block3 = /*selectionItems*/ ctx[13].length >= /*maxItems*/ ctx[5] && create_if_block(ctx);
+	function select_block_type_5(ctx, dirty) {
+		if (/*fetchError*/ ctx[18]) return create_if_block_1;
+		if (/*typeahead*/ ctx[6] && /*actualCount*/ ctx[10] === 0 && /*previousFetch*/ ctx[23] && !/*activeFetch*/ ctx[22]) return create_if_block_2;
+	}
+
+	let current_block_type = select_block_type_5(ctx);
+	let if_block1 = current_block_type && current_block_type(ctx);
+	let if_block2 = /*selectionItems*/ ctx[13].length >= /*maxItems*/ ctx[5] && create_if_block(ctx);
 
 	return {
 		c() {
@@ -1200,8 +1204,6 @@ function create_fragment(ctx) {
 			if (if_block1) if_block1.c();
 			t4 = space();
 			if (if_block2) if_block2.c();
-			t5 = space();
-			if (if_block3) if_block3.c();
 			toggle_class(span0, "ss-summary-multiple", !/*summarySingle*/ ctx[15]);
 			toggle_class(span0, "ss-summary-single", /*summarySingle*/ ctx[15]);
 
@@ -1248,8 +1250,6 @@ function create_fragment(ctx) {
 			if (if_block1) if_block1.m(div0, null);
 			append(div0, t4);
 			if (if_block2) if_block2.m(div0, null);
-			append(div0, t5);
-			if (if_block3) if_block3.m(div0, null);
 			/*div0_binding*/ ctx[101](div0);
 			/*div1_binding*/ ctx[102](div1);
 
@@ -1307,43 +1307,29 @@ function create_fragment(ctx) {
 				each_blocks = update_keyed_each(each_blocks, dirty, get_key_1, 1, ctx, each_value, each1_lookup, div0, destroy_block, create_each_block, t3, get_each_context);
 			}
 
-			if (/*typeahead*/ ctx[6] && /*actualCount*/ ctx[10] === 0 && /*previousFetch*/ ctx[23] && !/*activeFetch*/ ctx[22]) {
+			if (current_block_type === (current_block_type = select_block_type_5(ctx)) && if_block1) {
+				if_block1.p(ctx, dirty);
+			} else {
+				if (if_block1) if_block1.d(1);
+				if_block1 = current_block_type && current_block_type(ctx);
+
 				if (if_block1) {
-					if_block1.p(ctx, dirty);
-				} else {
-					if_block1 = create_if_block_2(ctx);
 					if_block1.c();
 					if_block1.m(div0, t4);
 				}
-			} else if (if_block1) {
-				if_block1.d(1);
-				if_block1 = null;
 			}
 
-			if (/*fetchError*/ ctx[18]) {
+			if (/*selectionItems*/ ctx[13].length >= /*maxItems*/ ctx[5]) {
 				if (if_block2) {
 					if_block2.p(ctx, dirty);
 				} else {
-					if_block2 = create_if_block_1(ctx);
+					if_block2 = create_if_block(ctx);
 					if_block2.c();
-					if_block2.m(div0, t5);
+					if_block2.m(div0, null);
 				}
 			} else if (if_block2) {
 				if_block2.d(1);
 				if_block2 = null;
-			}
-
-			if (/*selectionItems*/ ctx[13].length >= /*maxItems*/ ctx[5]) {
-				if (if_block3) {
-					if_block3.p(ctx, dirty);
-				} else {
-					if_block3 = create_if_block(ctx);
-					if_block3.c();
-					if_block3.m(div0, null);
-				}
-			} else if (if_block3) {
-				if_block3.d(1);
-				if_block3 = null;
 			}
 
 			if (dirty[0] & /*popupVisible*/ 524288) {
@@ -1382,9 +1368,11 @@ function create_fragment(ctx) {
 				each_blocks[i].d();
 			}
 
-			if (if_block1) if_block1.d();
+			if (if_block1) {
+				if_block1.d();
+			}
+
 			if (if_block2) if_block2.d();
-			if (if_block3) if_block3.d();
 			/*div0_binding*/ ctx[101](null);
 			/*div1_binding*/ ctx[102](null);
 			run_all(dispose);
@@ -2215,6 +2203,8 @@ function instance($$self, $$props, $$invalidate) {
 
 			// no result fetched; since it doesn't match input any longer
 			previousQuery = null;
+
+			$$invalidate(17, showFetching = false);
 		}
 	}
 

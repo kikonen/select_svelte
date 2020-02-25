@@ -672,7 +672,7 @@ var Select = (function () {
     child_ctx[103] = list[i];
     child_ctx[107] = i;
     return child_ctx;
-  } // (1492:10) {:else}
+  } // (1494:10) {:else}
 
 
   function create_else_block_4(ctx) {
@@ -698,7 +698,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1486:10) {#if item.href}
+  } // (1488:10) {#if item.href}
 
 
   function create_if_block_12(ctx) {
@@ -747,7 +747,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1479:6) {#each summaryItems as item, index (item.id)}
+  } // (1481:6) {#each summaryItems as item, index (item.id)}
 
 
   function create_each_block_1(key_1, ctx) {
@@ -840,7 +840,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1509:4) {#if typeahead}
+  } // (1511:4) {#if typeahead}
 
 
   function create_if_block_11(ctx) {
@@ -900,7 +900,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1548:6) {:else}
+  } // (1550:6) {:else}
 
 
   function create_else_block(ctx) {
@@ -1049,7 +1049,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1534:50) 
+  } // (1536:50) 
 
 
   function create_if_block_4(ctx) {
@@ -1124,7 +1124,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1528:6) {#if item.separator}
+  } // (1530:6) {#if item.separator}
 
 
   function create_if_block_3(ctx) {
@@ -1148,7 +1148,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1560:12) {#if multiple && !item.blank && !item.action}
+  } // (1562:12) {#if multiple && !item.blank && !item.action}
 
 
   function create_if_block_10(ctx) {
@@ -1185,7 +1185,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1575:14) {:else}
+  } // (1577:14) {:else}
 
 
   function create_else_block_2(ctx) {
@@ -1252,7 +1252,7 @@ var Select = (function () {
         if (detaching) detach(if_block1_anchor);
       }
     };
-  } // (1567:14) {#if item.blank}
+  } // (1569:14) {#if item.blank}
 
 
   function create_if_block_6(ctx) {
@@ -1295,7 +1295,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1582:16) {:else}
+  } // (1584:16) {:else}
 
 
   function create_else_block_3(ctx) {
@@ -1336,7 +1336,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1576:16) {#if item.href}
+  } // (1578:16) {#if item.href}
 
 
   function create_if_block_9(ctx) {
@@ -1384,7 +1384,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1588:16) {#if item.desc}
+  } // (1590:16) {#if item.desc}
 
 
   function create_if_block_8(ctx) {
@@ -1414,7 +1414,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1571:18) {:else}
+  } // (1573:18) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -1440,7 +1440,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1569:18) {#if multiple}
+  } // (1571:18) {#if multiple}
 
 
   function create_if_block_7(ctx) {
@@ -1460,7 +1460,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1541:10) {#if item.desc}
+  } // (1543:10) {#if item.desc}
 
 
   function create_if_block_5(ctx) {
@@ -1490,7 +1490,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1527:4) {#each displayItems as item (item.id)}
+  } // (1529:4) {#each displayItems as item (item.id)}
 
 
   function create_each_block(key_1, ctx) {
@@ -1544,7 +1544,7 @@ var Select = (function () {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1600:4) {#if typeahead && actualCount === 0 && previousFetch && !activeFetch}
+  } // (1606:78) 
 
 
   function create_if_block_2(ctx) {
@@ -1566,7 +1566,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1606:4) {#if fetchError}
+  } // (1602:4) {#if fetchError}
 
 
   function create_if_block_1(ctx) {
@@ -1657,7 +1657,6 @@ var Select = (function () {
     var each1_lookup = new Map();
     var t3;
     var t4;
-    var t5;
     var div1_class_value;
     var dispose;
     var each_value_1 =
@@ -1699,19 +1698,24 @@ var Select = (function () {
       each1_lookup.set(_key, each_blocks[_i] = create_each_block(_key, _child_ctx));
     }
 
-    var if_block1 =
-    /*typeahead*/
-    ctx[6] &&
-    /*actualCount*/
-    ctx[10] === 0 &&
-    /*previousFetch*/
-    ctx[23] && !
-    /*activeFetch*/
-    ctx[22] && create_if_block_2(ctx);
+    function select_block_type_5(ctx, dirty) {
+      if (
+      /*fetchError*/
+      ctx[18]) return create_if_block_1;
+      if (
+      /*typeahead*/
+      ctx[6] &&
+      /*actualCount*/
+      ctx[10] === 0 &&
+      /*previousFetch*/
+      ctx[23] && !
+      /*activeFetch*/
+      ctx[22]) return create_if_block_2;
+    }
+
+    var current_block_type = select_block_type_5(ctx);
+    var if_block1 = current_block_type && current_block_type(ctx);
     var if_block2 =
-    /*fetchError*/
-    ctx[18] && create_if_block_1(ctx);
-    var if_block3 =
     /*selectionItems*/
     ctx[13].length >=
     /*maxItems*/
@@ -1741,8 +1745,6 @@ var Select = (function () {
         if (if_block1) if_block1.c();
         t4 = space();
         if (if_block2) if_block2.c();
-        t5 = space();
-        if (if_block3) if_block3.c();
         toggle_class(span0, "ss-summary-multiple", !
         /*summarySingle*/
         ctx[15]);
@@ -1809,8 +1811,6 @@ var Select = (function () {
         if (if_block1) if_block1.m(div0, null);
         append(div0, t4);
         if (if_block2) if_block2.m(div0, null);
-        append(div0, t5);
-        if (if_block3) if_block3.m(div0, null);
         /*div0_binding*/
 
         ctx[101](div0);
@@ -1907,40 +1907,16 @@ var Select = (function () {
           each_blocks = update_keyed_each(each_blocks, dirty, get_key_1, 1, ctx, _each_value, each1_lookup, div0, destroy_block, create_each_block, t3, get_each_context);
         }
 
-        if (
-        /*typeahead*/
-        ctx[6] &&
-        /*actualCount*/
-        ctx[10] === 0 &&
-        /*previousFetch*/
-        ctx[23] && !
-        /*activeFetch*/
-        ctx[22]) {
+        if (current_block_type === (current_block_type = select_block_type_5(ctx)) && if_block1) {
+          if_block1.p(ctx, dirty);
+        } else {
+          if (if_block1) if_block1.d(1);
+          if_block1 = current_block_type && current_block_type(ctx);
+
           if (if_block1) {
-            if_block1.p(ctx, dirty);
-          } else {
-            if_block1 = create_if_block_2(ctx);
             if_block1.c();
             if_block1.m(div0, t4);
           }
-        } else if (if_block1) {
-          if_block1.d(1);
-          if_block1 = null;
-        }
-
-        if (
-        /*fetchError*/
-        ctx[18]) {
-          if (if_block2) {
-            if_block2.p(ctx, dirty);
-          } else {
-            if_block2 = create_if_block_1(ctx);
-            if_block2.c();
-            if_block2.m(div0, t5);
-          }
-        } else if (if_block2) {
-          if_block2.d(1);
-          if_block2 = null;
         }
 
         if (
@@ -1948,16 +1924,16 @@ var Select = (function () {
         ctx[13].length >=
         /*maxItems*/
         ctx[5]) {
-          if (if_block3) {
-            if_block3.p(ctx, dirty);
+          if (if_block2) {
+            if_block2.p(ctx, dirty);
           } else {
-            if_block3 = create_if_block(ctx);
-            if_block3.c();
-            if_block3.m(div0, null);
+            if_block2 = create_if_block(ctx);
+            if_block2.c();
+            if_block2.m(div0, null);
           }
-        } else if (if_block3) {
-          if_block3.d(1);
-          if_block3 = null;
+        } else if (if_block2) {
+          if_block2.d(1);
+          if_block2 = null;
         }
 
         if (dirty[0] &
@@ -2018,9 +1994,11 @@ var Select = (function () {
           each_blocks[_i7].d();
         }
 
-        if (if_block1) if_block1.d();
+        if (if_block1) {
+          if_block1.d();
+        }
+
         if (if_block2) if_block2.d();
-        if (if_block3) if_block3.d();
         /*div0_binding*/
 
         ctx[101](null);
@@ -2846,6 +2824,7 @@ var Select = (function () {
         $$invalidate(22, activeFetch = null); // no result fetched; since it doesn't match input any longer
 
         previousQuery = null;
+        $$invalidate(17, showFetching = false);
       }
     }
 
