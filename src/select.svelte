@@ -873,6 +873,8 @@
 
          // no result fetched; since it doesn't match input any longer
          previousQuery = null;
+
+         showFetching = false;
      }
  }
 
