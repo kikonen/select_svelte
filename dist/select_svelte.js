@@ -308,17 +308,23 @@ var Select = (function () {
     render_callbacks.push(fn);
   }
 
+  var flushing = false;
   var seen_callbacks = new Set();
 
   function flush() {
+    if (flushing) return;
+    flushing = true;
+
     do {
       // first, call beforeUpdate functions
       // and update components
-      while (dirty_components.length) {
-        var component = dirty_components.shift();
+      for (var i = 0; i < dirty_components.length; i += 1) {
+        var component = dirty_components[i];
         set_current_component(component);
         update(component.$$);
       }
+
+      dirty_components.length = 0;
 
       while (binding_callbacks.length) {
         binding_callbacks.pop()();
@@ -327,8 +333,8 @@ var Select = (function () {
       // subsequent updates...
 
 
-      for (var i = 0; i < render_callbacks.length; i += 1) {
-        var callback = render_callbacks[i];
+      for (var _i = 0; _i < render_callbacks.length; _i += 1) {
+        var callback = render_callbacks[_i];
 
         if (!seen_callbacks.has(callback)) {
           // ...so guard against infinite loops
@@ -345,6 +351,7 @@ var Select = (function () {
     }
 
     update_scheduled = false;
+    flushing = false;
     seen_callbacks.clear();
   }
 
@@ -1823,10 +1830,16 @@ var Select = (function () {
         ctx[40])];
       },
       p: function p(ctx, dirty) {
-        var each_value_1 =
-        /*summaryItems*/
-        ctx[16];
-        each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key, 1, ctx, each_value_1, each0_lookup, span0, destroy_block, create_each_block_1, null, get_each_context_1);
+        if (dirty[0] &
+        /*summaryItems, summarySingle*/
+        98304 | dirty[1] &
+        /*handleToggleLinkClick*/
+        128) {
+          var _each_value_ =
+          /*summaryItems*/
+          ctx[16];
+          each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key, 1, ctx, _each_value_, each0_lookup, span0, destroy_block, create_each_block_1, null, get_each_context_1);
+        }
 
         if (dirty[0] &
         /*summarySingle*/
@@ -1883,10 +1896,16 @@ var Select = (function () {
           if_block0 = null;
         }
 
-        var each_value =
-        /*displayItems*/
-        ctx[11];
-        each_blocks = update_keyed_each(each_blocks, dirty, get_key_1, 1, ctx, each_value, each1_lookup, div0, destroy_block, create_each_block, t3, get_each_context);
+        if (dirty[0] &
+        /*displayItems, selectionById, handleBlur, translate, multiple*/
+        218109952 | dirty[1] &
+        /*handleItemKeydown, handleItemClick, handleItemKeyup, handleItemLinkClick*/
+        368) {
+          var _each_value =
+          /*displayItems*/
+          ctx[11];
+          each_blocks = update_keyed_each(each_blocks, dirty, get_key_1, 1, ctx, _each_value, each1_lookup, div0, destroy_block, create_each_block, t3, get_each_context);
+        }
 
         if (
         /*typeahead*/
