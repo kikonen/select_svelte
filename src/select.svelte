@@ -13,6 +13,8 @@
      container_class: '',
  };
 
+ const BLANK_ID = '';
+
  const FIXED_SORT_KEY = '_';
 
  const MAX_ITEMS_DEFAULT = 100;
@@ -88,6 +90,20 @@
      return META_KEYS[event.key] || META_KEYS[event.code]
  }
 
+ /**
+  * NOTE 0 and "0" are non blank ids
+  */
+ function isBlankId(id) {
+     return id !== 0 && id !== '0' && (id == null || id == BLANK_ID);
+ }
+
+ /**
+  * Normalize id value
+  */
+ function normalizeId(id) {
+     return isBlankId(id) ? BLANK_ID : id.toString();
+ }
+
  function toUnderscore(key) {
      return key.split(/(?=[A-Z])/).join('_').toLowerCase();
  }
@@ -105,7 +121,7 @@
  function createItemFromOption(el, styles, baseHref) {
      let ds = el.dataset;
      let item = {
-         id: el.value || '',
+         id: normalizeId(el.value),
          text: el.text || '',
      };
      item.sort_key = item.text;
@@ -129,7 +145,7 @@
          });
      }
      if (!item.separator) {
-         if (item.id === '') {
+         if (isBlankId(item.id)) {
              item.blank = true;
          } else {
              if (!item.action && !item.href && baseHref) {
@@ -250,9 +266,12 @@
 
      fetchedItems.forEach(function(item) {
          if (item.id) {
-             item.id = item.id.toString();
+             item.id = normalizeId(item.id);
          }
-         item.sort_key = item.sort_key || item.text;
+         if (isBlankId(item.id)) {
+             item.blank = true;
+         }
+         item.sort_key = item.sort_key == null ? item.text : item.sort_key;
      });
 
      let counts = calculateCounts(fetchedItems);
@@ -273,7 +292,7 @@
      items.forEach(function(item) {
          if (item.separator) {
              // NOTE KI separator is ignored always
-         } else if (!item.id) {
+         } else if (item.blank) {
              //NOTE KI dummy items ignored
          } else if (item.placeholder) {
              // NOTE KI does not affect pagination
@@ -318,7 +337,7 @@
  let summaryWrap = SUMMARY_WRAP;
  let keepResult = true;
  let placeholderItem = {
-     id: '',
+     id: BLANK_ID,
      text: '',
      blank: true
  };
@@ -508,7 +527,8 @@
      let options = real.selectedOptions;
      for (let i = options.length - 1; i >= 0; i--) {
          let el = options[i];
-         let item = oldById[el.value || ''];
+         let id = normalizeId(el.value);
+         let item = oldById[id];
          if (!item) {
              item = createItemFromOption(el, styles, baseHref);
          }
@@ -543,7 +563,8 @@
      let options = real.options;
      for (let i = options.length - 1; i >= 0; i--) {
          let el = options[i];
-         let selected = !!selectionById[el.value];
+         let id = normalizeId(el.value);
+         let selected = !!selectionById[id];
          changed = changed || el.selected !== selected;
          if (selected) {
              el.setAttribute('selected', '');
@@ -577,7 +598,9 @@
      let options = real.options;
      for (let i = 0; i < options.length; i++) {
          let el = options[i];
-         if (!el.value || el.dataset.itemFixed != null) {
+
+         // NOTE KI pick "blank" and "fixed" items
+         if (isBlankId(el.value) || el.dataset.itemFixed != null) {
              let item = createItemFromOption(el, styles, baseHref);
              item.sort_key = FIXED_SORT_KEY + item.sort_key;
              item.fixed = true;
@@ -586,7 +609,7 @@
          }
      }
 
-     let blankItem = byId[''];
+     let blankItem = byId[BLANK_ID];
      if (blankItem) {
          blankItem.blank = true;
      }
@@ -1037,7 +1060,7 @@
          closePopup(false);
      },
      Delete: function(event) {
-         selectItem('');
+         selectItem(BLANK_ID);
      },
  };
 
@@ -1470,7 +1493,7 @@
     <span class:ss-summary-multiple={!summarySingle}
           class:ss-summary-single={summarySingle}>
       {#each summaryItems as item, index (item.id)}
-        <span class="{item.item_class || ''}"
+        <span class="{item.item_class}"
               class:ss-blank={item.blank}
               class:ss-summary-item-multiple={!summarySingle}
               class:ss-summary-item-single={summarySingle}
@@ -1540,10 +1563,10 @@
 
       {:else}
         <div tabindex=1
-             class="dropdown-item ss-item ss-js-item {item.item_class || ''}"
+             class="dropdown-item ss-item ss-js-item {item.item_class}"
              class:ss-item-selected={!item.blank && selectionById[item.id]}
              data-id="{item.id}"
-             data-action="{item.action || ''}"
+             data-action="{item.action}"
              on:blur={handleBlur}
              on:click={handleItemClick}
              on:keydown={handleItemKeydown}
@@ -1573,13 +1596,13 @@
                     {item.text}
                   </a>
                 {:else}
-                  <div class="ss-item-text {item.item_text_class || ''}">
+                  <div class="ss-item-text {item.item_text_class}">
                     {item.text}
                   </div>
                 {/if}
 
                 {#if item.desc}
-                  <div class="ss-item-desc {item.item_desc_class || ''}">
+                  <div class="ss-item-desc {item.item_desc_class}">
                     {item.desc}
                   </div>
                 {/if}

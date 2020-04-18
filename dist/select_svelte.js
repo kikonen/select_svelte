@@ -564,7 +564,7 @@ var Select = (function () {
     child_ctx[103] = list[i];
     child_ctx[107] = i;
     return child_ctx;
-  } // (1485:10) {:else}
+  } // (1508:10) {:else}
 
 
   function create_else_block_4(ctx) {
@@ -590,7 +590,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1479:10) {#if item.href}
+  } // (1502:10) {#if item.href}
 
 
   function create_if_block_12(ctx) {
@@ -640,7 +640,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1472:6) {#each summaryItems as item, index (item.id)}
+  } // (1495:6) {#each summaryItems as item, index (item.id)}
 
 
   function create_each_block_1(key_1, ctx) {
@@ -666,7 +666,7 @@ var Select = (function () {
         t = space();
         attr(span, "class", span_class_value =
         /*item*/
-        ctx[103].item_class || "");
+        ctx[103].item_class);
         toggle_class(span, "ss-blank",
         /*item*/
         ctx[103].blank);
@@ -700,7 +700,7 @@ var Select = (function () {
         /*summaryItems*/
         65536 && span_class_value !== (span_class_value =
         /*item*/
-        ctx[103].item_class || "")) {
+        ctx[103].item_class)) {
           attr(span, "class", span_class_value);
         }
 
@@ -733,7 +733,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1502:4) {#if typeahead}
+  } // (1525:4) {#if typeahead}
 
 
   function create_if_block_11(ctx) {
@@ -794,7 +794,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1541:6) {:else}
+  } // (1564:6) {:else}
 
 
   function create_else_block(ctx) {
@@ -834,15 +834,15 @@ var Select = (function () {
         attr(div0, "class", "d-inline-block");
         attr(div1, "class", "ss-no-click");
         attr(div2, "tabindex", "1");
-        attr(div2, "class", div2_class_value = "dropdown-item ss-item ss-js-item " + (
+        attr(div2, "class", div2_class_value = "dropdown-item ss-item ss-js-item " +
         /*item*/
-        ctx[103].item_class || ""));
+        ctx[103].item_class);
         attr(div2, "data-id", div2_data_id_value =
         /*item*/
         ctx[103].id);
         attr(div2, "data-action", div2_data_action_value =
         /*item*/
-        ctx[103].action || "");
+        ctx[103].action);
         toggle_class(div2, "ss-item-selected", !
         /*item*/
         ctx[103].blank &&
@@ -903,9 +903,9 @@ var Select = (function () {
 
         if (dirty[0] &
         /*displayItems*/
-        2048 && div2_class_value !== (div2_class_value = "dropdown-item ss-item ss-js-item " + (
+        2048 && div2_class_value !== (div2_class_value = "dropdown-item ss-item ss-js-item " +
         /*item*/
-        ctx[103].item_class || ""))) {
+        ctx[103].item_class)) {
           attr(div2, "class", div2_class_value);
         }
 
@@ -921,7 +921,7 @@ var Select = (function () {
         /*displayItems*/
         2048 && div2_data_action_value !== (div2_data_action_value =
         /*item*/
-        ctx[103].action || "")) {
+        ctx[103].action)) {
           attr(div2, "data-action", div2_data_action_value);
         }
 
@@ -944,7 +944,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1527:50) 
+  } // (1550:50) 
 
 
   function create_if_block_4(ctx) {
@@ -1020,7 +1020,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1521:6) {#if item.separator}
+  } // (1544:6) {#if item.separator}
 
 
   function create_if_block_3(ctx) {
@@ -1045,7 +1045,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1553:12) {#if multiple && !item.blank && !item.action}
+  } // (1576:12) {#if multiple && !item.blank && !item.action}
 
 
   function create_if_block_10(ctx) {
@@ -1082,7 +1082,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1568:14) {:else}
+  } // (1591:14) {:else}
 
 
   function create_else_block_2(ctx) {
@@ -1149,7 +1149,7 @@ var Select = (function () {
         if (detaching) detach(if_block1_anchor);
       }
     };
-  } // (1560:14) {#if item.blank}
+  } // (1583:14) {#if item.blank}
 
 
   function create_if_block_6(ctx) {
@@ -1192,7 +1192,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1575:16) {:else}
+  } // (1598:16) {:else}
 
 
   function create_else_block_3(ctx) {
@@ -1206,9 +1206,9 @@ var Select = (function () {
       c: function c() {
         div = element("div");
         t = text(t_value);
-        attr(div, "class", div_class_value = "ss-item-text " + (
+        attr(div, "class", div_class_value = "ss-item-text " +
         /*item*/
-        ctx[103].item_text_class || ""));
+        ctx[103].item_text_class);
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -1223,9 +1223,9 @@ var Select = (function () {
 
         if (dirty[0] &
         /*displayItems*/
-        2048 && div_class_value !== (div_class_value = "ss-item-text " + (
+        2048 && div_class_value !== (div_class_value = "ss-item-text " +
         /*item*/
-        ctx[103].item_text_class || ""))) {
+        ctx[103].item_text_class)) {
           attr(div, "class", div_class_value);
         }
       },
@@ -1233,7 +1233,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1569:16) {#if item.href}
+  } // (1592:16) {#if item.href}
 
 
   function create_if_block_9(ctx) {
@@ -1282,7 +1282,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1581:16) {#if item.desc}
+  } // (1604:16) {#if item.desc}
 
 
   function create_if_block_8(ctx) {
@@ -1296,9 +1296,9 @@ var Select = (function () {
       c: function c() {
         div = element("div");
         t = text(t_value);
-        attr(div, "class", div_class_value = "ss-item-desc " + (
+        attr(div, "class", div_class_value = "ss-item-desc " +
         /*item*/
-        ctx[103].item_desc_class || ""));
+        ctx[103].item_desc_class);
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -1313,9 +1313,9 @@ var Select = (function () {
 
         if (dirty[0] &
         /*displayItems*/
-        2048 && div_class_value !== (div_class_value = "ss-item-desc " + (
+        2048 && div_class_value !== (div_class_value = "ss-item-desc " +
         /*item*/
-        ctx[103].item_desc_class || ""))) {
+        ctx[103].item_desc_class)) {
           attr(div, "class", div_class_value);
         }
       },
@@ -1323,7 +1323,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1564:18) {:else}
+  } // (1587:18) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -1349,7 +1349,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1562:18) {#if multiple}
+  } // (1585:18) {#if multiple}
 
 
   function create_if_block_7(ctx) {
@@ -1369,7 +1369,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1534:10) {#if item.desc}
+  } // (1557:10) {#if item.desc}
 
 
   function create_if_block_5(ctx) {
@@ -1399,7 +1399,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1520:4) {#each displayItems as item (item.id)}
+  } // (1543:4) {#each displayItems as item (item.id)}
 
 
   function create_each_block(key_1, ctx) {
@@ -1453,7 +1453,7 @@ var Select = (function () {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1597:78) 
+  } // (1620:78) 
 
 
   function create_if_block_2(ctx) {
@@ -1475,7 +1475,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1593:4) {#if fetchError}
+  } // (1616:4) {#if fetchError}
 
 
   function create_if_block_1(ctx) {
@@ -1505,7 +1505,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1603:4) {#if selectionItems.length >= maxItems}
+  } // (1626:4) {#if selectionItems.length >= maxItems}
 
 
   function create_if_block(ctx) {
@@ -1929,6 +1929,7 @@ var Select = (function () {
   var STYLE_DEFAULTS = {
     container_class: ""
   };
+  var BLANK_ID = "";
   var FIXED_SORT_KEY = "_";
   var MAX_ITEMS_DEFAULT = 100;
   var FETCH_INDICATOR_DELAY = 150;
@@ -1990,6 +1991,22 @@ var Select = (function () {
   function isMetaKey(event) {
     return META_KEYS[event.key] || META_KEYS[event.code];
   }
+  /**
+   * NOTE 0 and "0" are non blank ids
+   */
+
+
+  function isBlankId(id) {
+    return id !== 0 && id !== "0" && (id == null || id == BLANK_ID);
+  }
+  /**
+   * Normalize id value
+   */
+
+
+  function normalizeId(id) {
+    return isBlankId(id) ? BLANK_ID : id.toString();
+  }
 
   function toUnderscore(key) {
     return key.split(/(?=[A-Z])/).join("_").toLowerCase();
@@ -2002,7 +2019,7 @@ var Select = (function () {
   function createItemFromOption(el, styles, baseHref) {
     var ds = el.dataset;
     var item = {
-      id: el.value || "",
+      id: normalizeId(el.value),
       text: el.text || ""
     };
     item.sort_key = item.text;
@@ -2023,7 +2040,7 @@ var Select = (function () {
     }
 
     if (!item.separator) {
-      if (item.id === "") {
+      if (isBlankId(item.id)) {
         item.blank = true;
       } else {
         if (!item.action && !item.href && baseHref) {
@@ -2154,10 +2171,14 @@ var Select = (function () {
     var fetchedItems = data.fetchedItems || [];
     fetchedItems.forEach(function (item) {
       if (item.id) {
-        item.id = item.id.toString();
+        item.id = normalizeId(item.id);
       }
 
-      item.sort_key = item.sort_key || item.text;
+      if (isBlankId(item.id)) {
+        item.blank = true;
+      }
+
+      item.sort_key = item.sort_key == null ? item.text : item.sort_key;
     });
     var counts = calculateCounts(fetchedItems);
     var more = data.more === true && counts.offsetCount > 0 && !data.fetchedId;
@@ -2173,7 +2194,7 @@ var Select = (function () {
     var act = 0;
     var off = 0;
     items.forEach(function (item) {
-      if (item.separator) ; else if (!item.id) ; else if (item.placeholder) {
+      if (item.separator) ; else if (item.blank) ; else if (item.placeholder) {
         // NOTE KI does not affect pagination
         act += 1; // NOTE KI separator is ignored always
         //NOTE KI dummy items ignored
@@ -2213,7 +2234,7 @@ var Select = (function () {
     var summaryWrap = SUMMARY_WRAP;
     var keepResult = true;
     var placeholderItem = {
-      id: "",
+      id: BLANK_ID,
       text: "",
       blank: true
     };
@@ -2380,7 +2401,8 @@ var Select = (function () {
 
       for (var i = options.length - 1; i >= 0; i--) {
         var el = options[i];
-        var item = oldById[el.value || ""];
+        var id = normalizeId(el.value);
+        var item = oldById[id];
 
         if (!item) {
           item = createItemFromOption(el, styles, baseHref);
@@ -2417,7 +2439,8 @@ var Select = (function () {
 
       for (var i = options.length - 1; i >= 0; i--) {
         var el = options[i];
-        var selected = !!selectionById[el.value];
+        var id = normalizeId(el.value);
+        var selected = !!selectionById[id];
         changed = changed || el.selected !== selected;
 
         if (selected) {
@@ -2452,9 +2475,9 @@ var Select = (function () {
       var options = real.options;
 
       for (var i = 0; i < options.length; i++) {
-        var el = options[i];
+        var el = options[i]; // NOTE KI pick "blank" and "fixed" items
 
-        if (!el.value || el.dataset.itemFixed != null) {
+        if (isBlankId(el.value) || el.dataset.itemFixed != null) {
           var item = createItemFromOption(el, styles, baseHref);
           item.sort_key = FIXED_SORT_KEY + item.sort_key;
           item.fixed = true;
@@ -2463,7 +2486,7 @@ var Select = (function () {
         }
       }
 
-      var blankItem = byId[""];
+      var blankItem = byId[BLANK_ID];
 
       if (blankItem) {
         blankItem.blank = true;
@@ -2893,7 +2916,7 @@ var Select = (function () {
         closePopup(false);
       },
       Delete: function Delete(event) {
-        selectItem("");
+        selectItem(BLANK_ID);
       }
     };
     var toggleKeyupHandlers = {
