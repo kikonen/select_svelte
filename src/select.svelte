@@ -111,26 +111,17 @@
      item.sort_key = item.text;
 
      if (ds) {
-         if (ds.sortKey) {
-             item.sort_key = ds.sortKey;
-         }
+         item.sort_key = ds.sortKey;
+         item.separator = !!ds.itemSeparator;
 
-         if (ds.itemSeparator) {
-             item.separator = true;
-         }
-         if (ds.itemDesc) {
-             item.desc = ds.itemDesc;
-         }
-         if (ds.itemAction) {
-             item.action = ds.itemAction;
-         }
-         if (ds.itemClass) {
-             item.item_class = ds.itemClass;
-         }
+         item.desc = ds.itemDesc;
+         item.action = ds.itemAction;
 
-         if (ds.itemHref) {
-             item.href = ds.itemHref;
-         }
+         item.item_class = ds.itemClass;
+         item.item_text_class = ds.itemTextClass;
+         item.item_desc_class = ds.itemDescClass;
+
+         item.href = ds.itemHref;
 
          item.data = {};
          Object.keys(ds).forEach(function(key) {
@@ -641,7 +632,7 @@
 
  function updateSelection(byId) {
      let items = Object.values(byId);
-     if (items.length == 0) {
+     if (items.length === 0) {
          let blankItem = display.blankItem || placeholderItem;
          byId = {
              [blankItem.id]: blankItem
@@ -1582,13 +1573,13 @@
                     {item.text}
                   </a>
                 {:else}
-                  <div class="ss-item-text {item.item_class || ''}">
+                  <div class="ss-item-text {item.item_text_class || ''}">
                     {item.text}
                   </div>
                 {/if}
 
                 {#if item.desc}
-                  <div class="ss-item-desc">
+                  <div class="ss-item-desc {item.item_desc_class || ''}">
                     {item.desc}
                   </div>
                 {/if}

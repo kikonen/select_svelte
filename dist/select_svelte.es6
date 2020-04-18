@@ -357,7 +357,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (1494:10) {:else}
+// (1485:10) {:else}
 function create_else_block_4(ctx) {
 	let t_value = /*item*/ ctx[103].text + "";
 	let t;
@@ -378,7 +378,7 @@ function create_else_block_4(ctx) {
 	};
 }
 
-// (1488:10) {#if item.href}
+// (1479:10) {#if item.href}
 function create_if_block_12(ctx) {
 	let a;
 	let t_value = /*item*/ ctx[103].text + "";
@@ -415,7 +415,7 @@ function create_if_block_12(ctx) {
 	};
 }
 
-// (1481:6) {#each summaryItems as item, index (item.id)}
+// (1472:6) {#each summaryItems as item, index (item.id)}
 function create_each_block_1(key_1, ctx) {
 	let span;
 	let t;
@@ -483,7 +483,7 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (1511:4) {#if typeahead}
+// (1502:4) {#if typeahead}
 function create_if_block_11(ctx) {
 	let div;
 	let input;
@@ -530,7 +530,7 @@ function create_if_block_11(ctx) {
 	};
 }
 
-// (1550:6) {:else}
+// (1541:6) {:else}
 function create_else_block(ctx) {
 	let div2;
 	let div1;
@@ -633,7 +633,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (1536:50) 
+// (1527:50) 
 function create_if_block_4(ctx) {
 	let div1;
 	let div0;
@@ -692,7 +692,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (1530:6) {#if item.separator}
+// (1521:6) {#if item.separator}
 function create_if_block_3(ctx) {
 	let div;
 	let dispose;
@@ -716,7 +716,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (1562:12) {#if multiple && !item.blank && !item.action}
+// (1553:12) {#if multiple && !item.blank && !item.action}
 function create_if_block_10(ctx) {
 	let div;
 	let i;
@@ -750,7 +750,7 @@ function create_if_block_10(ctx) {
 	};
 }
 
-// (1577:14) {:else}
+// (1568:14) {:else}
 function create_else_block_2(ctx) {
 	let t;
 	let if_block1_anchor;
@@ -812,7 +812,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (1569:14) {#if item.blank}
+// (1560:14) {#if item.blank}
 function create_if_block_6(ctx) {
 	let div;
 
@@ -854,7 +854,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (1584:16) {:else}
+// (1575:16) {:else}
 function create_else_block_3(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[103].text + "";
@@ -865,7 +865,7 @@ function create_else_block_3(ctx) {
 		c() {
 			div = element("div");
 			t = text(t_value);
-			attr(div, "class", div_class_value = "ss-item-text " + (/*item*/ ctx[103].item_class || ""));
+			attr(div, "class", div_class_value = "ss-item-text " + (/*item*/ ctx[103].item_text_class || ""));
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -874,7 +874,7 @@ function create_else_block_3(ctx) {
 		p(ctx, dirty) {
 			if (dirty[0] & /*displayItems*/ 2048 && t_value !== (t_value = /*item*/ ctx[103].text + "")) set_data(t, t_value);
 
-			if (dirty[0] & /*displayItems*/ 2048 && div_class_value !== (div_class_value = "ss-item-text " + (/*item*/ ctx[103].item_class || ""))) {
+			if (dirty[0] & /*displayItems*/ 2048 && div_class_value !== (div_class_value = "ss-item-text " + (/*item*/ ctx[103].item_text_class || ""))) {
 				attr(div, "class", div_class_value);
 			}
 		},
@@ -884,7 +884,7 @@ function create_else_block_3(ctx) {
 	};
 }
 
-// (1578:16) {#if item.href}
+// (1569:16) {#if item.href}
 function create_if_block_9(ctx) {
 	let a;
 	let t_value = /*item*/ ctx[103].text + "";
@@ -920,17 +920,18 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (1590:16) {#if item.desc}
+// (1581:16) {#if item.desc}
 function create_if_block_8(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[103].desc + "";
 	let t;
+	let div_class_value;
 
 	return {
 		c() {
 			div = element("div");
 			t = text(t_value);
-			attr(div, "class", "ss-item-desc");
+			attr(div, "class", div_class_value = "ss-item-desc " + (/*item*/ ctx[103].item_desc_class || ""));
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -938,6 +939,10 @@ function create_if_block_8(ctx) {
 		},
 		p(ctx, dirty) {
 			if (dirty[0] & /*displayItems*/ 2048 && t_value !== (t_value = /*item*/ ctx[103].desc + "")) set_data(t, t_value);
+
+			if (dirty[0] & /*displayItems*/ 2048 && div_class_value !== (div_class_value = "ss-item-desc " + (/*item*/ ctx[103].item_desc_class || ""))) {
+				attr(div, "class", div_class_value);
+			}
 		},
 		d(detaching) {
 			if (detaching) detach(div);
@@ -945,7 +950,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (1573:18) {:else}
+// (1564:18) {:else}
 function create_else_block_1(ctx) {
 	let t_value = /*item*/ ctx[103].text + "";
 	let t;
@@ -966,7 +971,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (1571:18) {#if multiple}
+// (1562:18) {#if multiple}
 function create_if_block_7(ctx) {
 	let t_value = /*translate*/ ctx[26]("clear") + "";
 	let t;
@@ -985,7 +990,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (1543:10) {#if item.desc}
+// (1534:10) {#if item.desc}
 function create_if_block_5(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[103].desc + "";
@@ -1010,7 +1015,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (1529:4) {#each displayItems as item (item.id)}
+// (1520:4) {#each displayItems as item (item.id)}
 function create_each_block(key_1, ctx) {
 	let first;
 	let if_block_anchor;
@@ -1059,7 +1064,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (1606:78) 
+// (1597:78) 
 function create_if_block_2(ctx) {
 	let div;
 
@@ -1080,7 +1085,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (1602:4) {#if fetchError}
+// (1593:4) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -1105,7 +1110,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (1612:4) {#if selectionItems.length >= maxItems}
+// (1603:4) {#if selectionItems.length >= maxItems}
 function create_if_block(ctx) {
 	let div;
 	let t0_value = /*translate*/ ctx[26]("max_limit") + "";
@@ -1478,30 +1483,14 @@ function createItemFromOption(el, styles, baseHref) {
 	item.sort_key = item.text;
 
 	if (ds) {
-		if (ds.sortKey) {
-			item.sort_key = ds.sortKey;
-		}
-
-		if (ds.itemSeparator) {
-			item.separator = true;
-		}
-
-		if (ds.itemDesc) {
-			item.desc = ds.itemDesc;
-		}
-
-		if (ds.itemAction) {
-			item.action = ds.itemAction;
-		}
-
-		if (ds.itemClass) {
-			item.item_class = ds.itemClass;
-		}
-
-		if (ds.itemHref) {
-			item.href = ds.itemHref;
-		}
-
+		item.sort_key = ds.sortKey;
+		item.separator = !!ds.itemSeparator;
+		item.desc = ds.itemDesc;
+		item.action = ds.itemAction;
+		item.item_class = ds.itemClass;
+		item.item_text_class = ds.itemTextClass;
+		item.item_desc_class = ds.itemDescClass;
+		item.href = ds.itemHref;
 		item.data = {};
 
 		Object.keys(ds).forEach(function (key) {
@@ -1995,7 +1984,7 @@ function instance($$self, $$props, $$invalidate) {
 	function updateSelection(byId) {
 		let items = Object.values(byId);
 
-		if (items.length == 0) {
+		if (items.length === 0) {
 			let blankItem = display.blankItem || placeholderItem;
 			byId = { [blankItem.id]: blankItem };
 			items = [blankItem];
