@@ -23,43 +23,12 @@ var Select = (function () {
     return Constructor;
   }
 
-  function _typeof(obj) {
-    "@babel/helpers - typeof";
-
-    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-      _typeof = function _typeof(obj) {
-        return typeof obj;
-      };
-    } else {
-      _typeof = function _typeof(obj) {
-        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-      };
-    }
-
-    return _typeof(obj);
-  }
-
   function _assertThisInitialized(self) {
     if (self === void 0) {
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
     }
 
     return self;
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (call && (_typeof(call) === "object" || typeof call === "function")) {
-      return call;
-    }
-
-    return _assertThisInitialized(self);
-  }
-
-  function _getPrototypeOf(o) {
-    _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
-      return o.__proto__ || Object.getPrototypeOf(o);
-    };
-    return _getPrototypeOf(o);
   }
 
   function _setPrototypeOf(o, p) {
@@ -86,6 +55,37 @@ var Select = (function () {
     if (superClass) _setPrototypeOf(subClass, superClass);
   }
 
+  function _typeof(obj) {
+    "@babel/helpers - typeof";
+
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof = function _typeof(obj) {
+        return typeof obj;
+      };
+    } else {
+      _typeof = function _typeof(obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      };
+    }
+
+    return _typeof(obj);
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (call && (_typeof(call) === "object" || typeof call === "function")) {
+      return call;
+    }
+
+    return _assertThisInitialized(self);
+  }
+
+  function _getPrototypeOf(o) {
+    _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+      return o.__proto__ || Object.getPrototypeOf(o);
+    };
+    return _getPrototypeOf(o);
+  }
+
   function _defineProperty(obj, key, value) {
     if (key in obj) {
       Object.defineProperty(obj, key, {
@@ -101,94 +101,39 @@ var Select = (function () {
     return obj;
   }
 
-  function _isNativeFunction(fn) {
-    return Function.toString.call(fn).indexOf("[native code]") !== -1;
-  }
+  function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
 
-  function isNativeReflectConstruct() {
-    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-    if (Reflect.construct.sham) return false;
-    if (typeof Proxy === "function") return true;
-
-    try {
-      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  function _construct(Parent, args, Class) {
-    if (isNativeReflectConstruct()) {
-      _construct = Reflect.construct;
-    } else {
-      _construct = function _construct(Parent, args, Class) {
-        var a = [null];
-        a.push.apply(a, args);
-        var Constructor = Function.bind.apply(Parent, a);
-        var instance = new Constructor();
-        if (Class) _setPrototypeOf(instance, Class.prototype);
-        return instance;
-      };
+    for (var i = 0, arr2 = new Array(len); i < len; i++) {
+      arr2[i] = arr[i];
     }
 
-    return _construct.apply(null, arguments);
-  }
-
-  function _wrapNativeSuper(Class) {
-    var _cache = typeof Map === "function" ? new Map() : undefined;
-
-    _wrapNativeSuper = function _wrapNativeSuper(Class) {
-      if (Class === null || !_isNativeFunction(Class)) return Class;
-
-      if (typeof Class !== "function") {
-        throw new TypeError("Super expression must either be null or a function");
-      }
-
-      if (typeof _cache !== "undefined") {
-        if (_cache.has(Class)) return _cache.get(Class);
-
-        _cache.set(Class, Wrapper);
-      }
-
-      function Wrapper() {
-        return _construct(Class, arguments, _getPrototypeOf(this).constructor);
-      }
-
-      Wrapper.prototype = Object.create(Class.prototype, {
-        constructor: {
-          value: Wrapper,
-          enumerable: false,
-          writable: true,
-          configurable: true
-        }
-      });
-      return _setPrototypeOf(Wrapper, Class);
-    };
-
-    return _wrapNativeSuper(Class);
+    return arr2;
   }
 
   function _arrayWithoutHoles(arr) {
-    if (Array.isArray(arr)) {
-      for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
-        arr2[i] = arr[i];
-      }
-
-      return arr2;
-    }
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
   }
 
   function _iterableToArray(iter) {
-    if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+    if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+  }
+
+  function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(n);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
   }
 
   function _nonIterableSpread() {
-    throw new TypeError("Invalid attempt to spread non-iterable instance");
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
 
   function _toConsumableArray(arr) {
-    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
   }
 
   function noop() {}
@@ -416,7 +361,7 @@ var Select = (function () {
 
     function insert(block) {
       transition_in(block, 1);
-      block.m(node, next);
+      block.m(node, next, lookup.has(block.key));
       lookup.set(block.key, block);
       next = block.first;
       n--;
@@ -551,8 +496,10 @@ var Select = (function () {
 
     if (options.target) {
       if (options.hydrate) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        $$.fragment && $$.fragment.l(children(options.target));
+        var nodes = children(options.target); // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
+        $$.fragment && $$.fragment.l(nodes);
+        nodes.forEach(detach);
       } else {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         $$.fragment && $$.fragment.c();
@@ -566,72 +513,7 @@ var Select = (function () {
     set_current_component(parent_component);
   }
 
-  var SvelteElement;
-
-  if (typeof HTMLElement === 'function') {
-    SvelteElement =
-    /*#__PURE__*/
-    function (_HTMLElement) {
-      _inherits(SvelteElement, _HTMLElement);
-
-      function SvelteElement() {
-        var _this;
-
-        _classCallCheck(this, SvelteElement);
-
-        _this = _possibleConstructorReturn(this, _getPrototypeOf(SvelteElement).call(this));
-
-        _this.attachShadow({
-          mode: 'open'
-        });
-
-        return _this;
-      }
-
-      _createClass(SvelteElement, [{
-        key: "connectedCallback",
-        value: function connectedCallback() {
-          // @ts-ignore todo: improve typings
-          for (var key in this.$$.slotted) {
-            // @ts-ignore todo: improve typings
-            this.appendChild(this.$$.slotted[key]);
-          }
-        }
-      }, {
-        key: "attributeChangedCallback",
-        value: function attributeChangedCallback(attr, _oldValue, newValue) {
-          this[attr] = newValue;
-        }
-      }, {
-        key: "$destroy",
-        value: function $destroy() {
-          destroy_component(this, 1);
-          this.$destroy = noop;
-        }
-      }, {
-        key: "$on",
-        value: function $on(type, callback) {
-          // TODO should this delegate to addEventListener?
-          var callbacks = this.$$.callbacks[type] || (this.$$.callbacks[type] = []);
-          callbacks.push(callback);
-          return function () {
-            var index = callbacks.indexOf(callback);
-            if (index !== -1) callbacks.splice(index, 1);
-          };
-        }
-      }, {
-        key: "$set",
-        value: function $set() {// overridden by instance, if it has props
-        }
-      }]);
-
-      return SvelteElement;
-    }(_wrapNativeSuper(HTMLElement));
-  }
-
-  var SvelteComponent =
-  /*#__PURE__*/
-  function () {
+  var SvelteComponent = /*#__PURE__*/function () {
     function SvelteComponent() {
       _classCallCheck(this, SvelteComponent);
     }
@@ -660,6 +542,16 @@ var Select = (function () {
 
     return SvelteComponent;
   }();
+
+  function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+  function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+  function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray$1(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+  function _unsupportedIterableToArray$1(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
+
+  function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
   function get_each_context(ctx, list, i) {
     var child_ctx = ctx.slice();
@@ -720,9 +612,10 @@ var Select = (function () {
         attr(a, "target", "_blank");
         attr(a, "tabindex", "-1");
       },
-      m: function m(target, anchor) {
+      m: function m(target, anchor, remount) {
         insert(target, a, anchor);
         append(a, t);
+        if (remount) dispose();
         dispose = listen(a, "click",
         /*handleToggleLinkClick*/
         ctx[38]);
@@ -860,7 +753,7 @@ var Select = (function () {
         attr(div, "class", "ss-input-item");
         attr(div, "tabindex", "-1");
       },
-      m: function m(target, anchor) {
+      m: function m(target, anchor, remount) {
         insert(target, div, anchor);
         append(div, input);
         /*input_binding*/
@@ -869,6 +762,7 @@ var Select = (function () {
         set_input_value(input,
         /*query*/
         ctx[9]);
+        if (remount) run_all(dispose);
         dispose = [listen(input, "input",
         /*input_input_handler*/
         ctx[100]), listen(input, "blur",
@@ -957,13 +851,14 @@ var Select = (function () {
         /*item*/
         ctx[103].id]);
       },
-      m: function m(target, anchor) {
+      m: function m(target, anchor, remount) {
         insert(target, div2, anchor);
         append(div2, div1);
         if (if_block0) if_block0.m(div1, null);
         append(div1, t);
         append(div1, div0);
         if_block1.m(div0, null);
+        if (remount) run_all(dispose);
         dispose = [listen(div2, "blur",
         /*handleBlur*/
         ctx[27]), listen(div2, "click",
@@ -1078,12 +973,13 @@ var Select = (function () {
         attr(div1, "tabindex", "-1");
         attr(div1, "class", "dropdown-item ss-item-muted ss-js-dead");
       },
-      m: function m(target, anchor) {
+      m: function m(target, anchor, remount) {
         insert(target, div1, anchor);
         append(div1, div0);
         append(div0, t0);
         append(div1, t1);
         if (if_block) if_block.m(div1, null);
+        if (remount) dispose();
         dispose = listen(div1, "keydown",
         /*handleItemKeydown*/
         ctx[35]);
@@ -1136,8 +1032,9 @@ var Select = (function () {
         attr(div, "tabindex", "-1");
         attr(div, "class", "dropdown-divider ss-js-dead");
       },
-      m: function m(target, anchor) {
+      m: function m(target, anchor, remount) {
         insert(target, div, anchor);
+        if (remount) dispose();
         dispose = listen(div, "keydown",
         /*handleItemKeydown*/
         ctx[35]);
@@ -1357,9 +1254,10 @@ var Select = (function () {
         ctx[103].href);
         attr(a, "tabindex", "-1");
       },
-      m: function m(target, anchor) {
+      m: function m(target, anchor, remount) {
         insert(target, a, anchor);
         append(a, t);
+        if (remount) dispose();
         dispose = listen(a, "click",
         /*handleItemLinkClick*/
         ctx[39]);
@@ -1784,7 +1682,7 @@ var Select = (function () {
         /*containerName*/
         ctx[8]);
       },
-      m: function m(target, anchor) {
+      m: function m(target, anchor, remount) {
         insert(target, div1, anchor);
         append(div1, button);
         append(button, span0);
@@ -1817,6 +1715,7 @@ var Select = (function () {
         /*div1_binding*/
 
         ctx[102](div1);
+        if (remount) run_all(dispose);
         dispose = [listen(button, "blur",
         /*handleBlur*/
         ctx[27]), listen(button, "keydown",
@@ -2895,12 +2794,11 @@ var Select = (function () {
     }
 
     function handleMutation(mutationsList, observer) {
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
+      var _iterator = _createForOfIteratorHelper(mutationsList),
+          _step;
 
       try {
-        for (var _iterator = mutationsList[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var mutation = _step.value;
 
           if (mutation.type === "childList") {
@@ -2908,18 +2806,9 @@ var Select = (function () {
           }
         }
       } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
+        _iterator.e(err);
       } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-            _iterator["return"]();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
+        _iterator.f();
       }
     }
 
@@ -3459,17 +3348,17 @@ var Select = (function () {
     return [real, containerEl, inputEl, toggleEl, popupEl, maxItems, typeahead, containerId, containerName, query, actualCount, displayItems, selectionById, selectionItems, selectionTip, summarySingle, summaryItems, showFetching, fetchError, popupVisible, popupTop, popupLeft, activeFetch, previousFetch, multiple, styles, translate, handleBlur, handleInputBlur, handleInputKeypress, handleInputKeydown, handleInputKeyup, handleToggleKeydown, handleToggleKeyup, handleToggleClick, handleItemKeydown, handleItemKeyup, handleItemClick, handleToggleLinkClick, handleItemLinkClick, handlePopupScroll, config, selectItem, setupDone, fetcher, remote, summaryLen, summaryWrap, keepResult, placeholderItem, baseHref, mounted, fixedItems, fixedById, result, hasMore, display, fetchingMore, previousQuery, isSyncToReal, mutationObserver, translations, clearQuery, openPopup, closePopup, selectItemImpl, executeAction, selectElement, containsElement, syncFromRealSelection, syncToRealSelection, updateFixedItems, updateDisplay, appendFetchedToDisplay, updateSelection, reload, inlineFetcher, fetchItems, cancelFetch, fetchMoreIfneeded, setupComponent, handleMutation, eventListeners, toggleKeydownHandlers, toggleKeyupHandlers, inputKeypressHandlers, inputKeydownHandlers, inputKeyupHandlers, focusNextByKey, focusItem, focusPreviousItem, focusNextItem, focusPageUp, focusPageDown, blockScrollUpIfNeeded, blockScrollDownIfNeeded, itemKeydownHandlers, itemKeyupHandlers, button_binding, input_binding, input_input_handler, div0_binding, div1_binding];
   }
 
-  var Select =
-  /*#__PURE__*/
-  function (_SvelteComponent) {
+  var Select = /*#__PURE__*/function (_SvelteComponent) {
     _inherits(Select, _SvelteComponent);
+
+    var _super = _createSuper(Select);
 
     function Select(options) {
       var _this;
 
       _classCallCheck(this, Select);
 
-      _this = _possibleConstructorReturn(this, _getPrototypeOf(Select).call(this));
+      _this = _super.call(this);
       init(_assertThisInitialized(_this), options, instance, create_fragment, safe_not_equal, {
         real: 0,
         config: 41,
