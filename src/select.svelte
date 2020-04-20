@@ -124,7 +124,6 @@
          id: normalizeId(el.value),
          text: el.text || '',
      };
-     item.sort_key = item.text;
 
      if (ds) {
          item.sort_key = ds.sortKey;
@@ -144,6 +143,11 @@
              item.data[toUnderscore(key)] = ds[key];
          });
      }
+
+     if (item.sort_key == null) {
+         item.sort_key = item.text;
+     }
+
      if (!item.separator) {
          if (isBlankId(item.id)) {
              item.blank = true;
@@ -271,7 +275,14 @@
          if (isBlankId(item.id)) {
              item.blank = true;
          }
-         item.sort_key = item.sort_key == null ? item.text : item.sort_key;
+
+         if (item.text == null) {
+             item.text = '';
+         }
+
+         if (item.sort_key == null) {
+             item.sort_key = item.text;
+         }
      });
 
      let counts = calculateCounts(fetchedItems);

@@ -357,7 +357,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (1508:10) {:else}
+// (1519:10) {:else}
 function create_else_block_4(ctx) {
 	let t_value = /*item*/ ctx[103].text + "";
 	let t;
@@ -378,7 +378,7 @@ function create_else_block_4(ctx) {
 	};
 }
 
-// (1502:10) {#if item.href}
+// (1513:10) {#if item.href}
 function create_if_block_12(ctx) {
 	let a;
 	let t_value = /*item*/ ctx[103].text + "";
@@ -415,7 +415,7 @@ function create_if_block_12(ctx) {
 	};
 }
 
-// (1495:6) {#each summaryItems as item, index (item.id)}
+// (1506:6) {#each summaryItems as item, index (item.id)}
 function create_each_block_1(key_1, ctx) {
 	let span;
 	let t;
@@ -483,7 +483,7 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (1525:4) {#if typeahead}
+// (1536:4) {#if typeahead}
 function create_if_block_11(ctx) {
 	let div;
 	let input;
@@ -530,7 +530,7 @@ function create_if_block_11(ctx) {
 	};
 }
 
-// (1564:6) {:else}
+// (1575:6) {:else}
 function create_else_block(ctx) {
 	let div2;
 	let div1;
@@ -633,7 +633,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (1550:50) 
+// (1561:50) 
 function create_if_block_4(ctx) {
 	let div1;
 	let div0;
@@ -692,7 +692,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (1544:6) {#if item.separator}
+// (1555:6) {#if item.separator}
 function create_if_block_3(ctx) {
 	let div;
 	let dispose;
@@ -716,7 +716,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (1576:12) {#if multiple && !item.blank && !item.action}
+// (1587:12) {#if multiple && !item.blank && !item.action}
 function create_if_block_10(ctx) {
 	let div;
 	let i;
@@ -750,7 +750,7 @@ function create_if_block_10(ctx) {
 	};
 }
 
-// (1591:14) {:else}
+// (1602:14) {:else}
 function create_else_block_2(ctx) {
 	let t;
 	let if_block1_anchor;
@@ -812,7 +812,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (1583:14) {#if item.blank}
+// (1594:14) {#if item.blank}
 function create_if_block_6(ctx) {
 	let div;
 
@@ -854,7 +854,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (1598:16) {:else}
+// (1609:16) {:else}
 function create_else_block_3(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[103].text + "";
@@ -884,7 +884,7 @@ function create_else_block_3(ctx) {
 	};
 }
 
-// (1592:16) {#if item.href}
+// (1603:16) {#if item.href}
 function create_if_block_9(ctx) {
 	let a;
 	let t_value = /*item*/ ctx[103].text + "";
@@ -920,7 +920,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (1604:16) {#if item.desc}
+// (1615:16) {#if item.desc}
 function create_if_block_8(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[103].desc + "";
@@ -950,7 +950,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (1587:18) {:else}
+// (1598:18) {:else}
 function create_else_block_1(ctx) {
 	let t_value = /*item*/ ctx[103].text + "";
 	let t;
@@ -971,7 +971,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (1585:18) {#if multiple}
+// (1596:18) {#if multiple}
 function create_if_block_7(ctx) {
 	let t_value = /*translate*/ ctx[26]("clear") + "";
 	let t;
@@ -990,7 +990,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (1557:10) {#if item.desc}
+// (1568:10) {#if item.desc}
 function create_if_block_5(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[103].desc + "";
@@ -1015,7 +1015,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (1543:4) {#each displayItems as item (item.id)}
+// (1554:4) {#each displayItems as item (item.id)}
 function create_each_block(key_1, ctx) {
 	let first;
 	let if_block_anchor;
@@ -1064,7 +1064,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (1620:78) 
+// (1631:78) 
 function create_if_block_2(ctx) {
 	let div;
 
@@ -1085,7 +1085,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (1616:4) {#if fetchError}
+// (1627:4) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -1110,7 +1110,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (1626:4) {#if selectionItems.length >= maxItems}
+// (1637:4) {#if selectionItems.length >= maxItems}
 function create_if_block(ctx) {
 	let div;
 	let t0_value = /*translate*/ ctx[26]("max_limit") + "";
@@ -1500,8 +1500,6 @@ function createItemFromOption(el, styles, baseHref) {
 		text: el.text || ""
 	};
 
-	item.sort_key = item.text;
-
 	if (ds) {
 		item.sort_key = ds.sortKey;
 		item.separator = !!ds.itemSeparator;
@@ -1516,6 +1514,10 @@ function createItemFromOption(el, styles, baseHref) {
 		Object.keys(ds).forEach(function (key) {
 			item.data[toUnderscore(key)] = ds[key];
 		});
+	}
+
+	if (item.sort_key == null) {
+		item.sort_key = item.text;
 	}
 
 	if (!item.separator) {
@@ -1658,7 +1660,13 @@ function createResult(data) {
 			item.blank = true;
 		}
 
-		item.sort_key = item.sort_key == null ? item.text : item.sort_key;
+		if (item.text == null) {
+			item.text = "";
+		}
+
+		if (item.sort_key == null) {
+			item.sort_key = item.text;
+		}
 	});
 
 	let counts = calculateCounts(fetchedItems);
