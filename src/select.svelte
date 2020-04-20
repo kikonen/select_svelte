@@ -269,9 +269,8 @@
      let fetchedItems = data.fetchedItems || [];
 
      fetchedItems.forEach(function(item) {
-         if (item.id) {
-             item.id = normalizeId(item.id);
-         }
+         item.id = normalizeId(item.id);
+
          if (isBlankId(item.id)) {
              item.blank = true;
          }
@@ -458,7 +457,7 @@
      if (DEBUG) console.log("SELECT", item);
 
      if (multiple) {
-         if (item.id) {
+         if (!item.blank) {
              if (byId[item.id]) {
                  delete byId[item.id];
 
