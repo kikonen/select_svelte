@@ -436,7 +436,7 @@ function create_each_block_1(key_1, ctx) {
 			span = element("span");
 			if_block.c();
 			t = space();
-			attr(span, "class", span_class_value = /*item*/ ctx[103].item_class);
+			attr(span, "class", span_class_value = /*item*/ ctx[103].item_class || "");
 			toggle_class(span, "ss-blank", /*item*/ ctx[103].blank);
 			toggle_class(span, "ss-summary-item-multiple", !/*summarySingle*/ ctx[15]);
 			toggle_class(span, "ss-summary-item-single", /*summarySingle*/ ctx[15]);
@@ -460,7 +460,7 @@ function create_each_block_1(key_1, ctx) {
 				}
 			}
 
-			if (dirty[0] & /*summaryItems*/ 65536 && span_class_value !== (span_class_value = /*item*/ ctx[103].item_class)) {
+			if (dirty[0] & /*summaryItems*/ 65536 && span_class_value !== (span_class_value = /*item*/ ctx[103].item_class || "")) {
 				attr(span, "class", span_class_value);
 			}
 
@@ -561,7 +561,7 @@ function create_else_block(ctx) {
 			attr(div0, "class", "d-inline-block");
 			attr(div1, "class", "ss-no-click");
 			attr(div2, "tabindex", "1");
-			attr(div2, "class", div2_class_value = "dropdown-item ss-item ss-js-item " + /*item*/ ctx[103].item_class);
+			attr(div2, "class", div2_class_value = "dropdown-item ss-item ss-js-item " + (/*item*/ ctx[103].item_class || ""));
 			attr(div2, "data-id", div2_data_id_value = /*item*/ ctx[103].id);
 			attr(div2, "data-action", div2_data_action_value = /*item*/ ctx[103].action);
 			toggle_class(div2, "ss-item-selected", !/*item*/ ctx[103].blank && /*selectionById*/ ctx[12][/*item*/ ctx[103].id]);
@@ -608,7 +608,7 @@ function create_else_block(ctx) {
 				}
 			}
 
-			if (dirty[0] & /*displayItems*/ 2048 && div2_class_value !== (div2_class_value = "dropdown-item ss-item ss-js-item " + /*item*/ ctx[103].item_class)) {
+			if (dirty[0] & /*displayItems*/ 2048 && div2_class_value !== (div2_class_value = "dropdown-item ss-item ss-js-item " + (/*item*/ ctx[103].item_class || ""))) {
 				attr(div2, "class", div2_class_value);
 			}
 
@@ -651,7 +651,7 @@ function create_if_block_4(ctx) {
 			t0 = text(t0_value);
 			t1 = space();
 			if (if_block) if_block.c();
-			attr(div0, "class", div0_class_value = "ss-item-text " + /*item*/ ctx[103].item_class);
+			attr(div0, "class", div0_class_value = "ss-item-text " + (/*item*/ ctx[103].item_text_class || ""));
 			attr(div1, "tabindex", "-1");
 			attr(div1, "class", "dropdown-item ss-item-muted ss-js-dead");
 		},
@@ -667,7 +667,7 @@ function create_if_block_4(ctx) {
 		p(ctx, dirty) {
 			if (dirty[0] & /*displayItems*/ 2048 && t0_value !== (t0_value = /*item*/ ctx[103].text + "")) set_data(t0, t0_value);
 
-			if (dirty[0] & /*displayItems*/ 2048 && div0_class_value !== (div0_class_value = "ss-item-text " + /*item*/ ctx[103].item_class)) {
+			if (dirty[0] & /*displayItems*/ 2048 && div0_class_value !== (div0_class_value = "ss-item-text " + (/*item*/ ctx[103].item_text_class || ""))) {
 				attr(div0, "class", div0_class_value);
 			}
 
@@ -865,7 +865,7 @@ function create_else_block_3(ctx) {
 		c() {
 			div = element("div");
 			t = text(t_value);
-			attr(div, "class", div_class_value = "ss-item-text " + /*item*/ ctx[103].item_text_class);
+			attr(div, "class", div_class_value = "ss-item-text " + (/*item*/ ctx[103].item_text_class || ""));
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -874,7 +874,7 @@ function create_else_block_3(ctx) {
 		p(ctx, dirty) {
 			if (dirty[0] & /*displayItems*/ 2048 && t_value !== (t_value = /*item*/ ctx[103].text + "")) set_data(t, t_value);
 
-			if (dirty[0] & /*displayItems*/ 2048 && div_class_value !== (div_class_value = "ss-item-text " + /*item*/ ctx[103].item_text_class)) {
+			if (dirty[0] & /*displayItems*/ 2048 && div_class_value !== (div_class_value = "ss-item-text " + (/*item*/ ctx[103].item_text_class || ""))) {
 				attr(div, "class", div_class_value);
 			}
 		},
@@ -931,7 +931,7 @@ function create_if_block_8(ctx) {
 		c() {
 			div = element("div");
 			t = text(t_value);
-			attr(div, "class", div_class_value = "ss-item-desc " + /*item*/ ctx[103].item_desc_class);
+			attr(div, "class", div_class_value = "ss-item-desc " + (/*item*/ ctx[103].item_desc_class || ""));
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -940,7 +940,7 @@ function create_if_block_8(ctx) {
 		p(ctx, dirty) {
 			if (dirty[0] & /*displayItems*/ 2048 && t_value !== (t_value = /*item*/ ctx[103].desc + "")) set_data(t, t_value);
 
-			if (dirty[0] & /*displayItems*/ 2048 && div_class_value !== (div_class_value = "ss-item-desc " + /*item*/ ctx[103].item_desc_class)) {
+			if (dirty[0] & /*displayItems*/ 2048 && div_class_value !== (div_class_value = "ss-item-desc " + (/*item*/ ctx[103].item_desc_class || ""))) {
 				attr(div, "class", div_class_value);
 			}
 		},
@@ -995,12 +995,13 @@ function create_if_block_5(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[103].desc + "";
 	let t;
+	let div_class_value;
 
 	return {
 		c() {
 			div = element("div");
 			t = text(t_value);
-			attr(div, "class", "ss-item-desc");
+			attr(div, "class", div_class_value = "ss-item-desc " + (/*item*/ ctx[103].item_desc_class || ""));
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -1008,6 +1009,10 @@ function create_if_block_5(ctx) {
 		},
 		p(ctx, dirty) {
 			if (dirty[0] & /*displayItems*/ 2048 && t_value !== (t_value = /*item*/ ctx[103].desc + "")) set_data(t, t_value);
+
+			if (dirty[0] & /*displayItems*/ 2048 && div_class_value !== (div_class_value = "ss-item-desc " + (/*item*/ ctx[103].item_desc_class || ""))) {
+				attr(div, "class", div_class_value);
+			}
 		},
 		d(detaching) {
 			if (detaching) detach(div);
@@ -1234,7 +1239,7 @@ function create_fragment(ctx) {
 			toggle_class(div0, "show", /*popupVisible*/ ctx[19]);
 			toggle_class(div0, "ss-popup-top", /*popupTop*/ ctx[20]);
 			toggle_class(div0, "ss-popup-left", /*popupLeft*/ ctx[21]);
-			attr(div1, "class", div1_class_value = "form-control ss-container " + /*styles*/ ctx[25].container_class);
+			attr(div1, "class", div1_class_value = "form-control ss-container " + (/*styles*/ ctx[25].container_class || ""));
 			attr(div1, "id", /*containerId*/ ctx[7]);
 			attr(div1, "name", /*containerName*/ ctx[8]);
 		},
