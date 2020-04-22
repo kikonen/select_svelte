@@ -2024,14 +2024,14 @@ var Select = (function () {
     };
 
     if (ds) {
-      item.sort_key = ds.sortKey;
+      item.sort_key = ds.sortKey || null;
       item.separator = !!ds.itemSeparator;
-      item.desc = ds.itemDesc;
-      item.action = ds.itemAction;
-      item.item_class = ds.itemClass;
-      item.item_text_class = ds.itemTextClass;
-      item.item_desc_class = ds.itemDescClass;
-      item.href = ds.itemHref;
+      item.desc = ds.itemDesc || null;
+      item.action = ds.itemAction || null;
+      item.item_class = ds.itemClass || null;
+      item.item_text_class = ds.itemTextClass || null;
+      item.item_desc_class = ds.itemDescClass || null;
+      item.href = ds.itemHref || null;
       item.data = {};
       Object.keys(ds).forEach(function (key) {
         item.data[toUnderscore(key)] = ds[key];
