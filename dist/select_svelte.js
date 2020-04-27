@@ -570,9 +570,11 @@ var Select = (function () {
   function create_else_block_4(ctx) {
     var t_value = (
     /*item*/
-    ctx[103].summary ||
+    ctx[103].summary == null ?
     /*item*/
-    ctx[103].text) + "";
+    ctx[103].text :
+    /*item*/
+    ctx[103].summary) + "";
     var t;
     return {
       c: function c() {
@@ -586,9 +588,11 @@ var Select = (function () {
         /*summaryItems*/
         65536 && t_value !== (t_value = (
         /*item*/
-        ctx[103].summary ||
+        ctx[103].summary == null ?
         /*item*/
-        ctx[103].text) + "")) set_data(t, t_value);
+        ctx[103].text :
+        /*item*/
+        ctx[103].summary) + "")) set_data(t, t_value);
       },
       d: function d(detaching) {
         if (detaching) detach(t);
@@ -601,9 +605,11 @@ var Select = (function () {
     var a;
     var t_value = (
     /*item*/
-    ctx[103].summary ||
+    ctx[103].summary == null ?
     /*item*/
-    ctx[103].text) + "";
+    ctx[103].text :
+    /*item*/
+    ctx[103].summary) + "";
     var t;
     var a_href_value;
     var dispose;
@@ -631,9 +637,11 @@ var Select = (function () {
         /*summaryItems*/
         65536 && t_value !== (t_value = (
         /*item*/
-        ctx[103].summary ||
+        ctx[103].summary == null ?
         /*item*/
-        ctx[103].text) + "")) set_data(t, t_value);
+        ctx[103].text :
+        /*item*/
+        ctx[103].summary) + "")) set_data(t, t_value);
 
         if (dirty[0] &
         /*summaryItems*/

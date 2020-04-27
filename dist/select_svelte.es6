@@ -359,7 +359,10 @@ function get_each_context_1(ctx, list, i) {
 
 // (1529:10) {:else}
 function create_else_block_4(ctx) {
-	let t_value = (/*item*/ ctx[103].summary || /*item*/ ctx[103].text) + "";
+	let t_value = (/*item*/ ctx[103].summary == null
+	? /*item*/ ctx[103].text
+	: /*item*/ ctx[103].summary) + "";
+
 	let t;
 
 	return {
@@ -370,7 +373,9 @@ function create_else_block_4(ctx) {
 			insert(target, t, anchor);
 		},
 		p(ctx, dirty) {
-			if (dirty[0] & /*summaryItems*/ 65536 && t_value !== (t_value = (/*item*/ ctx[103].summary || /*item*/ ctx[103].text) + "")) set_data(t, t_value);
+			if (dirty[0] & /*summaryItems*/ 65536 && t_value !== (t_value = (/*item*/ ctx[103].summary == null
+			? /*item*/ ctx[103].text
+			: /*item*/ ctx[103].summary) + "")) set_data(t, t_value);
 		},
 		d(detaching) {
 			if (detaching) detach(t);
@@ -381,7 +386,11 @@ function create_else_block_4(ctx) {
 // (1523:10) {#if item.href}
 function create_if_block_12(ctx) {
 	let a;
-	let t_value = (/*item*/ ctx[103].summary || /*item*/ ctx[103].text) + "";
+
+	let t_value = (/*item*/ ctx[103].summary == null
+	? /*item*/ ctx[103].text
+	: /*item*/ ctx[103].summary) + "";
+
 	let t;
 	let a_href_value;
 	let dispose;
@@ -402,7 +411,9 @@ function create_if_block_12(ctx) {
 			dispose = listen(a, "click", /*handleToggleLinkClick*/ ctx[38]);
 		},
 		p(ctx, dirty) {
-			if (dirty[0] & /*summaryItems*/ 65536 && t_value !== (t_value = (/*item*/ ctx[103].summary || /*item*/ ctx[103].text) + "")) set_data(t, t_value);
+			if (dirty[0] & /*summaryItems*/ 65536 && t_value !== (t_value = (/*item*/ ctx[103].summary == null
+			? /*item*/ ctx[103].text
+			: /*item*/ ctx[103].summary) + "")) set_data(t, t_value);
 
 			if (dirty[0] & /*summaryItems*/ 65536 && a_href_value !== (a_href_value = /*item*/ ctx[103].href)) {
 				attr(a, "href", a_href_value);

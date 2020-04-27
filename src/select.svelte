@@ -1524,10 +1524,10 @@
             <a class="ss-item-link" href="{item.href}" target="_blank"
                tabindex="-1"
                on:click={handleToggleLinkClick}>
-              {item.summary || item.text}
+              {item.summary == null ? item.text : item.summary}
             </a>
           {:else}
-            {item.summary || item.text}
+            {item.summary == null ? item.text : item.summary}
           {/if}
         </span>
       {/each}
