@@ -129,6 +129,8 @@
          item.sort_key = ds.sortKey || null;
          item.separator = !!ds.itemSeparator;
 
+         item.summary = ds.itemSummary || null;
+
          item.desc = ds.itemDesc || null;
          item.action = ds.itemAction || null;
 
@@ -169,8 +171,17 @@
      if (item.item_class) {
          el.setAttribute('data-item-class', item.item_class);
      }
+     if (item.item_text_class) {
+         el.setAttribute('data-item-text-class', item.item_class);
+     }
+     if (item.item_desc_class) {
+         el.setAttribute('data-item-desc-class', item.item_class);
+     }
      if (item.action) {
          el.setAttribute('data-item-action', item.action);
+     }
+     if (item.summary) {
+         el.setAttribute('data-item-summary', item.desc);
      }
      if (item.data) {
          Object.keys(item.data).forEach(function(key) {
@@ -1513,10 +1524,10 @@
             <a class="ss-item-link" href="{item.href}" target="_blank"
                tabindex="-1"
                on:click={handleToggleLinkClick}>
-              {item.text}
+              {item.summary || item.text}
             </a>
           {:else}
-            {item.text}
+            {item.summary || item.text}
           {/if}
         </span>
       {/each}

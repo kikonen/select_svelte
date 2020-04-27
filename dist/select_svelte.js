@@ -564,13 +564,15 @@ var Select = (function () {
     child_ctx[103] = list[i];
     child_ctx[107] = i;
     return child_ctx;
-  } // (1518:10) {:else}
+  } // (1529:10) {:else}
 
 
   function create_else_block_4(ctx) {
-    var t_value =
+    var t_value = (
     /*item*/
-    ctx[103].text + "";
+    ctx[103].summary ||
+    /*item*/
+    ctx[103].text) + "";
     var t;
     return {
       c: function c() {
@@ -582,22 +584,26 @@ var Select = (function () {
       p: function p(ctx, dirty) {
         if (dirty[0] &
         /*summaryItems*/
-        65536 && t_value !== (t_value =
+        65536 && t_value !== (t_value = (
         /*item*/
-        ctx[103].text + "")) set_data(t, t_value);
+        ctx[103].summary ||
+        /*item*/
+        ctx[103].text) + "")) set_data(t, t_value);
       },
       d: function d(detaching) {
         if (detaching) detach(t);
       }
     };
-  } // (1512:10) {#if item.href}
+  } // (1523:10) {#if item.href}
 
 
   function create_if_block_12(ctx) {
     var a;
-    var t_value =
+    var t_value = (
     /*item*/
-    ctx[103].text + "";
+    ctx[103].summary ||
+    /*item*/
+    ctx[103].text) + "";
     var t;
     var a_href_value;
     var dispose;
@@ -623,9 +629,11 @@ var Select = (function () {
       p: function p(ctx, dirty) {
         if (dirty[0] &
         /*summaryItems*/
-        65536 && t_value !== (t_value =
+        65536 && t_value !== (t_value = (
         /*item*/
-        ctx[103].text + "")) set_data(t, t_value);
+        ctx[103].summary ||
+        /*item*/
+        ctx[103].text) + "")) set_data(t, t_value);
 
         if (dirty[0] &
         /*summaryItems*/
@@ -640,7 +648,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1505:6) {#each summaryItems as item, index (item.id)}
+  } // (1516:6) {#each summaryItems as item, index (item.id)}
 
 
   function create_each_block_1(key_1, ctx) {
@@ -733,7 +741,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1535:4) {#if typeahead}
+  } // (1546:4) {#if typeahead}
 
 
   function create_if_block_11(ctx) {
@@ -794,7 +802,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1574:6) {:else}
+  } // (1585:6) {:else}
 
 
   function create_else_block(ctx) {
@@ -944,7 +952,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1560:50) 
+  } // (1571:50) 
 
 
   function create_if_block_4(ctx) {
@@ -1020,7 +1028,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1554:6) {#if item.separator}
+  } // (1565:6) {#if item.separator}
 
 
   function create_if_block_3(ctx) {
@@ -1045,7 +1053,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1586:12) {#if multiple && !item.blank && !item.action}
+  } // (1597:12) {#if multiple && !item.blank && !item.action}
 
 
   function create_if_block_10(ctx) {
@@ -1082,7 +1090,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1601:14) {:else}
+  } // (1612:14) {:else}
 
 
   function create_else_block_2(ctx) {
@@ -1149,7 +1157,7 @@ var Select = (function () {
         if (detaching) detach(if_block1_anchor);
       }
     };
-  } // (1593:14) {#if item.blank}
+  } // (1604:14) {#if item.blank}
 
 
   function create_if_block_6(ctx) {
@@ -1192,7 +1200,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1608:16) {:else}
+  } // (1619:16) {:else}
 
 
   function create_else_block_3(ctx) {
@@ -1233,7 +1241,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1602:16) {#if item.href}
+  } // (1613:16) {#if item.href}
 
 
   function create_if_block_9(ctx) {
@@ -1282,7 +1290,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1614:16) {#if item.desc}
+  } // (1625:16) {#if item.desc}
 
 
   function create_if_block_8(ctx) {
@@ -1323,7 +1331,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1597:18) {:else}
+  } // (1608:18) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -1349,7 +1357,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1595:18) {#if multiple}
+  } // (1606:18) {#if multiple}
 
 
   function create_if_block_7(ctx) {
@@ -1369,7 +1377,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1567:10) {#if item.desc}
+  } // (1578:10) {#if item.desc}
 
 
   function create_if_block_5(ctx) {
@@ -1399,7 +1407,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1553:4) {#each displayItems as item (item.id)}
+  } // (1564:4) {#each displayItems as item (item.id)}
 
 
   function create_each_block(key_1, ctx) {
@@ -1453,7 +1461,7 @@ var Select = (function () {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1630:78) 
+  } // (1641:78) 
 
 
   function create_if_block_2(ctx) {
@@ -1475,7 +1483,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1626:4) {#if fetchError}
+  } // (1637:4) {#if fetchError}
 
 
   function create_if_block_1(ctx) {
@@ -1505,7 +1513,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1636:4) {#if selectionItems.length >= maxItems}
+  } // (1647:4) {#if selectionItems.length >= maxItems}
 
 
   function create_if_block(ctx) {
@@ -2026,6 +2034,7 @@ var Select = (function () {
     if (ds) {
       item.sort_key = ds.sortKey || null;
       item.separator = !!ds.itemSeparator;
+      item.summary = ds.itemSummary || null;
       item.desc = ds.itemDesc || null;
       item.action = ds.itemAction || null;
       item.item_class = ds.itemClass || null;
@@ -2067,8 +2076,20 @@ var Select = (function () {
       el.setAttribute("data-item-class", item.item_class);
     }
 
+    if (item.item_text_class) {
+      el.setAttribute("data-item-text-class", item.item_class);
+    }
+
+    if (item.item_desc_class) {
+      el.setAttribute("data-item-desc-class", item.item_class);
+    }
+
     if (item.action) {
       el.setAttribute("data-item-action", item.action);
+    }
+
+    if (item.summary) {
+      el.setAttribute("data-item-summary", item.desc);
     }
 
     if (item.data) {
