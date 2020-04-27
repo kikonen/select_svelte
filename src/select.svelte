@@ -129,7 +129,9 @@
          item.sort_key = ds.sortKey || null;
          item.separator = !!ds.itemSeparator;
 
-         item.summary = ds.itemSummary || null;
+         if (ds.itemSummary != null) {
+             item.summary = ds.itemSummary;
+         }
 
          item.desc = ds.itemDesc || null;
          item.action = ds.itemAction || null;
