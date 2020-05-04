@@ -1497,7 +1497,7 @@
 
 <!-- ------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------ -->
-<div class="form-control ss-container {styles.container_class}"
+<div class="form-control ss-container {styles.container_class || ''}"
      id={containerId}
      name={containerName}
      bind:this={containerEl}>
@@ -1516,7 +1516,7 @@
     <span class:ss-summary-multiple={!summarySingle}
           class:ss-summary-single={summarySingle}>
       {#each summaryItems as item, index (item.id)}
-        <span class="{item.item_class}"
+        <span class="{item.item_class || ''}"
               class:ss-blank={item.blank}
               class:ss-summary-item-multiple={!summarySingle}
               class:ss-summary-item-single={summarySingle}
@@ -1573,7 +1573,7 @@
       {:else if item.disabled || item.placeholder}
         <div tabindex="-1" class="dropdown-item ss-item-muted ss-js-dead"
              on:keydown={handleItemKeydown}>
-          <div class="ss-item-text {item.item_class}">
+          <div class="ss-item-text {item.item_class || ''}">
             {item.text}
           </div>
 
@@ -1586,7 +1586,7 @@
 
       {:else}
         <div tabindex=1
-             class="dropdown-item ss-item ss-js-item {item.item_class}"
+             class="dropdown-item ss-item ss-js-item {item.item_class || ''}"
              class:ss-item-selected={!item.blank && selectionById[item.id]}
              data-id="{item.id}"
              data-action="{item.action}"
@@ -1619,13 +1619,13 @@
                     {item.text}
                   </a>
                 {:else}
-                  <div class="ss-item-text {item.item_text_class}">
+                  <div class="ss-item-text {item.item_text_class || ''}">
                     {item.text}
                   </div>
                 {/if}
 
                 {#if item.desc}
-                  <div class="ss-item-desc {item.item_desc_class}">
+                  <div class="ss-item-desc {item.item_desc_class || ''}">
                     {item.desc}
                   </div>
                 {/if}

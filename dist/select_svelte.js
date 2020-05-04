@@ -124,7 +124,7 @@ var Select = (function () {
     if (typeof o === "string") return _arrayLikeToArray(o, minLen);
     var n = Object.prototype.toString.call(o).slice(8, -1);
     if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(n);
+    if (n === "Map" || n === "Set") return Array.from(o);
     if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
   }
 
@@ -543,13 +543,13 @@ var Select = (function () {
     return SvelteComponent;
   }();
 
-  function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function () { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
   function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
   function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray$1(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
-  function _unsupportedIterableToArray$1(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
+  function _unsupportedIterableToArray$1(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
 
   function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
@@ -682,7 +682,7 @@ var Select = (function () {
         t = space();
         attr(span, "class", span_class_value =
         /*item*/
-        ctx[103].item_class);
+        ctx[103].item_class || "");
         toggle_class(span, "ss-blank",
         /*item*/
         ctx[103].blank);
@@ -716,7 +716,7 @@ var Select = (function () {
         /*summaryItems*/
         65536 && span_class_value !== (span_class_value =
         /*item*/
-        ctx[103].item_class)) {
+        ctx[103].item_class || "")) {
           attr(span, "class", span_class_value);
         }
 
@@ -850,9 +850,9 @@ var Select = (function () {
         attr(div0, "class", "d-inline-block");
         attr(div1, "class", "ss-no-click");
         attr(div2, "tabindex", "1");
-        attr(div2, "class", div2_class_value = "dropdown-item ss-item ss-js-item " +
+        attr(div2, "class", div2_class_value = "dropdown-item ss-item ss-js-item " + (
         /*item*/
-        ctx[103].item_class);
+        ctx[103].item_class || ""));
         attr(div2, "data-id", div2_data_id_value =
         /*item*/
         ctx[103].id);
@@ -919,9 +919,9 @@ var Select = (function () {
 
         if (dirty[0] &
         /*displayItems*/
-        2048 && div2_class_value !== (div2_class_value = "dropdown-item ss-item ss-js-item " +
+        2048 && div2_class_value !== (div2_class_value = "dropdown-item ss-item ss-js-item " + (
         /*item*/
-        ctx[103].item_class)) {
+        ctx[103].item_class || ""))) {
           attr(div2, "class", div2_class_value);
         }
 
@@ -983,9 +983,9 @@ var Select = (function () {
         t0 = text(t0_value);
         t1 = space();
         if (if_block) if_block.c();
-        attr(div0, "class", div0_class_value = "ss-item-text " +
+        attr(div0, "class", div0_class_value = "ss-item-text " + (
         /*item*/
-        ctx[103].item_class);
+        ctx[103].item_class || ""));
         attr(div1, "tabindex", "-1");
         attr(div1, "class", "dropdown-item ss-item-muted ss-js-dead");
       },
@@ -1009,9 +1009,9 @@ var Select = (function () {
 
         if (dirty[0] &
         /*displayItems*/
-        2048 && div0_class_value !== (div0_class_value = "ss-item-text " +
+        2048 && div0_class_value !== (div0_class_value = "ss-item-text " + (
         /*item*/
-        ctx[103].item_class)) {
+        ctx[103].item_class || ""))) {
           attr(div0, "class", div0_class_value);
         }
 
@@ -1222,9 +1222,9 @@ var Select = (function () {
       c: function c() {
         div = element("div");
         t = text(t_value);
-        attr(div, "class", div_class_value = "ss-item-text " +
+        attr(div, "class", div_class_value = "ss-item-text " + (
         /*item*/
-        ctx[103].item_text_class);
+        ctx[103].item_text_class || ""));
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -1239,9 +1239,9 @@ var Select = (function () {
 
         if (dirty[0] &
         /*displayItems*/
-        2048 && div_class_value !== (div_class_value = "ss-item-text " +
+        2048 && div_class_value !== (div_class_value = "ss-item-text " + (
         /*item*/
-        ctx[103].item_text_class)) {
+        ctx[103].item_text_class || ""))) {
           attr(div, "class", div_class_value);
         }
       },
@@ -1312,9 +1312,9 @@ var Select = (function () {
       c: function c() {
         div = element("div");
         t = text(t_value);
-        attr(div, "class", div_class_value = "ss-item-desc " +
+        attr(div, "class", div_class_value = "ss-item-desc " + (
         /*item*/
-        ctx[103].item_desc_class);
+        ctx[103].item_desc_class || ""));
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -1329,9 +1329,9 @@ var Select = (function () {
 
         if (dirty[0] &
         /*displayItems*/
-        2048 && div_class_value !== (div_class_value = "ss-item-desc " +
+        2048 && div_class_value !== (div_class_value = "ss-item-desc " + (
         /*item*/
-        ctx[103].item_desc_class)) {
+        ctx[103].item_desc_class || ""))) {
           attr(div, "class", div_class_value);
         }
       },
@@ -1699,9 +1699,9 @@ var Select = (function () {
         toggle_class(div0, "ss-popup-left",
         /*popupLeft*/
         ctx[21]);
-        attr(div1, "class", div1_class_value = "form-control ss-container " +
+        attr(div1, "class", div1_class_value = "form-control ss-container " + (
         /*styles*/
-        ctx[25].container_class);
+        ctx[25].container_class || ""));
         attr(div1, "id",
         /*containerId*/
         ctx[7]);
