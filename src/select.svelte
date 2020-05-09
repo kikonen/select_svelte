@@ -1464,7 +1464,9 @@
              closePopup(false);
          } else {
              openPopup();
-             fetchItems(false);
+             fetchItems(false).then(function() {
+                 focusItem(findFirstItem());
+             });
          }
      }
  }
