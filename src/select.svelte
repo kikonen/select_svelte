@@ -1018,6 +1018,22 @@
      },
  }
 
+ function findFirstItem() {
+     return typeahead || multiple ? findFirstDynamic() : findFirstSimple();
+ }
+
+ function findFirstSimple() {
+     let selectedId = selectionItems[0].id;
+     return popupEl.querySelector(`.ss-js-item[data-id="${selectedId}"`);
+ }
+
+ function findFirstDynamic() {
+     let next = popupEl.querySelectorAll('.ss-js-item')[0];
+     while (next && next.classList.contains('ss-js-dead')) {
+         next = next.nextElementSibling;
+     }
+ }
+
 
  ////////////////////////////////////////////////////////////
  // Handlers
@@ -1035,16 +1051,14 @@
      },
      ArrowDown: function(event) {
          openPopup();
-         fetchItems();
+         let fetch = fetchItems();
 
          if (typeahead) {
              inputEl.focus();
          } else {
-             let next = popupEl.querySelectorAll('.ss-js-item')[0];
-             while (next && next.classList.contains('ss-js-dead')) {
-                 next = next.nextElementSibling;
-             }
-             focusItem(next);
+             fetch.then(function() {
+                 focusItem(findFirstItem());
+             });
          }
          event.preventDefault();
      },
@@ -1059,7 +1073,11 @@
              closePopup(false);
          } else {
              openPopup();
-             fetchItems(false);
+             fetchItems(false).then(function() {
+                 if (!typeahead) {
+                     focusItem(findFirstItem());
+                 }
+             });
          }
          event.preventDefault();
      },
@@ -1073,7 +1091,11 @@
              closePopup(false);
          } else {
              openPopup();
-             fetchItems(false);
+             fetchItems(false).then(function() {
+                 if (!typeahead) {
+                     focusItem(findFirstItem());
+                 }
+             });
          }
          event.preventDefault();
      },
