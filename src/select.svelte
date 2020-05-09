@@ -1019,7 +1019,7 @@
  }
 
  function findFirstItem() {
-     return typeahead || multiple ? findFirstDynamic() : findFirstSimple();
+     return multiple ? findFirstDynamic() : findFirstSimple();
  }
 
  function findFirstSimple() {
@@ -1051,18 +1051,23 @@
      },
      ArrowDown: function(event) {
          openPopup();
-         let fetch = fetchItems();
-
-         if (typeahead) {
-             inputEl.focus();
-         } else {
-             fetch.then(function() {
-                 focusItem(findFirstItem());
-             });
-         }
+         fetchItems().then(function() {
+             let next = findFirstItem();
+             if (next) {
+                 focusItem(next);
+             } else if (typeahead) {
+                 inputEl.focus();
+             }
+         });
          event.preventDefault();
      },
-     ArrowUp: nop,
+     ArrowUp: function(event) {
+         openPopup();
+         fetchItems().then(function() {
+             focusItem(findFirstItem());
+         });
+         event.preventDefault();
+     },
      Enter: function(event) {
          if (hasModifier(event)) {
              return;
@@ -1074,9 +1079,7 @@
          } else {
              openPopup();
              fetchItems(false).then(function() {
-                 if (!typeahead) {
-                     focusItem(findFirstItem());
-                 }
+                 focusItem(findFirstItem());
              });
          }
          event.preventDefault();
@@ -1092,9 +1095,7 @@
          } else {
              openPopup();
              fetchItems(false).then(function() {
-                 if (!typeahead) {
-                     focusItem(findFirstItem());
-                 }
+                 focusItem(findFirstItem());
              });
          }
          event.preventDefault();
