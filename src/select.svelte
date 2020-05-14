@@ -976,7 +976,7 @@
      real.setAttribute('tabindex', '-1');
      multiple = real.multiple;
 
-     ds = real.dataset;
+     let ds = real.dataset;
 
      containerId = real.id ? `ss_container_${real.id}` : null;
      containerName = real.name ? `ss_container_${real.name}` : null;

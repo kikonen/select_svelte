@@ -2318,7 +2318,7 @@ function instance($$self, $$props, $$invalidate) {
 		real.classList.add("ss-select-hidden");
 		real.setAttribute("tabindex", "-1");
 		$$invalidate(24, multiple = real.multiple);
-		ds = real.dataset;
+		let ds = real.dataset;
 		$$invalidate(7, containerId = real.id ? `ss_container_${real.id}` : null);
 		$$invalidate(8, containerName = real.name ? `ss_container_${real.name}` : null);
 

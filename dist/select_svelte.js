@@ -2831,7 +2831,7 @@ var Select = (function () {
       real.classList.add("ss-select-hidden");
       real.setAttribute("tabindex", "-1");
       $$invalidate(24, multiple = real.multiple);
-      ds = real.dataset;
+      var ds = real.dataset;
       $$invalidate(7, containerId = real.id ? "ss_container_".concat(real.id) : null);
       $$invalidate(8, containerName = real.name ? "ss_container_".concat(real.name) : null);
 
