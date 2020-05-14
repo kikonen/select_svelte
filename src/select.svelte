@@ -127,7 +127,9 @@
 
      if (ds) {
          item.sort_key = ds.sortKey || null;
-         item.separator = !!ds.itemSeparator;
+         if (ds.itemSeparator != undefined) {
+             item.separator = true;
+         }
 
          if (ds.itemSummary != null) {
              item.summary = ds.itemSummary;
@@ -745,8 +747,9 @@
      if (DEBUG) console.log("INLINE_SELECT_FETCH: " + query);
 
      function createItems() {
-         let items = []
          let pattern = query.toUpperCase().trim();
+
+         let matchedItems = []
 
          let options = real.options;
          for (let i = 0; i < options.length; i++) {
@@ -763,9 +766,27 @@
              }
 
              if (match) {
-                 items.push(item);
+                 matchedItems.push(item);
              }
          }
+
+         let wasSeparator = true;
+         let lastSeparator = null;
+
+         let items = []
+         matchedItems.forEach(function(item) {
+             if (item.separator) {
+                 lastSeparator = item;
+             } else {
+                 if (lastSeparator && !wasSeparator) {
+                     items.push(lastSeparator);
+                     lastSeparator = null;
+                 }
+                 items.push(item);
+                 wasSeparator = false;
+             }
+         });
+
          return items;
      }
 
