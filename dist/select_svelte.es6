@@ -2329,25 +2329,25 @@ function instance($$self, $$props, $$invalidate) {
 
 		$$invalidate(6, typeahead = ds.ssTypeahead != undefined
 		? ds.ssTypeahead !== "false"
-		: false);
+		: typeahead);
 
 		$$invalidate(5, maxItems = ds.ssMaxItems != undefined
 		? parseInt(ds.ssMaxItems, 10)
-		: MAX_ITEMS_DEFAULT);
+		: maxItems);
 
 		summaryLen = ds.ssSummaryLen != undefined
 		? parseInt(ds.ssSummaryLen, 10)
-		: SUMMARY_LEN;
+		: summaryLen;
 
 		summaryWrap = ds.ssSummaryWrap != undefined
 		? ds.ssSummaryWrap !== "false"
-		: SUMMARY_WRAP;
+		: summaryWrap;
 
-		baseHref = ds.ssBaseHref != undefined ? ds.ssBaseHref : null;
+		baseHref = ds.ssBaseHref != undefined ? ds.ssBaseHref : baseHref;
 
 		keepResult = ds.ssKeepResult != undefined
 		? ds.ssKeepResult !== "false"
-		: true;
+		: keepResulta;
 
 		$$invalidate(6, typeahead = config.typeahead != undefined
 		? config.typeahead

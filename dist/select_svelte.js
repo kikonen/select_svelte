@@ -2840,12 +2840,12 @@ var Select = (function () {
         fetcher = config.fetcher;
       }
 
-      $$invalidate(6, typeahead = ds.ssTypeahead != undefined ? ds.ssTypeahead !== "false" : false);
-      $$invalidate(5, maxItems = ds.ssMaxItems != undefined ? parseInt(ds.ssMaxItems, 10) : MAX_ITEMS_DEFAULT);
-      summaryLen = ds.ssSummaryLen != undefined ? parseInt(ds.ssSummaryLen, 10) : SUMMARY_LEN;
-      summaryWrap = ds.ssSummaryWrap != undefined ? ds.ssSummaryWrap !== "false" : SUMMARY_WRAP;
-      baseHref = ds.ssBaseHref != undefined ? ds.ssBaseHref : null;
-      keepResult = ds.ssKeepResult != undefined ? ds.ssKeepResult !== "false" : true;
+      $$invalidate(6, typeahead = ds.ssTypeahead != undefined ? ds.ssTypeahead !== "false" : typeahead);
+      $$invalidate(5, maxItems = ds.ssMaxItems != undefined ? parseInt(ds.ssMaxItems, 10) : maxItems);
+      summaryLen = ds.ssSummaryLen != undefined ? parseInt(ds.ssSummaryLen, 10) : summaryLen;
+      summaryWrap = ds.ssSummaryWrap != undefined ? ds.ssSummaryWrap !== "false" : summaryWrap;
+      baseHref = ds.ssBaseHref != undefined ? ds.ssBaseHref : baseHref;
+      keepResult = ds.ssKeepResult != undefined ? ds.ssKeepResult !== "false" : keepResulta;
       $$invalidate(6, typeahead = config.typeahead != undefined ? config.typeahead : typeahead);
       $$invalidate(5, maxItems = config.maxItems || maxItems);
       summaryLen = config.summaryLen || summaryLen;

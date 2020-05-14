@@ -986,12 +986,12 @@
          fetcher = config.fetcher;
      }
 
-     typeahead = ds.ssTypeahead != undefined ? ds.ssTypeahead !== 'false' : false;
-     maxItems = ds.ssMaxItems != undefined ? parseInt(ds.ssMaxItems, 10) : MAX_ITEMS_DEFAULT;
-     summaryLen = ds.ssSummaryLen != undefined ? parseInt(ds.ssSummaryLen, 10) : SUMMARY_LEN;
-     summaryWrap = ds.ssSummaryWrap != undefined ? ds.ssSummaryWrap !== 'false' : SUMMARY_WRAP;
-     baseHref = ds.ssBaseHref != undefined ? ds.ssBaseHref : null;
-     keepResult = ds.ssKeepResult != undefined ? ds.ssKeepResult !== 'false' : true;
+     typeahead = ds.ssTypeahead != undefined ? ds.ssTypeahead !== 'false' : typeahead;
+     maxItems = ds.ssMaxItems != undefined ? parseInt(ds.ssMaxItems, 10) : maxItems;
+     summaryLen = ds.ssSummaryLen != undefined ? parseInt(ds.ssSummaryLen, 10) : summaryLen;
+     summaryWrap = ds.ssSummaryWrap != undefined ? ds.ssSummaryWrap !== 'false' : summaryWrap;
+     baseHref = ds.ssBaseHref != undefined ? ds.ssBaseHref : baseHref;
+     keepResult = ds.ssKeepResult != undefined ? ds.ssKeepResult !== 'false' : keepResulta;
 
      typeahead = config.typeahead != undefined ? config.typeahead : typeahead
      maxItems = config.maxItems || maxItems;
