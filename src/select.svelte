@@ -976,6 +976,8 @@
      real.setAttribute('tabindex', '-1');
      multiple = real.multiple;
 
+     ds = real.dataset;
+
      containerId = real.id ? `ss_container_${real.id}` : null;
      containerName = real.name ? `ss_container_${real.name}` : null;
 
@@ -983,13 +985,21 @@
          remote = true;
          fetcher = config.fetcher;
      }
-     typeahead = config.typeahead || false;
-     maxItems = config.maxItems || MAX_ITEMS_DEFAULT;
-     summaryLen = config.summaryLen || SUMMARY_LEN;
-     summaryWrap = config.summaryWrap != null ? config.summaryWrap : SUMMARY_WRAP;
 
-     baseHref = config.baseHref;
-     keepResult = config.keepResult != null ? config.keepResult : true;
+     typeahead = ds.ssTypeahead != undefined ? ds.ssTypeahead !== 'false' : false;
+     maxItems = ds.ssMaxItems != undefined ? parseInt(ds.ssMaxItems, 10) : MAX_ITEMS_DEFAULT;
+     summaryLen = ds.ssSummaryLen != undefined ? parseInt(ds.ssSummaryLen, 10) : SUMMARY_LEN;
+     summaryWrap = ds.ssSummaryWrap != undefined ? ds.ssSummaryWrap !== 'false' : SUMMARY_WRAP;
+     baseHref = ds.ssBaseHref != undefined ? ds.ssBaseHref : null;
+     keepResult = ds.ssKeepResult != undefined ? ds.ssKeepResult !== 'false' : true;
+
+     typeahead = config.typeahead != undefined ? config.typeahead : typeahead
+     maxItems = config.maxItems || maxItems;
+     summaryLen = config.summaryLen || summaryLen;
+     summaryWrap = config.summaryWrap != undefined ? config.summaryWrap : summaryWrap;
+
+     baseHref = config.baseHref || baseHref;
+     keepResult = config.keepResult != undefined ? config.keepResult : keepResult;
 
      Object.assign(translations, I18N_DEFAULTS);
      if (config.translations) {

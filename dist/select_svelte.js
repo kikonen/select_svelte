@@ -564,7 +564,7 @@ var Select = (function () {
     child_ctx[106] = list[i];
     child_ctx[110] = i;
     return child_ctx;
-  } // (1577:10) {:else}
+  } // (1587:10) {:else}
 
 
   function create_else_block_4(ctx) {
@@ -598,7 +598,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1571:10) {#if item.href}
+  } // (1581:10) {#if item.href}
 
 
   function create_if_block_12(ctx) {
@@ -656,7 +656,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1564:6) {#each summaryItems as item, index (item.id)}
+  } // (1574:6) {#each summaryItems as item, index (item.id)}
 
 
   function create_each_block_1(key_1, ctx) {
@@ -749,7 +749,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1594:4) {#if typeahead}
+  } // (1604:4) {#if typeahead}
 
 
   function create_if_block_11(ctx) {
@@ -810,7 +810,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1633:6) {:else}
+  } // (1643:6) {:else}
 
 
   function create_else_block(ctx) {
@@ -960,7 +960,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1619:50) 
+  } // (1629:50) 
 
 
   function create_if_block_4(ctx) {
@@ -1036,7 +1036,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1613:6) {#if item.separator}
+  } // (1623:6) {#if item.separator}
 
 
   function create_if_block_3(ctx) {
@@ -1061,7 +1061,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1645:12) {#if multiple && !item.blank && !item.action}
+  } // (1655:12) {#if multiple && !item.blank && !item.action}
 
 
   function create_if_block_10(ctx) {
@@ -1098,7 +1098,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1660:14) {:else}
+  } // (1670:14) {:else}
 
 
   function create_else_block_2(ctx) {
@@ -1165,7 +1165,7 @@ var Select = (function () {
         if (detaching) detach(if_block1_anchor);
       }
     };
-  } // (1652:14) {#if item.blank}
+  } // (1662:14) {#if item.blank}
 
 
   function create_if_block_6(ctx) {
@@ -1208,7 +1208,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1667:16) {:else}
+  } // (1677:16) {:else}
 
 
   function create_else_block_3(ctx) {
@@ -1249,7 +1249,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1661:16) {#if item.href}
+  } // (1671:16) {#if item.href}
 
 
   function create_if_block_9(ctx) {
@@ -1298,7 +1298,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1673:16) {#if item.desc}
+  } // (1683:16) {#if item.desc}
 
 
   function create_if_block_8(ctx) {
@@ -1339,7 +1339,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1656:18) {:else}
+  } // (1666:18) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -1365,7 +1365,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1654:18) {#if multiple}
+  } // (1664:18) {#if multiple}
 
 
   function create_if_block_7(ctx) {
@@ -1385,7 +1385,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1626:10) {#if item.desc}
+  } // (1636:10) {#if item.desc}
 
 
   function create_if_block_5(ctx) {
@@ -1415,7 +1415,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1612:4) {#each displayItems as item (item.id)}
+  } // (1622:4) {#each displayItems as item (item.id)}
 
 
   function create_each_block(key_1, ctx) {
@@ -1469,7 +1469,7 @@ var Select = (function () {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1689:78) 
+  } // (1699:78) 
 
 
   function create_if_block_2(ctx) {
@@ -1491,7 +1491,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1685:4) {#if fetchError}
+  } // (1695:4) {#if fetchError}
 
 
   function create_if_block_1(ctx) {
@@ -1521,7 +1521,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1695:4) {#if selectionItems.length >= maxItems}
+  } // (1705:4) {#if selectionItems.length >= maxItems}
 
 
   function create_if_block(ctx) {
@@ -2831,6 +2831,7 @@ var Select = (function () {
       real.classList.add("ss-select-hidden");
       real.setAttribute("tabindex", "-1");
       $$invalidate(24, multiple = real.multiple);
+      ds = real.dataset;
       $$invalidate(7, containerId = real.id ? "ss_container_".concat(real.id) : null);
       $$invalidate(8, containerName = real.name ? "ss_container_".concat(real.name) : null);
 
@@ -2839,12 +2840,18 @@ var Select = (function () {
         fetcher = config.fetcher;
       }
 
-      $$invalidate(6, typeahead = config.typeahead || false);
-      $$invalidate(5, maxItems = config.maxItems || MAX_ITEMS_DEFAULT);
-      summaryLen = config.summaryLen || SUMMARY_LEN;
-      summaryWrap = config.summaryWrap != null ? config.summaryWrap : SUMMARY_WRAP;
-      baseHref = config.baseHref;
-      keepResult = config.keepResult != null ? config.keepResult : true;
+      $$invalidate(6, typeahead = ds.ssTypeahead != undefined ? ds.ssTypeahead !== "false" : false);
+      $$invalidate(5, maxItems = ds.ssMaxItems != undefined ? parseInt(ds.ssMaxItems, 10) : MAX_ITEMS_DEFAULT);
+      summaryLen = ds.ssSummaryLen != undefined ? parseInt(ds.ssSummaryLen, 10) : SUMMARY_LEN;
+      summaryWrap = ds.ssSummaryWrap != undefined ? ds.ssSummaryWrap !== "false" : SUMMARY_WRAP;
+      baseHref = ds.ssBaseHref != undefined ? ds.ssBaseHref : null;
+      keepResult = ds.ssKeepResult != undefined ? ds.ssKeepResult !== "false" : true;
+      $$invalidate(6, typeahead = config.typeahead != undefined ? config.typeahead : typeahead);
+      $$invalidate(5, maxItems = config.maxItems || maxItems);
+      summaryLen = config.summaryLen || summaryLen;
+      summaryWrap = config.summaryWrap != undefined ? config.summaryWrap : summaryWrap;
+      baseHref = config.baseHref || baseHref;
+      keepResult = config.keepResult != undefined ? config.keepResult : keepResult;
       Object.assign(translations, I18N_DEFAULTS);
 
       if (config.translations) {
