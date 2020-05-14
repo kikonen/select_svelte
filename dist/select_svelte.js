@@ -2845,7 +2845,7 @@ var Select = (function () {
       summaryLen = ds.ssSummaryLen != undefined ? parseInt(ds.ssSummaryLen, 10) : summaryLen;
       summaryWrap = ds.ssSummaryWrap != undefined ? ds.ssSummaryWrap !== "false" : summaryWrap;
       baseHref = ds.ssBaseHref != undefined ? ds.ssBaseHref : baseHref;
-      keepResult = ds.ssKeepResult != undefined ? ds.ssKeepResult !== "false" : keepResulta;
+      keepResult = ds.ssKeepResult != undefined ? ds.ssKeepResult !== "false" : keepResult;
       $$invalidate(6, typeahead = config.typeahead != undefined ? config.typeahead : typeahead);
       $$invalidate(5, maxItems = config.maxItems || maxItems);
       summaryLen = config.summaryLen || summaryLen;

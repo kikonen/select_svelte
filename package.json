@@ -1,6 +1,6 @@
 {
   "license": "SEE LICENSE IN LICENSE",
-  "version": "0.2.48",
+  "version": "0.2.49",
   "name": "@kikonen/select_svelte",
   "devDependencies": {
     "@babel/core": "^7.7.2",

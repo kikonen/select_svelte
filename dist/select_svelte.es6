@@ -2347,7 +2347,7 @@ function instance($$self, $$props, $$invalidate) {
 
 		keepResult = ds.ssKeepResult != undefined
 		? ds.ssKeepResult !== "false"
-		: keepResulta;
+		: keepResult;
 
 		$$invalidate(6, typeahead = config.typeahead != undefined
 		? config.typeahead
