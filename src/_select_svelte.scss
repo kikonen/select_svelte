@@ -108,6 +108,9 @@
   overflow-y: auto;
   overscroll-behavior: contain;
 }
+.ss-popup-fixed {
+  position: fixed;
+}
 .ss-popup-left {
   right: 0;
   left: unset;
@@ -115,6 +118,12 @@
 .ss-popup-top {
   top: unset;
   bottom: 100%;
+}
+.ss-popup-fixed-left {
+  left: unset;
+}
+.ss-popup-fixed-top {
+  top: unset;
 }
 .ss-item {
   padding-left: 0.5rem;

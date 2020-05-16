@@ -338,6 +338,7 @@
 
 <script>
  import {beforeUpdate} from 'svelte';
+ import {afterUpdate} from 'svelte';
  import {onMount} from 'svelte';
 
  export let real;
@@ -350,9 +351,14 @@
 
  const mutationObserver = new MutationObserver(handleMutation);
 
+ let intersectionObserver;
+ let resizeObserver;
+
  let setupDone = false;
  let translations = {};
  let styles = {};
+
+ let popupFixed = false;
 
  let fetcher = inlineFetcher;
  let remote = false;
@@ -439,12 +445,7 @@
          let w = containerEl.offsetWidth;
          popupEl.style.minWidth = w + "px";
 
-         let bounds = containerEl.getBoundingClientRect();
-         let middleY = window.innerHeight / 2;
-         let middleX = window.innerWidth / 2;
-
-         popupTop = bounds.y > middleY;
-         popupLeft = bounds.x + bounds.width > middleX;
+         updatePopupPosition();
      }
  }
 
@@ -971,6 +972,17 @@
      }
  });
 
+ afterUpdate(function() {
+     if (popupFixed && !intersectionObserver) {
+//         intersectionObserver = new IntersectionObserver(handleIntersection);
+//         intersectionObserver.observe(containerEl, {});
+
+         resizeObserver = new ResizeObserver(handleResize);
+         resizeObserver.observe(containerEl, {});
+     }
+     updatePopupPosition();
+ });
+
  function setupComponent() {
      real.classList.add('ss-select-hidden');
      real.setAttribute('tabindex', '-1');
@@ -992,6 +1004,7 @@
      summaryWrap = ds.ssSummaryWrap != undefined ? ds.ssSummaryWrap !== 'false' : summaryWrap;
      baseHref = ds.ssBaseHref != undefined ? ds.ssBaseHref : baseHref;
      keepResult = ds.ssKeepResult != undefined ? ds.ssKeepResult !== 'false' : keepResult;
+     popupFixed = ds.ssPopupFixed != undefined ? ds.ssPopupFixed !== 'false' : popupFixed;
 
      typeahead = config.typeahead != undefined ? config.typeahead : typeahead
      maxItems = config.maxItems || maxItems;
@@ -1000,6 +1013,7 @@
 
      baseHref = config.baseHref || baseHref;
      keepResult = config.keepResult != undefined ? config.keepResult : keepResult;
+     popupFixed = config.popupFixed != undefined ? config.popupFixed !== 'false' : popupFixed;
 
      Object.assign(translations, I18N_DEFAULTS);
      if (config.translations) {
@@ -1031,6 +1045,14 @@
              reload();
          }
      }
+ }
+
+ function handleIntersection(intersectionList, observer) {
+     updatePopupPosition();
+ }
+
+ function handleResize(resizeList, observer) {
+     updatePopupPosition();
  }
 
  let eventListeners = {
@@ -1065,6 +1087,33 @@
      }
  }
 
+ function updatePopupPosition() {
+     if (!popupVisible) {
+         return;
+     }
+
+     let bounds = containerEl.getBoundingClientRect();
+     let middleY = window.innerHeight / 2;
+     let middleX = window.innerWidth / 2;
+
+     popupTop = bounds.y > middleY;
+     popupLeft = bounds.x + bounds.width > middleX;
+
+     if (popupFixed) {
+         let popupBounds = popupEl.getBoundingClientRect();
+
+         if (popupTop) {
+             popupEl.style.top = `${bounds.y - popupBounds.height}px`;
+         } else {
+             popupEl.style.top = `${bounds.y + bounds.height}px`;
+         }
+         if (popupLeft) {
+             popupEl.style.left = `${bounds.x + bounds.width - popupBounds.width}px`;
+         } else {
+             popupEl.style.left = `${bounds.x}px`;
+         }
+     }
+ }
 
  ////////////////////////////////////////////////////////////
  // Handlers
@@ -1544,6 +1593,10 @@
  function handlePopupScroll(event) {
      fetchMoreIfneeded();
  }
+
+ function handleWindowScroll(event) {
+     updatePopupPosition();
+ }
 </script>
 
 <!-- ------------------------------------------------------------ -->
@@ -1553,6 +1606,7 @@
 
 <!-- ------------------------------------------------------------ -->
 <!-- ------------------------------------------------------------ -->
+<svelte:window on:scroll={handleWindowScroll}/>
 <div class="form-control ss-container {styles.container_class || ''}"
      id={containerId}
      name={containerName}
@@ -1596,8 +1650,11 @@
 
   <div class="dropdown-menu ss-popup"
        class:show={popupVisible}
-       class:ss-popup-top={popupTop}
-       class:ss-popup-left={popupLeft}
+       class:ss-popup-fixed={popupFixed}
+       class:ss-popup-top={popupTop && !popupFixed}
+       class:ss-popup-left={popupLeft && !popupFixed}
+       class:ss-popup-fixed-top={popupTop && popupFixed}
+       class:ss-popup-fixed-left={popupLeft && popupFixed}
        bind:this={popupEl}
        tabindex="-1"
        on:scroll={handlePopupScroll}>
