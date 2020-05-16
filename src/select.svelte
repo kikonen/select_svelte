@@ -351,7 +351,6 @@
 
  const mutationObserver = new MutationObserver(handleMutation);
 
- let intersectionObserver;
  let resizeObserver;
 
  let setupDone = false;
@@ -973,10 +972,7 @@
  });
 
  afterUpdate(function() {
-     if (popupFixed && !intersectionObserver) {
-//         intersectionObserver = new IntersectionObserver(handleIntersection);
-//         intersectionObserver.observe(containerEl, {});
-
+     if (popupFixed && !resizeObserver) {
          resizeObserver = new ResizeObserver(handleResize);
          resizeObserver.observe(containerEl, {});
      }
@@ -1047,10 +1043,6 @@
      }
  }
 
- function handleIntersection(intersectionList, observer) {
-     updatePopupPosition();
- }
-
  function handleResize(resizeList, observer) {
      updatePopupPosition();
  }
@@ -1093,6 +1085,7 @@
      }
 
      let bounds = containerEl.getBoundingClientRect();
+
      let middleY = window.innerHeight / 2;
      let middleX = window.innerWidth / 2;
 
