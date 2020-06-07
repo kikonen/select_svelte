@@ -1194,6 +1194,9 @@
 
  let inputKeydownHandlers = {
      base: nop,
+     Enter: function(event) {
+         event.preventDefault();
+     },
      ArrowDown: function(event) {
          let next = popupEl.querySelectorAll('.ss-js-item')[0];
          while (next && next.classList.contains('ss-js-dead')) {
