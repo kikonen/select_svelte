@@ -366,7 +366,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (1634:10) {:else}
+// (1633:10) {:else}
 function create_else_block_4(ctx) {
 	let t_value = (/*item*/ ctx[111].summary == null
 	? /*item*/ ctx[111].text
@@ -392,7 +392,7 @@ function create_else_block_4(ctx) {
 	};
 }
 
-// (1628:10) {#if item.href}
+// (1627:10) {#if item.href}
 function create_if_block_12(ctx) {
 	let a;
 
@@ -440,7 +440,7 @@ function create_if_block_12(ctx) {
 	};
 }
 
-// (1621:6) {#each summaryItems as item, index (item.id)}
+// (1620:6) {#each summaryItems as item, index (item.id)}
 function create_each_block_1(key_1, ctx) {
 	let span;
 	let t;
@@ -508,7 +508,7 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (1654:4) {#if typeahead}
+// (1653:4) {#if typeahead}
 function create_if_block_11(ctx) {
 	let div;
 	let input;
@@ -560,7 +560,7 @@ function create_if_block_11(ctx) {
 	};
 }
 
-// (1693:6) {:else}
+// (1692:6) {:else}
 function create_else_block(ctx) {
 	let div2;
 	let div1;
@@ -668,7 +668,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (1679:50) 
+// (1678:50) 
 function create_if_block_4(ctx) {
 	let div1;
 	let div0;
@@ -732,7 +732,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (1673:6) {#if item.separator}
+// (1672:6) {#if item.separator}
 function create_if_block_3(ctx) {
 	let div;
 	let mounted;
@@ -761,7 +761,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (1705:12) {#if multiple && !item.blank && !item.action}
+// (1704:12) {#if multiple && !item.blank && !item.action}
 function create_if_block_10(ctx) {
 	let div;
 	let i;
@@ -795,7 +795,7 @@ function create_if_block_10(ctx) {
 	};
 }
 
-// (1720:14) {:else}
+// (1719:14) {:else}
 function create_else_block_2(ctx) {
 	let t;
 	let if_block1_anchor;
@@ -857,7 +857,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (1712:14) {#if item.blank}
+// (1711:14) {#if item.blank}
 function create_if_block_6(ctx) {
 	let div;
 
@@ -899,7 +899,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (1727:16) {:else}
+// (1726:16) {:else}
 function create_else_block_3(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[111].text + "";
@@ -929,7 +929,7 @@ function create_else_block_3(ctx) {
 	};
 }
 
-// (1721:16) {#if item.href}
+// (1720:16) {#if item.href}
 function create_if_block_9(ctx) {
 	let a;
 	let t_value = /*item*/ ctx[111].text + "";
@@ -970,7 +970,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (1733:16) {#if item.desc}
+// (1732:16) {#if item.desc}
 function create_if_block_8(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[111].desc + "";
@@ -1000,7 +1000,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (1716:18) {:else}
+// (1715:18) {:else}
 function create_else_block_1(ctx) {
 	let t_value = /*item*/ ctx[111].text + "";
 	let t;
@@ -1021,7 +1021,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (1714:18) {#if multiple}
+// (1713:18) {#if multiple}
 function create_if_block_7(ctx) {
 	let t_value = /*translate*/ ctx[27]("clear") + "";
 	let t;
@@ -1040,7 +1040,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (1686:10) {#if item.desc}
+// (1685:10) {#if item.desc}
 function create_if_block_5(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[111].desc + "";
@@ -1065,7 +1065,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (1672:4) {#each displayItems as item (item.id)}
+// (1671:4) {#each displayItems as item (item.id)}
 function create_each_block(key_1, ctx) {
 	let first;
 	let if_block_anchor;
@@ -1114,7 +1114,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (1749:78) 
+// (1748:78) 
 function create_if_block_2(ctx) {
 	let div;
 
@@ -1135,7 +1135,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (1745:4) {#if fetchError}
+// (1744:4) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -1160,7 +1160,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (1755:4) {#if selectionItems.length >= maxItems}
+// (1754:4) {#if selectionItems.length >= maxItems}
 function create_if_block(ctx) {
 	let div;
 	let t0_value = /*translate*/ ctx[27]("max_limit") + "";
@@ -1476,10 +1476,7 @@ const I18N_DEFAULTS = {
 const STYLE_DEFAULTS = { container_class: "" };
 const BLANK_ID = "";
 const FIXED_SORT_KEY = "_";
-const MAX_ITEMS_DEFAULT = 100;
 const FETCH_INDICATOR_DELAY = 150;
-const SUMMARY_LEN = 2;
-const SUMMARY_WRAP = false;
 const FA_CARET_DOWN = "fas fa-caret-down";
 const FA_CARET_FETCHING = "far fa-hourglass";
 const FA_SELECTED = "far fa-check-square";
@@ -1808,11 +1805,11 @@ function instance($$self, $$props, $$invalidate) {
 	let popupFixed = false;
 	let fetcher = inlineFetcher;
 	let remote = false;
-	let maxItems = MAX_ITEMS_DEFAULT;
+	let maxItems = 100;
 	let typeahead = false;
-	let summaryLen = SUMMARY_LEN;
-	let summaryWrap = SUMMARY_WRAP;
-	let keepResult = true;
+	let summaryLen = 2;
+	let summaryWrap = false;
+	let noCache = false;
 	let placeholderItem = { id: BLANK_ID, text: "", blank: true };
 	let baseHref = null;
 	let mounted = false;
@@ -1858,7 +1855,7 @@ function instance($$self, $$props, $$invalidate) {
 	function clearQuery() {
 		$$invalidate(10, query = "");
 
-		if (!keepResult) {
+		if (noCache) {
 			previousQuery = null;
 		}
 	}
@@ -2394,51 +2391,37 @@ function instance($$self, $$props, $$invalidate) {
 			fetcher = config.fetcher;
 		}
 
-		$$invalidate(7, typeahead = ds.ssTypeahead != undefined
-		? ds.ssTypeahead !== "false"
-		: typeahead);
+		$$invalidate(7, typeahead = ds.ssTypeahead !== undefined ? true : typeahead);
 
-		$$invalidate(6, maxItems = ds.ssMaxItems != undefined
+		$$invalidate(6, maxItems = ds.ssMaxItems !== undefined
 		? parseInt(ds.ssMaxItems, 10)
 		: maxItems);
 
-		summaryLen = ds.ssSummaryLen != undefined
+		summaryLen = ds.ssSummaryLen !== undefined
 		? parseInt(ds.ssSummaryLen, 10)
 		: summaryLen;
 
-		summaryWrap = ds.ssSummaryWrap != undefined
-		? ds.ssSummaryWrap !== "false"
-		: summaryWrap;
-
+		summaryWrap = ds.ssSummaryWrap !== undefined ? true : summaryWrap;
 		baseHref = ds.ssBaseHref != undefined ? ds.ssBaseHref : baseHref;
+		noCache = ds.ssNoCache !== undefined ? true : noCache;
+		$$invalidate(5, popupFixed = ds.ssPopupFixed !== undefined ? true : popupFixed);
 
-		keepResult = ds.ssKeepResult != undefined
-		? ds.ssKeepResult !== "false"
-		: keepResult;
-
-		$$invalidate(5, popupFixed = ds.ssPopupFixed != undefined
-		? ds.ssPopupFixed !== "false"
-		: popupFixed);
-
-		$$invalidate(7, typeahead = config.typeahead != undefined
+		$$invalidate(7, typeahead = config.typeahead !== undefined
 		? config.typeahead
 		: typeahead);
 
 		$$invalidate(6, maxItems = config.maxItems || maxItems);
 		summaryLen = config.summaryLen || summaryLen;
 
-		summaryWrap = config.summaryWrap != undefined
+		summaryWrap = config.summaryWrap !== undefined
 		? config.summaryWrap
 		: summaryWrap;
 
 		baseHref = config.baseHref || baseHref;
+		noCache = config.noCache !== undefined ? config.noCache : noCache;
 
-		keepResult = config.keepResult != undefined
-		? config.keepResult
-		: keepResult;
-
-		$$invalidate(5, popupFixed = config.popupFixed != undefined
-		? config.popupFixed !== "false"
+		$$invalidate(5, popupFixed = config.popupFixed !== undefined
+		? config.popupFixed
 		: popupFixed);
 
 		Object.assign(translations, I18N_DEFAULTS);
@@ -2453,7 +2436,7 @@ function instance($$self, $$props, $$invalidate) {
 			Object.assign(styles, config.styles);
 		}
 
-		$$invalidate(6, maxItems = config.maxItems || MAX_ITEMS_DEFAULT);
+		$$invalidate(6, maxItems = config.maxItems || maxItems);
 		placeholderItem.text = config.placeholder || "";
 
 		if (jQuery.tooltip) {
@@ -2637,6 +2620,9 @@ function instance($$self, $$props, $$invalidate) {
 
 	let inputKeydownHandlers = {
 		base: nop,
+		Enter(event) {
+			event.preventDefault();
+		},
 		ArrowDown(event) {
 			let next = popupEl.querySelectorAll(".ss-js-item")[0];
 
@@ -3126,7 +3112,7 @@ function instance($$self, $$props, $$invalidate) {
 		remote,
 		summaryLen,
 		summaryWrap,
-		keepResult,
+		noCache,
 		placeholderItem,
 		baseHref,
 		mounted,

@@ -569,7 +569,7 @@ var Select = (function () {
     child_ctx[111] = list[i];
     child_ctx[115] = i;
     return child_ctx;
-  } // (1634:10) {:else}
+  } // (1633:10) {:else}
 
 
   function create_else_block_4(ctx) {
@@ -603,7 +603,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1628:10) {#if item.href}
+  } // (1627:10) {#if item.href}
 
 
   function create_if_block_12(ctx) {
@@ -666,7 +666,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1621:6) {#each summaryItems as item, index (item.id)}
+  } // (1620:6) {#each summaryItems as item, index (item.id)}
 
 
   function create_each_block_1(key_1, ctx) {
@@ -759,7 +759,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1654:4) {#if typeahead}
+  } // (1653:4) {#if typeahead}
 
 
   function create_if_block_11(ctx) {
@@ -825,7 +825,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1693:6) {:else}
+  } // (1692:6) {:else}
 
 
   function create_else_block(ctx) {
@@ -980,7 +980,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1679:50) 
+  } // (1678:50) 
 
 
   function create_if_block_4(ctx) {
@@ -1061,7 +1061,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1673:6) {#if item.separator}
+  } // (1672:6) {#if item.separator}
 
 
   function create_if_block_3(ctx) {
@@ -1091,7 +1091,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1705:12) {#if multiple && !item.blank && !item.action}
+  } // (1704:12) {#if multiple && !item.blank && !item.action}
 
 
   function create_if_block_10(ctx) {
@@ -1128,7 +1128,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1720:14) {:else}
+  } // (1719:14) {:else}
 
 
   function create_else_block_2(ctx) {
@@ -1195,7 +1195,7 @@ var Select = (function () {
         if (detaching) detach(if_block1_anchor);
       }
     };
-  } // (1712:14) {#if item.blank}
+  } // (1711:14) {#if item.blank}
 
 
   function create_if_block_6(ctx) {
@@ -1238,7 +1238,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1727:16) {:else}
+  } // (1726:16) {:else}
 
 
   function create_else_block_3(ctx) {
@@ -1279,7 +1279,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1721:16) {#if item.href}
+  } // (1720:16) {#if item.href}
 
 
   function create_if_block_9(ctx) {
@@ -1333,7 +1333,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1733:16) {#if item.desc}
+  } // (1732:16) {#if item.desc}
 
 
   function create_if_block_8(ctx) {
@@ -1374,7 +1374,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1716:18) {:else}
+  } // (1715:18) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -1400,7 +1400,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1714:18) {#if multiple}
+  } // (1713:18) {#if multiple}
 
 
   function create_if_block_7(ctx) {
@@ -1420,7 +1420,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1686:10) {#if item.desc}
+  } // (1685:10) {#if item.desc}
 
 
   function create_if_block_5(ctx) {
@@ -1450,7 +1450,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1672:4) {#each displayItems as item (item.id)}
+  } // (1671:4) {#each displayItems as item (item.id)}
 
 
   function create_each_block(key_1, ctx) {
@@ -1504,7 +1504,7 @@ var Select = (function () {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1749:78) 
+  } // (1748:78) 
 
 
   function create_if_block_2(ctx) {
@@ -1526,7 +1526,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1745:4) {#if fetchError}
+  } // (1744:4) {#if fetchError}
 
 
   function create_if_block_1(ctx) {
@@ -1556,7 +1556,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1755:4) {#if selectionItems.length >= maxItems}
+  } // (1754:4) {#if selectionItems.length >= maxItems}
 
 
   function create_if_block(ctx) {
@@ -2038,10 +2038,7 @@ var Select = (function () {
   };
   var BLANK_ID = "";
   var FIXED_SORT_KEY = "_";
-  var MAX_ITEMS_DEFAULT = 100;
   var FETCH_INDICATOR_DELAY = 150;
-  var SUMMARY_LEN = 2;
-  var SUMMARY_WRAP = false;
   var FA_CARET_DOWN = "fas fa-caret-down";
   var FA_CARET_FETCHING = "far fa-hourglass";
   var FA_SELECTED = "far fa-check-square";
@@ -2364,11 +2361,11 @@ var Select = (function () {
     var popupFixed = false;
     var fetcher = inlineFetcher;
     var remote = false;
-    var maxItems = MAX_ITEMS_DEFAULT;
+    var maxItems = 100;
     var typeahead = false;
-    var summaryLen = SUMMARY_LEN;
-    var summaryWrap = SUMMARY_WRAP;
-    var keepResult = true;
+    var summaryLen = 2;
+    var summaryWrap = false;
+    var noCache = false;
     var placeholderItem = {
       id: BLANK_ID,
       text: "",
@@ -2418,7 +2415,7 @@ var Select = (function () {
     function clearQuery() {
       $$invalidate(10, query = "");
 
-      if (!keepResult) {
+      if (noCache) {
         previousQuery = null;
       }
     }
@@ -2937,20 +2934,20 @@ var Select = (function () {
         fetcher = config.fetcher;
       }
 
-      $$invalidate(7, typeahead = ds.ssTypeahead != undefined ? ds.ssTypeahead !== "false" : typeahead);
-      $$invalidate(6, maxItems = ds.ssMaxItems != undefined ? parseInt(ds.ssMaxItems, 10) : maxItems);
-      summaryLen = ds.ssSummaryLen != undefined ? parseInt(ds.ssSummaryLen, 10) : summaryLen;
-      summaryWrap = ds.ssSummaryWrap != undefined ? ds.ssSummaryWrap !== "false" : summaryWrap;
+      $$invalidate(7, typeahead = ds.ssTypeahead !== undefined ? true : typeahead);
+      $$invalidate(6, maxItems = ds.ssMaxItems !== undefined ? parseInt(ds.ssMaxItems, 10) : maxItems);
+      summaryLen = ds.ssSummaryLen !== undefined ? parseInt(ds.ssSummaryLen, 10) : summaryLen;
+      summaryWrap = ds.ssSummaryWrap !== undefined ? true : summaryWrap;
       baseHref = ds.ssBaseHref != undefined ? ds.ssBaseHref : baseHref;
-      keepResult = ds.ssKeepResult != undefined ? ds.ssKeepResult !== "false" : keepResult;
-      $$invalidate(5, popupFixed = ds.ssPopupFixed != undefined ? ds.ssPopupFixed !== "false" : popupFixed);
-      $$invalidate(7, typeahead = config.typeahead != undefined ? config.typeahead : typeahead);
+      noCache = ds.ssNoCache !== undefined ? true : noCache;
+      $$invalidate(5, popupFixed = ds.ssPopupFixed !== undefined ? true : popupFixed);
+      $$invalidate(7, typeahead = config.typeahead !== undefined ? config.typeahead : typeahead);
       $$invalidate(6, maxItems = config.maxItems || maxItems);
       summaryLen = config.summaryLen || summaryLen;
-      summaryWrap = config.summaryWrap != undefined ? config.summaryWrap : summaryWrap;
+      summaryWrap = config.summaryWrap !== undefined ? config.summaryWrap : summaryWrap;
       baseHref = config.baseHref || baseHref;
-      keepResult = config.keepResult != undefined ? config.keepResult : keepResult;
-      $$invalidate(5, popupFixed = config.popupFixed != undefined ? config.popupFixed !== "false" : popupFixed);
+      noCache = config.noCache !== undefined ? config.noCache : noCache;
+      $$invalidate(5, popupFixed = config.popupFixed !== undefined ? config.popupFixed : popupFixed);
       Object.assign(translations, I18N_DEFAULTS);
 
       if (config.translations) {
@@ -2963,7 +2960,7 @@ var Select = (function () {
         Object.assign(styles, config.styles);
       }
 
-      $$invalidate(6, maxItems = config.maxItems || MAX_ITEMS_DEFAULT);
+      $$invalidate(6, maxItems = config.maxItems || maxItems);
       placeholderItem.text = config.placeholder || "";
 
       if (jQuery.tooltip) {
@@ -3147,6 +3144,9 @@ var Select = (function () {
     };
     var inputKeydownHandlers = {
       base: nop,
+      Enter: function Enter(event) {
+        event.preventDefault();
+      },
       ArrowDown: function ArrowDown(event) {
         var next = popupEl.querySelectorAll(".ss-js-item")[0];
 
@@ -3589,7 +3589,7 @@ var Select = (function () {
       }
     };
 
-    return [real, containerEl, inputEl, toggleEl, popupEl, popupFixed, maxItems, typeahead, containerId, containerName, query, actualCount, displayItems, selectionById, selectionItems, selectionTip, summarySingle, summaryItems, showFetching, fetchError, popupVisible, popupTop, popupLeft, activeFetch, previousFetch, multiple, styles, translate, handleBlur, handleInputBlur, handleInputKeypress, handleInputKeydown, handleInputKeyup, handleToggleKeydown, handleToggleKeyup, handleToggleClick, handleItemKeydown, handleItemKeyup, handleItemClick, handleToggleLinkClick, handleItemLinkClick, handlePopupScroll, handleWindowScroll, config, selectItem, resizeObserver, setupDone, fetcher, remote, summaryLen, summaryWrap, keepResult, placeholderItem, baseHref, mounted, fixedItems, fixedById, result, hasMore, display, fetchingMore, previousQuery, isSyncToReal, mutationObserver, translations, clearQuery, openPopup, closePopup, selectItemImpl, executeAction, selectElement, containsElement, syncFromRealSelection, syncToRealSelection, updateFixedItems, updateDisplay, appendFetchedToDisplay, updateSelection, reload, inlineFetcher, fetchItems, cancelFetch, fetchMoreIfneeded, setupComponent, handleMutation, handleResize, eventListeners, findFirstItem, findFirstSimple, findFirstDynamic, updatePopupPosition, toggleKeydownHandlers, toggleKeyupHandlers, inputKeypressHandlers, inputKeydownHandlers, inputKeyupHandlers, focusNextByKey, focusItem, focusPreviousItem, focusNextItem, focusPageUp, focusPageDown, blockScrollUpIfNeeded, blockScrollDownIfNeeded, itemKeydownHandlers, itemKeyupHandlers, button_binding, input_binding, input_input_handler, div0_binding, div1_binding];
+    return [real, containerEl, inputEl, toggleEl, popupEl, popupFixed, maxItems, typeahead, containerId, containerName, query, actualCount, displayItems, selectionById, selectionItems, selectionTip, summarySingle, summaryItems, showFetching, fetchError, popupVisible, popupTop, popupLeft, activeFetch, previousFetch, multiple, styles, translate, handleBlur, handleInputBlur, handleInputKeypress, handleInputKeydown, handleInputKeyup, handleToggleKeydown, handleToggleKeyup, handleToggleClick, handleItemKeydown, handleItemKeyup, handleItemClick, handleToggleLinkClick, handleItemLinkClick, handlePopupScroll, handleWindowScroll, config, selectItem, resizeObserver, setupDone, fetcher, remote, summaryLen, summaryWrap, noCache, placeholderItem, baseHref, mounted, fixedItems, fixedById, result, hasMore, display, fetchingMore, previousQuery, isSyncToReal, mutationObserver, translations, clearQuery, openPopup, closePopup, selectItemImpl, executeAction, selectElement, containsElement, syncFromRealSelection, syncToRealSelection, updateFixedItems, updateDisplay, appendFetchedToDisplay, updateSelection, reload, inlineFetcher, fetchItems, cancelFetch, fetchMoreIfneeded, setupComponent, handleMutation, handleResize, eventListeners, findFirstItem, findFirstSimple, findFirstDynamic, updatePopupPosition, toggleKeydownHandlers, toggleKeyupHandlers, inputKeypressHandlers, inputKeydownHandlers, inputKeyupHandlers, focusNextByKey, focusItem, focusPreviousItem, focusNextItem, focusPageUp, focusPageDown, blockScrollUpIfNeeded, blockScrollDownIfNeeded, itemKeydownHandlers, itemKeyupHandlers, button_binding, input_binding, input_input_handler, div0_binding, div1_binding];
   }
 
   var Select = /*#__PURE__*/function (_SvelteComponent) {

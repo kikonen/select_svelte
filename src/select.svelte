@@ -361,7 +361,7 @@
  let typeahead = false;
  let summaryLen = 2;
  let summaryWrap = false;
- let keepResult = false;
+ let noCache = false;
  let placeholderItem = {
      id: BLANK_ID,
      text: '',
@@ -429,7 +429,7 @@
 
  function clearQuery() {
      query = '';
-     if (!keepResult) {
+     if (noCache) {
          previousQuery = null;
      }
  }
@@ -995,7 +995,7 @@
      summaryLen = ds.ssSummaryLen !== undefined ? parseInt(ds.ssSummaryLen, 10) : summaryLen;
      summaryWrap = ds.ssSummaryWrap !== undefined ? true : summaryWrap;
      baseHref = ds.ssBaseHref != undefined ? ds.ssBaseHref : baseHref;
-     keepResult = ds.ssKeepResult !== undefined ? true : keepResult;
+     noCache = ds.ssNoCache !== undefined ? true : noCache;
      popupFixed = ds.ssPopupFixed !== undefined ? true : popupFixed;
 
      typeahead = config.typeahead !== undefined ? config.typeahead : typeahead
@@ -1004,7 +1004,7 @@
      summaryWrap = config.summaryWrap !== undefined ? config.summaryWrap : summaryWrap;
 
      baseHref = config.baseHref || baseHref;
-     keepResult = config.keepResult !== undefined ? config.keepResult : keepResult;
+     noCache = config.noCache !== undefined ? config.noCache : noCache;
      popupFixed = config.popupFixed !== undefined ? config.popupFixed : popupFixed;
 
      Object.assign(translations, I18N_DEFAULTS);
