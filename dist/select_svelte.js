@@ -207,9 +207,7 @@ var Select = (function () {
   }
 
   function set_input_value(input, value) {
-    if (value != null || input.value) {
-      input.value = value;
-    }
+    input.value = value == null ? '' : value;
   }
 
   function toggle_class(element, name, toggle) {
@@ -367,7 +365,7 @@ var Select = (function () {
 
     function insert(block) {
       transition_in(block, 1);
-      block.m(node, next, lookup.has(block.key));
+      block.m(node, next);
       lookup.set(block.key, block);
       next = block.first;
       n--;
@@ -549,11 +547,11 @@ var Select = (function () {
     return SvelteComponent;
   }();
 
-  function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function () { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+  function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
   function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
-  function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray$1(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+  function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$1(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
   function _unsupportedIterableToArray$1(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
 
@@ -619,6 +617,7 @@ var Select = (function () {
     ctx[111].summary) + "";
     var t;
     var a_href_value;
+    var mounted;
     var dispose;
     return {
       c: function c() {
@@ -631,13 +630,16 @@ var Select = (function () {
         attr(a, "target", "_blank");
         attr(a, "tabindex", "-1");
       },
-      m: function m(target, anchor, remount) {
+      m: function m(target, anchor) {
         insert(target, a, anchor);
         append(a, t);
-        if (remount) dispose();
-        dispose = listen(a, "click",
-        /*handleToggleLinkClick*/
-        ctx[39]);
+
+        if (!mounted) {
+          dispose = listen(a, "click",
+          /*handleToggleLinkClick*/
+          ctx[39]);
+          mounted = true;
+        }
       },
       p: function p(ctx, dirty) {
         if (dirty[0] &
@@ -660,6 +662,7 @@ var Select = (function () {
       },
       d: function d(detaching) {
         if (detaching) detach(a);
+        mounted = false;
         dispose();
       }
     };
@@ -762,6 +765,7 @@ var Select = (function () {
   function create_if_block_11(ctx) {
     var div;
     var input;
+    var mounted;
     var dispose;
     return {
       c: function c() {
@@ -776,7 +780,7 @@ var Select = (function () {
         attr(div, "class", "ss-input-item");
         attr(div, "tabindex", "-1");
       },
-      m: function m(target, anchor, remount) {
+      m: function m(target, anchor) {
         insert(target, div, anchor);
         append(div, input);
         /*input_binding*/
@@ -785,18 +789,21 @@ var Select = (function () {
         set_input_value(input,
         /*query*/
         ctx[10]);
-        if (remount) run_all(dispose);
-        dispose = [listen(input, "input",
-        /*input_input_handler*/
-        ctx[108]), listen(input, "blur",
-        /*handleInputBlur*/
-        ctx[29]), listen(input, "keypress",
-        /*handleInputKeypress*/
-        ctx[30]), listen(input, "keydown",
-        /*handleInputKeydown*/
-        ctx[31]), listen(input, "keyup",
-        /*handleInputKeyup*/
-        ctx[32])];
+
+        if (!mounted) {
+          dispose = [listen(input, "input",
+          /*input_input_handler*/
+          ctx[108]), listen(input, "blur",
+          /*handleInputBlur*/
+          ctx[29]), listen(input, "keypress",
+          /*handleInputKeypress*/
+          ctx[30]), listen(input, "keydown",
+          /*handleInputKeydown*/
+          ctx[31]), listen(input, "keyup",
+          /*handleInputKeyup*/
+          ctx[32])];
+          mounted = true;
+        }
       },
       p: function p(ctx, dirty) {
         if (dirty[0] &
@@ -814,6 +821,7 @@ var Select = (function () {
         /*input_binding*/
 
         ctx[107](null);
+        mounted = false;
         run_all(dispose);
       }
     };
@@ -828,6 +836,7 @@ var Select = (function () {
     var div2_class_value;
     var div2_data_id_value;
     var div2_data_action_value;
+    var mounted;
     var dispose;
     var if_block0 =
     /*multiple*/
@@ -874,23 +883,26 @@ var Select = (function () {
         /*item*/
         ctx[111].id]);
       },
-      m: function m(target, anchor, remount) {
+      m: function m(target, anchor) {
         insert(target, div2, anchor);
         append(div2, div1);
         if (if_block0) if_block0.m(div1, null);
         append(div1, t);
         append(div1, div0);
         if_block1.m(div0, null);
-        if (remount) run_all(dispose);
-        dispose = [listen(div2, "blur",
-        /*handleBlur*/
-        ctx[28]), listen(div2, "click",
-        /*handleItemClick*/
-        ctx[38]), listen(div2, "keydown",
-        /*handleItemKeydown*/
-        ctx[36]), listen(div2, "keyup",
-        /*handleItemKeyup*/
-        ctx[37])];
+
+        if (!mounted) {
+          dispose = [listen(div2, "blur",
+          /*handleBlur*/
+          ctx[28]), listen(div2, "click",
+          /*handleItemClick*/
+          ctx[38]), listen(div2, "keydown",
+          /*handleItemKeydown*/
+          ctx[36]), listen(div2, "keyup",
+          /*handleItemKeyup*/
+          ctx[37])];
+          mounted = true;
+        }
       },
       p: function p(ctx, dirty) {
         if (
@@ -964,6 +976,7 @@ var Select = (function () {
         if (detaching) detach(div2);
         if (if_block0) if_block0.d();
         if_block1.d();
+        mounted = false;
         run_all(dispose);
       }
     };
@@ -979,6 +992,7 @@ var Select = (function () {
     var t0;
     var div0_class_value;
     var t1;
+    var mounted;
     var dispose;
     var if_block =
     /*item*/
@@ -996,16 +1010,19 @@ var Select = (function () {
         attr(div1, "tabindex", "-1");
         attr(div1, "class", "dropdown-item ss-item-muted ss-js-dead");
       },
-      m: function m(target, anchor, remount) {
+      m: function m(target, anchor) {
         insert(target, div1, anchor);
         append(div1, div0);
         append(div0, t0);
         append(div1, t1);
         if (if_block) if_block.m(div1, null);
-        if (remount) dispose();
-        dispose = listen(div1, "keydown",
-        /*handleItemKeydown*/
-        ctx[36]);
+
+        if (!mounted) {
+          dispose = listen(div1, "keydown",
+          /*handleItemKeydown*/
+          ctx[36]);
+          mounted = true;
+        }
       },
       p: function p(ctx, dirty) {
         if (dirty[0] &
@@ -1040,6 +1057,7 @@ var Select = (function () {
       d: function d(detaching) {
         if (detaching) detach(div1);
         if (if_block) if_block.d();
+        mounted = false;
         dispose();
       }
     };
@@ -1048,6 +1066,7 @@ var Select = (function () {
 
   function create_if_block_3(ctx) {
     var div;
+    var mounted;
     var dispose;
     return {
       c: function c() {
@@ -1055,16 +1074,20 @@ var Select = (function () {
         attr(div, "tabindex", "-1");
         attr(div, "class", "dropdown-divider ss-js-dead");
       },
-      m: function m(target, anchor, remount) {
+      m: function m(target, anchor) {
         insert(target, div, anchor);
-        if (remount) dispose();
-        dispose = listen(div, "keydown",
-        /*handleItemKeydown*/
-        ctx[36]);
+
+        if (!mounted) {
+          dispose = listen(div, "keydown",
+          /*handleItemKeydown*/
+          ctx[36]);
+          mounted = true;
+        }
       },
       p: noop,
       d: function d(detaching) {
         if (detaching) detach(div);
+        mounted = false;
         dispose();
       }
     };
@@ -1266,6 +1289,7 @@ var Select = (function () {
     ctx[111].text + "";
     var t;
     var a_href_value;
+    var mounted;
     var dispose;
     return {
       c: function c() {
@@ -1277,13 +1301,16 @@ var Select = (function () {
         ctx[111].href);
         attr(a, "tabindex", "-1");
       },
-      m: function m(target, anchor, remount) {
+      m: function m(target, anchor) {
         insert(target, a, anchor);
         append(a, t);
-        if (remount) dispose();
-        dispose = listen(a, "click",
-        /*handleItemLinkClick*/
-        ctx[40]);
+
+        if (!mounted) {
+          dispose = listen(a, "click",
+          /*handleItemLinkClick*/
+          ctx[40]);
+          mounted = true;
+        }
       },
       p: function p(ctx, dirty) {
         if (dirty[0] &
@@ -1302,6 +1329,7 @@ var Select = (function () {
       },
       d: function d(detaching) {
         if (detaching) detach(a);
+        mounted = false;
         dispose();
       }
     };
@@ -1590,6 +1618,7 @@ var Select = (function () {
     var t3;
     var t4;
     var div1_class_value;
+    var mounted;
     var dispose;
     var each_value_1 =
     /*summaryItems*/
@@ -1733,7 +1762,7 @@ var Select = (function () {
         /*containerName*/
         ctx[9]);
       },
-      m: function m(target, anchor, remount) {
+      m: function m(target, anchor) {
         insert(target, div1, anchor);
         append(div1, button);
         append(button, span0);
@@ -1766,20 +1795,23 @@ var Select = (function () {
         /*div1_binding*/
 
         ctx[110](div1);
-        if (remount) run_all(dispose);
-        dispose = [listen(window_1, "scroll",
-        /*handleWindowScroll*/
-        ctx[42]), listen(button, "blur",
-        /*handleBlur*/
-        ctx[28]), listen(button, "keydown",
-        /*handleToggleKeydown*/
-        ctx[33]), listen(button, "keyup",
-        /*handleToggleKeyup*/
-        ctx[34]), listen(button, "click",
-        /*handleToggleClick*/
-        ctx[35]), listen(div0, "scroll",
-        /*handlePopupScroll*/
-        ctx[41])];
+
+        if (!mounted) {
+          dispose = [listen(window_1, "scroll",
+          /*handleWindowScroll*/
+          ctx[42]), listen(button, "blur",
+          /*handleBlur*/
+          ctx[28]), listen(button, "keydown",
+          /*handleToggleKeydown*/
+          ctx[33]), listen(button, "keyup",
+          /*handleToggleKeyup*/
+          ctx[34]), listen(button, "click",
+          /*handleToggleClick*/
+          ctx[35]), listen(div0, "scroll",
+          /*handlePopupScroll*/
+          ctx[41])];
+          mounted = true;
+        }
       },
       p: function p(ctx, dirty) {
         if (dirty[0] &
@@ -1989,6 +2021,7 @@ var Select = (function () {
         /*div1_binding*/
 
         ctx[110](null);
+        mounted = false;
         run_all(dispose);
       }
     };
