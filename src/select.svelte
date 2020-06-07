@@ -73,7 +73,7 @@
      F12: true,
  }
 
- const MUTATIONS = { childList: true };
+ const MUTATIONS = { childList: true, attributes: true };
 
 
  function nop() {};
@@ -407,6 +407,7 @@
  let previousQuery = null;
 
  let multiple = false;
+ let disabled = false;
 
  let isSyncToReal = false;
 
@@ -608,6 +609,10 @@
      }
  }
 
+ function syncFromRealDisabled() {
+     disabled = real.disabled;
+ }
+
  function updateFixedItems() {
      let byId = {}
      let items = [];
@@ -723,6 +728,7 @@
      }
      updateFixedItems();
      syncFromRealSelection();
+     syncFromRealDisabled();
      result = createResult({});
      display.dirty = true;
      updateDisplay();
@@ -952,6 +958,7 @@
  onMount(function() {
      // Initial selection
      syncFromRealSelection();
+     syncFromRealDisabled();
 
      Object.keys(eventListeners).forEach(function(ev) {
          real.addEventListener(ev, eventListeners[ev]);
@@ -1035,6 +1042,10 @@
      for (let mutation of mutationsList) {
          if (mutation.type === 'childList') {
              reload();
+         } else if (mutation.type === 'attributes') {
+             if (mutation.attributeName === 'disabled') {
+                 syncFromRealDisabled();
+             }
          }
      }
  }
@@ -1609,6 +1620,8 @@
           type="button"
           tabindex="0"
           title="{selectionTip}"
+          disabled={disabled}
+
           bind:this={toggleEl}
           on:blur={handleBlur}
           on:keydown={handleToggleKeydown}
