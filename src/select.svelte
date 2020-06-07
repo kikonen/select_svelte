@@ -123,7 +123,7 @@
 
      if (ds) {
          item.sort_key = ds.sortKey || null;
-         if (ds.itemSeparator != undefined) {
+         if (ds.itemSeparator !== undefined) {
              item.separator = true;
          }
 
