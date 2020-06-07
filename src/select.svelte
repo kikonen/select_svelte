@@ -17,11 +17,7 @@
 
  const FIXED_SORT_KEY = '_';
 
- const MAX_ITEMS_DEFAULT = 100;
  const FETCH_INDICATOR_DELAY = 150;
-
- const SUMMARY_LEN = 2;
- const SUMMARY_WRAP = false;
 
  const FA_CARET_DOWN = 'fas fa-caret-down';
  const FA_CARET_FETCHING = 'far fa-hourglass';
@@ -361,11 +357,11 @@
 
  let fetcher = inlineFetcher;
  let remote = false;
- let maxItems = MAX_ITEMS_DEFAULT;
+ let maxItems = 100;
  let typeahead = false;
- let summaryLen = SUMMARY_LEN;
- let summaryWrap = SUMMARY_WRAP;
- let keepResult = true;
+ let summaryLen = 2;
+ let summaryWrap = false;
+ let keepResult = false;
  let placeholderItem = {
      id: BLANK_ID,
      text: '',
@@ -994,22 +990,22 @@
          fetcher = config.fetcher;
      }
 
-     typeahead = ds.ssTypeahead != undefined ? ds.ssTypeahead !== 'false' : typeahead;
-     maxItems = ds.ssMaxItems != undefined ? parseInt(ds.ssMaxItems, 10) : maxItems;
-     summaryLen = ds.ssSummaryLen != undefined ? parseInt(ds.ssSummaryLen, 10) : summaryLen;
-     summaryWrap = ds.ssSummaryWrap != undefined ? ds.ssSummaryWrap !== 'false' : summaryWrap;
+     typeahead = ds.ssTypeahead !== undefined ? true : typeahead;
+     maxItems = ds.ssMaxItems !== undefined ? parseInt(ds.ssMaxItems, 10) : maxItems;
+     summaryLen = ds.ssSummaryLen !== undefined ? parseInt(ds.ssSummaryLen, 10) : summaryLen;
+     summaryWrap = ds.ssSummaryWrap !== undefined ? true : summaryWrap;
      baseHref = ds.ssBaseHref != undefined ? ds.ssBaseHref : baseHref;
-     keepResult = ds.ssKeepResult != undefined ? ds.ssKeepResult !== 'false' : keepResult;
-     popupFixed = ds.ssPopupFixed != undefined ? ds.ssPopupFixed !== 'false' : popupFixed;
+     keepResult = ds.ssKeepResult !== undefined ? true : keepResult;
+     popupFixed = ds.ssPopupFixed !== undefined ? true : popupFixed;
 
-     typeahead = config.typeahead != undefined ? config.typeahead : typeahead
+     typeahead = config.typeahead !== undefined ? config.typeahead : typeahead
      maxItems = config.maxItems || maxItems;
      summaryLen = config.summaryLen || summaryLen;
-     summaryWrap = config.summaryWrap != undefined ? config.summaryWrap : summaryWrap;
+     summaryWrap = config.summaryWrap !== undefined ? config.summaryWrap : summaryWrap;
 
      baseHref = config.baseHref || baseHref;
-     keepResult = config.keepResult != undefined ? config.keepResult : keepResult;
-     popupFixed = config.popupFixed != undefined ? config.popupFixed !== 'false' : popupFixed;
+     keepResult = config.keepResult !== undefined ? config.keepResult : keepResult;
+     popupFixed = config.popupFixed !== undefined ? config.popupFixed : popupFixed;
 
      Object.assign(translations, I18N_DEFAULTS);
      if (config.translations) {
@@ -1021,7 +1017,7 @@
          Object.assign(styles, config.styles);
      }
 
-     maxItems = config.maxItems || MAX_ITEMS_DEFAULT;
+     maxItems = config.maxItems || maxItems;
      placeholderItem.text = config.placeholder || '';
 
      if (jQuery.tooltip) {
