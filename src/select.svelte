@@ -346,6 +346,8 @@
  let toggleEl;
  let popupEl;
 
+ let labelId = null;
+
  const mutationObserver = new MutationObserver(handleMutation);
 
  let resizeObserver;
@@ -1034,9 +1036,21 @@
 
      mutationObserver.observe(real, MUTATIONS);
 
+     bindLabel();
      updateFixedItems();
      display.dirty = true;
      updateDisplay();
+ }
+
+ function bindLabel() {
+     if (!real.id) {
+         return;
+     }
+     let label = document.querySelector(`[for="${real.id}"]`);
+     if (label) {
+         label.id = label.id || `ts_label_${real.id}`;
+         labelId = label.id;
+     }
  }
 
  function handleMutation(mutationsList, observer) {
@@ -1619,9 +1633,12 @@
   <button class="form-control ss-control"
           name="ss_control_{real.name}"
           type="button"
+          role="listbox"
           tabindex="0"
           title="{selectionTip}"
           disabled={disabled}
+
+          aria-labelledby={labelId}
 
           bind:this={toggleEl}
           on:blur={handleBlur}
