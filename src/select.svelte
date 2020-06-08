@@ -1640,7 +1640,10 @@
   <button class="form-control ss-control"
           name="ss_control_{real.name}"
           type="button"
+
           role="listbox"
+          aria-multiselectable={multiple ? '' : null}
+
           tabindex="0"
           title="{selectionTip}"
           disabled={disabled}
@@ -1685,6 +1688,9 @@
        class:ss-popup-left={popupLeft && !popupFixed}
        class:ss-popup-fixed-top={popupTop && popupFixed}
        class:ss-popup-fixed-left={popupLeft && popupFixed}
+
+       role="list"
+
        bind:this={popupEl}
        tabindex="-1"
        on:scroll={handlePopupScroll}>
@@ -1733,6 +1739,10 @@
         <div tabindex=1
              class="dropdown-item ss-item ss-js-item {item.item_class || ''}"
              class:ss-item-selected={!item.blank && selectionById[item.id]}
+
+             role="option"
+             aria-selected={selectionById[item.id] ? '' : null}
+
              data-id="{item.id}"
              data-action="{item.action}"
              on:blur={handleBlur}
