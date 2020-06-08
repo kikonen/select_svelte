@@ -76,8 +76,14 @@
 
  const MUTATIONS = { childList: true, attributes: true };
 
+ let uidBase = 0;
 
  function nop() {};
+
+ function nextUID() {
+     uidBase++;
+     return uidBase;
+ };
 
  function hasModifier(event) {
      return event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
@@ -992,7 +998,8 @@
 
      let ds = real.dataset;
 
-     containerId = real.id ? `ss_container_${real.id}` : null;
+     let baseId = real.id || nextUID();
+     containerId = `ss_container_${baseId}`;
      containerName = real.name ? `ss_container_${real.name}` : null;
 
      if (config.remote) {
@@ -1683,7 +1690,7 @@
        on:scroll={handlePopupScroll}>
     {#if typeahead}
         <div class="ss-input-item" tabindex="-1">
-          <label for="{containerId}_input}" class="sr-only">{translate('typehead_input')}</label>
+          <label for="{containerId}_input" class="sr-only">{translate('typeahead_input')}</label>
           <input class="form-control ss-input"
                  id="{containerId}_input}"
                  tabindex=1
