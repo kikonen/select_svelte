@@ -7,7 +7,8 @@
      max_limit: 'Max limit reached',
      selected_count: 'selected',
      selected_more: 'more',
-     typeahead_input: 'Search for...'
+     typeahead_input: 'Search for...',
+     popup: 'List',
  };
 
  const STYLE_DEFAULTS = {
@@ -1641,7 +1642,13 @@
           name="ss_control_{real.name}"
           type="button"
 
-          role="listbox"
+          role="combobox"
+          aria-expanded="{popupVisible}"
+          aria-haspopup="listbox"
+          aria-owns="{containerId}_popup"
+
+          aria-activedescendant="{!multiple && selectionItems.length ? `${containerId}_item_${selectionItems[0].id}` : null}"
+
           aria-multiselectable={multiple ? '' : null}
 
           tabindex="0"
@@ -1681,6 +1688,7 @@
     </span>
   </button>
 
+  <label for="{containerId}_popup" class="sr-only">{translate('popup')}</label>
   <div class="dropdown-menu ss-popup"
        class:show={popupVisible}
        class:ss-popup-fixed={popupFixed}
@@ -1689,7 +1697,8 @@
        class:ss-popup-fixed-top={popupTop && popupFixed}
        class:ss-popup-fixed-left={popupLeft && popupFixed}
 
-       role="list"
+       id="{containerId}_popup"
+       role="listbox"
 
        bind:this={popupEl}
        tabindex="-1"
@@ -1740,8 +1749,10 @@
              class="dropdown-item ss-item ss-js-item {item.item_class || ''}"
              class:ss-item-selected={!item.blank && selectionById[item.id]}
 
+             id="{containerId}_item_{item.id}"
+
              role="option"
-             aria-selected={selectionById[item.id] ? '' : null}
+             aria-selected={selectionById[item.id] ? 'true' : null}
 
              data-id="{item.id}"
              data-action="{item.action}"
