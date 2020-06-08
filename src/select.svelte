@@ -7,6 +7,7 @@
      max_limit: 'Max limit reached',
      selected_count: 'selected',
      selected_more: 'more',
+     typeahead_input: 'Search for...'
  };
 
  const STYLE_DEFAULTS = {
@@ -1665,7 +1666,9 @@
        on:scroll={handlePopupScroll}>
     {#if typeahead}
         <div class="ss-input-item" tabindex="-1">
+          <label for="{containerId}_input}" class="sr-only">{translate('typehead_input')}</label>
           <input class="form-control ss-input"
+                 id="{containerId}_input}"
                  tabindex=1
                  autocomplete="new-password"
                  autocorrect=off

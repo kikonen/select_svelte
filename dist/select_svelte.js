@@ -569,7 +569,7 @@ var Select = (function () {
     child_ctx[113] = list[i];
     child_ctx[117] = i;
     return child_ctx;
-  } // (1646:10) {:else}
+  } // (1647:10) {:else}
 
 
   function create_else_block_4(ctx) {
@@ -603,7 +603,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1640:10) {#if item.href}
+  } // (1641:10) {#if item.href}
 
 
   function create_if_block_12(ctx) {
@@ -666,7 +666,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1633:6) {#each summaryItems as item, index (item.id)}
+  } // (1634:6) {#each summaryItems as item, index (item.id)}
 
 
   function create_each_block_1(key_1, ctx) {
@@ -759,19 +759,37 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1666:4) {#if typeahead}
+  } // (1667:4) {#if typeahead}
 
 
   function create_if_block_11(ctx) {
     var div;
+    var label;
+    var t0_value =
+    /*translate*/
+    ctx[28]("typehead_input") + "";
+    var t0;
+    var label_for_value;
+    var t1;
     var input;
+    var input_id_value;
     var mounted;
     var dispose;
     return {
       c: function c() {
         div = element("div");
+        label = element("label");
+        t0 = text(t0_value);
+        t1 = space();
         input = element("input");
+        attr(label, "for", label_for_value = "" + (
+        /*containerId*/
+        ctx[8] + "_input}"));
+        attr(label, "class", "sr-only");
         attr(input, "class", "form-control ss-input");
+        attr(input, "id", input_id_value = "" + (
+        /*containerId*/
+        ctx[8] + "_input}"));
         attr(input, "tabindex", "1");
         attr(input, "autocomplete", "new-password");
         attr(input, "autocorrect", "off");
@@ -782,6 +800,9 @@ var Select = (function () {
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
+        append(div, label);
+        append(label, t0);
+        append(div, t1);
         append(div, input);
         /*input_binding*/
 
@@ -807,6 +828,22 @@ var Select = (function () {
       },
       p: function p(ctx, dirty) {
         if (dirty[0] &
+        /*containerId*/
+        256 && label_for_value !== (label_for_value = "" + (
+        /*containerId*/
+        ctx[8] + "_input}"))) {
+          attr(label, "for", label_for_value);
+        }
+
+        if (dirty[0] &
+        /*containerId*/
+        256 && input_id_value !== (input_id_value = "" + (
+        /*containerId*/
+        ctx[8] + "_input}"))) {
+          attr(input, "id", input_id_value);
+        }
+
+        if (dirty[0] &
         /*query*/
         1024 && input.value !==
         /*query*/
@@ -825,7 +862,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1705:6) {:else}
+  } // (1708:6) {:else}
 
 
   function create_else_block(ctx) {
@@ -980,7 +1017,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1691:50) 
+  } // (1694:50) 
 
 
   function create_if_block_4(ctx) {
@@ -1061,7 +1098,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1685:6) {#if item.separator}
+  } // (1688:6) {#if item.separator}
 
 
   function create_if_block_3(ctx) {
@@ -1091,7 +1128,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1717:12) {#if multiple && !item.blank && !item.action}
+  } // (1720:12) {#if multiple && !item.blank && !item.action}
 
 
   function create_if_block_10(ctx) {
@@ -1128,7 +1165,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1732:14) {:else}
+  } // (1735:14) {:else}
 
 
   function create_else_block_2(ctx) {
@@ -1195,7 +1232,7 @@ var Select = (function () {
         if (detaching) detach(if_block1_anchor);
       }
     };
-  } // (1724:14) {#if item.blank}
+  } // (1727:14) {#if item.blank}
 
 
   function create_if_block_6(ctx) {
@@ -1238,7 +1275,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1739:16) {:else}
+  } // (1742:16) {:else}
 
 
   function create_else_block_3(ctx) {
@@ -1279,7 +1316,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1733:16) {#if item.href}
+  } // (1736:16) {#if item.href}
 
 
   function create_if_block_9(ctx) {
@@ -1333,7 +1370,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1745:16) {#if item.desc}
+  } // (1748:16) {#if item.desc}
 
 
   function create_if_block_8(ctx) {
@@ -1374,7 +1411,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1728:18) {:else}
+  } // (1731:18) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -1400,7 +1437,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1726:18) {#if multiple}
+  } // (1729:18) {#if multiple}
 
 
   function create_if_block_7(ctx) {
@@ -1420,7 +1457,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1698:10) {#if item.desc}
+  } // (1701:10) {#if item.desc}
 
 
   function create_if_block_5(ctx) {
@@ -1450,7 +1487,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1684:4) {#each displayItems as item (item.id)}
+  } // (1687:4) {#each displayItems as item (item.id)}
 
 
   function create_each_block(key_1, ctx) {
@@ -1504,7 +1541,7 @@ var Select = (function () {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1761:78) 
+  } // (1764:78) 
 
 
   function create_if_block_2(ctx) {
@@ -1526,7 +1563,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1757:4) {#if fetchError}
+  } // (1760:4) {#if fetchError}
 
 
   function create_if_block_1(ctx) {
@@ -1556,7 +1593,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1767:4) {#if selectionItems.length >= maxItems}
+  } // (1770:4) {#if selectionItems.length >= maxItems}
 
 
   function create_if_block(ctx) {
@@ -2042,7 +2079,8 @@ var Select = (function () {
     no_results: "No results",
     max_limit: "Max limit reached",
     selected_count: "selected",
-    selected_more: "more"
+    selected_more: "more",
+    typeahead_input: "Search for..."
   };
   var STYLE_DEFAULTS = {
     container_class: ""

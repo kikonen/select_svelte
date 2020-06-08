@@ -366,7 +366,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (1646:10) {:else}
+// (1647:10) {:else}
 function create_else_block_4(ctx) {
 	let t_value = (/*item*/ ctx[113].summary == null
 	? /*item*/ ctx[113].text
@@ -392,7 +392,7 @@ function create_else_block_4(ctx) {
 	};
 }
 
-// (1640:10) {#if item.href}
+// (1641:10) {#if item.href}
 function create_if_block_12(ctx) {
 	let a;
 
@@ -440,7 +440,7 @@ function create_if_block_12(ctx) {
 	};
 }
 
-// (1633:6) {#each summaryItems as item, index (item.id)}
+// (1634:6) {#each summaryItems as item, index (item.id)}
 function create_each_block_1(key_1, ctx) {
 	let span;
 	let t;
@@ -508,18 +508,30 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (1666:4) {#if typeahead}
+// (1667:4) {#if typeahead}
 function create_if_block_11(ctx) {
 	let div;
+	let label;
+	let t0_value = /*translate*/ ctx[28]("typehead_input") + "";
+	let t0;
+	let label_for_value;
+	let t1;
 	let input;
+	let input_id_value;
 	let mounted;
 	let dispose;
 
 	return {
 		c() {
 			div = element("div");
+			label = element("label");
+			t0 = text(t0_value);
+			t1 = space();
 			input = element("input");
+			attr(label, "for", label_for_value = "" + (/*containerId*/ ctx[8] + "_input}"));
+			attr(label, "class", "sr-only");
 			attr(input, "class", "form-control ss-input");
+			attr(input, "id", input_id_value = "" + (/*containerId*/ ctx[8] + "_input}"));
 			attr(input, "tabindex", "1");
 			attr(input, "autocomplete", "new-password");
 			attr(input, "autocorrect", "off");
@@ -530,6 +542,9 @@ function create_if_block_11(ctx) {
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
+			append(div, label);
+			append(label, t0);
+			append(div, t1);
 			append(div, input);
 			/*input_binding*/ ctx[109](input);
 			set_input_value(input, /*query*/ ctx[10]);
@@ -547,6 +562,14 @@ function create_if_block_11(ctx) {
 			}
 		},
 		p(ctx, dirty) {
+			if (dirty[0] & /*containerId*/ 256 && label_for_value !== (label_for_value = "" + (/*containerId*/ ctx[8] + "_input}"))) {
+				attr(label, "for", label_for_value);
+			}
+
+			if (dirty[0] & /*containerId*/ 256 && input_id_value !== (input_id_value = "" + (/*containerId*/ ctx[8] + "_input}"))) {
+				attr(input, "id", input_id_value);
+			}
+
 			if (dirty[0] & /*query*/ 1024 && input.value !== /*query*/ ctx[10]) {
 				set_input_value(input, /*query*/ ctx[10]);
 			}
@@ -560,7 +583,7 @@ function create_if_block_11(ctx) {
 	};
 }
 
-// (1705:6) {:else}
+// (1708:6) {:else}
 function create_else_block(ctx) {
 	let div2;
 	let div1;
@@ -668,7 +691,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (1691:50) 
+// (1694:50) 
 function create_if_block_4(ctx) {
 	let div1;
 	let div0;
@@ -732,7 +755,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (1685:6) {#if item.separator}
+// (1688:6) {#if item.separator}
 function create_if_block_3(ctx) {
 	let div;
 	let mounted;
@@ -761,7 +784,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (1717:12) {#if multiple && !item.blank && !item.action}
+// (1720:12) {#if multiple && !item.blank && !item.action}
 function create_if_block_10(ctx) {
 	let div;
 	let i;
@@ -795,7 +818,7 @@ function create_if_block_10(ctx) {
 	};
 }
 
-// (1732:14) {:else}
+// (1735:14) {:else}
 function create_else_block_2(ctx) {
 	let t;
 	let if_block1_anchor;
@@ -857,7 +880,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (1724:14) {#if item.blank}
+// (1727:14) {#if item.blank}
 function create_if_block_6(ctx) {
 	let div;
 
@@ -899,7 +922,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (1739:16) {:else}
+// (1742:16) {:else}
 function create_else_block_3(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[113].text + "";
@@ -929,7 +952,7 @@ function create_else_block_3(ctx) {
 	};
 }
 
-// (1733:16) {#if item.href}
+// (1736:16) {#if item.href}
 function create_if_block_9(ctx) {
 	let a;
 	let t_value = /*item*/ ctx[113].text + "";
@@ -970,7 +993,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (1745:16) {#if item.desc}
+// (1748:16) {#if item.desc}
 function create_if_block_8(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[113].desc + "";
@@ -1000,7 +1023,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (1728:18) {:else}
+// (1731:18) {:else}
 function create_else_block_1(ctx) {
 	let t_value = /*item*/ ctx[113].text + "";
 	let t;
@@ -1021,7 +1044,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (1726:18) {#if multiple}
+// (1729:18) {#if multiple}
 function create_if_block_7(ctx) {
 	let t_value = /*translate*/ ctx[28]("clear") + "";
 	let t;
@@ -1040,7 +1063,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (1698:10) {#if item.desc}
+// (1701:10) {#if item.desc}
 function create_if_block_5(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[113].desc + "";
@@ -1065,7 +1088,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (1684:4) {#each displayItems as item (item.id)}
+// (1687:4) {#each displayItems as item (item.id)}
 function create_each_block(key_1, ctx) {
 	let first;
 	let if_block_anchor;
@@ -1114,7 +1137,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (1761:78) 
+// (1764:78) 
 function create_if_block_2(ctx) {
 	let div;
 
@@ -1135,7 +1158,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (1757:4) {#if fetchError}
+// (1760:4) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -1160,7 +1183,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (1767:4) {#if selectionItems.length >= maxItems}
+// (1770:4) {#if selectionItems.length >= maxItems}
 function create_if_block(ctx) {
 	let div;
 	let t0_value = /*translate*/ ctx[28]("max_limit") + "";
@@ -1475,7 +1498,8 @@ const I18N_DEFAULTS = {
 	no_results: "No results",
 	max_limit: "Max limit reached",
 	selected_count: "selected",
-	selected_more: "more"
+	selected_more: "more",
+	typeahead_input: "Search for..."
 };
 
 const STYLE_DEFAULTS = { container_class: "" };
