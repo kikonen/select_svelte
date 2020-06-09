@@ -1645,9 +1645,9 @@
           name="ss_control_{real.name}"
           type="button"
 
-          role="combobox"
+          role=combobox
           aria-expanded="{popupVisible}"
-          aria-haspopup="listbox"
+          aria-haspopup=listbox
           aria-owns="{containerId}_popup"
           aria-controls="{containerId}_popup"
 
@@ -1703,7 +1703,7 @@
        class:ss-popup-fixed-left={popupLeft && popupFixed}
 
        id="{containerId}_popup"
-       role="listbox"
+       role=listbox
 
        bind:this={popupEl}
        tabindex="-1"
@@ -1719,6 +1719,12 @@
                  autocapitalize=off
                  spellcheck=off
 
+                 type=search
+                 role=searchbox
+                 aria-autocomplete=list
+                 aria-controls="{containerId}_results"
+                 aria-activedescendant="{!multiple && selectionItems.length ? `${containerId}_item_${selectionItems[0].id}` : null}"
+
                  bind:this={inputEl}
                  bind:value={query}
                  on:blur={handleInputBlur}
@@ -1728,84 +1734,92 @@
           </div>
     {/if}
 
-    {#each displayItems as item (item.id)}
-      {#if item.separator}
-        <div tabindex="-1"
-             class="dropdown-divider ss-js-dead"
-             on:keydown={handleItemKeydown}>
-        </div>
+    <ul
+      class="ss-results"
+      id="{containerId}_results"
+      role=listbox
+      aria-expanded={popupVisible}
+      aria-hidden=false
+      >
+      {#each displayItems as item (item.id)}
+        {#if item.separator}
+          <li tabindex="-1"
+               class="dropdown-divider ss-js-dead"
+               on:keydown={handleItemKeydown}>
+          </li>
 
-      {:else if item.disabled || item.placeholder}
-        <div tabindex="-1" class="dropdown-item ss-item-muted ss-js-dead"
-             on:keydown={handleItemKeydown}>
-          <div class="ss-item-text {item.item_class || ''}">
-            {item.text}
-          </div>
-
-          {#if item.desc}
-            <div class="ss-item-desc">
-              {item.desc}
+        {:else if item.disabled || item.placeholder}
+          <li tabindex="-1" class="dropdown-item ss-item-muted ss-js-dead"
+               on:keydown={handleItemKeydown}>
+            <div class="ss-item-text {item.item_class || ''}">
+              {item.text}
             </div>
-          {/if}
-        </div>
 
-      {:else}
-        <div tabindex=1
-             class="dropdown-item ss-item ss-js-item {item.item_class || ''}"
-             class:ss-item-selected={!item.blank && selectionById[item.id]}
-
-             id="{containerId}_item_{item.id}"
-
-             role="option"
-             aria-selected={selectionById[item.id] ? 'true' : null}
-
-             data-id="{item.id}"
-             data-action="{item.action}"
-             on:blur={handleBlur}
-             on:click={handleItemClick}
-             on:keydown={handleItemKeydown}
-             on:keyup={handleItemKeyup}>
-
-          <div class="ss-no-click">
-            {#if multiple && !item.blank && !item.action}
-              <div class="d-inline-block align-top">
-                <i class="ss-marker {selectionById[item.id] ? FA_SELECTED : FA_NOT_SELECTED}"></i>
+            {#if item.desc}
+              <div class="ss-item-desc">
+                {item.desc}
               </div>
             {/if}
+          </li>
 
-            <div class="d-inline-block">
-              {#if item.blank}
-                <div class="ss-blank">
-                  {#if multiple}
-                    {translate('clear')}
-                  {:else}
-                    {item.text}
-                  {/if}
+        {:else}
+          <li tabindex=1
+               class="dropdown-item ss-item ss-js-item {item.item_class || ''}"
+               class:ss-item-selected={!item.blank && selectionById[item.id]}
+
+               id="{containerId}_item_{item.id}"
+
+               role=option
+               aria-selected={selectionById[item.id] ? 'true' : null}
+
+               data-id="{item.id}"
+               data-action="{item.action}"
+               on:blur={handleBlur}
+               on:click={handleItemClick}
+               on:keydown={handleItemKeydown}
+               on:keyup={handleItemKeyup}>
+
+            <div class="ss-no-click">
+              {#if multiple && !item.blank && !item.action}
+                <div class="d-inline-block align-top">
+                  <i class="ss-marker {selectionById[item.id] ? FA_SELECTED : FA_NOT_SELECTED}"></i>
                 </div>
-              {:else}
-                {#if item.href}
-                  <a class="ss-item-link" href="{item.href}"
-                     tabindex="-1"
-                     on:click={handleItemLinkClick}>
-                    {item.text}
-                  </a>
-                {:else}
-                  <div class="ss-item-text {item.item_text_class || ''}">
-                    {item.text}
-                  </div>
-                {/if}
-
-                {#if item.desc}
-                  <div class="ss-item-desc {item.item_desc_class || ''}">
-                    {item.desc}
-                  </div>
-                {/if}
               {/if}
+
+              <div class="d-inline-block">
+                {#if item.blank}
+                  <div class="ss-blank">
+                    {#if multiple}
+                      {translate('clear')}
+                    {:else}
+                      {item.text}
+                    {/if}
+                  </div>
+                {:else}
+                  {#if item.href}
+                    <a class="ss-item-link" href="{item.href}"
+                       tabindex="-1"
+                       on:click={handleItemLinkClick}>
+                      {item.text}
+                    </a>
+                  {:else}
+                    <div class="ss-item-text {item.item_text_class || ''}">
+                      {item.text}
+                    </div>
+                  {/if}
+
+                  {#if item.desc}
+                    <div class="ss-item-desc {item.item_desc_class || ''}">
+                      {item.desc}
+                    </div>
+                  {/if}
+                {/if}
+              </div>
             </div>
-          </div>
-        </div>
-      {/if}
-    {/each}
+          </li>
+        {/if}
+      {/each}
+    </ul>
 
     {#if fetchError}
       <div tabindex="-1" class="dropdown-item border-top text-danger ss-message-item ss-sticky-item ss-js-dead">
