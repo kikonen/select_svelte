@@ -354,6 +354,7 @@
  let popupEl;
 
  let labelId = null;
+ let labelText = null;
 
  const mutationObserver = new MutationObserver(handleMutation);
 
@@ -1051,13 +1052,15 @@
  }
 
  function bindLabel() {
-     if (!real.id) {
-         return;
+     if (real.id) {
+         let label = document.querySelector(`[for="${real.id}"]`);
+         if (label) {
+             label.id = label.id || `ts_label_${real.id}`;
+             labelId = label.id;
+         }
      }
-     let label = document.querySelector(`[for="${real.id}"]`);
-     if (label) {
-         label.id = label.id || `ts_label_${real.id}`;
-         labelId = label.id;
+     if (!labelId) {
+         labelText = real.getAttribute('aria-label') || null;
      }
  }
 
@@ -1646,6 +1649,7 @@
           aria-expanded="{popupVisible}"
           aria-haspopup="listbox"
           aria-owns="{containerId}_popup"
+          aria-controls="{containerId}_popup"
 
           aria-activedescendant="{!multiple && selectionItems.length ? `${containerId}_item_${selectionItems[0].id}` : null}"
 
@@ -1656,6 +1660,7 @@
           disabled={disabled}
 
           aria-labelledby={labelId}
+          aria-label={labelText}
 
           bind:this={toggleEl}
           on:blur={handleBlur}
@@ -1707,7 +1712,7 @@
         <div class="ss-input-item" tabindex="-1">
           <label for="{containerId}_input" class="sr-only">{translate('typeahead_input')}</label>
           <input class="form-control ss-input"
-                 id="{containerId}_input}"
+                 id="{containerId}_input"
                  tabindex=1
                  autocomplete="new-password"
                  autocorrect=off
