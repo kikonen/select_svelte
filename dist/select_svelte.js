@@ -569,7 +569,7 @@ var Select = (function () {
     child_ctx[116] = list[i];
     child_ctx[120] = i;
     return child_ctx;
-  } // (1687:10) {:else}
+  } // (1685:10) {:else}
 
 
   function create_else_block_4(ctx) {
@@ -603,7 +603,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1681:10) {#if item.href}
+  } // (1679:10) {#if item.href}
 
 
   function create_if_block_12(ctx) {
@@ -666,7 +666,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1674:6) {#each summaryItems as item, index (item.id)}
+  } // (1672:6) {#each summaryItems as item, index (item.id)}
 
 
   function create_each_block_1(key_1, ctx) {
@@ -759,7 +759,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1711:4) {#if typeahead}
+  } // (1708:4) {#if typeahead}
 
 
   function create_if_block_11(ctx) {
@@ -899,7 +899,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1767:8) {:else}
+  } // (1762:8) {:else}
 
 
   function create_else_block(ctx) {
@@ -1090,7 +1090,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1753:52) 
+  } // (1748:52) 
 
 
   function create_if_block_4(ctx) {
@@ -1174,7 +1174,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1747:8) {#if item.separator}
+  } // (1742:8) {#if item.separator}
 
 
   function create_if_block_3(ctx) {
@@ -1204,7 +1204,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1785:14) {#if multiple && !item.blank && !item.action}
+  } // (1780:14) {#if multiple && !item.blank && !item.action}
 
 
   function create_if_block_10(ctx) {
@@ -1241,7 +1241,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1800:16) {:else}
+  } // (1795:16) {:else}
 
 
   function create_else_block_2(ctx) {
@@ -1308,7 +1308,7 @@ var Select = (function () {
         if (detaching) detach(if_block1_anchor);
       }
     };
-  } // (1792:16) {#if item.blank}
+  } // (1787:16) {#if item.blank}
 
 
   function create_if_block_6(ctx) {
@@ -1351,7 +1351,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1807:18) {:else}
+  } // (1802:18) {:else}
 
 
   function create_else_block_3(ctx) {
@@ -1392,7 +1392,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1801:18) {#if item.href}
+  } // (1796:18) {#if item.href}
 
 
   function create_if_block_9(ctx) {
@@ -1446,7 +1446,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1813:18) {#if item.desc}
+  } // (1808:18) {#if item.desc}
 
 
   function create_if_block_8(ctx) {
@@ -1487,7 +1487,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1796:20) {:else}
+  } // (1791:20) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -1513,7 +1513,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1794:20) {#if multiple}
+  } // (1789:20) {#if multiple}
 
 
   function create_if_block_7(ctx) {
@@ -1533,7 +1533,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1760:12) {#if item.desc}
+  } // (1755:12) {#if item.desc}
 
 
   function create_if_block_5(ctx) {
@@ -1563,7 +1563,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1746:6) {#each displayItems as item (item.id)}
+  } // (1741:6) {#each displayItems as item (item.id)}
 
 
   function create_each_block(key_1, ctx) {
@@ -1617,7 +1617,7 @@ var Select = (function () {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1830:78) 
+  } // (1825:78) 
 
 
   function create_if_block_2(ctx) {
@@ -1639,7 +1639,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1826:4) {#if fetchError}
+  } // (1821:4) {#if fetchError}
 
 
   function create_if_block_1(ctx) {
@@ -1669,7 +1669,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1836:4) {#if selectionItems.length >= maxItems}
+  } // (1831:4) {#if selectionItems.length >= maxItems}
 
 
   function create_if_block(ctx) {
@@ -1727,29 +1727,14 @@ var Select = (function () {
     var div0_aria_activedescendant_value;
     var div0_aria_multiselectable_value;
     var t1;
-    var label0;
-    var t2_value =
-    /*translate*/
-    ctx[30]("popup") + "";
-    var t2;
-    var label0_for_value;
-    var t3;
     var div1;
-    var t4;
-    var label1;
-    var t5_value =
-    /*translate*/
-    ctx[30]("results") + "";
-    var t5;
-    var label1_id_value;
-    var t6;
+    var t2;
     var ul;
     var each_blocks = [];
     var each1_lookup = new Map();
     var ul_id_value;
-    var ul_aria_labelledby_value;
-    var t7;
-    var t8;
+    var t3;
+    var t4;
     var div1_id_value;
     var div2_class_value;
     var mounted;
@@ -1828,24 +1813,18 @@ var Select = (function () {
         t0 = space();
         span1 = element("span");
         t1 = space();
-        label0 = element("label");
-        t2 = text(t2_value);
-        t3 = space();
         div1 = element("div");
         if (if_block0) if_block0.c();
-        t4 = space();
-        label1 = element("label");
-        t5 = text(t5_value);
-        t6 = space();
+        t2 = space();
         ul = element("ul");
 
         for (var _i3 = 0; _i3 < each_blocks.length; _i3 += 1) {
           each_blocks[_i3].c();
         }
 
-        t7 = space();
+        t3 = space();
         if (if_block1) if_block1.c();
-        t8 = space();
+        t4 = space();
         if (if_block2) if_block2.c();
         toggle_class(span0, "ss-summary-multiple", !
         /*summarySingle*/
@@ -1894,22 +1873,11 @@ var Select = (function () {
         attr(div0, "aria-label",
         /*labelText*/
         ctx[6]);
-        attr(label0, "for", label0_for_value = "" + (
-        /*containerId*/
-        ctx[10] + "_popup"));
-        attr(label0, "class", "sr-only");
-        attr(label1, "id", label1_id_value = "" + (
-        /*containerId*/
-        ctx[10] + "_results_label"));
-        attr(label1, "class", "sr-only");
         attr(ul, "class", "ss-results");
         attr(ul, "id", ul_id_value = "" + (
         /*containerId*/
         ctx[10] + "_results"));
         attr(ul, "role", "listbox");
-        attr(ul, "aria-labelledby", ul_aria_labelledby_value = "" + (
-        /*containerId*/
-        ctx[10] + "_results_label"));
         attr(ul, "aria-expanded",
         /*popupVisible*/
         ctx[22]);
@@ -1970,24 +1938,18 @@ var Select = (function () {
 
         ctx[111](div0);
         append(div2, t1);
-        append(div2, label0);
-        append(label0, t2);
-        append(div2, t3);
         append(div2, div1);
         if (if_block0) if_block0.m(div1, null);
-        append(div1, t4);
-        append(div1, label1);
-        append(label1, t5);
-        append(div1, t6);
+        append(div1, t2);
         append(div1, ul);
 
         for (var _i5 = 0; _i5 < each_blocks.length; _i5 += 1) {
           each_blocks[_i5].m(ul, null);
         }
 
-        append(div1, t7);
+        append(div1, t3);
         if (if_block1) if_block1.m(div1, null);
-        append(div1, t8);
+        append(div1, t4);
         if (if_block2) if_block2.m(div1, null);
         /*div1_binding*/
 
@@ -2127,14 +2089,6 @@ var Select = (function () {
           ctx[6]);
         }
 
-        if (dirty[0] &
-        /*containerId*/
-        1024 && label0_for_value !== (label0_for_value = "" + (
-        /*containerId*/
-        ctx[10] + "_popup"))) {
-          attr(label0, "for", label0_for_value);
-        }
-
         if (
         /*typeahead*/
         ctx[9]) {
@@ -2143,19 +2097,11 @@ var Select = (function () {
           } else {
             if_block0 = create_if_block_11(ctx);
             if_block0.c();
-            if_block0.m(div1, t4);
+            if_block0.m(div1, t2);
           }
         } else if (if_block0) {
           if_block0.d(1);
           if_block0 = null;
-        }
-
-        if (dirty[0] &
-        /*containerId*/
-        1024 && label1_id_value !== (label1_id_value = "" + (
-        /*containerId*/
-        ctx[10] + "_results_label"))) {
-          attr(label1, "id", label1_id_value);
         }
 
         if (dirty[0] &
@@ -2178,14 +2124,6 @@ var Select = (function () {
         }
 
         if (dirty[0] &
-        /*containerId*/
-        1024 && ul_aria_labelledby_value !== (ul_aria_labelledby_value = "" + (
-        /*containerId*/
-        ctx[10] + "_results_label"))) {
-          attr(ul, "aria-labelledby", ul_aria_labelledby_value);
-        }
-
-        if (dirty[0] &
         /*popupVisible*/
         4194304) {
           attr(ul, "aria-expanded",
@@ -2201,7 +2139,7 @@ var Select = (function () {
 
           if (if_block1) {
             if_block1.c();
-            if_block1.m(div1, t8);
+            if_block1.m(div1, t4);
           }
         }
 
@@ -2342,9 +2280,7 @@ var Select = (function () {
     max_limit: "Max limit reached",
     selected_count: "selected",
     selected_more: "more",
-    typeahead_input: "Search for...",
-    popup: "List",
-    results: "Results"
+    typeahead_input: "Search for..."
   };
   var STYLE_DEFAULTS = {
     container_class: ""

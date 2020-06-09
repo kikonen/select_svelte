@@ -8,8 +8,6 @@
      selected_count: 'selected',
      selected_more: 'more',
      typeahead_input: 'Search for...',
-     popup: 'List',
-     results: 'Results',
  };
 
  const STYLE_DEFAULTS = {
@@ -1694,7 +1692,6 @@
     </span>
   </div>
 
-  <label for="{containerId}_popup" class="sr-only">{translate('popup')}</label>
   <div class="dropdown-menu ss-popup"
        class:show={popupVisible}
        class:ss-popup-fixed={popupFixed}
@@ -1734,12 +1731,10 @@
           </div>
     {/if}
 
-    <label id="{containerId}_results_label" class="sr-only">{translate('results')}</label>
     <ul
       class="ss-results"
       id="{containerId}_results"
       role=listbox
-      aria-labelledby="{containerId}_results_label"
       aria-expanded={popupVisible}
       aria-hidden=false
       >
