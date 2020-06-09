@@ -9,6 +9,7 @@
      selected_more: 'more',
      typeahead_input: 'Search for...',
      popup: 'List',
+     results: 'Results',
  };
 
  const STYLE_DEFAULTS = {
@@ -951,7 +952,8 @@
 
  function fetchMoreIfneeded() {
      if (hasMore && !fetchingMore && popupVisible) {
-         if (popupEl.scrollTop + popupEl.clientHeight >= popupEl.scrollHeight - popupEl.lastElementChild.clientHeight * 2 - 2) {
+         let lastItem = popupEl.querySelector('.ss-item:last-child');
+         if (popupEl.scrollTop + popupEl.clientHeight >= popupEl.scrollHeight - lastItem.clientHeight * 2 - 2) {
              fetchItems(true);
          }
      }
@@ -1641,15 +1643,14 @@
      name={containerName}
      bind:this={containerEl}>
 
-  <button class="form-control ss-control"
+  <div class="form-control ss-control"
           name="ss_control_{real.name}"
           type="button"
 
           role=combobox
           aria-expanded="{popupVisible}"
           aria-haspopup=listbox
-          aria-owns="{containerId}_popup"
-          aria-controls="{containerId}_popup"
+          aria-owns="{containerId}results"
 
           aria-activedescendant="{!multiple && selectionItems.length ? `${containerId}_item_${selectionItems[0].id}` : null}"
 
@@ -1691,7 +1692,7 @@
     </span>
     <span class="ss-caret {showFetching ? FA_CARET_FETCHING : FA_CARET_DOWN}">
     </span>
-  </button>
+  </div>
 
   <label for="{containerId}_popup" class="sr-only">{translate('popup')}</label>
   <div class="dropdown-menu ss-popup"
@@ -1703,7 +1704,6 @@
        class:ss-popup-fixed-left={popupLeft && popupFixed}
 
        id="{containerId}_popup"
-       role=listbox
 
        bind:this={popupEl}
        tabindex="-1"
@@ -1734,10 +1734,12 @@
           </div>
     {/if}
 
+    <label id="{containerId}_results_label" class="sr-only">{translate('results')}</label>
     <ul
       class="ss-results"
       id="{containerId}_results"
       role=listbox
+      aria-labelledby="{containerId}_results_label"
       aria-expanded={popupVisible}
       aria-hidden=false
       >

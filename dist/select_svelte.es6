@@ -366,7 +366,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (1686:10) {:else}
+// (1687:10) {:else}
 function create_else_block_4(ctx) {
 	let t_value = (/*item*/ ctx[116].summary == null
 	? /*item*/ ctx[116].text
@@ -392,7 +392,7 @@ function create_else_block_4(ctx) {
 	};
 }
 
-// (1680:10) {#if item.href}
+// (1681:10) {#if item.href}
 function create_if_block_12(ctx) {
 	let a;
 
@@ -440,7 +440,7 @@ function create_if_block_12(ctx) {
 	};
 }
 
-// (1673:6) {#each summaryItems as item, index (item.id)}
+// (1674:6) {#each summaryItems as item, index (item.id)}
 function create_each_block_1(key_1, ctx) {
 	let span;
 	let t;
@@ -604,7 +604,7 @@ function create_if_block_11(ctx) {
 	};
 }
 
-// (1765:8) {:else}
+// (1767:8) {:else}
 function create_else_block(ctx) {
 	let li;
 	let div1;
@@ -734,7 +734,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (1751:52) 
+// (1753:52) 
 function create_if_block_4(ctx) {
 	let li;
 	let div;
@@ -801,7 +801,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (1745:8) {#if item.separator}
+// (1747:8) {#if item.separator}
 function create_if_block_3(ctx) {
 	let li;
 	let mounted;
@@ -830,7 +830,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (1783:14) {#if multiple && !item.blank && !item.action}
+// (1785:14) {#if multiple && !item.blank && !item.action}
 function create_if_block_10(ctx) {
 	let div;
 	let i;
@@ -864,7 +864,7 @@ function create_if_block_10(ctx) {
 	};
 }
 
-// (1798:16) {:else}
+// (1800:16) {:else}
 function create_else_block_2(ctx) {
 	let t;
 	let if_block1_anchor;
@@ -926,7 +926,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (1790:16) {#if item.blank}
+// (1792:16) {#if item.blank}
 function create_if_block_6(ctx) {
 	let div;
 
@@ -968,7 +968,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (1805:18) {:else}
+// (1807:18) {:else}
 function create_else_block_3(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[116].text + "";
@@ -998,7 +998,7 @@ function create_else_block_3(ctx) {
 	};
 }
 
-// (1799:18) {#if item.href}
+// (1801:18) {#if item.href}
 function create_if_block_9(ctx) {
 	let a;
 	let t_value = /*item*/ ctx[116].text + "";
@@ -1039,7 +1039,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (1811:18) {#if item.desc}
+// (1813:18) {#if item.desc}
 function create_if_block_8(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[116].desc + "";
@@ -1069,7 +1069,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (1794:20) {:else}
+// (1796:20) {:else}
 function create_else_block_1(ctx) {
 	let t_value = /*item*/ ctx[116].text + "";
 	let t;
@@ -1090,7 +1090,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (1792:20) {#if multiple}
+// (1794:20) {#if multiple}
 function create_if_block_7(ctx) {
 	let t_value = /*translate*/ ctx[30]("clear") + "";
 	let t;
@@ -1109,7 +1109,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (1758:12) {#if item.desc}
+// (1760:12) {#if item.desc}
 function create_if_block_5(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[116].desc + "";
@@ -1134,7 +1134,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (1744:6) {#each displayItems as item (item.id)}
+// (1746:6) {#each displayItems as item (item.id)}
 function create_each_block(key_1, ctx) {
 	let first;
 	let if_block_anchor;
@@ -1183,7 +1183,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (1828:78) 
+// (1830:78) 
 function create_if_block_2(ctx) {
 	let div;
 
@@ -1204,7 +1204,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (1824:4) {#if fetchError}
+// (1826:4) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -1229,7 +1229,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (1834:4) {#if selectionItems.length >= maxItems}
+// (1836:4) {#if selectionItems.length >= maxItems}
 function create_if_block(ctx) {
 	let div;
 	let t0_value = /*translate*/ ctx[30]("max_limit") + "";
@@ -1265,35 +1265,40 @@ function create_if_block(ctx) {
 }
 
 function create_fragment(ctx) {
-	let div1;
-	let button;
+	let div2;
+	let div0;
 	let span0;
 	let each_blocks_1 = [];
 	let each0_lookup = new Map();
 	let t0;
 	let span1;
 	let span1_class_value;
-	let button_name_value;
-	let button_aria_owns_value;
-	let button_aria_controls_value;
-	let button_aria_activedescendant_value;
-	let button_aria_multiselectable_value;
+	let div0_name_value;
+	let div0_aria_owns_value;
+	let div0_aria_activedescendant_value;
+	let div0_aria_multiselectable_value;
 	let t1;
-	let label;
+	let label0;
 	let t2_value = /*translate*/ ctx[30]("popup") + "";
 	let t2;
-	let label_for_value;
+	let label0_for_value;
 	let t3;
-	let div0;
+	let div1;
 	let t4;
+	let label1;
+	let t5_value = /*translate*/ ctx[30]("results") + "";
+	let t5;
+	let label1_id_value;
+	let t6;
 	let ul;
 	let each_blocks = [];
 	let each1_lookup = new Map();
 	let ul_id_value;
-	let t5;
-	let t6;
-	let div0_id_value;
-	let div1_class_value;
+	let ul_aria_labelledby_value;
+	let t7;
+	let t8;
+	let div1_id_value;
+	let div2_class_value;
 	let mounted;
 	let dispose;
 	let each_value_1 = /*summaryItems*/ ctx[19];
@@ -1326,8 +1331,8 @@ function create_fragment(ctx) {
 
 	return {
 		c() {
-			div1 = element("div");
-			button = element("button");
+			div2 = element("div");
+			div0 = element("div");
 			span0 = element("span");
 
 			for (let i = 0; i < each_blocks_1.length; i += 1) {
@@ -1337,21 +1342,24 @@ function create_fragment(ctx) {
 			t0 = space();
 			span1 = element("span");
 			t1 = space();
-			label = element("label");
+			label0 = element("label");
 			t2 = text(t2_value);
 			t3 = space();
-			div0 = element("div");
+			div1 = element("div");
 			if (if_block0) if_block0.c();
 			t4 = space();
+			label1 = element("label");
+			t5 = text(t5_value);
+			t6 = space();
 			ul = element("ul");
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
 
-			t5 = space();
+			t7 = space();
 			if (if_block1) if_block1.c();
-			t6 = space();
+			t8 = space();
 			if (if_block2) if_block2.c();
 			toggle_class(span0, "ss-summary-multiple", !/*summarySingle*/ ctx[18]);
 			toggle_class(span0, "ss-summary-single", /*summarySingle*/ ctx[18]);
@@ -1360,86 +1368,90 @@ function create_fragment(ctx) {
 			? FA_CARET_FETCHING
 			: FA_CARET_DOWN));
 
-			attr(button, "class", "form-control ss-control");
-			attr(button, "name", button_name_value = "ss_control_" + /*real*/ ctx[0].name);
-			attr(button, "type", "button");
-			attr(button, "role", "combobox");
-			attr(button, "aria-expanded", /*popupVisible*/ ctx[22]);
-			attr(button, "aria-haspopup", "listbox");
-			attr(button, "aria-owns", button_aria_owns_value = "" + (/*containerId*/ ctx[10] + "_popup"));
-			attr(button, "aria-controls", button_aria_controls_value = "" + (/*containerId*/ ctx[10] + "_popup"));
+			attr(div0, "class", "form-control ss-control");
+			attr(div0, "name", div0_name_value = "ss_control_" + /*real*/ ctx[0].name);
+			attr(div0, "type", "button");
+			attr(div0, "role", "combobox");
+			attr(div0, "aria-expanded", /*popupVisible*/ ctx[22]);
+			attr(div0, "aria-haspopup", "listbox");
+			attr(div0, "aria-owns", div0_aria_owns_value = "" + (/*containerId*/ ctx[10] + "results"));
 
-			attr(button, "aria-activedescendant", button_aria_activedescendant_value = !/*multiple*/ ctx[27] && /*selectionItems*/ ctx[16].length
+			attr(div0, "aria-activedescendant", div0_aria_activedescendant_value = !/*multiple*/ ctx[27] && /*selectionItems*/ ctx[16].length
 			? `${/*containerId*/ ctx[10]}_item_${/*selectionItems*/ ctx[16][0].id}`
 			: null);
 
-			attr(button, "aria-multiselectable", button_aria_multiselectable_value = /*multiple*/ ctx[27] ? "" : null);
-			attr(button, "tabindex", "0");
-			attr(button, "title", /*selectionTip*/ ctx[17]);
-			button.disabled = /*disabled*/ ctx[28];
-			attr(button, "aria-labelledby", /*labelId*/ ctx[5]);
-			attr(button, "aria-label", /*labelText*/ ctx[6]);
-			attr(label, "for", label_for_value = "" + (/*containerId*/ ctx[10] + "_popup"));
-			attr(label, "class", "sr-only");
+			attr(div0, "aria-multiselectable", div0_aria_multiselectable_value = /*multiple*/ ctx[27] ? "" : null);
+			attr(div0, "tabindex", "0");
+			attr(div0, "title", /*selectionTip*/ ctx[17]);
+			attr(div0, "disabled", /*disabled*/ ctx[28]);
+			attr(div0, "aria-labelledby", /*labelId*/ ctx[5]);
+			attr(div0, "aria-label", /*labelText*/ ctx[6]);
+			attr(label0, "for", label0_for_value = "" + (/*containerId*/ ctx[10] + "_popup"));
+			attr(label0, "class", "sr-only");
+			attr(label1, "id", label1_id_value = "" + (/*containerId*/ ctx[10] + "_results_label"));
+			attr(label1, "class", "sr-only");
 			attr(ul, "class", "ss-results");
 			attr(ul, "id", ul_id_value = "" + (/*containerId*/ ctx[10] + "_results"));
 			attr(ul, "role", "listbox");
+			attr(ul, "aria-labelledby", ul_aria_labelledby_value = "" + (/*containerId*/ ctx[10] + "_results_label"));
 			attr(ul, "aria-expanded", /*popupVisible*/ ctx[22]);
 			attr(ul, "aria-hidden", "false");
-			attr(div0, "class", "dropdown-menu ss-popup");
-			attr(div0, "id", div0_id_value = "" + (/*containerId*/ ctx[10] + "_popup"));
-			attr(div0, "role", "listbox");
-			attr(div0, "tabindex", "-1");
-			toggle_class(div0, "show", /*popupVisible*/ ctx[22]);
-			toggle_class(div0, "ss-popup-fixed", /*popupFixed*/ ctx[7]);
-			toggle_class(div0, "ss-popup-top", /*popupTop*/ ctx[23] && !/*popupFixed*/ ctx[7]);
-			toggle_class(div0, "ss-popup-left", /*popupLeft*/ ctx[24] && !/*popupFixed*/ ctx[7]);
-			toggle_class(div0, "ss-popup-fixed-top", /*popupTop*/ ctx[23] && /*popupFixed*/ ctx[7]);
-			toggle_class(div0, "ss-popup-fixed-left", /*popupLeft*/ ctx[24] && /*popupFixed*/ ctx[7]);
-			attr(div1, "class", div1_class_value = "form-control ss-container " + (/*styles*/ ctx[29].container_class || ""));
-			attr(div1, "id", /*containerId*/ ctx[10]);
-			attr(div1, "name", /*containerName*/ ctx[11]);
+			attr(div1, "class", "dropdown-menu ss-popup");
+			attr(div1, "id", div1_id_value = "" + (/*containerId*/ ctx[10] + "_popup"));
+			attr(div1, "tabindex", "-1");
+			toggle_class(div1, "show", /*popupVisible*/ ctx[22]);
+			toggle_class(div1, "ss-popup-fixed", /*popupFixed*/ ctx[7]);
+			toggle_class(div1, "ss-popup-top", /*popupTop*/ ctx[23] && !/*popupFixed*/ ctx[7]);
+			toggle_class(div1, "ss-popup-left", /*popupLeft*/ ctx[24] && !/*popupFixed*/ ctx[7]);
+			toggle_class(div1, "ss-popup-fixed-top", /*popupTop*/ ctx[23] && /*popupFixed*/ ctx[7]);
+			toggle_class(div1, "ss-popup-fixed-left", /*popupLeft*/ ctx[24] && /*popupFixed*/ ctx[7]);
+			attr(div2, "class", div2_class_value = "form-control ss-container " + (/*styles*/ ctx[29].container_class || ""));
+			attr(div2, "id", /*containerId*/ ctx[10]);
+			attr(div2, "name", /*containerName*/ ctx[11]);
 		},
 		m(target, anchor) {
-			insert(target, div1, anchor);
-			append(div1, button);
-			append(button, span0);
+			insert(target, div2, anchor);
+			append(div2, div0);
+			append(div0, span0);
 
 			for (let i = 0; i < each_blocks_1.length; i += 1) {
 				each_blocks_1[i].m(span0, null);
 			}
 
-			append(button, t0);
-			append(button, span1);
-			/*button_binding*/ ctx[111](button);
-			append(div1, t1);
-			append(div1, label);
-			append(label, t2);
-			append(div1, t3);
-			append(div1, div0);
-			if (if_block0) if_block0.m(div0, null);
-			append(div0, t4);
-			append(div0, ul);
+			append(div0, t0);
+			append(div0, span1);
+			/*div0_binding*/ ctx[111](div0);
+			append(div2, t1);
+			append(div2, label0);
+			append(label0, t2);
+			append(div2, t3);
+			append(div2, div1);
+			if (if_block0) if_block0.m(div1, null);
+			append(div1, t4);
+			append(div1, label1);
+			append(label1, t5);
+			append(div1, t6);
+			append(div1, ul);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].m(ul, null);
 			}
 
-			append(div0, t5);
-			if (if_block1) if_block1.m(div0, null);
-			append(div0, t6);
-			if (if_block2) if_block2.m(div0, null);
-			/*div0_binding*/ ctx[114](div0);
-			/*div1_binding*/ ctx[115](div1);
+			append(div1, t7);
+			if (if_block1) if_block1.m(div1, null);
+			append(div1, t8);
+			if (if_block2) if_block2.m(div1, null);
+			/*div1_binding*/ ctx[114](div1);
+			/*div2_binding*/ ctx[115](div2);
 
 			if (!mounted) {
 				dispose = [
 					listen(window_1, "scroll", /*handleWindowScroll*/ ctx[45]),
-					listen(button, "blur", /*handleBlur*/ ctx[31]),
-					listen(button, "keydown", /*handleToggleKeydown*/ ctx[36]),
-					listen(button, "keyup", /*handleToggleKeyup*/ ctx[37]),
-					listen(button, "click", /*handleToggleClick*/ ctx[38]),
-					listen(div0, "scroll", /*handlePopupScroll*/ ctx[44])
+					listen(div0, "blur", /*handleBlur*/ ctx[31]),
+					listen(div0, "keydown", /*handleToggleKeydown*/ ctx[36]),
+					listen(div0, "keyup", /*handleToggleKeyup*/ ctx[37]),
+					listen(div0, "click", /*handleToggleClick*/ ctx[38]),
+					listen(div1, "scroll", /*handlePopupScroll*/ ctx[44])
 				];
 
 				mounted = true;
@@ -1465,50 +1477,46 @@ function create_fragment(ctx) {
 				attr(span1, "class", span1_class_value);
 			}
 
-			if (dirty[0] & /*real*/ 1 && button_name_value !== (button_name_value = "ss_control_" + /*real*/ ctx[0].name)) {
-				attr(button, "name", button_name_value);
+			if (dirty[0] & /*real*/ 1 && div0_name_value !== (div0_name_value = "ss_control_" + /*real*/ ctx[0].name)) {
+				attr(div0, "name", div0_name_value);
 			}
 
 			if (dirty[0] & /*popupVisible*/ 4194304) {
-				attr(button, "aria-expanded", /*popupVisible*/ ctx[22]);
+				attr(div0, "aria-expanded", /*popupVisible*/ ctx[22]);
 			}
 
-			if (dirty[0] & /*containerId*/ 1024 && button_aria_owns_value !== (button_aria_owns_value = "" + (/*containerId*/ ctx[10] + "_popup"))) {
-				attr(button, "aria-owns", button_aria_owns_value);
+			if (dirty[0] & /*containerId*/ 1024 && div0_aria_owns_value !== (div0_aria_owns_value = "" + (/*containerId*/ ctx[10] + "results"))) {
+				attr(div0, "aria-owns", div0_aria_owns_value);
 			}
 
-			if (dirty[0] & /*containerId*/ 1024 && button_aria_controls_value !== (button_aria_controls_value = "" + (/*containerId*/ ctx[10] + "_popup"))) {
-				attr(button, "aria-controls", button_aria_controls_value);
-			}
-
-			if (dirty[0] & /*multiple, selectionItems, containerId*/ 134284288 && button_aria_activedescendant_value !== (button_aria_activedescendant_value = !/*multiple*/ ctx[27] && /*selectionItems*/ ctx[16].length
+			if (dirty[0] & /*multiple, selectionItems, containerId*/ 134284288 && div0_aria_activedescendant_value !== (div0_aria_activedescendant_value = !/*multiple*/ ctx[27] && /*selectionItems*/ ctx[16].length
 			? `${/*containerId*/ ctx[10]}_item_${/*selectionItems*/ ctx[16][0].id}`
 			: null)) {
-				attr(button, "aria-activedescendant", button_aria_activedescendant_value);
+				attr(div0, "aria-activedescendant", div0_aria_activedescendant_value);
 			}
 
-			if (dirty[0] & /*multiple*/ 134217728 && button_aria_multiselectable_value !== (button_aria_multiselectable_value = /*multiple*/ ctx[27] ? "" : null)) {
-				attr(button, "aria-multiselectable", button_aria_multiselectable_value);
+			if (dirty[0] & /*multiple*/ 134217728 && div0_aria_multiselectable_value !== (div0_aria_multiselectable_value = /*multiple*/ ctx[27] ? "" : null)) {
+				attr(div0, "aria-multiselectable", div0_aria_multiselectable_value);
 			}
 
 			if (dirty[0] & /*selectionTip*/ 131072) {
-				attr(button, "title", /*selectionTip*/ ctx[17]);
+				attr(div0, "title", /*selectionTip*/ ctx[17]);
 			}
 
 			if (dirty[0] & /*disabled*/ 268435456) {
-				button.disabled = /*disabled*/ ctx[28];
+				attr(div0, "disabled", /*disabled*/ ctx[28]);
 			}
 
 			if (dirty[0] & /*labelId*/ 32) {
-				attr(button, "aria-labelledby", /*labelId*/ ctx[5]);
+				attr(div0, "aria-labelledby", /*labelId*/ ctx[5]);
 			}
 
 			if (dirty[0] & /*labelText*/ 64) {
-				attr(button, "aria-label", /*labelText*/ ctx[6]);
+				attr(div0, "aria-label", /*labelText*/ ctx[6]);
 			}
 
-			if (dirty[0] & /*containerId*/ 1024 && label_for_value !== (label_for_value = "" + (/*containerId*/ ctx[10] + "_popup"))) {
-				attr(label, "for", label_for_value);
+			if (dirty[0] & /*containerId*/ 1024 && label0_for_value !== (label0_for_value = "" + (/*containerId*/ ctx[10] + "_popup"))) {
+				attr(label0, "for", label0_for_value);
 			}
 
 			if (/*typeahead*/ ctx[9]) {
@@ -1517,11 +1525,15 @@ function create_fragment(ctx) {
 				} else {
 					if_block0 = create_if_block_11(ctx);
 					if_block0.c();
-					if_block0.m(div0, t4);
+					if_block0.m(div1, t4);
 				}
 			} else if (if_block0) {
 				if_block0.d(1);
 				if_block0 = null;
+			}
+
+			if (dirty[0] & /*containerId*/ 1024 && label1_id_value !== (label1_id_value = "" + (/*containerId*/ ctx[10] + "_results_label"))) {
+				attr(label1, "id", label1_id_value);
 			}
 
 			if (dirty[0] & /*displayItems, containerId, selectionById, translate, multiple*/ 1208009728 | dirty[1] & /*handleItemKeydown, handleBlur, handleItemClick, handleItemKeyup, handleItemLinkClick*/ 5889) {
@@ -1531,6 +1543,10 @@ function create_fragment(ctx) {
 
 			if (dirty[0] & /*containerId*/ 1024 && ul_id_value !== (ul_id_value = "" + (/*containerId*/ ctx[10] + "_results"))) {
 				attr(ul, "id", ul_id_value);
+			}
+
+			if (dirty[0] & /*containerId*/ 1024 && ul_aria_labelledby_value !== (ul_aria_labelledby_value = "" + (/*containerId*/ ctx[10] + "_results_label"))) {
+				attr(ul, "aria-labelledby", ul_aria_labelledby_value);
 			}
 
 			if (dirty[0] & /*popupVisible*/ 4194304) {
@@ -1545,7 +1561,7 @@ function create_fragment(ctx) {
 
 				if (if_block1) {
 					if_block1.c();
-					if_block1.m(div0, t6);
+					if_block1.m(div1, t8);
 				}
 			}
 
@@ -1555,59 +1571,59 @@ function create_fragment(ctx) {
 				} else {
 					if_block2 = create_if_block(ctx);
 					if_block2.c();
-					if_block2.m(div0, null);
+					if_block2.m(div1, null);
 				}
 			} else if (if_block2) {
 				if_block2.d(1);
 				if_block2 = null;
 			}
 
-			if (dirty[0] & /*containerId*/ 1024 && div0_id_value !== (div0_id_value = "" + (/*containerId*/ ctx[10] + "_popup"))) {
-				attr(div0, "id", div0_id_value);
+			if (dirty[0] & /*containerId*/ 1024 && div1_id_value !== (div1_id_value = "" + (/*containerId*/ ctx[10] + "_popup"))) {
+				attr(div1, "id", div1_id_value);
 			}
 
 			if (dirty[0] & /*popupVisible*/ 4194304) {
-				toggle_class(div0, "show", /*popupVisible*/ ctx[22]);
+				toggle_class(div1, "show", /*popupVisible*/ ctx[22]);
 			}
 
 			if (dirty[0] & /*popupFixed*/ 128) {
-				toggle_class(div0, "ss-popup-fixed", /*popupFixed*/ ctx[7]);
+				toggle_class(div1, "ss-popup-fixed", /*popupFixed*/ ctx[7]);
 			}
 
 			if (dirty[0] & /*popupTop, popupFixed*/ 8388736) {
-				toggle_class(div0, "ss-popup-top", /*popupTop*/ ctx[23] && !/*popupFixed*/ ctx[7]);
+				toggle_class(div1, "ss-popup-top", /*popupTop*/ ctx[23] && !/*popupFixed*/ ctx[7]);
 			}
 
 			if (dirty[0] & /*popupLeft, popupFixed*/ 16777344) {
-				toggle_class(div0, "ss-popup-left", /*popupLeft*/ ctx[24] && !/*popupFixed*/ ctx[7]);
+				toggle_class(div1, "ss-popup-left", /*popupLeft*/ ctx[24] && !/*popupFixed*/ ctx[7]);
 			}
 
 			if (dirty[0] & /*popupTop, popupFixed*/ 8388736) {
-				toggle_class(div0, "ss-popup-fixed-top", /*popupTop*/ ctx[23] && /*popupFixed*/ ctx[7]);
+				toggle_class(div1, "ss-popup-fixed-top", /*popupTop*/ ctx[23] && /*popupFixed*/ ctx[7]);
 			}
 
 			if (dirty[0] & /*popupLeft, popupFixed*/ 16777344) {
-				toggle_class(div0, "ss-popup-fixed-left", /*popupLeft*/ ctx[24] && /*popupFixed*/ ctx[7]);
+				toggle_class(div1, "ss-popup-fixed-left", /*popupLeft*/ ctx[24] && /*popupFixed*/ ctx[7]);
 			}
 
 			if (dirty[0] & /*containerId*/ 1024) {
-				attr(div1, "id", /*containerId*/ ctx[10]);
+				attr(div2, "id", /*containerId*/ ctx[10]);
 			}
 
 			if (dirty[0] & /*containerName*/ 2048) {
-				attr(div1, "name", /*containerName*/ ctx[11]);
+				attr(div2, "name", /*containerName*/ ctx[11]);
 			}
 		},
 		i: noop,
 		o: noop,
 		d(detaching) {
-			if (detaching) detach(div1);
+			if (detaching) detach(div2);
 
 			for (let i = 0; i < each_blocks_1.length; i += 1) {
 				each_blocks_1[i].d();
 			}
 
-			/*button_binding*/ ctx[111](null);
+			/*div0_binding*/ ctx[111](null);
 			if (if_block0) if_block0.d();
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -1619,8 +1635,8 @@ function create_fragment(ctx) {
 			}
 
 			if (if_block2) if_block2.d();
-			/*div0_binding*/ ctx[114](null);
-			/*div1_binding*/ ctx[115](null);
+			/*div1_binding*/ ctx[114](null);
+			/*div2_binding*/ ctx[115](null);
 			mounted = false;
 			run_all(dispose);
 		}
@@ -1634,7 +1650,8 @@ const I18N_DEFAULTS = {
 	selected_count: "selected",
 	selected_more: "more",
 	typeahead_input: "Search for...",
-	popup: "List"
+	popup: "List",
+	results: "Results"
 };
 
 const STYLE_DEFAULTS = { container_class: "" };
@@ -2525,7 +2542,9 @@ function instance($$self, $$props, $$invalidate) {
 
 	function fetchMoreIfneeded() {
 		if (hasMore && !fetchingMore && popupVisible) {
-			if (popupEl.scrollTop + popupEl.clientHeight >= popupEl.scrollHeight - popupEl.lastElementChild.clientHeight * 2 - 2) {
+			let lastItem = popupEl.querySelector(".ss-item:last-child");
+
+			if (popupEl.scrollTop + popupEl.clientHeight >= popupEl.scrollHeight - lastItem.clientHeight * 2 - 2) {
 				fetchItems(true);
 			}
 		}
@@ -3216,7 +3235,7 @@ function instance($$self, $$props, $$invalidate) {
 		updatePopupPosition();
 	}
 
-	function button_binding($$value) {
+	function div0_binding($$value) {
 		binding_callbacks[$$value ? "unshift" : "push"](() => {
 			$$invalidate(3, toggleEl = $$value);
 		});
@@ -3233,13 +3252,13 @@ function instance($$self, $$props, $$invalidate) {
 		$$invalidate(12, query);
 	}
 
-	function div0_binding($$value) {
+	function div1_binding($$value) {
 		binding_callbacks[$$value ? "unshift" : "push"](() => {
 			$$invalidate(4, popupEl = $$value);
 		});
 	}
 
-	function div1_binding($$value) {
+	function div2_binding($$value) {
 		binding_callbacks[$$value ? "unshift" : "push"](() => {
 			$$invalidate(1, containerEl = $$value);
 		});
@@ -3375,11 +3394,11 @@ function instance($$self, $$props, $$invalidate) {
 		blockScrollDownIfNeeded,
 		itemKeydownHandlers,
 		itemKeyupHandlers,
-		button_binding,
+		div0_binding,
 		input_binding,
 		input_input_handler,
-		div0_binding,
-		div1_binding
+		div1_binding,
+		div2_binding
 	];
 }
 

@@ -569,7 +569,7 @@ var Select = (function () {
     child_ctx[116] = list[i];
     child_ctx[120] = i;
     return child_ctx;
-  } // (1686:10) {:else}
+  } // (1687:10) {:else}
 
 
   function create_else_block_4(ctx) {
@@ -603,7 +603,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1680:10) {#if item.href}
+  } // (1681:10) {#if item.href}
 
 
   function create_if_block_12(ctx) {
@@ -666,7 +666,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1673:6) {#each summaryItems as item, index (item.id)}
+  } // (1674:6) {#each summaryItems as item, index (item.id)}
 
 
   function create_each_block_1(key_1, ctx) {
@@ -899,7 +899,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1765:8) {:else}
+  } // (1767:8) {:else}
 
 
   function create_else_block(ctx) {
@@ -1090,7 +1090,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1751:52) 
+  } // (1753:52) 
 
 
   function create_if_block_4(ctx) {
@@ -1174,7 +1174,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1745:8) {#if item.separator}
+  } // (1747:8) {#if item.separator}
 
 
   function create_if_block_3(ctx) {
@@ -1204,7 +1204,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1783:14) {#if multiple && !item.blank && !item.action}
+  } // (1785:14) {#if multiple && !item.blank && !item.action}
 
 
   function create_if_block_10(ctx) {
@@ -1241,7 +1241,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1798:16) {:else}
+  } // (1800:16) {:else}
 
 
   function create_else_block_2(ctx) {
@@ -1308,7 +1308,7 @@ var Select = (function () {
         if (detaching) detach(if_block1_anchor);
       }
     };
-  } // (1790:16) {#if item.blank}
+  } // (1792:16) {#if item.blank}
 
 
   function create_if_block_6(ctx) {
@@ -1351,7 +1351,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1805:18) {:else}
+  } // (1807:18) {:else}
 
 
   function create_else_block_3(ctx) {
@@ -1392,7 +1392,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1799:18) {#if item.href}
+  } // (1801:18) {#if item.href}
 
 
   function create_if_block_9(ctx) {
@@ -1446,7 +1446,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1811:18) {#if item.desc}
+  } // (1813:18) {#if item.desc}
 
 
   function create_if_block_8(ctx) {
@@ -1487,7 +1487,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1794:20) {:else}
+  } // (1796:20) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -1513,7 +1513,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1792:20) {#if multiple}
+  } // (1794:20) {#if multiple}
 
 
   function create_if_block_7(ctx) {
@@ -1533,7 +1533,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1758:12) {#if item.desc}
+  } // (1760:12) {#if item.desc}
 
 
   function create_if_block_5(ctx) {
@@ -1563,7 +1563,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1744:6) {#each displayItems as item (item.id)}
+  } // (1746:6) {#each displayItems as item (item.id)}
 
 
   function create_each_block(key_1, ctx) {
@@ -1617,7 +1617,7 @@ var Select = (function () {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1828:78) 
+  } // (1830:78) 
 
 
   function create_if_block_2(ctx) {
@@ -1639,7 +1639,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1824:4) {#if fetchError}
+  } // (1826:4) {#if fetchError}
 
 
   function create_if_block_1(ctx) {
@@ -1669,7 +1669,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1834:4) {#if selectionItems.length >= maxItems}
+  } // (1836:4) {#if selectionItems.length >= maxItems}
 
 
   function create_if_block(ctx) {
@@ -1714,37 +1714,44 @@ var Select = (function () {
   }
 
   function create_fragment(ctx) {
-    var div1;
-    var button;
+    var div2;
+    var div0;
     var span0;
     var each_blocks_1 = [];
     var each0_lookup = new Map();
     var t0;
     var span1;
     var span1_class_value;
-    var button_name_value;
-    var button_aria_owns_value;
-    var button_aria_controls_value;
-    var button_aria_activedescendant_value;
-    var button_aria_multiselectable_value;
+    var div0_name_value;
+    var div0_aria_owns_value;
+    var div0_aria_activedescendant_value;
+    var div0_aria_multiselectable_value;
     var t1;
-    var label;
+    var label0;
     var t2_value =
     /*translate*/
     ctx[30]("popup") + "";
     var t2;
-    var label_for_value;
+    var label0_for_value;
     var t3;
-    var div0;
+    var div1;
     var t4;
+    var label1;
+    var t5_value =
+    /*translate*/
+    ctx[30]("results") + "";
+    var t5;
+    var label1_id_value;
+    var t6;
     var ul;
     var each_blocks = [];
     var each1_lookup = new Map();
     var ul_id_value;
-    var t5;
-    var t6;
-    var div0_id_value;
-    var div1_class_value;
+    var ul_aria_labelledby_value;
+    var t7;
+    var t8;
+    var div1_id_value;
+    var div2_class_value;
     var mounted;
     var dispose;
     var each_value_1 =
@@ -1810,8 +1817,8 @@ var Select = (function () {
     ctx[8] && create_if_block(ctx);
     return {
       c: function c() {
-        div1 = element("div");
-        button = element("button");
+        div2 = element("div");
+        div0 = element("div");
         span0 = element("span");
 
         for (var _i2 = 0; _i2 < each_blocks_1.length; _i2 += 1) {
@@ -1821,21 +1828,24 @@ var Select = (function () {
         t0 = space();
         span1 = element("span");
         t1 = space();
-        label = element("label");
+        label0 = element("label");
         t2 = text(t2_value);
         t3 = space();
-        div0 = element("div");
+        div1 = element("div");
         if (if_block0) if_block0.c();
         t4 = space();
+        label1 = element("label");
+        t5 = text(t5_value);
+        t6 = space();
         ul = element("ul");
 
         for (var _i3 = 0; _i3 < each_blocks.length; _i3 += 1) {
           each_blocks[_i3].c();
         }
 
-        t5 = space();
+        t7 = space();
         if (if_block1) if_block1.c();
-        t6 = space();
+        t8 = space();
         if (if_block2) if_block2.c();
         toggle_class(span0, "ss-summary-multiple", !
         /*summarySingle*/
@@ -1846,23 +1856,20 @@ var Select = (function () {
         attr(span1, "class", span1_class_value = "ss-caret " + (
         /*showFetching*/
         ctx[20] ? FA_CARET_FETCHING : FA_CARET_DOWN));
-        attr(button, "class", "form-control ss-control");
-        attr(button, "name", button_name_value = "ss_control_" +
+        attr(div0, "class", "form-control ss-control");
+        attr(div0, "name", div0_name_value = "ss_control_" +
         /*real*/
         ctx[0].name);
-        attr(button, "type", "button");
-        attr(button, "role", "combobox");
-        attr(button, "aria-expanded",
+        attr(div0, "type", "button");
+        attr(div0, "role", "combobox");
+        attr(div0, "aria-expanded",
         /*popupVisible*/
         ctx[22]);
-        attr(button, "aria-haspopup", "listbox");
-        attr(button, "aria-owns", button_aria_owns_value = "" + (
+        attr(div0, "aria-haspopup", "listbox");
+        attr(div0, "aria-owns", div0_aria_owns_value = "" + (
         /*containerId*/
-        ctx[10] + "_popup"));
-        attr(button, "aria-controls", button_aria_controls_value = "" + (
-        /*containerId*/
-        ctx[10] + "_popup"));
-        attr(button, "aria-activedescendant", button_aria_activedescendant_value = !
+        ctx[10] + "results"));
+        attr(div0, "aria-activedescendant", div0_aria_activedescendant_value = !
         /*multiple*/
         ctx[27] &&
         /*selectionItems*/
@@ -1871,127 +1878,136 @@ var Select = (function () {
         ctx[10], "_item_").concat(
         /*selectionItems*/
         ctx[16][0].id) : null);
-        attr(button, "aria-multiselectable", button_aria_multiselectable_value =
+        attr(div0, "aria-multiselectable", div0_aria_multiselectable_value =
         /*multiple*/
         ctx[27] ? "" : null);
-        attr(button, "tabindex", "0");
-        attr(button, "title",
+        attr(div0, "tabindex", "0");
+        attr(div0, "title",
         /*selectionTip*/
         ctx[17]);
-        button.disabled =
+        attr(div0, "disabled",
         /*disabled*/
-        ctx[28];
-        attr(button, "aria-labelledby",
+        ctx[28]);
+        attr(div0, "aria-labelledby",
         /*labelId*/
         ctx[5]);
-        attr(button, "aria-label",
+        attr(div0, "aria-label",
         /*labelText*/
         ctx[6]);
-        attr(label, "for", label_for_value = "" + (
+        attr(label0, "for", label0_for_value = "" + (
         /*containerId*/
         ctx[10] + "_popup"));
-        attr(label, "class", "sr-only");
+        attr(label0, "class", "sr-only");
+        attr(label1, "id", label1_id_value = "" + (
+        /*containerId*/
+        ctx[10] + "_results_label"));
+        attr(label1, "class", "sr-only");
         attr(ul, "class", "ss-results");
         attr(ul, "id", ul_id_value = "" + (
         /*containerId*/
         ctx[10] + "_results"));
         attr(ul, "role", "listbox");
+        attr(ul, "aria-labelledby", ul_aria_labelledby_value = "" + (
+        /*containerId*/
+        ctx[10] + "_results_label"));
         attr(ul, "aria-expanded",
         /*popupVisible*/
         ctx[22]);
         attr(ul, "aria-hidden", "false");
-        attr(div0, "class", "dropdown-menu ss-popup");
-        attr(div0, "id", div0_id_value = "" + (
+        attr(div1, "class", "dropdown-menu ss-popup");
+        attr(div1, "id", div1_id_value = "" + (
         /*containerId*/
         ctx[10] + "_popup"));
-        attr(div0, "role", "listbox");
-        attr(div0, "tabindex", "-1");
-        toggle_class(div0, "show",
+        attr(div1, "tabindex", "-1");
+        toggle_class(div1, "show",
         /*popupVisible*/
         ctx[22]);
-        toggle_class(div0, "ss-popup-fixed",
+        toggle_class(div1, "ss-popup-fixed",
         /*popupFixed*/
         ctx[7]);
-        toggle_class(div0, "ss-popup-top",
+        toggle_class(div1, "ss-popup-top",
         /*popupTop*/
         ctx[23] && !
         /*popupFixed*/
         ctx[7]);
-        toggle_class(div0, "ss-popup-left",
+        toggle_class(div1, "ss-popup-left",
         /*popupLeft*/
         ctx[24] && !
         /*popupFixed*/
         ctx[7]);
-        toggle_class(div0, "ss-popup-fixed-top",
+        toggle_class(div1, "ss-popup-fixed-top",
         /*popupTop*/
         ctx[23] &&
         /*popupFixed*/
         ctx[7]);
-        toggle_class(div0, "ss-popup-fixed-left",
+        toggle_class(div1, "ss-popup-fixed-left",
         /*popupLeft*/
         ctx[24] &&
         /*popupFixed*/
         ctx[7]);
-        attr(div1, "class", div1_class_value = "form-control ss-container " + (
+        attr(div2, "class", div2_class_value = "form-control ss-container " + (
         /*styles*/
         ctx[29].container_class || ""));
-        attr(div1, "id",
+        attr(div2, "id",
         /*containerId*/
         ctx[10]);
-        attr(div1, "name",
+        attr(div2, "name",
         /*containerName*/
         ctx[11]);
       },
       m: function m(target, anchor) {
-        insert(target, div1, anchor);
-        append(div1, button);
-        append(button, span0);
+        insert(target, div2, anchor);
+        append(div2, div0);
+        append(div0, span0);
 
         for (var _i4 = 0; _i4 < each_blocks_1.length; _i4 += 1) {
           each_blocks_1[_i4].m(span0, null);
         }
 
-        append(button, t0);
-        append(button, span1);
-        /*button_binding*/
+        append(div0, t0);
+        append(div0, span1);
+        /*div0_binding*/
 
-        ctx[111](button);
-        append(div1, t1);
-        append(div1, label);
-        append(label, t2);
-        append(div1, t3);
-        append(div1, div0);
-        if (if_block0) if_block0.m(div0, null);
-        append(div0, t4);
-        append(div0, ul);
+        ctx[111](div0);
+        append(div2, t1);
+        append(div2, label0);
+        append(label0, t2);
+        append(div2, t3);
+        append(div2, div1);
+        if (if_block0) if_block0.m(div1, null);
+        append(div1, t4);
+        append(div1, label1);
+        append(label1, t5);
+        append(div1, t6);
+        append(div1, ul);
 
         for (var _i5 = 0; _i5 < each_blocks.length; _i5 += 1) {
           each_blocks[_i5].m(ul, null);
         }
 
-        append(div0, t5);
-        if (if_block1) if_block1.m(div0, null);
-        append(div0, t6);
-        if (if_block2) if_block2.m(div0, null);
-        /*div0_binding*/
-
-        ctx[114](div0);
+        append(div1, t7);
+        if (if_block1) if_block1.m(div1, null);
+        append(div1, t8);
+        if (if_block2) if_block2.m(div1, null);
         /*div1_binding*/
 
-        ctx[115](div1);
+        ctx[114](div1);
+        /*div2_binding*/
+
+        ctx[115](div2);
 
         if (!mounted) {
           dispose = [listen(window_1, "scroll",
           /*handleWindowScroll*/
-          ctx[45]), listen(button, "blur",
+          ctx[45]), listen(div0, "blur",
           /*handleBlur*/
-          ctx[31]), listen(button, "keydown",
+          ctx[31]), listen(div0, "keydown",
           /*handleToggleKeydown*/
-          ctx[36]), listen(button, "keyup",
+          ctx[36]), listen(div0, "keyup",
           /*handleToggleKeyup*/
-          ctx[37]), listen(button, "click",
+          ctx[37]), listen(div0, "click",
           /*handleToggleClick*/
-          ctx[38]), listen(div0, "scroll",
+          ctx[38]), listen(div1, "scroll",
           /*handlePopupScroll*/
           ctx[44])];
           mounted = true;
@@ -2035,39 +2051,31 @@ var Select = (function () {
 
         if (dirty[0] &
         /*real*/
-        1 && button_name_value !== (button_name_value = "ss_control_" +
+        1 && div0_name_value !== (div0_name_value = "ss_control_" +
         /*real*/
         ctx[0].name)) {
-          attr(button, "name", button_name_value);
+          attr(div0, "name", div0_name_value);
         }
 
         if (dirty[0] &
         /*popupVisible*/
         4194304) {
-          attr(button, "aria-expanded",
+          attr(div0, "aria-expanded",
           /*popupVisible*/
           ctx[22]);
         }
 
         if (dirty[0] &
         /*containerId*/
-        1024 && button_aria_owns_value !== (button_aria_owns_value = "" + (
+        1024 && div0_aria_owns_value !== (div0_aria_owns_value = "" + (
         /*containerId*/
-        ctx[10] + "_popup"))) {
-          attr(button, "aria-owns", button_aria_owns_value);
-        }
-
-        if (dirty[0] &
-        /*containerId*/
-        1024 && button_aria_controls_value !== (button_aria_controls_value = "" + (
-        /*containerId*/
-        ctx[10] + "_popup"))) {
-          attr(button, "aria-controls", button_aria_controls_value);
+        ctx[10] + "results"))) {
+          attr(div0, "aria-owns", div0_aria_owns_value);
         }
 
         if (dirty[0] &
         /*multiple, selectionItems, containerId*/
-        134284288 && button_aria_activedescendant_value !== (button_aria_activedescendant_value = !
+        134284288 && div0_aria_activedescendant_value !== (div0_aria_activedescendant_value = !
         /*multiple*/
         ctx[27] &&
         /*selectionItems*/
@@ -2076,21 +2084,21 @@ var Select = (function () {
         ctx[10], "_item_").concat(
         /*selectionItems*/
         ctx[16][0].id) : null)) {
-          attr(button, "aria-activedescendant", button_aria_activedescendant_value);
+          attr(div0, "aria-activedescendant", div0_aria_activedescendant_value);
         }
 
         if (dirty[0] &
         /*multiple*/
-        134217728 && button_aria_multiselectable_value !== (button_aria_multiselectable_value =
+        134217728 && div0_aria_multiselectable_value !== (div0_aria_multiselectable_value =
         /*multiple*/
         ctx[27] ? "" : null)) {
-          attr(button, "aria-multiselectable", button_aria_multiselectable_value);
+          attr(div0, "aria-multiselectable", div0_aria_multiselectable_value);
         }
 
         if (dirty[0] &
         /*selectionTip*/
         131072) {
-          attr(button, "title",
+          attr(div0, "title",
           /*selectionTip*/
           ctx[17]);
         }
@@ -2098,15 +2106,15 @@ var Select = (function () {
         if (dirty[0] &
         /*disabled*/
         268435456) {
-          button.disabled =
+          attr(div0, "disabled",
           /*disabled*/
-          ctx[28];
+          ctx[28]);
         }
 
         if (dirty[0] &
         /*labelId*/
         32) {
-          attr(button, "aria-labelledby",
+          attr(div0, "aria-labelledby",
           /*labelId*/
           ctx[5]);
         }
@@ -2114,17 +2122,17 @@ var Select = (function () {
         if (dirty[0] &
         /*labelText*/
         64) {
-          attr(button, "aria-label",
+          attr(div0, "aria-label",
           /*labelText*/
           ctx[6]);
         }
 
         if (dirty[0] &
         /*containerId*/
-        1024 && label_for_value !== (label_for_value = "" + (
+        1024 && label0_for_value !== (label0_for_value = "" + (
         /*containerId*/
         ctx[10] + "_popup"))) {
-          attr(label, "for", label_for_value);
+          attr(label0, "for", label0_for_value);
         }
 
         if (
@@ -2135,11 +2143,19 @@ var Select = (function () {
           } else {
             if_block0 = create_if_block_11(ctx);
             if_block0.c();
-            if_block0.m(div0, t4);
+            if_block0.m(div1, t4);
           }
         } else if (if_block0) {
           if_block0.d(1);
           if_block0 = null;
+        }
+
+        if (dirty[0] &
+        /*containerId*/
+        1024 && label1_id_value !== (label1_id_value = "" + (
+        /*containerId*/
+        ctx[10] + "_results_label"))) {
+          attr(label1, "id", label1_id_value);
         }
 
         if (dirty[0] &
@@ -2162,6 +2178,14 @@ var Select = (function () {
         }
 
         if (dirty[0] &
+        /*containerId*/
+        1024 && ul_aria_labelledby_value !== (ul_aria_labelledby_value = "" + (
+        /*containerId*/
+        ctx[10] + "_results_label"))) {
+          attr(ul, "aria-labelledby", ul_aria_labelledby_value);
+        }
+
+        if (dirty[0] &
         /*popupVisible*/
         4194304) {
           attr(ul, "aria-expanded",
@@ -2177,7 +2201,7 @@ var Select = (function () {
 
           if (if_block1) {
             if_block1.c();
-            if_block1.m(div0, t6);
+            if_block1.m(div1, t8);
           }
         }
 
@@ -2191,7 +2215,7 @@ var Select = (function () {
           } else {
             if_block2 = create_if_block(ctx);
             if_block2.c();
-            if_block2.m(div0, null);
+            if_block2.m(div1, null);
           }
         } else if (if_block2) {
           if_block2.d(1);
@@ -2200,16 +2224,16 @@ var Select = (function () {
 
         if (dirty[0] &
         /*containerId*/
-        1024 && div0_id_value !== (div0_id_value = "" + (
+        1024 && div1_id_value !== (div1_id_value = "" + (
         /*containerId*/
         ctx[10] + "_popup"))) {
-          attr(div0, "id", div0_id_value);
+          attr(div1, "id", div1_id_value);
         }
 
         if (dirty[0] &
         /*popupVisible*/
         4194304) {
-          toggle_class(div0, "show",
+          toggle_class(div1, "show",
           /*popupVisible*/
           ctx[22]);
         }
@@ -2217,7 +2241,7 @@ var Select = (function () {
         if (dirty[0] &
         /*popupFixed*/
         128) {
-          toggle_class(div0, "ss-popup-fixed",
+          toggle_class(div1, "ss-popup-fixed",
           /*popupFixed*/
           ctx[7]);
         }
@@ -2225,7 +2249,7 @@ var Select = (function () {
         if (dirty[0] &
         /*popupTop, popupFixed*/
         8388736) {
-          toggle_class(div0, "ss-popup-top",
+          toggle_class(div1, "ss-popup-top",
           /*popupTop*/
           ctx[23] && !
           /*popupFixed*/
@@ -2235,7 +2259,7 @@ var Select = (function () {
         if (dirty[0] &
         /*popupLeft, popupFixed*/
         16777344) {
-          toggle_class(div0, "ss-popup-left",
+          toggle_class(div1, "ss-popup-left",
           /*popupLeft*/
           ctx[24] && !
           /*popupFixed*/
@@ -2245,7 +2269,7 @@ var Select = (function () {
         if (dirty[0] &
         /*popupTop, popupFixed*/
         8388736) {
-          toggle_class(div0, "ss-popup-fixed-top",
+          toggle_class(div1, "ss-popup-fixed-top",
           /*popupTop*/
           ctx[23] &&
           /*popupFixed*/
@@ -2255,7 +2279,7 @@ var Select = (function () {
         if (dirty[0] &
         /*popupLeft, popupFixed*/
         16777344) {
-          toggle_class(div0, "ss-popup-fixed-left",
+          toggle_class(div1, "ss-popup-fixed-left",
           /*popupLeft*/
           ctx[24] &&
           /*popupFixed*/
@@ -2265,7 +2289,7 @@ var Select = (function () {
         if (dirty[0] &
         /*containerId*/
         1024) {
-          attr(div1, "id",
+          attr(div2, "id",
           /*containerId*/
           ctx[10]);
         }
@@ -2273,7 +2297,7 @@ var Select = (function () {
         if (dirty[0] &
         /*containerName*/
         2048) {
-          attr(div1, "name",
+          attr(div2, "name",
           /*containerName*/
           ctx[11]);
         }
@@ -2281,12 +2305,12 @@ var Select = (function () {
       i: noop,
       o: noop,
       d: function d(detaching) {
-        if (detaching) detach(div1);
+        if (detaching) detach(div2);
 
         for (var _i6 = 0; _i6 < each_blocks_1.length; _i6 += 1) {
           each_blocks_1[_i6].d();
         }
-        /*button_binding*/
+        /*div0_binding*/
 
 
         ctx[111](null);
@@ -2301,10 +2325,10 @@ var Select = (function () {
         }
 
         if (if_block2) if_block2.d();
-        /*div0_binding*/
+        /*div1_binding*/
 
         ctx[114](null);
-        /*div1_binding*/
+        /*div2_binding*/
 
         ctx[115](null);
         mounted = false;
@@ -2319,7 +2343,8 @@ var Select = (function () {
     selected_count: "selected",
     selected_more: "more",
     typeahead_input: "Search for...",
-    popup: "List"
+    popup: "List",
+    results: "Results"
   };
   var STYLE_DEFAULTS = {
     container_class: ""
@@ -3195,7 +3220,9 @@ var Select = (function () {
 
     function fetchMoreIfneeded() {
       if (hasMore && !fetchingMore && popupVisible) {
-        if (popupEl.scrollTop + popupEl.clientHeight >= popupEl.scrollHeight - popupEl.lastElementChild.clientHeight * 2 - 2) {
+        var lastItem = popupEl.querySelector(".ss-item:last-child");
+
+        if (popupEl.scrollTop + popupEl.clientHeight >= popupEl.scrollHeight - lastItem.clientHeight * 2 - 2) {
           fetchItems(true);
         }
       }
@@ -3865,7 +3892,7 @@ var Select = (function () {
       updatePopupPosition();
     }
 
-    function button_binding($$value) {
+    function div0_binding($$value) {
       binding_callbacks[$$value ? "unshift" : "push"](function () {
         $$invalidate(3, toggleEl = $$value);
       });
@@ -3882,13 +3909,13 @@ var Select = (function () {
       $$invalidate(12, query);
     }
 
-    function div0_binding($$value) {
+    function div1_binding($$value) {
       binding_callbacks[$$value ? "unshift" : "push"](function () {
         $$invalidate(4, popupEl = $$value);
       });
     }
 
-    function div1_binding($$value) {
+    function div2_binding($$value) {
       binding_callbacks[$$value ? "unshift" : "push"](function () {
         $$invalidate(1, containerEl = $$value);
       });
@@ -3914,7 +3941,7 @@ var Select = (function () {
       }
     };
 
-    return [real, containerEl, inputEl, toggleEl, popupEl, labelId, labelText, popupFixed, maxItems, typeahead, containerId, containerName, query, actualCount, displayItems, selectionById, selectionItems, selectionTip, summarySingle, summaryItems, showFetching, fetchError, popupVisible, popupTop, popupLeft, activeFetch, previousFetch, multiple, disabled, styles, translate, handleBlur, handleInputBlur, handleInputKeypress, handleInputKeydown, handleInputKeyup, handleToggleKeydown, handleToggleKeyup, handleToggleClick, handleItemKeydown, handleItemKeyup, handleItemClick, handleToggleLinkClick, handleItemLinkClick, handlePopupScroll, handleWindowScroll, config, selectItem, resizeObserver, setupDone, fetcher, remote, summaryLen, summaryWrap, noCache, placeholderItem, baseHref, mounted, fixedItems, fixedById, result, hasMore, display, fetchingMore, previousQuery, isSyncToReal, mutationObserver, translations, clearQuery, openPopup, closePopup, selectItemImpl, executeAction, selectElement, containsElement, syncFromRealSelection, syncToRealSelection, syncFromRealDisabled, updateFixedItems, updateDisplay, appendFetchedToDisplay, updateSelection, reload, inlineFetcher, fetchItems, cancelFetch, fetchMoreIfneeded, setupComponent, bindLabel, handleMutation, handleResize, eventListeners, findFirstItem, findFirstSimple, findFirstDynamic, updatePopupPosition, toggleKeydownHandlers, toggleKeyupHandlers, inputKeypressHandlers, inputKeydownHandlers, inputKeyupHandlers, focusNextByKey, focusItem, focusPreviousItem, focusNextItem, focusPageUp, focusPageDown, blockScrollUpIfNeeded, blockScrollDownIfNeeded, itemKeydownHandlers, itemKeyupHandlers, button_binding, input_binding, input_input_handler, div0_binding, div1_binding];
+    return [real, containerEl, inputEl, toggleEl, popupEl, labelId, labelText, popupFixed, maxItems, typeahead, containerId, containerName, query, actualCount, displayItems, selectionById, selectionItems, selectionTip, summarySingle, summaryItems, showFetching, fetchError, popupVisible, popupTop, popupLeft, activeFetch, previousFetch, multiple, disabled, styles, translate, handleBlur, handleInputBlur, handleInputKeypress, handleInputKeydown, handleInputKeyup, handleToggleKeydown, handleToggleKeyup, handleToggleClick, handleItemKeydown, handleItemKeyup, handleItemClick, handleToggleLinkClick, handleItemLinkClick, handlePopupScroll, handleWindowScroll, config, selectItem, resizeObserver, setupDone, fetcher, remote, summaryLen, summaryWrap, noCache, placeholderItem, baseHref, mounted, fixedItems, fixedById, result, hasMore, display, fetchingMore, previousQuery, isSyncToReal, mutationObserver, translations, clearQuery, openPopup, closePopup, selectItemImpl, executeAction, selectElement, containsElement, syncFromRealSelection, syncToRealSelection, syncFromRealDisabled, updateFixedItems, updateDisplay, appendFetchedToDisplay, updateSelection, reload, inlineFetcher, fetchItems, cancelFetch, fetchMoreIfneeded, setupComponent, bindLabel, handleMutation, handleResize, eventListeners, findFirstItem, findFirstSimple, findFirstDynamic, updatePopupPosition, toggleKeydownHandlers, toggleKeyupHandlers, inputKeypressHandlers, inputKeydownHandlers, inputKeyupHandlers, focusNextByKey, focusItem, focusPreviousItem, focusNextItem, focusPageUp, focusPageDown, blockScrollUpIfNeeded, blockScrollDownIfNeeded, itemKeydownHandlers, itemKeyupHandlers, div0_binding, input_binding, input_input_handler, div1_binding, div2_binding];
   }
 
   var Select = /*#__PURE__*/function (_SvelteComponent) {
