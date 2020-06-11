@@ -351,6 +351,8 @@
  let inputEl;
  let toggleEl;
  let popupEl;
+ let resultEl;
+ let itemsEl;
 
  let labelId = null;
  let labelText = null;
@@ -364,6 +366,8 @@
  let styles = {};
 
  let popupFixed = false;
+
+ let debugMode = false;
 
  let fetcher = inlineFetcher;
  let remote = false;
@@ -950,8 +954,8 @@
 
  function fetchMoreIfneeded() {
      if (hasMore && !fetchingMore && popupVisible) {
-         let lastItem = popupEl.querySelector('.ss-item:last-child');
-         if (popupEl.scrollTop + popupEl.clientHeight >= popupEl.scrollHeight - lastItem.clientHeight * 2 - 2) {
+         let lastItem = itemsEl.querySelector('.ss-item:last-child');
+         if (resultEl.scrollTop + resultEl.clientHeight >= resultEl.scrollHeight - lastItem.clientHeight * 2 - 2) {
              fetchItems(true);
          }
      }
@@ -1009,6 +1013,8 @@
          fetcher = config.fetcher;
      }
 
+     debugMode = ds.ssDebugMode !== undefined ? true : debugMode;
+
      typeahead = ds.ssTypeahead !== undefined ? true : typeahead;
      maxItems = ds.ssMaxItems !== undefined ? parseInt(ds.ssMaxItems, 10) : maxItems;
      summaryLen = ds.ssSummaryLen !== undefined ? parseInt(ds.ssSummaryLen, 10) : summaryLen;
@@ -1017,7 +1023,9 @@
      noCache = ds.ssNoCache !== undefined ? true : noCache;
      popupFixed = ds.ssPopupFixed !== undefined ? true : popupFixed;
 
-     typeahead = config.typeahead !== undefined ? config.typeahead : typeahead
+     debugMode = config.debugMode !== undefined ? config.debugMode : debugMode;
+
+     typeahead = config.typeahead !== undefined ? config.typeahead : typeahead;
      maxItems = config.maxItems || maxItems;
      summaryLen = config.summaryLen || summaryLen;
      summaryWrap = config.summaryWrap !== undefined ? config.summaryWrap : summaryWrap;
@@ -1102,11 +1110,11 @@
 
  function findFirstSimple() {
      let selectedId = selectionItems[0].id;
-     return popupEl.querySelector(`.ss-js-item[data-id="${selectedId}"`);
+     return itemsEl.querySelector(`.ss-js-item[data-id="${selectedId}"`);
  }
 
  function findFirstDynamic() {
-     let next = popupEl.querySelectorAll('.ss-js-item')[0];
+     let next = itemsEl.querySelectorAll('.ss-js-item')[0];
      while (next && next.classList.contains('ss-js-dead')) {
          next = next.nextElementSibling;
      }
@@ -1231,7 +1239,7 @@
          event.preventDefault();
      },
      ArrowDown: function(event) {
-         let next = popupEl.querySelectorAll('.ss-js-item')[0];
+         let next = itemsEl.querySelectorAll('.ss-js-item')[0];
          while (next && next.classList.contains('ss-js-dead')) {
              next = next.nextElementSibling;
          }
@@ -1273,7 +1281,7 @@
  function focusNextByKey(ch) {
      ch = ch.toUpperCase();
 
-     let nodes = popupEl.querySelectorAll('.ss-js-item');
+     let nodes = itemsEl.querySelectorAll('.ss-js-item');
 
      let curr = document.activeElement;
      if (curr.classList.contains('ss-js-item')) {
@@ -1308,8 +1316,8 @@
 
  function focusItem(item) {
      if (item) {
-         if (typeahead && popupEl.children[1] === item) {
-             popupEl.scroll(0, 0);
+         if (typeahead && itemsEl.children[0] === item) {
+             resultEl.scroll(0, 0);
          }
 //         item.scrollIntoView();
          item.focus();
@@ -1359,21 +1367,14 @@
      let scrollLeft = document.body.scrollLeft;
      let scrollTop = document.body.scrollTop;
 
-     let popupRect = popupEl.getBoundingClientRect();
+     let resultRect = resultEl.getBoundingClientRect();
 
-     let x = scrollLeft + popupRect.left + 10;
-     let y;
-
-     if (typeahead) {
-         let inputRect = inputEl.getBoundingClientRect();
-         y = scrollTop + inputRect.bottom + 10;
-     } else {
-         y = scrollTop + popupRect.top + 10;
-     }
+     let x = scrollLeft + resultRect.left + 10;
+     let y = scrollTop + resultRect.top + 10;
 
      let next = document.elementFromPoint(x, y);
      if (!next) {
-         let nodes = popupEl.querySelectorAll('.ss-js-item');
+         let nodes = itemsEl.querySelectorAll('.ss-js-item');
          let next = nodes.length ? nodes[0] : null;
      } else {
          if (next.classList.contains('ss-item-link')) {
@@ -1381,7 +1382,7 @@
          }
 
          if (!next.classList.contains('ss-js-item')) {
-             let nodes = popupEl.querySelectorAll('.ss-js-item');
+             let nodes = itemsEl.querySelectorAll('.ss-js-item');
              let next = nodes.length ? nodes[0] : null;
          }
      }
@@ -1393,14 +1394,14 @@
      let scrollLeft = document.body.scrollLeft;
      let scrollTop = document.body.scrollTop;
 
-     let popupRect = popupEl.getBoundingClientRect();
+     let resultRect = resultEl.getBoundingClientRect();
 
-     let x = scrollLeft + popupRect.left + 10;
-     let y = scrollTop + popupRect.bottom - 10;
+     let x = scrollLeft + resultRect.left + 10;
+     let y = scrollTop + resultRect.bottom - 10;
 
      let next = document.elementFromPoint(x, y);
      if (!next) {
-         let nodes = popupEl.querySelectorAll('.ss-js-item');
+         let nodes = itemsEl.querySelectorAll('.ss-js-item');
          let next = nodes.length ? nodes[nodes.length -1] : null;
      } else {
          if (next.classList.contains('ss-item-link')) {
@@ -1408,7 +1409,7 @@
          }
 
          if (!next.classList.contains('ss-js-item')) {
-             let nodes = popupEl.querySelectorAll('.ss-js-item');
+             let nodes = itemsEl.querySelectorAll('.ss-js-item');
              let next = nodes.length ? nodes[nodes.length - 1] : null;
          }
      }
@@ -1417,7 +1418,7 @@
  }
 
  function blockScrollUpIfNeeded(event) {
-     if (popupEl.scrollTop === 0) {
+     if (resultEl.scrollTop === 0) {
          event.preventDefault();
      }
  }
@@ -1428,9 +1429,9 @@
          return;
      }
 
-     let popupRect = popupEl.getBoundingClientRect();
+     let resultRect = resultEl.getBoundingClientRect();
 
-     if (popupEl.scrollTop + popupRect.height >= popupEl.scrollHeight) {
+     if (Math.ceil(resultEl.scrollTop + resultRect.height) >= resultEl.scrollHeight) {
          event.preventDefault();
      }
  }
@@ -1506,13 +1507,13 @@
          focusPageDown(event);
      },
      Home: function(event) {
-         let nodes = popupEl.querySelectorAll('.ss-js-item');
+         let nodes = itemsEl.querySelectorAll('.ss-js-item');
          let next = nodes.length ? nodes[0] : null;
          focusItem(next);
          event.preventDefault();
      },
      End: function(event) {
-         let nodes = popupEl.querySelectorAll('.ss-js-item');
+         let nodes = itemsEl.querySelectorAll('.ss-js-item');
          let next = nodes.length ? nodes[nodes.length - 1] : null;
          focusItem(next);
          event.preventDefault();
@@ -1528,6 +1529,9 @@
  }
 
  function handleBlur(event) {
+     if (debugMode) {
+         return;
+     }
      if (/*event.sourceCapabilities &&*/ !containsElement(event.relatedTarget)) {
          if (DEBUG) console.log("BLUR", event);
 
@@ -1619,7 +1623,7 @@
      }
  }
 
- function handlePopupScroll(event) {
+ function handleResultScroll(event) {
      fetchMoreIfneeded();
  }
 
@@ -1646,9 +1650,13 @@
           type="button"
 
           role=combobox
+
+          aria-labelledby={labelId}
+          aria-label={labelText}
+
           aria-expanded="{popupVisible}"
           aria-haspopup=listbox
-          aria-owns="{containerId}results"
+          aria-owns="{containerId}_popup"
 
           aria-activedescendant="{!multiple && selectionItems.length ? `${containerId}_item_${selectionItems[0].id}` : null}"
 
@@ -1657,9 +1665,6 @@
           tabindex="0"
           title="{selectionTip}"
           disabled={disabled}
-
-          aria-labelledby={labelId}
-          aria-label={labelText}
 
           bind:this={toggleEl}
           on:blur={handleBlur}
@@ -1703,8 +1708,9 @@
        id="{containerId}_popup"
 
        bind:this={popupEl}
+
        tabindex="-1"
-       on:scroll={handlePopupScroll}>
+  >
     {#if typeahead}
         <div class="ss-input-item" tabindex="-1">
           <label for="{containerId}_input" class="sr-only">{translate('typeahead_input')}</label>
@@ -1719,11 +1725,12 @@
                  type=search
                  role=searchbox
                  aria-autocomplete=list
-                 aria-controls="{containerId}_results"
+                 aria-controls="{containerId}_items"
                  aria-activedescendant="{!multiple && selectionItems.length ? `${containerId}_item_${selectionItems[0].id}` : null}"
 
                  bind:this={inputEl}
                  bind:value={query}
+
                  on:blur={handleInputBlur}
                  on:keypress={handleInputKeypress}
                  on:keydown={handleInputKeydown}
@@ -1731,105 +1738,112 @@
           </div>
     {/if}
 
-    <ul
-      class="ss-results"
-      id="{containerId}_results"
-      role=listbox
-      aria-expanded={popupVisible}
-      aria-hidden=false
-      >
-      {#each displayItems as item (item.id)}
-        {#if item.separator}
-          <li tabindex="-1"
-               class="dropdown-divider ss-js-dead"
-               on:keydown={handleItemKeydown}>
-          </li>
+    <div class="ss-result"
+         bind:this={resultEl}
+         on:scroll={handleResultScroll}
+    >
+      <ul
+        class="ss-item-list"
+        id="{containerId}_items"
+        role=listbox
+        aria-expanded={popupVisible}
+        aria-hidden=false
 
-        {:else if item.disabled || item.placeholder}
-          <li tabindex="-1" class="dropdown-item ss-item-muted ss-js-dead"
-               on:keydown={handleItemKeydown}>
-            <div class="ss-item-text {item.item_class || ''}">
-              {item.text}
-            </div>
+        bind:this={itemsEl}
+        >
+        {#each displayItems as item (item.id)}
+          {#if item.separator}
+            <li tabindex="-1"
+                 class="dropdown-divider ss-js-dead"
+                 on:keydown={handleItemKeydown}>
+            </li>
 
-            {#if item.desc}
-              <div class="ss-item-desc">
-                {item.desc}
+          {:else if item.disabled || item.placeholder}
+            <li tabindex="-1" class="dropdown-item ss-item-muted ss-js-dead"
+                 on:keydown={handleItemKeydown}>
+              <div class="ss-item-text {item.item_class || ''}">
+                {item.text}
               </div>
-            {/if}
-          </li>
 
-        {:else}
-          <li tabindex=1
-               class="dropdown-item ss-item ss-js-item {item.item_class || ''}"
-               class:ss-item-selected={!item.blank && selectionById[item.id]}
-
-               id="{containerId}_item_{item.id}"
-
-               role=option
-               aria-selected={selectionById[item.id] ? 'true' : null}
-
-               data-id="{item.id}"
-               data-action="{item.action}"
-               on:blur={handleBlur}
-               on:click={handleItemClick}
-               on:keydown={handleItemKeydown}
-               on:keyup={handleItemKeyup}>
-
-            <div class="ss-no-click">
-              {#if multiple && !item.blank && !item.action}
-                <div class="d-inline-block align-top">
-                  <i class="ss-marker {selectionById[item.id] ? FA_SELECTED : FA_NOT_SELECTED}"></i>
+              {#if item.desc}
+                <div class="ss-item-desc">
+                  {item.desc}
                 </div>
               {/if}
+            </li>
 
-              <div class="d-inline-block">
-                {#if item.blank}
-                  <div class="ss-blank">
-                    {#if multiple}
-                      {translate('clear')}
-                    {:else}
-                      {item.text}
-                    {/if}
+          {:else}
+            <li tabindex=1
+                 class="dropdown-item ss-item ss-js-item {item.item_class || ''}"
+                 class:ss-item-selected={!item.blank && selectionById[item.id]}
+
+                 id="{containerId}_item_{item.id}"
+
+                 role=option
+                 aria-selected={selectionById[item.id] ? 'true' : null}
+
+                 data-id="{item.id}"
+                 data-action="{item.action}"
+                 on:blur={handleBlur}
+                 on:click={handleItemClick}
+                 on:keydown={handleItemKeydown}
+                 on:keyup={handleItemKeyup}>
+
+              <div class="ss-no-click">
+                {#if multiple && !item.blank && !item.action}
+                  <div class="d-inline-block align-top">
+                    <i class="ss-marker {selectionById[item.id] ? FA_SELECTED : FA_NOT_SELECTED}"></i>
                   </div>
-                {:else}
-                  {#if item.href}
-                    <a class="ss-item-link" href="{item.href}"
-                       tabindex="-1"
-                       on:click={handleItemLinkClick}>
-                      {item.text}
-                    </a>
-                  {:else}
-                    <div class="ss-item-text {item.item_text_class || ''}">
-                      {item.text}
-                    </div>
-                  {/if}
-
-                  {#if item.desc}
-                    <div class="ss-item-desc {item.item_desc_class || ''}">
-                      {item.desc}
-                    </div>
-                  {/if}
                 {/if}
+
+                <div class="d-inline-block">
+                  {#if item.blank}
+                    <div class="ss-blank">
+                      {#if multiple}
+                        {translate('clear')}
+                      {:else}
+                        {item.text}
+                      {/if}
+                    </div>
+                  {:else}
+                    {#if item.href}
+                      <a class="ss-item-link" href="{item.href}"
+                         tabindex="-1"
+                         on:click={handleItemLinkClick}>
+                        {item.text}
+                      </a>
+                    {:else}
+                      <div class="ss-item-text {item.item_text_class || ''}">
+                        {item.text}
+                      </div>
+                    {/if}
+
+                    {#if item.desc}
+                      <div class="ss-item-desc {item.item_desc_class || ''}">
+                        {item.desc}
+                      </div>
+                    {/if}
+                  {/if}
+                </div>
               </div>
-            </div>
-          </li>
-        {/if}
-      {/each}
-    </ul>
+            </li>
+          {/if}
+        {/each}
+      </ul>
+    </div>
 
     {#if fetchError}
-      <div tabindex="-1" class="dropdown-item border-top text-danger ss-message-item ss-sticky-item ss-js-dead">
+      <div tabindex="-1" class="dropdown-item border-top text-danger ss-message-item">
         {fetchError}
       </div>
     {:else if typeahead && actualCount === 0 && previousFetch && !activeFetch}
-      <div tabindex="-1" class="dropdown-item ss-message-item ss-item-muted ss-js-dead">
+      <div tabindex="-1" class="dropdown-item ss-message-item ss-item-muted">
         {translate('no_results')}
       </div>
     {/if}
 
     {#if selectionItems.length >= maxItems}
-      <div tabindex="-1" class="dropdown-item border-top text-danger ss-message-item ss-sticky-item ss-js-dead">
+      <div tabindex="-1" class="dropdown-item border-top text-danger ss-message-item">
         {translate('max_limit')} ({maxItems})
       </div>
     {/if}
