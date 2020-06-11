@@ -1063,7 +1063,7 @@
      if (real.id) {
          let label = document.querySelector(`[for="${real.id}"]`);
          if (label) {
-             label.id = label.id || `ts_label_${real.id}`;
+             label.id = label.id || `ss_label_${real.id}`;
              labelId = label.id;
          }
      }
