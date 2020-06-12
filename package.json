@@ -8,12 +8,12 @@
     "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/preset-env": "^7.7.1",
     "@babel/runtime": "^7.7.2",
-    "rollup": "2.14.0",
+    "rollup": "2.15.0",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-postcss": "3.1.2",
     "rollup-plugin-svelte": "^5.1.1",
-    "svelte": "3.23.0",
-    "svelte-preprocess": "^3.2.6"
+    "svelte": "3.23.2",
+    "svelte-preprocess": "3.9.7"
   },
   "description": "Simple select widget implemented using Svelte",
   "scripts": {
