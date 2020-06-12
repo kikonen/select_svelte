@@ -1647,7 +1647,6 @@
 
   <div class="form-control ss-control"
           name="ss_control_{real.name}"
-          type="button"
 
           role=combobox
 

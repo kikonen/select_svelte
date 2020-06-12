@@ -569,7 +569,7 @@ var Select = (function () {
     child_ctx[121] = list[i];
     child_ctx[125] = i;
     return child_ctx;
-  } // (1690:10) {:else}
+  } // (1689:10) {:else}
 
 
   function create_else_block_4(ctx) {
@@ -603,7 +603,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1684:10) {#if item.href}
+  } // (1683:10) {#if item.href}
 
 
   function create_if_block_12(ctx) {
@@ -666,7 +666,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1677:6) {#each summaryItems as item, index (item.id)}
+  } // (1676:6) {#each summaryItems as item, index (item.id)}
 
 
   function create_each_block_1(key_1, ctx) {
@@ -759,7 +759,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1714:4) {#if typeahead}
+  } // (1713:4) {#if typeahead}
 
 
   function create_if_block_11(ctx) {
@@ -823,7 +823,7 @@ var Select = (function () {
         append(div, input);
         /*input_binding*/
 
-        ctx[115](input);
+        ctx[51](input);
         set_input_value(input,
         /*query*/
         ctx[14]);
@@ -831,7 +831,7 @@ var Select = (function () {
         if (!mounted) {
           dispose = [listen(input, "input",
           /*input_input_handler*/
-          ctx[116]), listen(input, "blur",
+          ctx[52]), listen(input, "blur",
           /*handleInputBlur*/
           ctx[34]), listen(input, "keypress",
           /*handleInputKeypress*/
@@ -894,12 +894,12 @@ var Select = (function () {
         if (detaching) detach(div);
         /*input_binding*/
 
-        ctx[115](null);
+        ctx[51](null);
         mounted = false;
         run_all(dispose);
       }
     };
-  } // (1775:10) {:else}
+  } // (1774:10) {:else}
 
 
   function create_else_block(ctx) {
@@ -1090,7 +1090,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1761:54) 
+  } // (1760:54) 
 
 
   function create_if_block_4(ctx) {
@@ -1174,7 +1174,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1755:10) {#if item.separator}
+  } // (1754:10) {#if item.separator}
 
 
   function create_if_block_3(ctx) {
@@ -1204,7 +1204,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1793:16) {#if multiple && !item.blank && !item.action}
+  } // (1792:16) {#if multiple && !item.blank && !item.action}
 
 
   function create_if_block_10(ctx) {
@@ -1241,7 +1241,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1808:18) {:else}
+  } // (1807:18) {:else}
 
 
   function create_else_block_2(ctx) {
@@ -1308,7 +1308,7 @@ var Select = (function () {
         if (detaching) detach(if_block1_anchor);
       }
     };
-  } // (1800:18) {#if item.blank}
+  } // (1799:18) {#if item.blank}
 
 
   function create_if_block_6(ctx) {
@@ -1351,7 +1351,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1815:20) {:else}
+  } // (1814:20) {:else}
 
 
   function create_else_block_3(ctx) {
@@ -1392,7 +1392,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1809:20) {#if item.href}
+  } // (1808:20) {#if item.href}
 
 
   function create_if_block_9(ctx) {
@@ -1446,7 +1446,7 @@ var Select = (function () {
         dispose();
       }
     };
-  } // (1821:20) {#if item.desc}
+  } // (1820:20) {#if item.desc}
 
 
   function create_if_block_8(ctx) {
@@ -1487,7 +1487,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1804:22) {:else}
+  } // (1803:22) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -1513,7 +1513,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1802:22) {#if multiple}
+  } // (1801:22) {#if multiple}
 
 
   function create_if_block_7(ctx) {
@@ -1533,7 +1533,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1768:14) {#if item.desc}
+  } // (1767:14) {#if item.desc}
 
 
   function create_if_block_5(ctx) {
@@ -1563,7 +1563,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1754:8) {#each displayItems as item (item.id)}
+  } // (1753:8) {#each displayItems as item (item.id)}
 
 
   function create_each_block(key_1, ctx) {
@@ -1617,7 +1617,7 @@ var Select = (function () {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1839:78) 
+  } // (1838:78) 
 
 
   function create_if_block_2(ctx) {
@@ -1639,7 +1639,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1835:4) {#if fetchError}
+  } // (1834:4) {#if fetchError}
 
 
   function create_if_block_1(ctx) {
@@ -1669,7 +1669,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1845:4) {#if selectionItems.length >= maxItems}
+  } // (1844:4) {#if selectionItems.length >= maxItems}
 
 
   function create_if_block(ctx) {
@@ -1841,7 +1841,6 @@ var Select = (function () {
         attr(div0, "name", div0_name_value = "ss_control_" +
         /*real*/
         ctx[0].name);
-        attr(div0, "type", "button");
         attr(div0, "role", "combobox");
         attr(div0, "aria-labelledby",
         /*labelId*/
@@ -1939,7 +1938,7 @@ var Select = (function () {
         append(div0, span1);
         /*div0_binding*/
 
-        ctx[114](div0);
+        ctx[50](div0);
         append(div3, t1);
         append(div3, div2);
         if (if_block0) if_block0.m(div2, null);
@@ -1953,20 +1952,20 @@ var Select = (function () {
         /*ul_binding*/
 
 
-        ctx[117](ul);
+        ctx[53](ul);
         /*div1_binding*/
 
-        ctx[118](div1);
+        ctx[54](div1);
         append(div2, t3);
         if (if_block1) if_block1.m(div2, null);
         append(div2, t4);
         if (if_block2) if_block2.m(div2, null);
         /*div2_binding*/
 
-        ctx[119](div2);
+        ctx[55](div2);
         /*div3_binding*/
 
-        ctx[120](div3);
+        ctx[56](div3);
 
         if (!mounted) {
           dispose = [listen(window_1, "scroll",
@@ -2261,7 +2260,7 @@ var Select = (function () {
         /*div0_binding*/
 
 
-        ctx[114](null);
+        ctx[50](null);
         if (if_block0) if_block0.d();
 
         for (var _i7 = 0; _i7 < each_blocks.length; _i7 += 1) {
@@ -2270,10 +2269,10 @@ var Select = (function () {
         /*ul_binding*/
 
 
-        ctx[117](null);
+        ctx[53](null);
         /*div1_binding*/
 
-        ctx[118](null);
+        ctx[54](null);
 
         if (if_block1) {
           if_block1.d();
@@ -2282,10 +2281,10 @@ var Select = (function () {
         if (if_block2) if_block2.d();
         /*div2_binding*/
 
-        ctx[119](null);
+        ctx[55](null);
         /*div3_binding*/
 
-        ctx[120](null);
+        ctx[56](null);
         mounted = false;
         run_all(dispose);
       }
@@ -2655,7 +2654,6 @@ var Select = (function () {
     var containerName = null;
     var query = "";
     var fixedItems = [];
-    var fixedById = {};
     var result = createResult({});
     var actualCount = 0;
     var hasMore = false;
@@ -2905,7 +2903,6 @@ var Select = (function () {
       }
 
       fixedItems = items;
-      fixedById = byId;
     }
 
     function updateDisplay() {
@@ -3191,7 +3188,7 @@ var Select = (function () {
       Object.keys(eventListeners).forEach(function (ev) {
         real.addEventListener(ev, eventListeners[ev]);
       });
-      $$invalidate(60, mounted = true);
+      $$invalidate(67, mounted = true);
     });
     beforeUpdate(function () {
       if (!setupDone) {
@@ -3269,7 +3266,7 @@ var Select = (function () {
         var label = document.querySelector("[for=\"".concat(real.id, "\"]"));
 
         if (label) {
-          label.id = label.id || "ts_label_".concat(real.id);
+          label.id = label.id || "ss_label_".concat(real.id);
           $$invalidate(7, labelId = label.id);
         }
       }
@@ -3848,13 +3845,15 @@ var Select = (function () {
 
     function div0_binding($$value) {
       binding_callbacks[$$value ? "unshift" : "push"](function () {
-        $$invalidate(3, toggleEl = $$value);
+        toggleEl = $$value;
+        $$invalidate(3, toggleEl);
       });
     }
 
     function input_binding($$value) {
       binding_callbacks[$$value ? "unshift" : "push"](function () {
-        $$invalidate(2, inputEl = $$value);
+        inputEl = $$value;
+        $$invalidate(2, inputEl);
       });
     }
 
@@ -3865,25 +3864,29 @@ var Select = (function () {
 
     function ul_binding($$value) {
       binding_callbacks[$$value ? "unshift" : "push"](function () {
-        $$invalidate(6, itemsEl = $$value);
+        itemsEl = $$value;
+        $$invalidate(6, itemsEl);
       });
     }
 
     function div1_binding($$value) {
       binding_callbacks[$$value ? "unshift" : "push"](function () {
-        $$invalidate(5, resultEl = $$value);
+        resultEl = $$value;
+        $$invalidate(5, resultEl);
       });
     }
 
     function div2_binding($$value) {
       binding_callbacks[$$value ? "unshift" : "push"](function () {
-        $$invalidate(4, popupEl = $$value);
+        popupEl = $$value;
+        $$invalidate(4, popupEl);
       });
     }
 
     function div3_binding($$value) {
       binding_callbacks[$$value ? "unshift" : "push"](function () {
-        $$invalidate(1, containerEl = $$value);
+        containerEl = $$value;
+        $$invalidate(1, containerEl);
       });
     }
 
@@ -3893,9 +3896,9 @@ var Select = (function () {
     };
 
     $$self.$$.update = function () {
-      if ($$self.$$.dirty[1] &
+      if ($$self.$$.dirty[2] &
       /*mounted*/
-      536870912) {
+      32) {
         ////////////////////////////////////////////////////////////
         // Setup
         //
@@ -3907,7 +3910,7 @@ var Select = (function () {
       }
     };
 
-    return [real, containerEl, inputEl, toggleEl, popupEl, resultEl, itemsEl, labelId, labelText, popupFixed, maxItems, typeahead, containerId, containerName, query, actualCount, displayItems, selectionById, selectionItems, selectionTip, summarySingle, summaryItems, showFetching, fetchError, popupVisible, popupTop, popupLeft, activeFetch, previousFetch, multiple, disabled, styles, translate, handleBlur, handleInputBlur, handleInputKeypress, handleInputKeydown, handleInputKeyup, handleToggleKeydown, handleToggleKeyup, handleToggleClick, handleItemKeydown, handleItemKeyup, handleItemClick, handleToggleLinkClick, handleItemLinkClick, handleResultScroll, handleWindowScroll, config, selectItem, resizeObserver, setupDone, debugMode, fetcher, remote, summaryLen, summaryWrap, noCache, placeholderItem, baseHref, mounted, fixedItems, fixedById, result, hasMore, display, fetchingMore, previousQuery, isSyncToReal, mutationObserver, translations, clearQuery, openPopup, closePopup, selectItemImpl, executeAction, selectElement, containsElement, syncFromRealSelection, syncToRealSelection, syncFromRealDisabled, updateFixedItems, updateDisplay, appendFetchedToDisplay, updateSelection, reload, inlineFetcher, fetchItems, cancelFetch, fetchMoreIfneeded, setupComponent, bindLabel, handleMutation, handleResize, eventListeners, findFirstItem, findFirstSimple, findFirstDynamic, updatePopupPosition, toggleKeydownHandlers, toggleKeyupHandlers, inputKeypressHandlers, inputKeydownHandlers, inputKeyupHandlers, focusNextByKey, focusItem, focusPreviousItem, focusNextItem, focusPageUp, focusPageDown, blockScrollUpIfNeeded, blockScrollDownIfNeeded, itemKeydownHandlers, itemKeyupHandlers, div0_binding, input_binding, input_input_handler, ul_binding, div1_binding, div2_binding, div3_binding];
+    return [real, containerEl, inputEl, toggleEl, popupEl, resultEl, itemsEl, labelId, labelText, popupFixed, maxItems, typeahead, containerId, containerName, query, actualCount, displayItems, selectionById, selectionItems, selectionTip, summarySingle, summaryItems, showFetching, fetchError, popupVisible, popupTop, popupLeft, activeFetch, previousFetch, multiple, disabled, styles, translate, handleBlur, handleInputBlur, handleInputKeypress, handleInputKeydown, handleInputKeyup, handleToggleKeydown, handleToggleKeyup, handleToggleClick, handleItemKeydown, handleItemKeyup, handleItemClick, handleToggleLinkClick, handleItemLinkClick, handleResultScroll, handleWindowScroll, config, selectItem, div0_binding, input_binding, input_input_handler, ul_binding, div1_binding, div2_binding, div3_binding];
   }
 
   var Select = /*#__PURE__*/function (_SvelteComponent) {
