@@ -1000,6 +1000,8 @@
  function setupComponent() {
      real.classList.add('ss-select-hidden');
      real.setAttribute('tabindex', '-1');
+     real.setAttribute('aria-hidden', 'true');
+
      multiple = real.multiple;
 
      let ds = real.dataset;
@@ -1692,8 +1694,7 @@
         </span>
       {/each}
     </span>
-    <span class="ss-caret {showFetching ? FA_CARET_FETCHING : FA_CARET_DOWN}">
-    </span>
+    <i class="ss-caret {showFetching ? FA_CARET_FETCHING : FA_CARET_DOWN}" aria-hidden=true></i>
   </div>
 
   <div class="dropdown-menu ss-popup"
