@@ -8,12 +8,12 @@
     "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/preset-env": "^7.7.1",
     "@babel/runtime": "^7.7.2",
-    "rollup": "2.15.0",
+    "rollup": "2.19.0",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-postcss": "3.1.2",
     "rollup-plugin-svelte": "^5.1.1",
     "svelte": "3.23.2",
-    "svelte-preprocess": "3.9.7"
+    "svelte-preprocess": "3.9.11"
   },
   "description": "Simple select widget implemented using Svelte",
   "scripts": {
@@ -31,7 +31,7 @@
   "homepage": "https://github.com/kikonen/select_svelte",
   "dependencies": {
     "@rollup/plugin-commonjs": "13.0.0",
-    "@rollup/plugin-node-resolve": "8.0.1",
+    "@rollup/plugin-node-resolve": "8.1.0",
     "core-js": "^3.4.1",
     "rollup-plugin-copy": "^3.1.0",
     "rollup-plugin-scss": "^2.1.0"
