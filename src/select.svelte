@@ -449,7 +449,18 @@
      }
  }
 
+ function focusToggle() {
+     if (disabled) {
+         return;
+     }
+     toggleEl.focus();
+ }
+
  function openPopup() {
+     if (disabled) {
+         return;
+     }
+
      if (!popupVisible) {
          popupVisible = true;
          let w = containerEl.offsetWidth;
@@ -459,11 +470,11 @@
      }
  }
 
- function closePopup(focusToggle) {
+ function closePopup(focus) {
      popupVisible = false;
      updateDisplay();
-     if (focusToggle) {
-         toggleEl.focus();
+     if (focus) {
+         focusToggle();
      }
  }
 
@@ -625,6 +636,10 @@
 
  function syncFromRealDisabled() {
      disabled = real.disabled;
+
+     if (disabled) {
+         closePopup();
+     }
  }
 
  function updateFixedItems() {
@@ -923,7 +938,7 @@
 
              showFetching = false;
 
-             toggleEl.focus();
+             focusToggle();
              openPopup();
          }
      });
@@ -1102,7 +1117,7 @@
          reload();
      },
      'focus': function(event) {
-         toggleEl.focus();
+         focusToggle();
      },
  }
 
@@ -1267,7 +1282,7 @@
          closePopup(true);
      },
      Tab: function(event) {
-         toggleEl.focus();
+         focusToggle();
          event.preventDefault();
      },
  };
@@ -1494,7 +1509,7 @@
          closePopup(true);
      },
      Tab: function(event) {
-         toggleEl.focus();
+         focusToggle();
          event.preventDefault();
      },
  };
@@ -1527,6 +1542,10 @@
  //
  function handleKeyEvent(event, handlers) {
      if (DEBUG) console.debug(event);
+     if (disabled) {
+         return;
+     }
+
      (handlers[event.key] || handlers[event.code] || handlers.base)(event);
  }
 
@@ -1574,6 +1593,10 @@
  }
 
  function handleToggleClick(event) {
+     if (disabled) {
+         return;
+     }
+
      if (event.button === 0 && !hasModifier(event)) {
          if (popupVisible) {
              closePopup(false);
@@ -1595,6 +1618,10 @@
  }
 
  function handleItemClick(event) {
+     if (disabled) {
+         return;
+     }
+
      if (event.button === 0) {
          if (!hasModifier(event)) {
              selectElement(event.target)
@@ -1603,13 +1630,21 @@
  }
 
  function handleToggleLinkClick(event) {
-     toggleEl.focus();
+     if (disabled) {
+         return;
+     }
+
+     focusToggle();
      if (!hasModifier(event)) {
          event.preventDefault();
      }
  }
 
  function handleItemLinkClick(event) {
+     if (disabled) {
+         return;
+     }
+
      let el = event.target.closest('.ss-item');
      el.focus();
      if (!hasModifier(event)) {
@@ -1648,30 +1683,31 @@
      bind:this={containerEl}>
 
   <div class="form-control ss-control"
-          name="ss_control_{real.name}"
+       class:ss-disabled={disabled}
+       name="ss_control_{real.name}"
 
-          role=combobox
+       role=combobox
 
-          aria-labelledby={labelId}
-          aria-label={labelText}
+       aria-labelledby={labelId}
+       aria-label={labelText}
 
-          aria-expanded="{popupVisible}"
-          aria-haspopup=listbox
-          aria-owns="{containerId}_popup"
+       aria-expanded="{popupVisible}"
+       aria-haspopup=listbox
+       aria-owns="{containerId}_popup"
 
-          aria-activedescendant="{!multiple && selectionItems.length ? `${containerId}_item_${selectionItems[0].id}` : null}"
+       aria-activedescendant="{!multiple && selectionItems.length ? `${containerId}_item_${selectionItems[0].id}` : null}"
 
-          aria-multiselectable={multiple ? '' : null}
+       aria-multiselectable={multiple ? '' : null}
 
-          tabindex="0"
-          title="{selectionTip}"
-          disabled={disabled}
+       tabindex="{disabled ? '-1' : '0'}"
+       title="{selectionTip}"
+       aria-disabled={disabled}
 
-          bind:this={toggleEl}
-          on:blur={handleBlur}
-          on:keydown={handleToggleKeydown}
-          on:keyup={handleToggleKeyup}
-          on:click={handleToggleClick}>
+       bind:this={toggleEl}
+       on:blur={handleBlur}
+       on:keydown={handleToggleKeydown}
+       on:keyup={handleToggleKeyup}
+       on:click={handleToggleClick}>
 
     <span class:ss-summary-multiple={!summarySingle}
           class:ss-summary-single={summarySingle}>
@@ -1773,8 +1809,7 @@
             </li>
 
           {:else}
-            <li tabindex=1
-                 class="dropdown-item ss-item ss-js-item {item.item_class || ''}"
+            <li class="dropdown-item ss-item ss-js-item {item.item_class || ''}"
                  class:ss-item-selected={!item.blank && selectionById[item.id]}
 
                  id="{containerId}_item_{item.id}"
@@ -1833,17 +1868,17 @@
     </div>
 
     {#if fetchError}
-      <div tabindex="-1" class="dropdown-item border-top text-danger ss-message-item">
+      <div class="dropdown-item border-top text-danger ss-message-item">
         {fetchError}
       </div>
     {:else if typeahead && actualCount === 0 && previousFetch && !activeFetch}
-      <div tabindex="-1" class="dropdown-item ss-message-item ss-item-muted">
+      <div class="dropdown-item ss-message-item ss-item-muted">
         {translate('no_results')}
       </div>
     {/if}
 
     {#if selectionItems.length >= maxItems}
-      <div tabindex="-1" class="dropdown-item border-top text-danger ss-message-item">
+      <div class="dropdown-item border-top text-danger ss-message-item">
         {translate('max_limit')} ({maxItems})
       </div>
     {/if}

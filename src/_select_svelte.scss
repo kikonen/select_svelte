@@ -33,6 +33,17 @@
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 }
+.ss-disabled {
+  background-color: $input-disabled-bg !important;
+
+  .ss-summary-item-single, ss-summary-item-multiple, .ss-caret {
+    background-color: $input-disabled-bg;
+
+    a {
+      background-color: $input-disabled-bg;
+    }
+  }
+}
 
 @mixin ss-summary {
   @include ss-no-click;
