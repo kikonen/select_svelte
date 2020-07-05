@@ -1809,7 +1809,8 @@
             </li>
 
           {:else}
-            <li class="dropdown-item ss-item ss-js-item {item.item_class || ''}"
+            <li tabindex=1
+                 class="dropdown-item ss-item ss-js-item {item.item_class || ''}"
                  class:ss-item-selected={!item.blank && selectionById[item.id]}
 
                  id="{containerId}_item_{item.id}"

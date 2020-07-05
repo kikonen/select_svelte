@@ -639,6 +639,7 @@ function create_else_block(ctx) {
 			t1 = space();
 			attr(div0, "class", "d-inline-block");
 			attr(div1, "class", "ss-no-click");
+			attr(li, "tabindex", "1");
 			attr(li, "class", li_class_value = "dropdown-item ss-item ss-js-item " + (/*item*/ ctx[123].item_class || ""));
 			attr(li, "id", li_id_value = "" + (/*containerId*/ ctx[12] + "_item_" + /*item*/ ctx[123].id));
 			attr(li, "role", "option");
@@ -829,7 +830,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (1828:16) {#if multiple && !item.blank && !item.action}
+// (1829:16) {#if multiple && !item.blank && !item.action}
 function create_if_block_10(ctx) {
 	let div;
 	let i;
@@ -863,7 +864,7 @@ function create_if_block_10(ctx) {
 	};
 }
 
-// (1843:18) {:else}
+// (1844:18) {:else}
 function create_else_block_2(ctx) {
 	let t;
 	let if_block1_anchor;
@@ -925,7 +926,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (1835:18) {#if item.blank}
+// (1836:18) {#if item.blank}
 function create_if_block_6(ctx) {
 	let div;
 
@@ -967,7 +968,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (1850:20) {:else}
+// (1851:20) {:else}
 function create_else_block_3(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[123].text + "";
@@ -997,7 +998,7 @@ function create_else_block_3(ctx) {
 	};
 }
 
-// (1844:20) {#if item.href}
+// (1845:20) {#if item.href}
 function create_if_block_9(ctx) {
 	let a;
 	let t_value = /*item*/ ctx[123].text + "";
@@ -1038,7 +1039,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (1856:20) {#if item.desc}
+// (1857:20) {#if item.desc}
 function create_if_block_8(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[123].desc + "";
@@ -1068,7 +1069,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (1839:22) {:else}
+// (1840:22) {:else}
 function create_else_block_1(ctx) {
 	let t_value = /*item*/ ctx[123].text + "";
 	let t;
@@ -1089,7 +1090,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (1837:22) {#if multiple}
+// (1838:22) {#if multiple}
 function create_if_block_7(ctx) {
 	let t_value = /*translate*/ ctx[32]("clear") + "";
 	let t;
@@ -1182,7 +1183,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (1874:78) 
+// (1875:78) 
 function create_if_block_2(ctx) {
 	let div;
 
@@ -1202,7 +1203,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (1870:4) {#if fetchError}
+// (1871:4) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -1226,7 +1227,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (1880:4) {#if selectionItems.length >= maxItems}
+// (1881:4) {#if selectionItems.length >= maxItems}
 function create_if_block(ctx) {
 	let div;
 	let t0_value = /*translate*/ ctx[32]("max_limit") + "";
