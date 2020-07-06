@@ -352,7 +352,7 @@
  let toggleEl;
  let popupEl;
  let resultEl;
- let itemsEl;
+ let optionsEl;
 
  let labelId = null;
  let labelText = null;
@@ -453,21 +453,26 @@
      if (disabled) {
          return;
      }
-     toggleEl.focus();
+     if (document.activeElement !== toggleEl) {
+         if (DEBUG) console.log("FOCUS_TOGGLE. was", document.activeElement);
+         toggleEl.focus();
+     }
  }
 
+ /**
+  * @return true if opened, false if was already open
+  */
  function openPopup() {
-     if (disabled) {
-         return;
+     if (popupVisible) {
+         return false;
      }
 
-     if (!popupVisible) {
-         popupVisible = true;
-         let w = containerEl.offsetWidth;
-         popupEl.style.minWidth = w + "px";
+     popupVisible = true;
+     let w = containerEl.offsetWidth;
+     popupEl.style.minWidth = w + "px";
 
-         updatePopupPosition();
-     }
+     updatePopupPosition();
+     return true;
  }
 
  function closePopup(focus) {
@@ -525,7 +530,7 @@
 
      if (!multiple || item.blank) {
          clearQuery();
-         closePopup(containsElement(document.activeElement));
+         closePopup(true);
      }
 
      syncToRealSelection();
@@ -540,7 +545,7 @@
          console.error("MISSING action item=" + id);
          return;
      }
-     closePopup(containsElement(document.activeElement));
+     closePopup(true);
      real.dispatchEvent(new CustomEvent('select-action', { detail: item }));
  }
 
@@ -556,8 +561,8 @@
      }
  }
 
- function containsElement(el) {
-     return containerEl.contains(el) || popupEl.contains(el);
+ function containsActiveElement(el) {
+     return toggleEl === el || inputEl === el;
  }
 
  ////////////////////////////////////////////////////////////
@@ -821,16 +826,13 @@
          return items;
      }
 
-     let promise = new Promise(function(resolve, reject) {
-         resolve({
+     return Promise.resolve(
+         {
              items: createItems(),
              info: {
                  more: false,
              }
          });
-     });
-
-     return promise;
  }
 
  /**
@@ -969,7 +971,7 @@
 
  function fetchMoreIfneeded() {
      if (hasMore && !fetchingMore && popupVisible) {
-         let lastItem = itemsEl.querySelector('.ss-item:last-child');
+         let lastItem = optionsEl.querySelector('.ss-item:last-child');
          if (resultEl.scrollTop + resultEl.clientHeight >= resultEl.scrollHeight - lastItem.clientHeight * 2 - 2) {
              fetchItems(true);
          }
@@ -1121,17 +1123,31 @@
      },
  }
 
- function findFirstItem() {
-     return multiple ? findFirstDynamic() : findFirstSimple();
+ function findActiveOption() {
+     return optionsEl.querySelector('.ss-item-active');
  }
 
- function findFirstSimple() {
+ function findFirstOption() {
+     let children = optionsEl.children;
+     return children[0];
+ }
+
+ function findLastOption() {
+     let children = optionsEl.children;
+     return children[children.length - 1];
+ }
+
+ function findInitialOption() {
+     return multiple ? findInitialDynamic() : findInitialSimple();
+ }
+
+ function findInitialSimple() {
      let selectedId = selectionItems[0].id;
-     return itemsEl.querySelector(`.ss-js-item[data-id="${selectedId}"`);
+     return optionsEl.querySelector(`.ss-js-item[data-id="${selectedId}"`);
  }
 
- function findFirstDynamic() {
-     let next = itemsEl.querySelectorAll('.ss-js-item')[0];
+ function findInitialDynamic() {
+     let next = optionsEl.querySelectorAll('.ss-js-item')[0];
      while (next && next.classList.contains('ss-js-dead')) {
          next = next.nextElementSibling;
      }
@@ -1177,41 +1193,58 @@
          if (typeahead) {
              inputEl.focus();
          } else {
-             focusNextByKey(event.key);
+             activateNextByKey(event.key);
          }
      },
      ArrowDown: function(event) {
-         openPopup();
-         fetchItems().then(function() {
-             let next = findFirstItem();
-             if (next) {
-                 focusItem(next);
-             } else if (typeahead) {
-                 inputEl.focus();
+         if (openPopup()) {
+             fetchItems().then(function() {
+                 let next = findInitialOption();
+                 if (next) {
+                     activateOption(next);
+                 }
+             });
+         } else {
+             if (!fetchingMore) {
+                 activateArrowDown(event);
              }
-         });
+         }
          event.preventDefault();
      },
      ArrowUp: function(event) {
-         openPopup();
-         fetchItems().then(function() {
-             focusItem(findFirstItem());
-         });
+         if (openPopup()) {
+             fetchItems().then(function() {
+                 activateOption(findInitialOption());
+             });
+         } else {
+             activateArrowUp(event);
+         }
          event.preventDefault();
+     },
+     PageUp: function(event) {
+         activatePageUp(event);
+     },
+     PageDown: function(event) {
+         activatePageDown(event);
+     },
+     Home: function(event) {
+         activateHome(event);
+     },
+     End: function(event) {
+         activateEnd(event);
      },
      Enter: function(event) {
          if (hasModifier(event)) {
              return;
          }
          if (popupVisible) {
-             // NOTE KI don't cancel fetch
-             clearQuery();
-             closePopup(false);
+             selectElement(findActiveOption());
          } else {
-             openPopup();
-             fetchItems(false).then(function() {
-                 focusItem(findFirstItem());
-             });
+             if (openPopup()) {
+                 fetchItems(false).then(function() {
+                     activateOption(findInitialOption());
+                 });
+             }
          }
          event.preventDefault();
      },
@@ -1224,10 +1257,11 @@
              clearQuery();
              closePopup(false);
          } else {
-             openPopup();
-             fetchItems(false).then(function() {
-                 focusItem(findFirstItem());
-             });
+             if (openPopup()) {
+                 fetchItems(false).then(function() {
+                     activateOption(findInitialOption());
+                 });
+             }
          }
          event.preventDefault();
      },
@@ -1252,29 +1286,31 @@
 
  let inputKeydownHandlers = {
      base: nop,
-     Enter: function(event) {
-         event.preventDefault();
-     },
-     ArrowDown: function(event) {
-         let next = itemsEl.querySelectorAll('.ss-js-item')[0];
-         while (next && next.classList.contains('ss-js-dead')) {
-             next = next.nextElementSibling;
-         }
-         focusItem(next);
-         event.preventDefault();
-     },
      ArrowUp: function(event) {
          // NOTE KI closing popup here is *irritating* i.e. if one is trying to select
          // first entry in dropdown
-         event.preventDefault();
+         activateArrowUp(event);
+     },
+     ArrowDown: function(event) {
+         activateArrowDown(event);
      },
      PageUp: function(event) {
-//         blockScrollUpIfNeeded(event);
-         event.preventDefault();
+         activatePageUp(event);
      },
      PageDown: function(event) {
-//         blockScrollDownIfNeeded(event);
-         event.preventDefault();
+         activatePageDown(event);
+     },
+     Home: function(event) {
+         activateHome(event);
+     },
+     End: function(event) {
+         activateEnd(event);
+     },
+     Enter: function(event) {
+         if (!hasModifier(event)) {
+             selectElement(findActiveOption());
+             event.preventDefault();
+         }
      },
      Escape: function(event) {
          cancelFetch();
@@ -1295,12 +1331,12 @@
      },
  }
 
- function focusNextByKey(ch) {
+ function activateNextByKey(ch) {
      ch = ch.toUpperCase();
 
-     let nodes = itemsEl.querySelectorAll('.ss-js-item');
+     let nodes = optionsEl.querySelectorAll('.ss-js-item');
 
-     let curr = document.activeElement;
+     let curr = findActiveOption() || findFirstOption();
      if (curr.classList.contains('ss-js-item')) {
          curr = curr.nextElementSibling;
      } else {
@@ -1328,21 +1364,43 @@
      if (idx >= nodes.length) {
          curr = null;
      }
-     focusItem(curr);
+     activateOption(curr);
  }
 
- function focusItem(item) {
-     if (item) {
-         if (typeahead && itemsEl.children[0] === item) {
-             resultEl.scroll(0, 0);
+ function activateOption(el, old) {
+     if (!el) {
+         return;
+     }
+
+     old = old || findActiveOption();
+     if (old && old !== el) {
+         old.classList.remove('ss-item-active');
+     }
+     el.classList.add('ss-item-active');
+
+     let clientHeight = resultEl.clientHeight;
+
+     if (resultEl.scrollHeight > clientHeight) {
+         let y = el.offsetTop;
+         let elementBottom = y + el.offsetHeight;
+
+         let scrollTop = resultEl.scrollTop;
+
+         if (elementBottom > scrollTop + clientHeight) {
+             resultEl.scrollTop = elementBottom - clientHeight;
+         } else if (y < scrollTop) {
+             resultEl.scrollTop = y;
          }
-//         item.scrollIntoView();
-         item.focus();
      }
  }
 
- function focusPreviousItem(el) {
-     let next = el.previousElementSibling;
+ function activateArrowUp(event) {
+     if (disabled || !popupVisible) {
+         return;
+     }
+
+     let el = findActiveOption();
+     let next = el ? el.previousElementSibling : findFirstOption();
 
      if (next) {
          while (next && next.classList.contains('ss-js-dead')) {
@@ -1353,17 +1411,17 @@
          }
      }
 
-     if (!next) {
-         next = typeahead ? inputEl : toggleEl;
-     }
-
-     focusItem(next);
-
-     return next;
+     activateOption(next, el);
+     event.preventDefault();
  }
 
- function focusNextItem(el) {
-     let next = el.nextElementSibling;
+ function activateArrowDown(event) {
+     if (disabled || !popupVisible) {
+         return;
+     }
+
+     let el = findActiveOption();
+     let next = el ? el.nextElementSibling : findFirstOption();
 
      if (next) {
          while (next && next.classList.contains('ss-js-dead')) {
@@ -1375,168 +1433,81 @@
          }
      }
 
-     focusItem(next);
-
-     return next;
- }
-
- function focusPageUp(event) {
-     let scrollLeft = document.body.scrollLeft;
-     let scrollTop = document.body.scrollTop;
-
-     let resultRect = resultEl.getBoundingClientRect();
-
-     let x = scrollLeft + resultRect.left + 10;
-     let y = scrollTop + resultRect.top + 10;
-
-     let next = document.elementFromPoint(x, y);
-     if (!next) {
-         let nodes = itemsEl.querySelectorAll('.ss-js-item');
-         let next = nodes.length ? nodes[0] : null;
-     } else {
-         if (next.classList.contains('ss-item-link')) {
-             next = next.closest('.ss-js-item');
-         }
-
-         if (!next.classList.contains('ss-js-item')) {
-             let nodes = itemsEl.querySelectorAll('.ss-js-item');
-             let next = nodes.length ? nodes[0] : null;
-         }
-     }
-     focusItem(next);
+     activateOption(next, el);
      event.preventDefault();
  }
 
- function focusPageDown(event) {
-     let scrollLeft = document.body.scrollLeft;
-     let scrollTop = document.body.scrollTop;
-
-     let resultRect = resultEl.getBoundingClientRect();
-
-     let x = scrollLeft + resultRect.left + 10;
-     let y = scrollTop + resultRect.bottom - 10;
-
-     let next = document.elementFromPoint(x, y);
-     if (!next) {
-         let nodes = itemsEl.querySelectorAll('.ss-js-item');
-         let next = nodes.length ? nodes[nodes.length -1] : null;
-     } else {
-         if (next.classList.contains('ss-item-link')) {
-             next = next.closest('.ss-js-item');
-         }
-
-         if (!next.classList.contains('ss-js-item')) {
-             let nodes = itemsEl.querySelectorAll('.ss-js-item');
-             let next = nodes.length ? nodes[nodes.length - 1] : null;
-         }
-     }
-     focusItem(next);
-     event.preventDefault();
- }
-
- function blockScrollUpIfNeeded(event) {
-     if (resultEl.scrollTop === 0) {
-         event.preventDefault();
-     }
- }
-
- function blockScrollDownIfNeeded(event) {
-     if (fetchingMore) {
-         event.preventDefault();
+ function activatePageUp(event) {
+     if (disabled || !popupVisible) {
          return;
      }
 
-     let resultRect = resultEl.getBoundingClientRect();
+     let newY = resultEl.scrollTop - resultEl.clientHeight;
 
-     if (Math.ceil(resultEl.scrollTop + resultRect.height) >= resultEl.scrollHeight) {
-         event.preventDefault();
+     let nodes = optionsEl.querySelectorAll('.ss-js-item');
+
+     let next = null;
+     for (let i = 0; !next && i < nodes.length; i++) {
+         let node = nodes[i];
+         if (newY <= node.offsetTop) {
+             next = node;
+         }
      }
+     if (!next) {
+         next = nodes[0];
+     }
+
+     activateOption(next);
+     event.preventDefault();
  }
 
- let itemKeydownHandlers = {
-     base: function(event) {
-         if (isMetaKey(event)) {
-             return;
-         }
-         if (typeahead) {
-             inputEl.focus();
-         } else {
-             focusNextByKey(event.key);
-         }
-     },
-     ArrowDown: function(event) {
-         if (!fetchingMore) {
-             focusNextItem(event.target);
-         }
-         event.preventDefault();
-     },
-     ArrowUp: function(event) {
-         focusPreviousItem(event.target);
-         event.preventDefault();
-     },
-     PageUp: function(event) {
-         blockScrollUpIfNeeded(event);
-     },
-     PageDown: function(event) {
-         blockScrollDownIfNeeded(event);
-     },
-     Home: function(event) {
-         blockScrollUpIfNeeded(event);
-     },
-     End: function(event) {
-         blockScrollDownIfNeeded(event);
-     },
-     Enter: function(event) {
-         if (!hasModifier(event)) {
-             selectElement(event.target);
-             event.preventDefault();
-         }
-     },
-     Space: function(event) {
-         if (hasModifier(event)) {
-             return;
-         }
-         if (typeahead) {
-             inputEl.focus();
-         } else {
-             selectElement(event.target);
-             event.preventDefault();
-         }
-     },
-     Escape: function(event) {
-         cancelFetch();
-         clearQuery();
-         closePopup(true);
-     },
-     Tab: function(event) {
-         focusToggle();
-         event.preventDefault();
-     },
- };
+ function activatePageDown(event) {
+     if (disabled || !popupVisible) {
+         return;
+     }
 
- let itemKeyupHandlers = {
-     base: nop,
-     // allow "meta" keys to navigate in items
-     PageUp: function(event) {
-         focusPageUp(event);
-     },
-     PageDown: function(event) {
-         focusPageDown(event);
-     },
-     Home: function(event) {
-         let nodes = itemsEl.querySelectorAll('.ss-js-item');
-         let next = nodes.length ? nodes[0] : null;
-         focusItem(next);
-         event.preventDefault();
-     },
-     End: function(event) {
-         let nodes = itemsEl.querySelectorAll('.ss-js-item');
-         let next = nodes.length ? nodes[nodes.length - 1] : null;
-         focusItem(next);
-         event.preventDefault();
-     },
+     let curr = findActiveOption() || findFirstOption();
+
+     let newY = curr.offsetTop + resultEl.clientHeight;
+
+     let nodes = optionsEl.querySelectorAll('.ss-js-item');
+
+     let next = null;
+     for (let i = 0; !next && i < nodes.length; i++) {
+         let node = nodes[i];
+         if (node.offsetTop + node.clientHeight >= newY) {
+             next = node;
+         }
+     }
+     if (!next) {
+         next = nodes[nodes.length - 1];
+     }
+
+     activateOption(next);
+     event.preventDefault();
  }
 
+ function activateHome(event) {
+     if (disabled || !popupVisible) {
+         return;
+     }
+
+     let nodes = optionsEl.querySelectorAll('.ss-js-item');
+     let next = nodes.length ? nodes[0] : null;
+     activateOption(next);
+     event.preventDefault();
+ }
+
+ function activateEnd(event) {
+     if (disabled || !popupVisible) {
+         return;
+     }
+
+     let nodes = optionsEl.querySelectorAll('.ss-js-item');
+     let next = nodes.length ? nodes[nodes.length - 1] : null;
+     activateOption(next);
+     event.preventDefault();
+ }
 
  ////////////////////////////////////////////////////////////
  //
@@ -1553,7 +1524,7 @@
      if (debugMode) {
          return;
      }
-     if (/*event.sourceCapabilities &&*/ !containsElement(event.relatedTarget)) {
+     if (/*event.sourceCapabilities &&*/ !containsActiveElement(event.relatedTarget)) {
          if (DEBUG) console.log("BLUR", event);
 
          cancelFetch();
@@ -1601,32 +1572,17 @@
          if (popupVisible) {
              closePopup(false);
          } else {
-             openPopup();
-             fetchItems(false).then(function() {
-                 focusItem(findFirstItem());
-             });
+             if (openPopup()) {
+                 fetchItems(false).then(function() {
+                     activateOption(findInitialOption());
+                 });
+             }
          }
      }
  }
 
- function handleItemKeydown(event) {
-     handleKeyEvent(event, itemKeydownHandlers);
- }
-
- function handleItemKeyup(event) {
-     handleKeyEvent(event, itemKeyupHandlers);
- }
-
- function handleItemClick(event) {
-     if (disabled) {
-         return;
-     }
-
-     if (event.button === 0) {
-         if (!hasModifier(event)) {
-             selectElement(event.target)
-         }
-     }
+ function handleToggleLinkMouseDown(event) {
+     event.preventDefault();
  }
 
  function handleToggleLinkClick(event) {
@@ -1640,20 +1596,40 @@
      }
  }
 
- function handleItemLinkClick(event) {
+ function handleOptionMouseDown(event) {
+     event.preventDefault();
+ }
+
+ function handleOptionClick(event) {
+     if (disabled) {
+         return;
+     }
+
+     if (event.button === 0) {
+         if (!hasModifier(event)) {
+             selectElement(event.target);
+             event.preventDefault();
+         }
+     }
+ }
+
+ function handleOptionLinkMouseDown(event) {
+     event.preventDefault();
+ }
+
+ function handleOptionLinkClick(event) {
      if (disabled) {
          return;
      }
 
      let el = event.target.closest('.ss-item');
-     el.focus();
+     activateOption(el);
+
      if (!hasModifier(event)) {
          event.preventDefault();
          event.stopPropagation();
          if (event.button === 0) {
-             if (!hasModifier(event)) {
-                 selectElement(el)
-             }
+             selectElement(el)
          }
      } else {
          // activate link
@@ -1721,6 +1697,7 @@
           {#if item.href}
             <a class="ss-item-link" href="{item.href}" target="_blank"
                tabindex="-1"
+               on:click={handleToggleLinkMouseDown}
                on:click={handleToggleLinkClick}>
               {item.summary == null ? item.text : item.summary}
             </a>
@@ -1744,11 +1721,9 @@
        id="{containerId}_popup"
 
        bind:this={popupEl}
-
-       tabindex="-1"
   >
     {#if typeahead}
-        <div class="ss-input-item" tabindex="-1">
+        <div class="ss-input-item">
           <label for="{containerId}_input" class="sr-only">{translate('typeahead_input')}</label>
           <input class="form-control ss-input"
                  id="{containerId}_input"
@@ -1785,18 +1760,15 @@
         aria-expanded={popupVisible}
         aria-hidden=false
 
-        bind:this={itemsEl}
+        bind:this={optionsEl}
         >
         {#each displayItems as item (item.id)}
           {#if item.separator}
-            <li tabindex="-1"
-                 class="dropdown-divider ss-js-dead"
-                 on:keydown={handleItemKeydown}>
+            <li class="dropdown-divider ss-js-dead">
             </li>
 
           {:else if item.disabled || item.placeholder}
-            <li tabindex="-1" class="dropdown-item ss-item-muted ss-js-dead"
-                 on:keydown={handleItemKeydown}>
+            <li class="dropdown-item ss-item-muted ss-js-dead">
               <div class="ss-item-text {item.item_class || ''}">
                 {item.text}
               </div>
@@ -1809,8 +1781,7 @@
             </li>
 
           {:else}
-            <li tabindex=1
-                 class="dropdown-item ss-item ss-js-item {item.item_class || ''}"
+            <li class="dropdown-item ss-item ss-js-item {item.item_class || ''}"
                  class:ss-item-selected={!item.blank && selectionById[item.id]}
 
                  id="{containerId}_item_{item.id}"
@@ -1820,10 +1791,8 @@
 
                  data-id="{item.id}"
                  data-action="{item.action}"
-                 on:blur={handleBlur}
-                 on:click={handleItemClick}
-                 on:keydown={handleItemKeydown}
-                 on:keyup={handleItemKeyup}>
+                 on:mousedown={handleOptionMouseDown}
+                 on:click={handleOptionClick}>
 
               <div class="ss-no-click">
                 {#if multiple && !item.blank && !item.action}
@@ -1845,7 +1814,8 @@
                     {#if item.href}
                       <a class="ss-item-link" href="{item.href}"
                          tabindex="-1"
-                         on:click={handleItemLinkClick}>
+                         on:mousedown={handleOptionLinkMouseDown}
+                         on:click={handleOptionLinkClick}>
                         {item.text}
                       </a>
                     {:else}
