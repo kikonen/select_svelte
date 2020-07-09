@@ -203,7 +203,7 @@ var Select = (function () {
 
   function set_data(text, data) {
     data = '' + data;
-    if (text.data !== data) text.data = data;
+    if (text.wholeText !== data) text.data = data;
   }
 
   function set_input_value(input, value) {
