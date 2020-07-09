@@ -407,6 +407,8 @@
  let summarySingle = true;
  let summaryItems = [];
 
+ let activeId = null;
+
  let showFetching = false;
  let fetchingMore = false;
  let fetchError = null;
@@ -550,6 +552,12 @@
  }
 
  function selectElement(el) {
+     if (!el) {
+         // NOTE KI "blank" selected
+         closePopup(true);
+         return;
+     }
+
      if (el.dataset.action) {
          executeAction(el.dataset.id);
      } else {
@@ -1253,9 +1261,7 @@
              return;
          }
          if (popupVisible) {
-             // NOTE KI don't cancel fetch
-             clearQuery();
-             closePopup(false);
+             selectElement(findActiveOption());
          } else {
              if (openPopup()) {
                  fetchItems(false).then(function() {
@@ -1369,6 +1375,7 @@
 
  function activateOption(el, old) {
      if (!el) {
+         activeId = null;
          return;
      }
 
@@ -1377,6 +1384,8 @@
          old.classList.remove('ss-item-active');
      }
      el.classList.add('ss-item-active');
+
+     activeId = `${containerId}_item_${el.dataset.id}`
 
      let clientHeight = resultEl.clientHeight;
 
@@ -1737,7 +1746,7 @@
                  role=searchbox
                  aria-autocomplete=list
                  aria-controls="{containerId}_items"
-                 aria-activedescendant="{!multiple && selectionItems.length ? `${containerId}_item_${selectionItems[0].id}` : null}"
+                 aria-activedescendant="{activeId || ''}"
 
                  bind:this={inputEl}
                  bind:value={query}

@@ -1,3 +1,15 @@
+$ss-selected-color: theme-color-level("primary", $alert-color-level) !default;
+$ss-selected-bg: theme-color-level("secondary", $alert-bg-level) !default;
+$ss-selected-border-color: theme-color-level("secondary", $alert-border-level) !default;
+
+$ss-active-color: theme-color-level("primary", $alert-color-level) !default;
+$ss-active-bg: theme-color-level("primary", $alert-bg-level) !default;
+$ss-active-border-color: theme-color-level("primary", $alert-border-level) !default;
+
+$ss-caret-color: $dark !default;
+$ss-text-muted: $text-muted !default;
+
+
 @mixin ss-no-click {
   pointer-events: none;
   user-select: none;
@@ -98,17 +110,17 @@
   @include ss-summary-item;
 }
 .ss-summary-more {
-  color: $text-muted;
+  color: $ss-text-muted;
   background-color: unset;
   border-color: transparent;
 }
 .ss-caret {
   margin-top: 3px;
   margin-left: auto;
-  color: $dark;
+  color: $ss-caret-color;
 }
 .ss-marker {
-  color: $text-muted;
+  color: $ss-text-muted;
   padding-right: 0.25rem;
 }
 .ss-popup {
@@ -152,28 +164,27 @@
   border: 2px solid transparent;
 }
 .ss-item-selected {
-  color: theme-color-level("primary", $alert-color-level);
-  background-color: theme-color-level("secondary", $alert-bg-level);
-//  border: 1px solid theme-color-level("secondary", $alert-border-level);
-  border: 2px solid theme-color-level("secondary", $alert-bg-level)
+  color: $ss-selected-color;
+  background-color: $ss-selected-bg;
+  border: 2px solid $ss-selected-border-color;
 }
 .ss-item-active {
-  color: theme-color-level("primary", $alert-color-level);
-  background-color: theme-color-level("primary", $alert-bg-level);
-  border: 2px solid theme-color-level("primary", $alert-border-level);
+  color: $ss-active-color;
+  background-color: $ss-active-bg;
+  border: 2px solid $ss-active-border-color;
 }
 .ss-blank {
-  color: $text-muted;
+  color: $ss-text-muted;
 }
 .ss-item-muted {
-  color: $text-muted;
+  color: $ss-text-muted;
 }
 .ss-item-text {
   @include ss-no-click;
 }
 .ss-item-desc {
   @include ss-no-click;
-  color: $text-muted;
+  color: $ss-text-muted;
 }
 .ss-item-link {
   pointer-events: all;
