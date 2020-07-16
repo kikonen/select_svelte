@@ -366,7 +366,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (1713:10) {:else}
+// (1696:10) {:else}
 function create_else_block_4(ctx) {
 	let t_value = (/*item*/ ctx[123].summary == null
 	? /*item*/ ctx[123].text
@@ -392,7 +392,7 @@ function create_else_block_4(ctx) {
 	};
 }
 
-// (1706:10) {#if item.href}
+// (1689:10) {#if item.href}
 function create_if_block_12(ctx) {
 	let a;
 
@@ -444,7 +444,7 @@ function create_if_block_12(ctx) {
 	};
 }
 
-// (1699:6) {#each summaryItems as item, index (item.id)}
+// (1682:6) {#each summaryItems as item, index (item.id)}
 function create_each_block_1(key_1, ctx) {
 	let span;
 	let t;
@@ -512,7 +512,7 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (1734:4) {#if typeahead}
+// (1717:4) {#if typeahead}
 function create_if_block_11(ctx) {
 	let div;
 	let label;
@@ -543,8 +543,7 @@ function create_if_block_11(ctx) {
 			attr(input, "autocorrect", "off");
 			attr(input, "autocapitalize", "off");
 			attr(input, "spellcheck", "off");
-			attr(input, "type", "search");
-			attr(input, "role", "searchbox");
+			attr(input, "role", "combobox");
 			attr(input, "aria-autocomplete", "list");
 			attr(input, "aria-controls", input_aria_controls_value = "" + (/*containerId*/ ctx[12] + "_items"));
 			attr(input, "aria-activedescendant", input_aria_activedescendant_value = /*activeId*/ ctx[22] || "");
@@ -588,7 +587,7 @@ function create_if_block_11(ctx) {
 				attr(input, "aria-activedescendant", input_aria_activedescendant_value);
 			}
 
-			if (dirty[0] & /*query*/ 16384) {
+			if (dirty[0] & /*query*/ 16384 && input.value !== /*query*/ ctx[14]) {
 				set_input_value(input, /*query*/ ctx[14]);
 			}
 		},
@@ -601,7 +600,7 @@ function create_if_block_11(ctx) {
 	};
 }
 
-// (1792:10) {:else}
+// (1775:10) {:else}
 function create_else_block(ctx) {
 	let li;
 	let div1;
@@ -728,7 +727,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (1779:54) 
+// (1762:54) 
 function create_if_block_4(ctx) {
 	let li;
 	let div;
@@ -785,7 +784,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (1775:10) {#if item.separator}
+// (1758:10) {#if item.separator}
 function create_if_block_3(ctx) {
 	let li;
 
@@ -804,7 +803,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (1807:16) {#if multiple && !item.blank && !item.action}
+// (1790:16) {#if multiple && !item.blank && !item.action}
 function create_if_block_10(ctx) {
 	let div;
 	let i;
@@ -838,7 +837,7 @@ function create_if_block_10(ctx) {
 	};
 }
 
-// (1822:18) {:else}
+// (1805:18) {:else}
 function create_else_block_2(ctx) {
 	let t;
 	let if_block1_anchor;
@@ -900,7 +899,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (1814:18) {#if item.blank}
+// (1797:18) {#if item.blank}
 function create_if_block_6(ctx) {
 	let div;
 
@@ -942,7 +941,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (1830:20) {:else}
+// (1813:20) {:else}
 function create_else_block_3(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[123].text + "";
@@ -972,7 +971,7 @@ function create_else_block_3(ctx) {
 	};
 }
 
-// (1823:20) {#if item.href}
+// (1806:20) {#if item.href}
 function create_if_block_9(ctx) {
 	let a;
 	let t_value = /*item*/ ctx[123].text + "";
@@ -1017,7 +1016,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (1836:20) {#if item.desc}
+// (1819:20) {#if item.desc}
 function create_if_block_8(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[123].desc + "";
@@ -1047,7 +1046,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (1818:22) {:else}
+// (1801:22) {:else}
 function create_else_block_1(ctx) {
 	let t_value = /*item*/ ctx[123].text + "";
 	let t;
@@ -1068,7 +1067,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (1816:22) {#if multiple}
+// (1799:22) {#if multiple}
 function create_if_block_7(ctx) {
 	let t_value = /*translate*/ ctx[33]("clear") + "";
 	let t;
@@ -1087,7 +1086,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (1785:14) {#if item.desc}
+// (1768:14) {#if item.desc}
 function create_if_block_5(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[123].desc + "";
@@ -1112,7 +1111,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (1774:8) {#each displayItems as item (item.id)}
+// (1757:8) {#each displayItems as item (item.id)}
 function create_each_block(key_1, ctx) {
 	let first;
 	let if_block_anchor;
@@ -1161,7 +1160,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (1854:78) 
+// (1837:78) 
 function create_if_block_2(ctx) {
 	let div;
 
@@ -1181,7 +1180,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (1850:4) {#if fetchError}
+// (1833:4) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -1205,7 +1204,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (1860:4) {#if selectionItems.length >= maxItems}
+// (1843:4) {#if selectionItems.length >= maxItems}
 function create_if_block(ctx) {
 	let div;
 	let t0_value = /*translate*/ ctx[33]("max_limit") + "";
@@ -2707,11 +2706,7 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	function findInitialDynamic() {
-		let next = optionsEl.querySelectorAll(".ss-js-item")[0];
-
-		while (next && next.classList.contains("ss-js-dead")) {
-			next = next.nextElementSibling;
-		}
+		return optionsEl.querySelectorAll(".ss-js-item")[0];
 	}
 
 	function updatePopupPosition() {
@@ -2851,26 +2846,12 @@ function instance($$self, $$props, $$invalidate) {
 
 	let inputKeydownHandlers = {
 		base: nop,
-		ArrowUp(event) {
-			// NOTE KI closing popup here is *irritating* i.e. if one is trying to select
-			// first entry in dropdown
-			activateArrowUp(event);
-		},
-		ArrowDown(event) {
-			activateArrowDown(event);
-		},
-		PageUp(event) {
-			activatePageUp(event);
-		},
-		PageDown(event) {
-			activatePageDown(event);
-		},
-		Home(event) {
-			activateHome(event);
-		},
-		End(event) {
-			activateEnd(event);
-		},
+		ArrowUp: activateArrowUp,
+		ArrowDown: activateArrowDown,
+		PageUp: activatePageUp,
+		PageDown: activatePageDown,
+		Home: activateHome,
+		End: activateEnd,
 		Enter(event) {
 			if (!hasModifier(event)) {
 				selectElement(findActiveOption());
