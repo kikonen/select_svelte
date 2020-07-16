@@ -1155,10 +1155,7 @@
  }
 
  function findInitialDynamic() {
-     let next = optionsEl.querySelectorAll('.ss-js-item')[0];
-     while (next && next.classList.contains('ss-js-dead')) {
-         next = next.nextElementSibling;
-     }
+     return optionsEl.querySelectorAll('.ss-js-item')[0];
  }
 
  function updatePopupPosition() {
@@ -1292,26 +1289,12 @@
 
  let inputKeydownHandlers = {
      base: nop,
-     ArrowUp: function(event) {
-         // NOTE KI closing popup here is *irritating* i.e. if one is trying to select
-         // first entry in dropdown
-         activateArrowUp(event);
-     },
-     ArrowDown: function(event) {
-         activateArrowDown(event);
-     },
-     PageUp: function(event) {
-         activatePageUp(event);
-     },
-     PageDown: function(event) {
-         activatePageDown(event);
-     },
-     Home: function(event) {
-         activateHome(event);
-     },
-     End: function(event) {
-         activateEnd(event);
-     },
+     ArrowUp: activateArrowUp,
+     ArrowDown: activateArrowDown,
+     PageUp: activatePageUp,
+     PageDown: activatePageDown,
+     Home: activateHome,
+     End: activateEnd,
      Enter: function(event) {
          if (!hasModifier(event)) {
              selectElement(findActiveOption());
@@ -1742,8 +1725,8 @@
                  autocapitalize=off
                  spellcheck=off
 
-                 type=search
-                 role=searchbox
+                 role=combobox
+
                  aria-autocomplete=list
                  aria-controls="{containerId}_items"
                  aria-activedescendant="{activeId || ''}"
