@@ -1588,6 +1588,9 @@
      }
  }
 
+ /**
+  * NOTE KI blocks undesired blur in option select
+  */
  function handleOptionMouseDown(event) {
      event.preventDefault();
  }
