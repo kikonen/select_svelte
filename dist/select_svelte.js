@@ -158,6 +158,10 @@ var Select = (function () {
     return a != a ? b == b : a !== b || a && _typeof(a) === 'object' || typeof a === 'function';
   }
 
+  function is_empty(obj) {
+    return Object.keys(obj).length === 0;
+  }
+
   function append(target, node) {
     target.appendChild(node);
   }
@@ -271,6 +275,7 @@ var Select = (function () {
         update(component.$$);
       }
 
+      set_current_component(null);
       dirty_components.length = 0;
 
       while (binding_callbacks.length) {
@@ -477,14 +482,15 @@ var Select = (function () {
       context: new Map(parent_component ? parent_component.$$.context : []),
       // everything else
       callbacks: blank_object(),
-      dirty: dirty
+      dirty: dirty,
+      skip_bound: false
     };
     var ready = false;
     $$.ctx = instance ? instance(component, prop_values, function (i, ret) {
       var value = (arguments.length <= 2 ? 0 : arguments.length - 2) ? arguments.length <= 2 ? undefined : arguments[2] : ret;
 
       if ($$.ctx && not_equal($$.ctx[i], $$.ctx[i] = value)) {
-        if ($$.bound[i]) $$.bound[i](value);
+        if (!$$.skip_bound && $$.bound[i]) $$.bound[i](value);
         if (ready) make_dirty(component, i);
       }
 
@@ -538,7 +544,12 @@ var Select = (function () {
       }
     }, {
       key: "$set",
-      value: function $set() {// overridden by instance, if it has props
+      value: function $set($$props) {
+        if (this.$$set && !is_empty($$props)) {
+          this.$$.skip_bound = true;
+          this.$$set($$props);
+          this.$$.skip_bound = false;
+        }
       }
     }]);
 
@@ -566,7 +577,7 @@ var Select = (function () {
     child_ctx[124] = list[i];
     child_ctx[128] = i;
     return child_ctx;
-  } // (1711:10) {:else}
+  } // (1707:10) {:else}
 
 
   function create_else_block_4(ctx) {
@@ -600,7 +611,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1704:10) {#if item.href}
+  } // (1700:10) {#if item.href}
 
 
   function create_if_block_12(ctx) {
@@ -663,7 +674,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1697:6) {#each summaryItems as item, index (item.id)}
+  } // (1693:6) {#each summaryItems as item, index (item.id)}
 
 
   function create_each_block_1(key_1, ctx) {
@@ -756,7 +767,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1732:4) {#if typeahead}
+  } // (1728:4) {#if typeahead}
 
 
   function create_if_block_11(ctx) {
@@ -884,7 +895,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1790:10) {:else}
+  } // (1789:10) {:else}
 
 
   function create_else_block(ctx) {
@@ -1068,7 +1079,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1777:54) 
+  } // (1776:54) 
 
 
   function create_if_block_4(ctx) {
@@ -1140,7 +1151,7 @@ var Select = (function () {
         if (if_block) if_block.d();
       }
     };
-  } // (1773:10) {#if item.separator}
+  } // (1772:10) {#if item.separator}
 
 
   function create_if_block_3(ctx) {
@@ -1158,7 +1169,7 @@ var Select = (function () {
         if (detaching) detach(li);
       }
     };
-  } // (1805:16) {#if multiple && !item.blank && !item.action}
+  } // (1804:16) {#if multiple && !item.blank && !item.action}
 
 
   function create_if_block_10(ctx) {
@@ -1195,7 +1206,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1820:18) {:else}
+  } // (1819:18) {:else}
 
 
   function create_else_block_2(ctx) {
@@ -1262,7 +1273,7 @@ var Select = (function () {
         if (detaching) detach(if_block1_anchor);
       }
     };
-  } // (1812:18) {#if item.blank}
+  } // (1811:18) {#if item.blank}
 
 
   function create_if_block_6(ctx) {
@@ -1305,7 +1316,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1828:20) {:else}
+  } // (1827:20) {:else}
 
 
   function create_else_block_3(ctx) {
@@ -1346,7 +1357,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1821:20) {#if item.href}
+  } // (1820:20) {#if item.href}
 
 
   function create_if_block_9(ctx) {
@@ -1400,7 +1411,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1834:20) {#if item.desc}
+  } // (1833:20) {#if item.desc}
 
 
   function create_if_block_8(ctx) {
@@ -1441,7 +1452,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1816:22) {:else}
+  } // (1815:22) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -1467,7 +1478,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1814:22) {#if multiple}
+  } // (1813:22) {#if multiple}
 
 
   function create_if_block_7(ctx) {
@@ -1487,7 +1498,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1783:14) {#if item.desc}
+  } // (1782:14) {#if item.desc}
 
 
   function create_if_block_5(ctx) {
@@ -1517,7 +1528,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1772:8) {#each displayItems as item (item.id)}
+  } // (1771:8) {#each displayItems as item (item.id)}
 
 
   function create_each_block(key_1, ctx) {
@@ -1571,7 +1582,7 @@ var Select = (function () {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1852:78) 
+  } // (1851:78) 
 
 
   function create_if_block_2(ctx) {
@@ -1592,7 +1603,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1848:4) {#if fetchError}
+  } // (1847:4) {#if fetchError}
 
 
   function create_if_block_1(ctx) {
@@ -1621,7 +1632,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1858:4) {#if selectionItems.length >= maxItems}
+  } // (1857:4) {#if selectionItems.length >= maxItems}
 
 
   function create_if_block(ctx) {
@@ -1675,8 +1686,6 @@ var Select = (function () {
     var i_class_value;
     var div0_name_value;
     var div0_aria_owns_value;
-    var div0_aria_activedescendant_value;
-    var div0_aria_multiselectable_value;
     var div0_tabindex_value;
     var t1;
     var div2;
@@ -1686,6 +1695,8 @@ var Select = (function () {
     var each_blocks = [];
     var each1_lookup = new Map();
     var ul_id_value;
+    var ul_aria_activedescendant_value;
+    var ul_aria_multiselectable_value;
     var t3;
     var t4;
     var div2_id_value;
@@ -1794,7 +1805,7 @@ var Select = (function () {
         attr(div0, "name", div0_name_value = "ss_control_" +
         /*real*/
         ctx[0].name);
-        attr(div0, "role", "combobox");
+        attr(div0, "role", "button");
         attr(div0, "aria-labelledby",
         /*labelId*/
         ctx[7]);
@@ -1808,18 +1819,6 @@ var Select = (function () {
         attr(div0, "aria-owns", div0_aria_owns_value = "" + (
         /*containerId*/
         ctx[12] + "_popup"));
-        attr(div0, "aria-activedescendant", div0_aria_activedescendant_value = !
-        /*multiple*/
-        ctx[30] &&
-        /*selectionItems*/
-        ctx[18].length ? "".concat(
-        /*containerId*/
-        ctx[12], "_item_").concat(
-        /*selectionItems*/
-        ctx[18][0].id) : null);
-        attr(div0, "aria-multiselectable", div0_aria_multiselectable_value =
-        /*multiple*/
-        ctx[30] ? "" : null);
         attr(div0, "tabindex", div0_tabindex_value =
         /*disabled*/
         ctx[31] ? "-1" : "0");
@@ -1841,6 +1840,18 @@ var Select = (function () {
         /*popupVisible*/
         ctx[25]);
         attr(ul, "aria-hidden", "false");
+        attr(ul, "aria-activedescendant", ul_aria_activedescendant_value = !
+        /*multiple*/
+        ctx[30] &&
+        /*selectionItems*/
+        ctx[18].length ? "".concat(
+        /*containerId*/
+        ctx[12], "_item_").concat(
+        /*selectionItems*/
+        ctx[18][0].id) : null);
+        attr(ul, "aria-multiselectable", ul_aria_multiselectable_value =
+        /*multiple*/
+        ctx[30] ? "true" : null);
         attr(div1, "class", "ss-result");
         attr(div2, "class", "dropdown-menu ss-popup");
         attr(div2, "id", div2_id_value = "" + (
@@ -2015,28 +2026,6 @@ var Select = (function () {
           attr(div0, "aria-owns", div0_aria_owns_value);
         }
 
-        if (dirty[0] &
-        /*multiple, selectionItems, containerId*/
-        1074008064 && div0_aria_activedescendant_value !== (div0_aria_activedescendant_value = !
-        /*multiple*/
-        ctx[30] &&
-        /*selectionItems*/
-        ctx[18].length ? "".concat(
-        /*containerId*/
-        ctx[12], "_item_").concat(
-        /*selectionItems*/
-        ctx[18][0].id) : null)) {
-          attr(div0, "aria-activedescendant", div0_aria_activedescendant_value);
-        }
-
-        if (dirty[0] &
-        /*multiple*/
-        1073741824 && div0_aria_multiselectable_value !== (div0_aria_multiselectable_value =
-        /*multiple*/
-        ctx[30] ? "" : null)) {
-          attr(div0, "aria-multiselectable", div0_aria_multiselectable_value);
-        }
-
         if (dirty[1] &
         /*disabled*/
         1 && div0_tabindex_value !== (div0_tabindex_value =
@@ -2109,6 +2098,28 @@ var Select = (function () {
           attr(ul, "aria-expanded",
           /*popupVisible*/
           ctx[25]);
+        }
+
+        if (dirty[0] &
+        /*multiple, selectionItems, containerId*/
+        1074008064 && ul_aria_activedescendant_value !== (ul_aria_activedescendant_value = !
+        /*multiple*/
+        ctx[30] &&
+        /*selectionItems*/
+        ctx[18].length ? "".concat(
+        /*containerId*/
+        ctx[12], "_item_").concat(
+        /*selectionItems*/
+        ctx[18][0].id) : null)) {
+          attr(ul, "aria-activedescendant", ul_aria_activedescendant_value);
+        }
+
+        if (dirty[0] &
+        /*multiple*/
+        1073741824 && ul_aria_multiselectable_value !== (ul_aria_multiselectable_value =
+        /*multiple*/
+        ctx[30] ? "true" : null)) {
+          attr(ul, "aria-multiselectable", ul_aria_multiselectable_value);
         }
 
         if (current_block_type === (current_block_type = select_block_type_5(ctx)) && if_block1) {
@@ -3876,7 +3887,7 @@ var Select = (function () {
       });
     }
 
-    $$self.$set = function ($$props) {
+    $$self.$$set = function ($$props) {
       if ("real" in $$props) $$invalidate(0, real = $$props.real);
       if ("config" in $$props) $$invalidate(46, config = $$props.config);
     };
