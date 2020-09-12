@@ -1669,7 +1669,7 @@
        class:ss-disabled={disabled}
        name="ss_control_{real.name}"
 
-       role=combobox
+       role=button
 
        aria-labelledby={labelId}
        aria-label={labelText}
@@ -1677,10 +1677,6 @@
        aria-expanded="{popupVisible}"
        aria-haspopup=listbox
        aria-owns="{containerId}_popup"
-
-       aria-activedescendant="{!multiple && selectionItems.length ? `${containerId}_item_${selectionItems[0].id}` : null}"
-
-       aria-multiselectable={multiple ? '' : null}
 
        tabindex="{disabled ? '-1' : '0'}"
        title="{selectionTip}"
@@ -1766,6 +1762,9 @@
         role=listbox
         aria-expanded={popupVisible}
         aria-hidden=false
+
+        aria-activedescendant="{!multiple && selectionItems.length ? `${containerId}_item_${selectionItems[0].id}` : null}"
+        aria-multiselectable={multiple ? 'true' : null}
 
         bind:this={optionsEl}
         >
