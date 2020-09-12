@@ -807,31 +807,29 @@ function create_if_block_3(ctx) {
 // (1828:16) {#if multiple && !item.blank && !item.action}
 function create_if_block_10(ctx) {
 	let div;
-	let i;
-	let i_class_value;
+	let span;
+
+	let raw_value = (/*selectionById*/ ctx[17][/*item*/ ctx[125].id]
+	? FA_SELECTED
+	: FA_NOT_SELECTED) + "";
 
 	return {
 		c() {
 			div = element("div");
-			i = element("i");
-
-			attr(i, "class", i_class_value = "ss-marker " + (/*selectionById*/ ctx[17][/*item*/ ctx[125].id]
-			? FA_SELECTED
-			: FA_NOT_SELECTED));
-
+			span = element("span");
+			attr(span, "class", "ss-marker");
+			attr(span, "aria-hidden", "true");
 			attr(div, "class", "d-inline-block align-top");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
-			append(div, i);
+			append(div, span);
+			span.innerHTML = raw_value;
 		},
 		p(ctx, dirty) {
-			if (dirty[0] & /*selectionById, displayItems*/ 196608 && i_class_value !== (i_class_value = "ss-marker " + (/*selectionById*/ ctx[17][/*item*/ ctx[125].id]
+			if (dirty[0] & /*selectionById, displayItems*/ 196608 && raw_value !== (raw_value = (/*selectionById*/ ctx[17][/*item*/ ctx[125].id]
 			? FA_SELECTED
-			: FA_NOT_SELECTED))) {
-				attr(i, "class", i_class_value);
-			}
-		},
+			: FA_NOT_SELECTED) + "")) span.innerHTML = raw_value;		},
 		d(detaching) {
 			if (detaching) detach(div);
 		}
@@ -1242,12 +1240,16 @@ function create_if_block(ctx) {
 function create_fragment(ctx) {
 	let div3;
 	let div0;
-	let span;
+	let span0;
 	let each_blocks_1 = [];
 	let each0_lookup = new Map();
 	let t0;
-	let i;
-	let i_class_value;
+	let span1;
+
+	let raw_value = (/*showFetching*/ ctx[23]
+	? FA_CARET_FETCHING
+	: FA_CARET_DOWN) + "";
+
 	let div0_name_value;
 	let div0_aria_owns_value;
 	let div0_tabindex_value;
@@ -1299,14 +1301,14 @@ function create_fragment(ctx) {
 		c() {
 			div3 = element("div");
 			div0 = element("div");
-			span = element("span");
+			span0 = element("span");
 
 			for (let i = 0; i < each_blocks_1.length; i += 1) {
 				each_blocks_1[i].c();
 			}
 
 			t0 = space();
-			i = element("i");
+			span1 = element("span");
 			t1 = space();
 			div2 = element("div");
 			if (if_block0) if_block0.c();
@@ -1322,14 +1324,10 @@ function create_fragment(ctx) {
 			if (if_block1) if_block1.c();
 			t4 = space();
 			if (if_block2) if_block2.c();
-			toggle_class(span, "ss-summary-multiple", !/*summarySingle*/ ctx[20]);
-			toggle_class(span, "ss-summary-single", /*summarySingle*/ ctx[20]);
-
-			attr(i, "class", i_class_value = "ss-caret " + (/*showFetching*/ ctx[23]
-			? FA_CARET_FETCHING
-			: FA_CARET_DOWN));
-
-			attr(i, "aria-hidden", "true");
+			toggle_class(span0, "ss-summary-multiple", !/*summarySingle*/ ctx[20]);
+			toggle_class(span0, "ss-summary-single", /*summarySingle*/ ctx[20]);
+			attr(span1, "class", "ss-caret");
+			attr(span1, "aria-hidden", "true");
 			attr(div0, "class", "form-control ss-control");
 			attr(div0, "name", div0_name_value = "ss_control_" + /*real*/ ctx[0].name);
 			attr(div0, "role", "button");
@@ -1369,14 +1367,15 @@ function create_fragment(ctx) {
 		m(target, anchor) {
 			insert(target, div3, anchor);
 			append(div3, div0);
-			append(div0, span);
+			append(div0, span0);
 
 			for (let i = 0; i < each_blocks_1.length; i += 1) {
-				each_blocks_1[i].m(span, null);
+				each_blocks_1[i].m(span0, null);
 			}
 
 			append(div0, t0);
-			append(div0, i);
+			append(div0, span1);
+			span1.innerHTML = raw_value;
 			/*div0_binding*/ ctx[48](div0);
 			append(div3, t1);
 			append(div3, div2);
@@ -1413,23 +1412,20 @@ function create_fragment(ctx) {
 		p(ctx, dirty) {
 			if (dirty[0] & /*summaryItems, summarySingle*/ 3145728 | dirty[1] & /*handleToggleLinkClick*/ 2048) {
 				const each_value_1 = /*summaryItems*/ ctx[21];
-				each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key, 1, ctx, each_value_1, each0_lookup, span, destroy_block, create_each_block_1, null, get_each_context_1);
+				each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key, 1, ctx, each_value_1, each0_lookup, span0, destroy_block, create_each_block_1, null, get_each_context_1);
 			}
 
 			if (dirty[0] & /*summarySingle*/ 1048576) {
-				toggle_class(span, "ss-summary-multiple", !/*summarySingle*/ ctx[20]);
+				toggle_class(span0, "ss-summary-multiple", !/*summarySingle*/ ctx[20]);
 			}
 
 			if (dirty[0] & /*summarySingle*/ 1048576) {
-				toggle_class(span, "ss-summary-single", /*summarySingle*/ ctx[20]);
+				toggle_class(span0, "ss-summary-single", /*summarySingle*/ ctx[20]);
 			}
 
-			if (dirty[0] & /*showFetching*/ 8388608 && i_class_value !== (i_class_value = "ss-caret " + (/*showFetching*/ ctx[23]
+			if (dirty[0] & /*showFetching*/ 8388608 && raw_value !== (raw_value = (/*showFetching*/ ctx[23]
 			? FA_CARET_FETCHING
-			: FA_CARET_DOWN))) {
-				attr(i, "class", i_class_value);
-			}
-
+			: FA_CARET_DOWN) + "")) span1.innerHTML = raw_value;
 			if (dirty[0] & /*real*/ 1 && div0_name_value !== (div0_name_value = "ss_control_" + /*real*/ ctx[0].name)) {
 				attr(div0, "name", div0_name_value);
 			}
@@ -1608,10 +1604,10 @@ const STYLE_DEFAULTS = { container_class: "" };
 const BLANK_ID = "";
 const FIXED_SORT_KEY = "_";
 const FETCH_INDICATOR_DELAY = 150;
-const FA_CARET_DOWN = "fas fa-caret-down";
-const FA_CARET_FETCHING = "far fa-hourglass";
-const FA_SELECTED = "far fa-check-square";
-const FA_NOT_SELECTED = "far fa-square";
+const FA_CARET_DOWN = "&#9660;";
+const FA_CARET_FETCHING = "&#9201;";
+const FA_SELECTED = "&#128505;";
+const FA_NOT_SELECTED = "&#9744;";
 
 const META_KEYS = {
 	// Modifiers

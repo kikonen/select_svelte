@@ -115,7 +115,8 @@ $ss-text-muted: $text-muted !default;
   border-color: transparent;
 }
 .ss-caret {
-  margin-top: 3px;
+  margin-top: auto;
+  margin-bottom: auto;
   margin-left: auto;
   color: $ss-caret-color;
 }
