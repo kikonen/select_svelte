@@ -1417,6 +1417,8 @@
      }
 
      activateOption(next, el);
+     activateArrowShift(event, el);
+
      event.preventDefault();
  }
 
@@ -1439,7 +1441,29 @@
      }
 
      activateOption(next, el);
+     activateArrowShift(event, el);
+
      event.preventDefault();
+ }
+
+ function activateArrowShift(event, el) {
+     if (!event.shiftKey || !multiple) {
+         return;
+     }
+
+     if (!el) {
+         return;
+     }
+
+     let ds = el.dataset;
+     let id = ds.id;
+     let item = display.byId[id];
+
+     if (!item || item.blank || item.action) {
+         return;
+     }
+
+     selectElement(el);
  }
 
  function activatePageUp(event) {
