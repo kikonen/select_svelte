@@ -1174,33 +1174,33 @@ var Select = (function () {
 
   function create_if_block_10(ctx) {
     var div;
-    var span;
-    var raw_value = (
-    /*selectionById*/
-    ctx[17][
-    /*item*/
-    ctx[125].id] ? FA_SELECTED : FA_NOT_SELECTED) + "";
+    var i;
+    var i_class_value;
     return {
       c: function c() {
         div = element("div");
-        span = element("span");
-        attr(span, "class", "ss-marker");
-        attr(span, "aria-hidden", "true");
+        i = element("i");
+        attr(i, "class", i_class_value = "ss-marker " + (
+        /*selectionById*/
+        ctx[17][
+        /*item*/
+        ctx[125].id] ? FA_SELECTED : FA_NOT_SELECTED));
         attr(div, "class", "d-inline-block align-top");
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
-        append(div, span);
-        span.innerHTML = raw_value;
+        append(div, i);
       },
       p: function p(ctx, dirty) {
         if (dirty[0] &
         /*selectionById, displayItems*/
-        196608 && raw_value !== (raw_value = (
+        196608 && i_class_value !== (i_class_value = "ss-marker " + (
         /*selectionById*/
         ctx[17][
         /*item*/
-        ctx[125].id] ? FA_SELECTED : FA_NOT_SELECTED) + "")) span.innerHTML = raw_value;
+        ctx[125].id] ? FA_SELECTED : FA_NOT_SELECTED))) {
+          attr(i, "class", i_class_value);
+        }
       },
       d: function d(detaching) {
         if (detaching) detach(div);
@@ -1678,14 +1678,12 @@ var Select = (function () {
   function create_fragment(ctx) {
     var div3;
     var div0;
-    var span0;
+    var span;
     var each_blocks_1 = [];
     var each0_lookup = new Map();
     var t0;
-    var span1;
-    var raw_value = (
-    /*showFetching*/
-    ctx[23] ? FA_CARET_FETCHING : FA_CARET_DOWN) + "";
+    var i;
+    var i_class_value;
     var div0_name_value;
     var div0_aria_owns_value;
     var div0_tabindex_value;
@@ -1716,10 +1714,10 @@ var Select = (function () {
       );
     };
 
-    for (var i = 0; i < each_value_1.length; i += 1) {
-      var child_ctx = get_each_context_1(ctx, each_value_1, i);
+    for (var _i = 0; _i < each_value_1.length; _i += 1) {
+      var child_ctx = get_each_context_1(ctx, each_value_1, _i);
       var key = get_key(child_ctx);
-      each0_lookup.set(key, each_blocks_1[i] = create_each_block_1(key, child_ctx));
+      each0_lookup.set(key, each_blocks_1[_i] = create_each_block_1(key, child_ctx));
     }
 
     var if_block0 =
@@ -1736,12 +1734,12 @@ var Select = (function () {
       );
     };
 
-    for (var _i = 0; _i < each_value.length; _i += 1) {
-      var _child_ctx = get_each_context(ctx, each_value, _i);
+    for (var _i2 = 0; _i2 < each_value.length; _i2 += 1) {
+      var _child_ctx = get_each_context(ctx, each_value, _i2);
 
       var _key = get_key_1(_child_ctx);
 
-      each1_lookup.set(_key, each_blocks[_i] = create_each_block(_key, _child_ctx));
+      each1_lookup.set(_key, each_blocks[_i2] = create_each_block(_key, _child_ctx));
     }
 
     function select_block_type_5(ctx, dirty) {
@@ -1770,14 +1768,14 @@ var Select = (function () {
       c: function c() {
         div3 = element("div");
         div0 = element("div");
-        span0 = element("span");
+        span = element("span");
 
-        for (var _i2 = 0; _i2 < each_blocks_1.length; _i2 += 1) {
-          each_blocks_1[_i2].c();
+        for (var _i3 = 0; _i3 < each_blocks_1.length; _i3 += 1) {
+          each_blocks_1[_i3].c();
         }
 
         t0 = space();
-        span1 = element("span");
+        i = element("i");
         t1 = space();
         div2 = element("div");
         if (if_block0) if_block0.c();
@@ -1785,22 +1783,24 @@ var Select = (function () {
         div1 = element("div");
         ul = element("ul");
 
-        for (var _i3 = 0; _i3 < each_blocks.length; _i3 += 1) {
-          each_blocks[_i3].c();
+        for (var _i4 = 0; _i4 < each_blocks.length; _i4 += 1) {
+          each_blocks[_i4].c();
         }
 
         t3 = space();
         if (if_block1) if_block1.c();
         t4 = space();
         if (if_block2) if_block2.c();
-        toggle_class(span0, "ss-summary-multiple", !
+        toggle_class(span, "ss-summary-multiple", !
         /*summarySingle*/
         ctx[20]);
-        toggle_class(span0, "ss-summary-single",
+        toggle_class(span, "ss-summary-single",
         /*summarySingle*/
         ctx[20]);
-        attr(span1, "class", "ss-caret");
-        attr(span1, "aria-hidden", "true");
+        attr(i, "class", i_class_value = "ss-caret " + (
+        /*showFetching*/
+        ctx[23] ? FA_CARET_FETCHING : FA_CARET_DOWN));
+        attr(i, "aria-hidden", "true");
         attr(div0, "class", "form-control ss-control");
         attr(div0, "name", div0_name_value = "ss_control_" +
         /*real*/
@@ -1896,15 +1896,14 @@ var Select = (function () {
       m: function m(target, anchor) {
         insert(target, div3, anchor);
         append(div3, div0);
-        append(div0, span0);
+        append(div0, span);
 
-        for (var _i4 = 0; _i4 < each_blocks_1.length; _i4 += 1) {
-          each_blocks_1[_i4].m(span0, null);
+        for (var _i5 = 0; _i5 < each_blocks_1.length; _i5 += 1) {
+          each_blocks_1[_i5].m(span, null);
         }
 
         append(div0, t0);
-        append(div0, span1);
-        span1.innerHTML = raw_value;
+        append(div0, i);
         /*div0_binding*/
 
         ctx[48](div0);
@@ -1915,8 +1914,8 @@ var Select = (function () {
         append(div2, div1);
         append(div1, ul);
 
-        for (var _i5 = 0; _i5 < each_blocks.length; _i5 += 1) {
-          each_blocks[_i5].m(ul, null);
+        for (var _i6 = 0; _i6 < each_blocks.length; _i6 += 1) {
+          each_blocks[_i6].m(ul, null);
         }
         /*ul_binding*/
 
@@ -1960,13 +1959,13 @@ var Select = (function () {
           var _each_value_ =
           /*summaryItems*/
           ctx[21];
-          each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key, 1, ctx, _each_value_, each0_lookup, span0, destroy_block, create_each_block_1, null, get_each_context_1);
+          each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key, 1, ctx, _each_value_, each0_lookup, span, destroy_block, create_each_block_1, null, get_each_context_1);
         }
 
         if (dirty[0] &
         /*summarySingle*/
         1048576) {
-          toggle_class(span0, "ss-summary-multiple", !
+          toggle_class(span, "ss-summary-multiple", !
           /*summarySingle*/
           ctx[20]);
         }
@@ -1974,16 +1973,18 @@ var Select = (function () {
         if (dirty[0] &
         /*summarySingle*/
         1048576) {
-          toggle_class(span0, "ss-summary-single",
+          toggle_class(span, "ss-summary-single",
           /*summarySingle*/
           ctx[20]);
         }
 
         if (dirty[0] &
         /*showFetching*/
-        8388608 && raw_value !== (raw_value = (
+        8388608 && i_class_value !== (i_class_value = "ss-caret " + (
         /*showFetching*/
-        ctx[23] ? FA_CARET_FETCHING : FA_CARET_DOWN) + "")) span1.innerHTML = raw_value;
+        ctx[23] ? FA_CARET_FETCHING : FA_CARET_DOWN))) {
+          attr(i, "class", i_class_value);
+        }
 
         if (dirty[0] &
         /*real*/
@@ -2235,8 +2236,8 @@ var Select = (function () {
       d: function d(detaching) {
         if (detaching) detach(div3);
 
-        for (var _i6 = 0; _i6 < each_blocks_1.length; _i6 += 1) {
-          each_blocks_1[_i6].d();
+        for (var _i7 = 0; _i7 < each_blocks_1.length; _i7 += 1) {
+          each_blocks_1[_i7].d();
         }
         /*div0_binding*/
 
@@ -2244,8 +2245,8 @@ var Select = (function () {
         ctx[48](null);
         if (if_block0) if_block0.d();
 
-        for (var _i7 = 0; _i7 < each_blocks.length; _i7 += 1) {
-          each_blocks[_i7].d();
+        for (var _i8 = 0; _i8 < each_blocks.length; _i8 += 1) {
+          each_blocks[_i8].d();
         }
         /*ul_binding*/
 
@@ -2285,10 +2286,10 @@ var Select = (function () {
   var BLANK_ID = "";
   var FIXED_SORT_KEY = "_";
   var FETCH_INDICATOR_DELAY = 150;
-  var FA_CARET_DOWN = "&#9660;";
-  var FA_CARET_FETCHING = "&#9201;";
-  var FA_SELECTED = "&#128505;";
-  var FA_NOT_SELECTED = "&#9744;";
+  var FA_CARET_DOWN = "fas fa-caret-down";
+  var FA_CARET_FETCHING = "far fa-hourglass";
+  var FA_SELECTED = "far fa-check-square";
+  var FA_NOT_SELECTED = "far fa-square";
   var META_KEYS = {
     // Modifiers
     Control: true,
