@@ -20,12 +20,6 @@
 
  const FETCH_INDICATOR_DELAY = 150;
 
- const FA_CARET_DOWN = 'fas fa-caret-down';
- const FA_CARET_FETCHING = 'far fa-hourglass';
-
- const FA_SELECTED = 'far fa-check-square';
- const FA_NOT_SELECTED = 'far fa-square';
-
  const EDIT_KEYS = {
      // Edit keys
      Enter: true,
@@ -1734,7 +1728,18 @@
         </span>
       {/each}
     </span>
-    <i class="ss-caret {showFetching ? FA_CARET_FETCHING : FA_CARET_DOWN}" aria-hidden=true></i>
+
+    <div class="ss-caret">
+      {#if showFetching}
+        <svg height="16" width="16" class="{disabled ? 'ss-svg-caret-diasbled' : 'ss-svg-caret'}">
+          <polygon points="4,2 12,2 12,10 4,10" />
+        </svg>
+      {:else}
+        <svg height="16" width="16" class="{disabled ? 'ss-svg-caret-diasbled' : 'ss-svg-caret'}">
+          <polygon points="2,2 14,2 8,8" />
+        </svg>
+      {/if}
+    </div>
   </div>
 
   <div class="dropdown-menu ss-popup"
@@ -1826,8 +1831,17 @@
 
               <div class="ss-no-click">
                 {#if multiple && !item.blank && !item.action}
-                  <div class="d-inline-block align-top">
-                    <i class="ss-marker {selectionById[item.id] ? FA_SELECTED : FA_NOT_SELECTED}"></i>
+                  <div class="d-inline-block align-top ss-marker">
+                    {#if selectionById[item.id]}
+                      <svg height="16" width="16">
+                        <polygon points="2,1 14,1 14,12 2,12" class="ss-svg-marker"/>
+                        <path d="M4,6 L7,9 L12,4" class="ss-svg-marker-check"/>
+                      </svg>
+                    {:else}
+                      <svg height="16" width="16">
+                        <polygon points="2,1 14,1 14,12 2,12" class="ss-svg-marker"/>
+                      </svg>
+                    {/if}
                   </div>
                 {/if}
 

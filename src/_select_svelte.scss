@@ -220,6 +220,26 @@ $ss-text-muted: $text-muted !default;
   user-select: none;
 }
 
+.ss-svg-caret {
+  fill: $ss-caret-color;
+  stroke: $ss-caret-color;
+}
+.ss-svg-caret-diasbled {
+  fill: $ss-text-muted;
+  stroke: $ss-text-muted;
+}
+.ss-svg-marker {
+  stroke: $ss-text-muted;
+  fill: transparent;
+  stroke-width: 1.5;
+}
+.ss-svg-marker-check {
+  stroke: $ss-text-muted;
+  fill: transparent;
+  stroke-width: 2;
+}
+
+
 /*
  .ki-caret-container {
      margin-top: 140%;
