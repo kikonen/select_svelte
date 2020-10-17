@@ -9,6 +9,7 @@ $ss-active-border-color: theme-color-level("primary", $alert-border-level) !defa
 $ss-caret-color: $dark !default;
 $ss-text-muted: $text-muted !default;
 
+//$ss-font-size: $font-size-base;
 
 @mixin ss-no-click {
   pointer-events: none;
@@ -118,10 +119,16 @@ $ss-text-muted: $text-muted !default;
   margin-top: 3px;
   margin-left: auto;
   color: $ss-caret-color;
+  // NOTE KI "em" match to "container" font-size
+  width: 0.75em;
+  height: auto;
 }
 .ss-marker {
   color: $ss-text-muted;
   padding-right: 0.25rem;
+  // NOTE KI "em" match to "container" font-size
+  width: 1.25em;
+  height: auto;
 }
 .ss-popup {
   padding-top: 0;

@@ -1731,11 +1731,11 @@
 
     <div class="ss-caret">
       {#if showFetching}
-        <svg height="16" width="16" class="{disabled ? 'ss-svg-caret-diasbled' : 'ss-svg-caret'}">
+        <svg viewBox="0 0 16 16" class="{disabled ? 'ss-svg-caret-diasbled' : 'ss-svg-caret'}">
           <polygon points="4,2 12,2 12,10 4,10" />
         </svg>
       {:else}
-        <svg height="16" width="16" class="{disabled ? 'ss-svg-caret-diasbled' : 'ss-svg-caret'}">
+        <svg viewBox="0 0 16 16" class="{disabled ? 'ss-svg-caret-diasbled' : 'ss-svg-caret'}">
           <polygon points="2,2 14,2 8,8" />
         </svg>
       {/if}
@@ -1833,12 +1833,12 @@
                 {#if multiple && !item.blank && !item.action}
                   <div class="d-inline-block align-top ss-marker">
                     {#if selectionById[item.id]}
-                      <svg height="16" width="16">
+                      <svg viewBox="0 0 16 16">
                         <polygon points="2,1 14,1 14,12 2,12" class="ss-svg-marker"/>
                         <path d="M4,6 L7,9 L12,4" class="ss-svg-marker-check"/>
                       </svg>
                     {:else}
-                      <svg height="16" width="16">
+                      <svg viewBox="0 0 16 16">
                         <polygon points="2,1 14,1 14,12 2,12" class="ss-svg-marker"/>
                       </svg>
                     {/if}

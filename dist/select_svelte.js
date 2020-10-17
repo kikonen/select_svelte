@@ -783,8 +783,7 @@ var Select = (function () {
         svg = svg_element("svg");
         polygon = svg_element("polygon");
         attr(polygon, "points", "2,2 14,2 8,8");
-        attr(svg, "height", "16");
-        attr(svg, "width", "16");
+        attr(svg, "viewBox", "0 0 16 16");
         attr(svg, "class", svg_class_value =
         /*disabled*/
         ctx[31] ? "ss-svg-caret-diasbled" : "ss-svg-caret");
@@ -818,8 +817,7 @@ var Select = (function () {
         svg = svg_element("svg");
         polygon = svg_element("polygon");
         attr(polygon, "points", "4,2 12,2 12,10 4,10");
-        attr(svg, "height", "16");
-        attr(svg, "width", "16");
+        attr(svg, "viewBox", "0 0 16 16");
         attr(svg, "class", svg_class_value =
         /*disabled*/
         ctx[31] ? "ss-svg-caret-diasbled" : "ss-svg-caret");
@@ -1298,8 +1296,7 @@ var Select = (function () {
         polygon = svg_element("polygon");
         attr(polygon, "points", "2,1 14,1 14,12 2,12");
         attr(polygon, "class", "ss-svg-marker");
-        attr(svg, "height", "16");
-        attr(svg, "width", "16");
+        attr(svg, "viewBox", "0 0 16 16");
       },
       m: function m(target, anchor) {
         insert(target, svg, anchor);
@@ -1325,8 +1322,7 @@ var Select = (function () {
         attr(polygon, "class", "ss-svg-marker");
         attr(path, "d", "M4,6 L7,9 L12,4");
         attr(path, "class", "ss-svg-marker-check");
-        attr(svg, "height", "16");
-        attr(svg, "width", "16");
+        attr(svg, "viewBox", "0 0 16 16");
       },
       m: function m(target, anchor) {
         insert(target, svg, anchor);
