@@ -1805,15 +1805,22 @@
 
           {:else if item.disabled || item.placeholder}
             <li class="dropdown-item ss-item ss-item-muted ss-js-dead">
-              <div class="ss-item-text {item.item_class || ''}">
-                {item.text}
-              </div>
-
-              {#if item.desc}
-                <div class="ss-item-desc">
-                  {item.desc}
+              {#if multiple && !item.blank && !item.action}
+                <div class="d-inline-block align-top ss-marker">
                 </div>
               {/if}
+
+              <div class="d-inline-block">
+                <div class="ss-item-text {item.item_class || ''}">
+                  {item.text}
+                </div>
+
+                {#if item.desc}
+                  <div class="ss-item-desc">
+                    {item.desc}
+                  </div>
+                {/if}
+              </div>
             </li>
 
           {:else}
