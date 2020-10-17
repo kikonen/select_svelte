@@ -120,6 +120,7 @@
      let item = {
          id: normalizeId(el.value),
          text: el.text || '',
+         disabled: el.disabled,
      };
 
      if (ds) {
@@ -1803,7 +1804,7 @@
             </li>
 
           {:else if item.disabled || item.placeholder}
-            <li class="dropdown-item ss-item-muted ss-js-dead">
+            <li class="dropdown-item ss-item ss-item-muted ss-js-dead">
               <div class="ss-item-text {item.item_class || ''}">
                 {item.text}
               </div>
