@@ -2315,7 +2315,7 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	function containsActiveElement(el) {
-		return toggleEl === el || inputEl === el;
+		return toggleEl === el || inputEl === el || toggleEl.contains(el);
 	}
 
 	////////////////////////////////////////////////////////////
