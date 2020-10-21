@@ -581,7 +581,7 @@ var Select = (function () {
     child_ctx[125] = list[i];
     child_ctx[129] = i;
     return child_ctx;
-  } // (1726:10) {:else}
+  } // (1737:10) {:else}
 
 
   function create_else_block_6(ctx) {
@@ -615,7 +615,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1719:10) {#if item.href}
+  } // (1730:10) {#if item.href}
 
 
   function create_if_block_15(ctx) {
@@ -678,7 +678,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1712:6) {#each summaryItems as item, index (item.id)}
+  } // (1723:6) {#each summaryItems as item, index (item.id)}
 
 
   function create_each_block_1(key_1, ctx) {
@@ -771,7 +771,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1738:6) {:else}
+  } // (1749:6) {:else}
 
 
   function create_else_block_5(ctx) {
@@ -805,7 +805,7 @@ var Select = (function () {
         if (detaching) detach(svg);
       }
     };
-  } // (1734:6) {#if showFetching}
+  } // (1745:6) {#if showFetching}
 
 
   function create_if_block_14(ctx) {
@@ -839,7 +839,7 @@ var Select = (function () {
         if (detaching) detach(svg);
       }
     };
-  } // (1758:4) {#if typeahead}
+  } // (1769:4) {#if typeahead}
 
 
   function create_if_block_13(ctx) {
@@ -967,7 +967,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1826:10) {:else}
+  } // (1837:10) {:else}
 
 
   function create_else_block(ctx) {
@@ -1151,7 +1151,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1806:54) 
+  } // (1817:54) 
 
 
   function create_if_block_4(ctx) {
@@ -1257,7 +1257,7 @@ var Select = (function () {
         if (if_block1) if_block1.d();
       }
     };
-  } // (1802:10) {#if item.separator}
+  } // (1813:10) {#if item.separator}
 
 
   function create_if_block_3(ctx) {
@@ -1275,7 +1275,7 @@ var Select = (function () {
         if (detaching) detach(li);
       }
     };
-  } // (1841:16) {#if multiple && !item.blank && !item.action}
+  } // (1852:16) {#if multiple && !item.blank && !item.action}
 
 
   function create_if_block_11(ctx) {
@@ -1318,7 +1318,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1848:20) {:else}
+  } // (1859:20) {:else}
 
 
   function create_else_block_4(ctx) {
@@ -1340,7 +1340,7 @@ var Select = (function () {
         if (detaching) detach(svg);
       }
     };
-  } // (1843:20) {#if selectionById[item.id]}
+  } // (1854:20) {#if selectionById[item.id]}
 
 
   function create_if_block_12(ctx) {
@@ -1367,7 +1367,7 @@ var Select = (function () {
         if (detaching) detach(svg);
       }
     };
-  } // (1865:18) {:else}
+  } // (1876:18) {:else}
 
 
   function create_else_block_2(ctx) {
@@ -1434,7 +1434,7 @@ var Select = (function () {
         if (detaching) detach(if_block1_anchor);
       }
     };
-  } // (1857:18) {#if item.blank}
+  } // (1868:18) {#if item.blank}
 
 
   function create_if_block_7(ctx) {
@@ -1477,7 +1477,7 @@ var Select = (function () {
         if_block.d();
       }
     };
-  } // (1873:20) {:else}
+  } // (1884:20) {:else}
 
 
   function create_else_block_3(ctx) {
@@ -1518,7 +1518,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1866:20) {#if item.href}
+  } // (1877:20) {#if item.href}
 
 
   function create_if_block_10(ctx) {
@@ -1572,7 +1572,7 @@ var Select = (function () {
         run_all(dispose);
       }
     };
-  } // (1879:20) {#if item.desc}
+  } // (1890:20) {#if item.desc}
 
 
   function create_if_block_9(ctx) {
@@ -1613,7 +1613,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1861:22) {:else}
+  } // (1872:22) {:else}
 
 
   function create_else_block_1(ctx) {
@@ -1639,7 +1639,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1859:22) {#if multiple}
+  } // (1870:22) {#if multiple}
 
 
   function create_if_block_8(ctx) {
@@ -1659,7 +1659,7 @@ var Select = (function () {
         if (detaching) detach(t);
       }
     };
-  } // (1808:14) {#if multiple && !item.blank && !item.action}
+  } // (1819:14) {#if multiple && !item.blank && !item.action}
 
 
   function create_if_block_6(ctx) {
@@ -1676,7 +1676,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1818:16) {#if item.desc}
+  } // (1829:16) {#if item.desc}
 
 
   function create_if_block_5(ctx) {
@@ -1706,7 +1706,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1801:8) {#each displayItems as item (item.id)}
+  } // (1812:8) {#each displayItems as item (item.id)}
 
 
   function create_each_block(key_1, ctx) {
@@ -1760,7 +1760,7 @@ var Select = (function () {
         if (detaching) detach(if_block_anchor);
       }
     };
-  } // (1897:78) 
+  } // (1908:78) 
 
 
   function create_if_block_2(ctx) {
@@ -1781,7 +1781,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1893:4) {#if fetchError}
+  } // (1904:4) {#if fetchError}
 
 
   function create_if_block_1(ctx) {
@@ -1810,7 +1810,7 @@ var Select = (function () {
         if (detaching) detach(div);
       }
     };
-  } // (1903:4) {#if selectionItems.length >= maxItems}
+  } // (1914:4) {#if selectionItems.length >= maxItems}
 
 
   function create_if_block(ctx) {
@@ -2129,7 +2129,7 @@ var Select = (function () {
           /*handleToggleKeyup*/
           ctx[40]), listen(div1, "click",
           /*handleToggleClick*/
-          ctx[41]), listen(div2, "scroll",
+          ctx[41]), listen(div1, "mousedown", handleToggleMousedown), listen(div1, "dblclick", handleToggleDoubleClick), listen(div2, "scroll",
           /*handleResultScroll*/
           ctx[45])];
           mounted = true;
@@ -2781,6 +2781,14 @@ var Select = (function () {
       actualCount: act
     };
   }
+
+  function handleToggleMousedown(event) {
+    if (event.detail > 1) {
+      event.preventDefault();
+    }
+  }
+
+  function handleToggleDoubleClick(event) {}
 
   function handleToggleLinkMouseDown(event) {
     event.preventDefault();

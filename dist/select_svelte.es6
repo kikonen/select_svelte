@@ -370,7 +370,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (1726:10) {:else}
+// (1737:10) {:else}
 function create_else_block_6(ctx) {
 	let t_value = (/*item*/ ctx[125].summary == null
 	? /*item*/ ctx[125].text
@@ -396,7 +396,7 @@ function create_else_block_6(ctx) {
 	};
 }
 
-// (1719:10) {#if item.href}
+// (1730:10) {#if item.href}
 function create_if_block_15(ctx) {
 	let a;
 
@@ -448,7 +448,7 @@ function create_if_block_15(ctx) {
 	};
 }
 
-// (1712:6) {#each summaryItems as item, index (item.id)}
+// (1723:6) {#each summaryItems as item, index (item.id)}
 function create_each_block_1(key_1, ctx) {
 	let span;
 	let t;
@@ -516,7 +516,7 @@ function create_each_block_1(key_1, ctx) {
 	};
 }
 
-// (1738:6) {:else}
+// (1749:6) {:else}
 function create_else_block_5(ctx) {
 	let svg;
 	let polygon;
@@ -550,7 +550,7 @@ function create_else_block_5(ctx) {
 	};
 }
 
-// (1734:6) {#if showFetching}
+// (1745:6) {#if showFetching}
 function create_if_block_14(ctx) {
 	let svg;
 	let polygon;
@@ -584,7 +584,7 @@ function create_if_block_14(ctx) {
 	};
 }
 
-// (1758:4) {#if typeahead}
+// (1769:4) {#if typeahead}
 function create_if_block_13(ctx) {
 	let div;
 	let label;
@@ -672,7 +672,7 @@ function create_if_block_13(ctx) {
 	};
 }
 
-// (1826:10) {:else}
+// (1837:10) {:else}
 function create_else_block(ctx) {
 	let li;
 	let div1;
@@ -799,7 +799,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (1806:54) 
+// (1817:54) 
 function create_if_block_4(ctx) {
 	let li;
 	let t0;
@@ -878,7 +878,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (1802:10) {#if item.separator}
+// (1813:10) {#if item.separator}
 function create_if_block_3(ctx) {
 	let li;
 
@@ -897,7 +897,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (1841:16) {#if multiple && !item.blank && !item.action}
+// (1852:16) {#if multiple && !item.blank && !item.action}
 function create_if_block_11(ctx) {
 	let div;
 
@@ -937,7 +937,7 @@ function create_if_block_11(ctx) {
 	};
 }
 
-// (1848:20) {:else}
+// (1859:20) {:else}
 function create_else_block_4(ctx) {
 	let svg;
 	let polygon;
@@ -960,7 +960,7 @@ function create_else_block_4(ctx) {
 	};
 }
 
-// (1843:20) {#if selectionById[item.id]}
+// (1854:20) {#if selectionById[item.id]}
 function create_if_block_12(ctx) {
 	let svg;
 	let polygon;
@@ -988,7 +988,7 @@ function create_if_block_12(ctx) {
 	};
 }
 
-// (1865:18) {:else}
+// (1876:18) {:else}
 function create_else_block_2(ctx) {
 	let t;
 	let if_block1_anchor;
@@ -1050,7 +1050,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (1857:18) {#if item.blank}
+// (1868:18) {#if item.blank}
 function create_if_block_7(ctx) {
 	let div;
 
@@ -1092,7 +1092,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (1873:20) {:else}
+// (1884:20) {:else}
 function create_else_block_3(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[125].text + "";
@@ -1122,7 +1122,7 @@ function create_else_block_3(ctx) {
 	};
 }
 
-// (1866:20) {#if item.href}
+// (1877:20) {#if item.href}
 function create_if_block_10(ctx) {
 	let a;
 	let t_value = /*item*/ ctx[125].text + "";
@@ -1167,7 +1167,7 @@ function create_if_block_10(ctx) {
 	};
 }
 
-// (1879:20) {#if item.desc}
+// (1890:20) {#if item.desc}
 function create_if_block_9(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[125].desc + "";
@@ -1197,7 +1197,7 @@ function create_if_block_9(ctx) {
 	};
 }
 
-// (1861:22) {:else}
+// (1872:22) {:else}
 function create_else_block_1(ctx) {
 	let t_value = /*item*/ ctx[125].text + "";
 	let t;
@@ -1218,7 +1218,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (1859:22) {#if multiple}
+// (1870:22) {#if multiple}
 function create_if_block_8(ctx) {
 	let t_value = /*translate*/ ctx[33]("clear") + "";
 	let t;
@@ -1237,7 +1237,7 @@ function create_if_block_8(ctx) {
 	};
 }
 
-// (1808:14) {#if multiple && !item.blank && !item.action}
+// (1819:14) {#if multiple && !item.blank && !item.action}
 function create_if_block_6(ctx) {
 	let div;
 
@@ -1255,7 +1255,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (1818:16) {#if item.desc}
+// (1829:16) {#if item.desc}
 function create_if_block_5(ctx) {
 	let div;
 	let t_value = /*item*/ ctx[125].desc + "";
@@ -1280,7 +1280,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (1801:8) {#each displayItems as item (item.id)}
+// (1812:8) {#each displayItems as item (item.id)}
 function create_each_block(key_1, ctx) {
 	let first;
 	let if_block_anchor;
@@ -1329,7 +1329,7 @@ function create_each_block(key_1, ctx) {
 	};
 }
 
-// (1897:78) 
+// (1908:78) 
 function create_if_block_2(ctx) {
 	let div;
 
@@ -1349,7 +1349,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (1893:4) {#if fetchError}
+// (1904:4) {#if fetchError}
 function create_if_block_1(ctx) {
 	let div;
 	let t;
@@ -1373,7 +1373,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (1903:4) {#if selectionItems.length >= maxItems}
+// (1914:4) {#if selectionItems.length >= maxItems}
 function create_if_block(ctx) {
 	let div;
 	let t0_value = /*translate*/ ctx[33]("max_limit") + "";
@@ -1575,6 +1575,8 @@ function create_fragment(ctx) {
 					listen(div1, "keydown", /*handleToggleKeydown*/ ctx[39]),
 					listen(div1, "keyup", /*handleToggleKeyup*/ ctx[40]),
 					listen(div1, "click", /*handleToggleClick*/ ctx[41]),
+					listen(div1, "mousedown", handleToggleMousedown),
+					listen(div1, "dblclick", handleToggleDoubleClick),
 					listen(div2, "scroll", /*handleResultScroll*/ ctx[45])
 				];
 
@@ -2098,6 +2100,16 @@ function calculateCounts(items) {
 	});
 
 	return { offsetCount: off, actualCount: act };
+}
+
+function handleToggleMousedown(event) {
+	if (event.detail > 1) {
+		event.preventDefault();
+	}
+}
+
+function handleToggleDoubleClick(event) {
+	
 }
 
 function handleToggleLinkMouseDown(event) {
