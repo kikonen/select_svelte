@@ -1605,6 +1605,15 @@
      }
  }
 
+ function handleToggleMousedown(event) {
+   if (event.detail > 1) {
+     event.preventDefault();
+   }
+ }
+
+ function handleToggleDoubleClick(event) {
+ }
+
  function handleToggleLinkMouseDown(event) {
      event.preventDefault();
  }
@@ -1705,7 +1714,9 @@
        on:blur={handleBlur}
        on:keydown={handleToggleKeydown}
        on:keyup={handleToggleKeyup}
-       on:click={handleToggleClick}>
+       on:click={handleToggleClick}
+       on:mousedown={handleToggleMousedown}
+       on:dblclick={handleToggleDoubleClick}>
 
     <span class:ss-summary-multiple={!summarySingle}
           class:ss-summary-single={summarySingle}>
