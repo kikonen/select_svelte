@@ -17,7 +17,6 @@ function safe_not_equal(a, b) {
 function is_empty(obj) {
     return Object.keys(obj).length === 0;
 }
-
 function append(target, node) {
     target.appendChild(node);
 }
@@ -73,7 +72,7 @@ function set_current_component(component) {
 }
 function get_current_component() {
     if (!current_component)
-        throw new Error(`Function called outside component initialization`);
+        throw new Error('Function called outside component initialization');
     return current_component;
 }
 function beforeUpdate(fn) {
@@ -101,22 +100,40 @@ function schedule_update() {
 function add_render_callback(fn) {
     render_callbacks.push(fn);
 }
-let flushing = false;
+// flush() calls callbacks in this order:
+// 1. All beforeUpdate callbacks, in order: parents before children
+// 2. All bind:this callbacks, in reverse order: children before parents.
+// 3. All afterUpdate callbacks, in order: parents before children. EXCEPT
+//    for afterUpdates called during the initial onMount, which are called in
+//    reverse order: children before parents.
+// Since callbacks might update component values, which could trigger another
+// call to flush(), the following steps guard against this:
+// 1. During beforeUpdate, any updated components will be added to the
+//    dirty_components array and will cause a reentrant call to flush(). Because
+//    the flush index is kept outside the function, the reentrant call will pick
+//    up where the earlier call left off and go through all dirty components. The
+//    current_component value is saved and restored so that the reentrant call will
+//    not interfere with the "parent" flush() call.
+// 2. bind:this callbacks cannot trigger new flush() calls.
+// 3. During afterUpdate, any updated components will NOT have their afterUpdate
+//    callback called a second time; the seen_callbacks set, outside the flush()
+//    function, guarantees this behavior.
 const seen_callbacks = new Set();
+let flushidx = 0; // Do *not* move this inside the flush() function
 function flush() {
-    if (flushing)
-        return;
-    flushing = true;
+    const saved_component = current_component;
     do {
         // first, call beforeUpdate functions
         // and update components
-        for (let i = 0; i < dirty_components.length; i += 1) {
-            const component = dirty_components[i];
+        while (flushidx < dirty_components.length) {
+            const component = dirty_components[flushidx];
+            flushidx++;
             set_current_component(component);
             update(component.$$);
         }
         set_current_component(null);
         dirty_components.length = 0;
+        flushidx = 0;
         while (binding_callbacks.length)
             binding_callbacks.pop()();
         // then, once components are updated, call
@@ -136,8 +153,8 @@ function flush() {
         flush_callbacks.pop()();
     }
     update_scheduled = false;
-    flushing = false;
     seen_callbacks.clear();
+    set_current_component(saved_component);
 }
 function update($$) {
     if ($$.fragment !== null) {
@@ -236,22 +253,24 @@ function update_keyed_each(old_blocks, dirty, get_key, dynamic, ctx, list, looku
         insert(new_blocks[n - 1]);
     return new_blocks;
 }
-function mount_component(component, target, anchor) {
+function mount_component(component, target, anchor, customElement) {
     const { fragment, on_mount, on_destroy, after_update } = component.$$;
     fragment && fragment.m(target, anchor);
-    // onMount happens before the initial afterUpdate
-    add_render_callback(() => {
-        const new_on_destroy = on_mount.map(run).filter(is_function);
-        if (on_destroy) {
-            on_destroy.push(...new_on_destroy);
-        }
-        else {
-            // Edge case - component was destroyed immediately,
-            // most likely as a result of a binding initialising
-            run_all(new_on_destroy);
-        }
-        component.$$.on_mount = [];
-    });
+    if (!customElement) {
+        // onMount happens before the initial afterUpdate
+        add_render_callback(() => {
+            const new_on_destroy = on_mount.map(run).filter(is_function);
+            if (on_destroy) {
+                on_destroy.push(...new_on_destroy);
+            }
+            else {
+                // Edge case - component was destroyed immediately,
+                // most likely as a result of a binding initialising
+                run_all(new_on_destroy);
+            }
+            component.$$.on_mount = [];
+        });
+    }
     after_update.forEach(add_render_callback);
 }
 function destroy_component(component, detaching) {
@@ -273,10 +292,9 @@ function make_dirty(component, i) {
     }
     component.$$.dirty[(i / 31) | 0] |= (1 << (i % 31));
 }
-function init(component, options, instance, create_fragment, not_equal, props, dirty = [-1]) {
+function init(component, options, instance, create_fragment, not_equal, props, append_styles, dirty = [-1]) {
     const parent_component = current_component;
     set_current_component(component);
-    const prop_values = options.props || {};
     const $$ = component.$$ = {
         fragment: null,
         ctx: null,
@@ -288,17 +306,20 @@ function init(component, options, instance, create_fragment, not_equal, props, d
         // lifecycle
         on_mount: [],
         on_destroy: [],
+        on_disconnect: [],
         before_update: [],
         after_update: [],
-        context: new Map(parent_component ? parent_component.$$.context : []),
+        context: new Map(options.context || (parent_component ? parent_component.$$.context : [])),
         // everything else
         callbacks: blank_object(),
         dirty,
-        skip_bound: false
+        skip_bound: false,
+        root: options.target || parent_component.$$.root
     };
+    append_styles && append_styles($$.root);
     let ready = false;
     $$.ctx = instance
-        ? instance(component, prop_values, (i, ret, ...rest) => {
+        ? instance(component, options.props || {}, (i, ret, ...rest) => {
             const value = rest.length ? rest[0] : ret;
             if ($$.ctx && not_equal($$.ctx[i], $$.ctx[i] = value)) {
                 if (!$$.skip_bound && $$.bound[i])
@@ -327,11 +348,14 @@ function init(component, options, instance, create_fragment, not_equal, props, d
         }
         if (options.intro)
             transition_in(component.$$.fragment);
-        mount_component(component, options.target, options.anchor);
+        mount_component(component, options.target, options.anchor, options.customElement);
         flush();
     }
     set_current_component(parent_component);
 }
+/**
+ * Base class for Svelte components. Used when dev=false.
+ */
 class SvelteComponent {
     $destroy() {
         destroy_component(this, 1);
@@ -355,7 +379,7 @@ class SvelteComponent {
     }
 }
 
-/* src/select.svelte generated by Svelte v3.29.0 */
+/* src/select.svelte generated by Svelte v3.46.3 */
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
@@ -469,7 +493,7 @@ function create_each_block_1(key_1, ctx) {
 			span = element("span");
 			if_block.c();
 			t = space();
-			attr(span, "class", span_class_value = /*item*/ ctx[125].item_class || "");
+			attr(span, "class", span_class_value = /*item*/ ctx[125].item_class || '');
 			toggle_class(span, "ss-blank", /*item*/ ctx[125].blank);
 			toggle_class(span, "ss-summary-item-multiple", !/*summarySingle*/ ctx[20]);
 			toggle_class(span, "ss-summary-item-single", /*summarySingle*/ ctx[20]);
@@ -480,7 +504,9 @@ function create_each_block_1(key_1, ctx) {
 			if_block.m(span, null);
 			append(span, t);
 		},
-		p(ctx, dirty) {
+		p(new_ctx, dirty) {
+			ctx = new_ctx;
+
 			if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block) {
 				if_block.p(ctx, dirty);
 			} else {
@@ -493,7 +519,7 @@ function create_each_block_1(key_1, ctx) {
 				}
 			}
 
-			if (dirty[0] & /*summaryItems*/ 2097152 && span_class_value !== (span_class_value = /*item*/ ctx[125].item_class || "")) {
+			if (dirty[0] & /*summaryItems*/ 2097152 && span_class_value !== (span_class_value = /*item*/ ctx[125].item_class || '')) {
 				attr(span, "class", span_class_value);
 			}
 
@@ -530,8 +556,8 @@ function create_else_block_5(ctx) {
 			attr(svg, "viewBox", "0 0 16 16");
 
 			attr(svg, "class", svg_class_value = /*disabled*/ ctx[31]
-			? "ss-svg-caret-diasbled"
-			: "ss-svg-caret");
+			? 'ss-svg-caret-diasbled'
+			: 'ss-svg-caret');
 		},
 		m(target, anchor) {
 			insert(target, svg, anchor);
@@ -539,8 +565,8 @@ function create_else_block_5(ctx) {
 		},
 		p(ctx, dirty) {
 			if (dirty[1] & /*disabled*/ 1 && svg_class_value !== (svg_class_value = /*disabled*/ ctx[31]
-			? "ss-svg-caret-diasbled"
-			: "ss-svg-caret")) {
+			? 'ss-svg-caret-diasbled'
+			: 'ss-svg-caret')) {
 				attr(svg, "class", svg_class_value);
 			}
 		},
@@ -564,8 +590,8 @@ function create_if_block_14(ctx) {
 			attr(svg, "viewBox", "0 0 16 16");
 
 			attr(svg, "class", svg_class_value = /*disabled*/ ctx[31]
-			? "ss-svg-caret-diasbled"
-			: "ss-svg-caret");
+			? 'ss-svg-caret-diasbled'
+			: 'ss-svg-caret');
 		},
 		m(target, anchor) {
 			insert(target, svg, anchor);
@@ -573,8 +599,8 @@ function create_if_block_14(ctx) {
 		},
 		p(ctx, dirty) {
 			if (dirty[1] & /*disabled*/ 1 && svg_class_value !== (svg_class_value = /*disabled*/ ctx[31]
-			? "ss-svg-caret-diasbled"
-			: "ss-svg-caret")) {
+			? 'ss-svg-caret-diasbled'
+			: 'ss-svg-caret')) {
 				attr(svg, "class", svg_class_value);
 			}
 		},
@@ -588,7 +614,7 @@ function create_if_block_14(ctx) {
 function create_if_block_13(ctx) {
 	let div;
 	let label;
-	let t0_value = /*translate*/ ctx[33]("typeahead_input") + "";
+	let t0_value = /*translate*/ ctx[33]('typeahead_input') + "";
 	let t0;
 	let label_for_value;
 	let t1;
@@ -618,7 +644,7 @@ function create_if_block_13(ctx) {
 			attr(input, "role", "combobox");
 			attr(input, "aria-autocomplete", "list");
 			attr(input, "aria-controls", input_aria_controls_value = "" + (/*containerId*/ ctx[12] + "_items"));
-			attr(input, "aria-activedescendant", input_aria_activedescendant_value = /*activeId*/ ctx[22] || "");
+			attr(input, "aria-activedescendant", input_aria_activedescendant_value = /*activeId*/ ctx[22] || '');
 			attr(div, "class", "ss-input-item");
 		},
 		m(target, anchor) {
@@ -627,12 +653,12 @@ function create_if_block_13(ctx) {
 			append(label, t0);
 			append(div, t1);
 			append(div, input);
-			/*input_binding*/ ctx[49](input);
+			/*input_binding*/ ctx[50](input);
 			set_input_value(input, /*query*/ ctx[14]);
 
 			if (!mounted) {
 				dispose = [
-					listen(input, "input", /*input_input_handler*/ ctx[50]),
+					listen(input, "input", /*input_input_handler*/ ctx[51]),
 					listen(input, "blur", /*handleInputBlur*/ ctx[35]),
 					listen(input, "keypress", /*handleInputKeypress*/ ctx[36]),
 					listen(input, "keydown", /*handleInputKeydown*/ ctx[37]),
@@ -655,7 +681,7 @@ function create_if_block_13(ctx) {
 				attr(input, "aria-controls", input_aria_controls_value);
 			}
 
-			if (dirty[0] & /*activeId*/ 4194304 && input_aria_activedescendant_value !== (input_aria_activedescendant_value = /*activeId*/ ctx[22] || "")) {
+			if (dirty[0] & /*activeId*/ 4194304 && input_aria_activedescendant_value !== (input_aria_activedescendant_value = /*activeId*/ ctx[22] || '')) {
 				attr(input, "aria-activedescendant", input_aria_activedescendant_value);
 			}
 
@@ -665,7 +691,7 @@ function create_if_block_13(ctx) {
 		},
 		d(detaching) {
 			if (detaching) detach(div);
-			/*input_binding*/ ctx[49](null);
+			/*input_binding*/ ctx[50](null);
 			mounted = false;
 			run_all(dispose);
 		}
@@ -707,12 +733,12 @@ function create_else_block(ctx) {
 			t1 = space();
 			attr(div0, "class", "d-inline-block");
 			attr(div1, "class", "ss-no-click");
-			attr(li, "class", li_class_value = "dropdown-item ss-item ss-js-item " + (/*item*/ ctx[125].item_class || ""));
+			attr(li, "class", li_class_value = "dropdown-item ss-item ss-js-item " + (/*item*/ ctx[125].item_class || ''));
 			attr(li, "id", li_id_value = "" + (/*containerId*/ ctx[12] + "_item_" + /*item*/ ctx[125].id));
 			attr(li, "role", "option");
 
 			attr(li, "aria-selected", li_aria_selected_value = /*selectionById*/ ctx[17][/*item*/ ctx[125].id]
-			? "true"
+			? 'true'
 			: null);
 
 			attr(li, "data-id", li_data_id_value = /*item*/ ctx[125].id);
@@ -763,7 +789,7 @@ function create_else_block(ctx) {
 				}
 			}
 
-			if (dirty[0] & /*displayItems*/ 65536 && li_class_value !== (li_class_value = "dropdown-item ss-item ss-js-item " + (/*item*/ ctx[125].item_class || ""))) {
+			if (dirty[0] & /*displayItems*/ 65536 && li_class_value !== (li_class_value = "dropdown-item ss-item ss-js-item " + (/*item*/ ctx[125].item_class || ''))) {
 				attr(li, "class", li_class_value);
 			}
 
@@ -772,7 +798,7 @@ function create_else_block(ctx) {
 			}
 
 			if (dirty[0] & /*selectionById, displayItems*/ 196608 && li_aria_selected_value !== (li_aria_selected_value = /*selectionById*/ ctx[17][/*item*/ ctx[125].id]
-			? "true"
+			? 'true'
 			: null)) {
 				attr(li, "aria-selected", li_aria_selected_value);
 			}
@@ -824,7 +850,7 @@ function create_if_block_4(ctx) {
 			t2 = space();
 			if (if_block1) if_block1.c();
 			t3 = space();
-			attr(div0, "class", div0_class_value = "ss-item-text " + (/*item*/ ctx[125].item_class || ""));
+			attr(div0, "class", div0_class_value = "ss-item-text " + (/*item*/ ctx[125].item_class || ''));
 			attr(div1, "class", "d-inline-block");
 			attr(li, "class", "dropdown-item ss-item ss-item-muted ss-js-dead");
 		},
@@ -853,7 +879,7 @@ function create_if_block_4(ctx) {
 
 			if (dirty[0] & /*displayItems*/ 65536 && t1_value !== (t1_value = /*item*/ ctx[125].text + "")) set_data(t1, t1_value);
 
-			if (dirty[0] & /*displayItems*/ 65536 && div0_class_value !== (div0_class_value = "ss-item-text " + (/*item*/ ctx[125].item_class || ""))) {
+			if (dirty[0] & /*displayItems*/ 65536 && div0_class_value !== (div0_class_value = "ss-item-text " + (/*item*/ ctx[125].item_class || ''))) {
 				attr(div0, "class", div0_class_value);
 			}
 
@@ -1103,7 +1129,7 @@ function create_else_block_3(ctx) {
 		c() {
 			div = element("div");
 			t = text(t_value);
-			attr(div, "class", div_class_value = "ss-item-text " + (/*item*/ ctx[125].item_text_class || ""));
+			attr(div, "class", div_class_value = "ss-item-text " + (/*item*/ ctx[125].item_text_class || ''));
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -1112,7 +1138,7 @@ function create_else_block_3(ctx) {
 		p(ctx, dirty) {
 			if (dirty[0] & /*displayItems*/ 65536 && t_value !== (t_value = /*item*/ ctx[125].text + "")) set_data(t, t_value);
 
-			if (dirty[0] & /*displayItems*/ 65536 && div_class_value !== (div_class_value = "ss-item-text " + (/*item*/ ctx[125].item_text_class || ""))) {
+			if (dirty[0] & /*displayItems*/ 65536 && div_class_value !== (div_class_value = "ss-item-text " + (/*item*/ ctx[125].item_text_class || ''))) {
 				attr(div, "class", div_class_value);
 			}
 		},
@@ -1178,7 +1204,7 @@ function create_if_block_9(ctx) {
 		c() {
 			div = element("div");
 			t = text(t_value);
-			attr(div, "class", div_class_value = "ss-item-desc " + (/*item*/ ctx[125].item_desc_class || ""));
+			attr(div, "class", div_class_value = "ss-item-desc " + (/*item*/ ctx[125].item_desc_class || ''));
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -1187,7 +1213,7 @@ function create_if_block_9(ctx) {
 		p(ctx, dirty) {
 			if (dirty[0] & /*displayItems*/ 65536 && t_value !== (t_value = /*item*/ ctx[125].desc + "")) set_data(t, t_value);
 
-			if (dirty[0] & /*displayItems*/ 65536 && div_class_value !== (div_class_value = "ss-item-desc " + (/*item*/ ctx[125].item_desc_class || ""))) {
+			if (dirty[0] & /*displayItems*/ 65536 && div_class_value !== (div_class_value = "ss-item-desc " + (/*item*/ ctx[125].item_desc_class || ''))) {
 				attr(div, "class", div_class_value);
 			}
 		},
@@ -1220,7 +1246,7 @@ function create_else_block_1(ctx) {
 
 // (1870:22) {#if multiple}
 function create_if_block_8(ctx) {
-	let t_value = /*translate*/ ctx[33]("clear") + "";
+	let t_value = /*translate*/ ctx[33]('clear') + "";
 	let t;
 
 	return {
@@ -1308,7 +1334,9 @@ function create_each_block(key_1, ctx) {
 			if_block.m(target, anchor);
 			insert(target, if_block_anchor, anchor);
 		},
-		p(ctx, dirty) {
+		p(new_ctx, dirty) {
+			ctx = new_ctx;
+
 			if (current_block_type === (current_block_type = select_block_type_2(ctx)) && if_block) {
 				if_block.p(ctx, dirty);
 			} else {
@@ -1336,7 +1364,7 @@ function create_if_block_2(ctx) {
 	return {
 		c() {
 			div = element("div");
-			div.textContent = `${/*translate*/ ctx[33]("no_results")}`;
+			div.textContent = `${/*translate*/ ctx[33]('no_results')}`;
 			attr(div, "class", "dropdown-item ss-message-item ss-item-muted");
 		},
 		m(target, anchor) {
@@ -1376,7 +1404,7 @@ function create_if_block_1(ctx) {
 // (1914:4) {#if selectionItems.length >= maxItems}
 function create_if_block(ctx) {
 	let div;
-	let t0_value = /*translate*/ ctx[33]("max_limit") + "";
+	let t0_value = /*translate*/ ctx[33]('max_limit') + "";
 	let t0;
 	let t1;
 	let t2;
@@ -1431,7 +1459,6 @@ function create_fragment(ctx) {
 	let t3;
 	let t4;
 	let div3_id_value;
-	let div4_class_value;
 	let mounted;
 	let dispose;
 	let each_value_1 = /*summaryItems*/ ctx[21];
@@ -1508,7 +1535,7 @@ function create_fragment(ctx) {
 			attr(div1, "aria-expanded", /*popupVisible*/ ctx[25]);
 			attr(div1, "aria-haspopup", "listbox");
 			attr(div1, "aria-owns", div1_aria_owns_value = "" + (/*containerId*/ ctx[12] + "_popup"));
-			attr(div1, "tabindex", div1_tabindex_value = /*disabled*/ ctx[31] ? "-1" : "0");
+			attr(div1, "tabindex", div1_tabindex_value = /*disabled*/ ctx[31] ? '-1' : '0');
 			attr(div1, "title", /*selectionTip*/ ctx[19]);
 			attr(div1, "aria-disabled", /*disabled*/ ctx[31]);
 			toggle_class(div1, "ss-disabled", /*disabled*/ ctx[31]);
@@ -1522,7 +1549,7 @@ function create_fragment(ctx) {
 			? `${/*containerId*/ ctx[12]}_item_${/*selectionItems*/ ctx[18][0].id}`
 			: null);
 
-			attr(ul, "aria-multiselectable", ul_aria_multiselectable_value = /*multiple*/ ctx[30] ? "true" : null);
+			attr(ul, "aria-multiselectable", ul_aria_multiselectable_value = /*multiple*/ ctx[30] ? 'true' : null);
 			attr(div2, "class", "ss-result");
 			attr(div3, "class", "dropdown-menu ss-popup");
 			attr(div3, "id", div3_id_value = "" + (/*containerId*/ ctx[12] + "_popup"));
@@ -1532,7 +1559,7 @@ function create_fragment(ctx) {
 			toggle_class(div3, "ss-popup-left", /*popupLeft*/ ctx[27] && !/*popupFixed*/ ctx[9]);
 			toggle_class(div3, "ss-popup-fixed-top", /*popupTop*/ ctx[26] && /*popupFixed*/ ctx[9]);
 			toggle_class(div3, "ss-popup-fixed-left", /*popupLeft*/ ctx[27] && /*popupFixed*/ ctx[9]);
-			attr(div4, "class", div4_class_value = "form-control ss-container " + (/*styles*/ ctx[32].container_class || ""));
+			attr(div4, "class", "form-control ss-container " + (/*styles*/ ctx[32].container_class || ''));
 			attr(div4, "id", /*containerId*/ ctx[12]);
 			attr(div4, "name", /*containerName*/ ctx[13]);
 		},
@@ -1548,7 +1575,7 @@ function create_fragment(ctx) {
 			append(div1, t0);
 			append(div1, div0);
 			if_block0.m(div0, null);
-			/*div1_binding*/ ctx[48](div1);
+			/*div1_binding*/ ctx[49](div1);
 			append(div4, t1);
 			append(div4, div3);
 			if (if_block1) if_block1.m(div3, null);
@@ -1560,14 +1587,14 @@ function create_fragment(ctx) {
 				each_blocks[i].m(ul, null);
 			}
 
-			/*ul_binding*/ ctx[51](ul);
-			/*div2_binding*/ ctx[52](div2);
+			/*ul_binding*/ ctx[52](ul);
+			/*div2_binding*/ ctx[53](div2);
 			append(div3, t3);
 			if (if_block2) if_block2.m(div3, null);
 			append(div3, t4);
 			if (if_block3) if_block3.m(div3, null);
-			/*div3_binding*/ ctx[53](div3);
-			/*div4_binding*/ ctx[54](div4);
+			/*div3_binding*/ ctx[54](div3);
+			/*div4_binding*/ ctx[55](div4);
 
 			if (!mounted) {
 				dispose = [
@@ -1585,7 +1612,7 @@ function create_fragment(ctx) {
 		},
 		p(ctx, dirty) {
 			if (dirty[0] & /*summaryItems, summarySingle*/ 3145728 | dirty[1] & /*handleToggleLinkClick*/ 2048) {
-				const each_value_1 = /*summaryItems*/ ctx[21];
+				each_value_1 = /*summaryItems*/ ctx[21];
 				each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key, 1, ctx, each_value_1, each0_lookup, span, destroy_block, create_each_block_1, null, get_each_context_1);
 			}
 
@@ -1629,7 +1656,7 @@ function create_fragment(ctx) {
 				attr(div1, "aria-owns", div1_aria_owns_value);
 			}
 
-			if (dirty[1] & /*disabled*/ 1 && div1_tabindex_value !== (div1_tabindex_value = /*disabled*/ ctx[31] ? "-1" : "0")) {
+			if (dirty[1] & /*disabled*/ 1 && div1_tabindex_value !== (div1_tabindex_value = /*disabled*/ ctx[31] ? '-1' : '0')) {
 				attr(div1, "tabindex", div1_tabindex_value);
 			}
 
@@ -1659,7 +1686,7 @@ function create_fragment(ctx) {
 			}
 
 			if (dirty[0] & /*displayItems, multiple, containerId, selectionById*/ 1073942528 | dirty[1] & /*handleOptionClick, translate, handleOptionLinkClick*/ 12292) {
-				const each_value = /*displayItems*/ ctx[16];
+				each_value = /*displayItems*/ ctx[16];
 				each_blocks = update_keyed_each(each_blocks, dirty, get_key_1, 1, ctx, each_value, each1_lookup, ul, destroy_block, create_each_block, null, get_each_context);
 			}
 
@@ -1677,7 +1704,7 @@ function create_fragment(ctx) {
 				attr(ul, "aria-activedescendant", ul_aria_activedescendant_value);
 			}
 
-			if (dirty[0] & /*multiple*/ 1073741824 && ul_aria_multiselectable_value !== (ul_aria_multiselectable_value = /*multiple*/ ctx[30] ? "true" : null)) {
+			if (dirty[0] & /*multiple*/ 1073741824 && ul_aria_multiselectable_value !== (ul_aria_multiselectable_value = /*multiple*/ ctx[30] ? 'true' : null)) {
 				attr(ul, "aria-multiselectable", ul_aria_multiselectable_value);
 			}
 
@@ -1752,23 +1779,23 @@ function create_fragment(ctx) {
 			}
 
 			if_block0.d();
-			/*div1_binding*/ ctx[48](null);
+			/*div1_binding*/ ctx[49](null);
 			if (if_block1) if_block1.d();
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].d();
 			}
 
-			/*ul_binding*/ ctx[51](null);
-			/*div2_binding*/ ctx[52](null);
+			/*ul_binding*/ ctx[52](null);
+			/*div2_binding*/ ctx[53](null);
 
 			if (if_block2) {
 				if_block2.d();
 			}
 
 			if (if_block3) if_block3.d();
-			/*div3_binding*/ ctx[53](null);
-			/*div4_binding*/ ctx[54](null);
+			/*div3_binding*/ ctx[54](null);
+			/*div4_binding*/ ctx[55](null);
 			mounted = false;
 			run_all(dispose);
 		}
@@ -1776,17 +1803,17 @@ function create_fragment(ctx) {
 }
 
 const I18N_DEFAULTS = {
-	clear: "Clear",
-	no_results: "No results",
-	max_limit: "Max limit reached",
-	selected_count: "selected",
-	selected_more: "more",
-	typeahead_input: "Search for..."
+	clear: 'Clear',
+	no_results: 'No results',
+	max_limit: 'Max limit reached',
+	selected_count: 'selected',
+	selected_more: 'more',
+	typeahead_input: 'Search for...'
 };
 
-const STYLE_DEFAULTS = { container_class: "" };
-const BLANK_ID = "";
-const FIXED_SORT_KEY = "_";
+const STYLE_DEFAULTS = { container_class: '' };
+const BLANK_ID = '';
+const FIXED_SORT_KEY = '_';
 const FETCH_INDICATOR_DELAY = 150;
 
 const META_KEYS = {
@@ -1836,14 +1863,10 @@ function nop() {
 	
 }
 
-
-
 function nextUID() {
 	uidBase++;
 	return uidBase;
 }
-
-
 
 function hasModifier(event) {
 	return event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
@@ -1857,7 +1880,7 @@ function isMetaKey(event) {
  * NOTE 0 and "0" are non blank ids
  */
 function isBlankId(id) {
-	return id !== 0 && id !== "0" && (id == null || id == BLANK_ID);
+	return id !== 0 && id !== '0' && (id == null || id == BLANK_ID);
 }
 
 /**
@@ -1868,11 +1891,11 @@ function normalizeId(id) {
 }
 
 function toUnderscore(key) {
-	return key.split(/(?=[A-Z])/).join("_").toLowerCase();
+	return key.split(/(?=[A-Z])/).join('_').toLowerCase();
 }
 
 function toDash(key) {
-	return key.replace(/_/g, "-");
+	return key.replace(/_/g, '-');
 }
 
 function createItemFromOption(el, styles, baseHref) {
@@ -1880,7 +1903,7 @@ function createItemFromOption(el, styles, baseHref) {
 
 	let item = {
 		id: normalizeId(el.value),
-		text: el.text || "",
+		text: el.text || '',
 		disabled: el.disabled
 	};
 
@@ -1926,31 +1949,31 @@ function createItemFromOption(el, styles, baseHref) {
 }
 
 function createOptionFromItem(item) {
-	let el = document.createElement("option");
-	el.setAttribute("value", item.id);
+	let el = document.createElement('option');
+	el.setAttribute('value', item.id);
 
 	if (item.desc) {
-		el.setAttribute("data-item-desc", item.desc);
+		el.setAttribute('data-item-desc', item.desc);
 	}
 
 	if (item.item_class) {
-		el.setAttribute("data-item-class", item.item_class);
+		el.setAttribute('data-item-class', item.item_class);
 	}
 
 	if (item.item_text_class) {
-		el.setAttribute("data-item-text-class", item.item_class);
+		el.setAttribute('data-item-text-class', item.item_class);
 	}
 
 	if (item.item_desc_class) {
-		el.setAttribute("data-item-desc-class", item.item_class);
+		el.setAttribute('data-item-desc-class', item.item_class);
 	}
 
 	if (item.action) {
-		el.setAttribute("data-item-action", item.action);
+		el.setAttribute('data-item-action', item.action);
 	}
 
 	if (item.summary) {
-		el.setAttribute("data-item-summary", item.desc);
+		el.setAttribute('data-item-summary', item.desc);
 	}
 
 	if (item.data) {
@@ -1967,7 +1990,7 @@ function createDisplay(data) {
 	let byId = {};
 	let items = [];
 	let blankItem = null;
-	let query = (data.query || "").trim();
+	let query = (data.query || '').trim();
 	let fixedItems = data.fixedItems || [];
 	let fetchedItems = data.fetchedItems || [];
 	let selectionItems = data.selectionItems || [];
@@ -2021,7 +2044,7 @@ function createDisplay(data) {
 	});
 
 	if (data.typeahead && items.length && filteredSelection.length && filteredFetched.length) {
-		items.push({ id: "fixed_sep", separator: true });
+		items.push({ id: 'fixed_sep', separator: true });
 	}
 
 	filteredSelection.forEach(function (item) {
@@ -2029,7 +2052,7 @@ function createDisplay(data) {
 	});
 
 	if (filteredSelection.length && filteredFetched.length) {
-		items.push({ id: "selection_sep", separator: true });
+		items.push({ id: 'selection_sep', separator: true });
 	}
 
 	filteredFetched.forEach(function (item) {
@@ -2050,8 +2073,6 @@ function createDisplay(data) {
 	};
 }
 
-
-
 function createResult(data) {
 	let fetchedItems = data.fetchedItems || [];
 
@@ -2063,7 +2084,7 @@ function createResult(data) {
 		}
 
 		if (item.text == null) {
-			item.text = "";
+			item.text = '';
 		}
 
 		if (item.sort_key == null) {
@@ -2153,12 +2174,12 @@ function instance($$self, $$props, $$invalidate) {
 	let summaryLen = 2;
 	let summaryWrap = false;
 	let noCache = false;
-	let placeholderItem = { id: BLANK_ID, text: "", blank: true };
+	let placeholderItem = { id: BLANK_ID, text: '', blank: true };
 	let baseHref = null;
 	let mounted = false;
 	let containerId = null;
 	let containerName = null;
-	let query = "";
+	let query = '';
 	let fixedItems = [];
 	let result = createResult({});
 	let actualCount = 0;
@@ -2167,7 +2188,7 @@ function instance($$self, $$props, $$invalidate) {
 	let displayItems = [];
 	let selectionById = {};
 	let selectionItems = [];
-	let selectionTip = "";
+	let selectionTip = '';
 	let summarySingle = true;
 	let summaryItems = [];
 	let activeId = null;
@@ -2197,7 +2218,7 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	function clearQuery() {
-		$$invalidate(14, query = "");
+		$$invalidate(14, query = '');
 
 		if (noCache) {
 			previousQuery = null;
@@ -2229,7 +2250,7 @@ function instance($$self, $$props, $$invalidate) {
 
 		if (!windowScrollListener) {
 			windowScrollListener = handleWindowScroll;
-			window.addEventListener("scroll", windowScrollListener);
+			window.addEventListener('scroll', windowScrollListener);
 		}
 
 		return true;
@@ -2239,7 +2260,7 @@ function instance($$self, $$props, $$invalidate) {
 		$$invalidate(25, popupVisible = false);
 
 		if (windowScrollListener) {
-			window.removeEventListener("scroll", windowScrollListener);
+			window.removeEventListener('scroll', windowScrollListener);
 			windowScrollListener = null;
 		}
 
@@ -2294,7 +2315,7 @@ function instance($$self, $$props, $$invalidate) {
 		}
 
 		syncToRealSelection();
-		real.dispatchEvent(new CustomEvent("select-select", { detail: selectionItems }));
+		real.dispatchEvent(new CustomEvent('select-select', { detail: selectionItems }));
 	}
 
 	function executeAction(id) {
@@ -2306,7 +2327,7 @@ function instance($$self, $$props, $$invalidate) {
 		}
 
 		closePopup(true);
-		real.dispatchEvent(new CustomEvent("select-action", { detail: item }));
+		real.dispatchEvent(new CustomEvent('select-action', { detail: item }));
 	}
 
 	function selectElement(el) {
@@ -2370,7 +2391,7 @@ function instance($$self, $$props, $$invalidate) {
 					return;
 				}
 
-				let el = real.querySelector("option[value=\"" + item.id + "\"]");
+				let el = real.querySelector('option[value="' + item.id + '"]');
 
 				if (!el) {
 					el = createOptionFromItem(item);
@@ -2388,10 +2409,10 @@ function instance($$self, $$props, $$invalidate) {
 			changed = changed || el.selected !== selected;
 
 			if (selected) {
-				el.setAttribute("selected", "");
+				el.setAttribute('selected', '');
 				el.selected = true;
 			} else {
-				el.removeAttribute("selected");
+				el.removeAttribute('selected');
 				el.selected = false;
 			}
 		}
@@ -2401,7 +2422,7 @@ function instance($$self, $$props, $$invalidate) {
 		if (changed) {
 			try {
 				isSyncToReal = true;
-				real.dispatchEvent(new Event("change"));
+				real.dispatchEvent(new Event('change'));
 			} finally {
 				isSyncToReal = false;
 			}
@@ -2503,7 +2524,7 @@ function instance($$self, $$props, $$invalidate) {
 
 		let tip = selectionItems.map(function (item) {
 			return item.text;
-		}).join(", ");
+		}).join(', ');
 
 		let len = selectionItems.length;
 
@@ -2512,18 +2533,18 @@ function instance($$self, $$props, $$invalidate) {
 
 			if (summaryItems.length < len) {
 				summaryItems.push({
-					id: "more",
-					text: `${len - summaryLen} ${translate("selected_more")}`,
-					item_class: "ss-summary-more"
+					id: 'more',
+					text: `${len - summaryLen} ${translate('selected_more')}`,
+					item_class: 'ss-summary-more'
 				});
 			}
 
-			$$invalidate(19, selectionTip = `${len} ${translate("selected_count")}: ${tip}`);
+			$$invalidate(19, selectionTip = `${len} ${translate('selected_count')}: ${tip}`);
 		} else {
 			$$invalidate(21, summaryItems = selectionItems);
 
 			if (summaryItems[0].blank) {
-				$$invalidate(19, selectionTip = "");
+				$$invalidate(19, selectionTip = '');
 			} else {
 				$$invalidate(19, selectionTip = summaryItems[0].text);
 			}
@@ -2612,7 +2633,7 @@ function instance($$self, $$props, $$invalidate) {
 		let currentQuery;
 
 		if (fetchId) {
-			currentQuery = "";
+			currentQuery = '';
 		} else {
 			currentQuery = query.trim();
 
@@ -2728,7 +2749,7 @@ function instance($$self, $$props, $$invalidate) {
 
 	function fetchMoreIfneeded() {
 		if (hasMore && !fetchingMore && popupVisible) {
-			let lastItem = optionsEl.querySelector(".ss-item:last-child");
+			let lastItem = optionsEl.querySelector('.ss-item:last-child');
 
 			if (resultEl.scrollTop + resultEl.clientHeight >= resultEl.scrollHeight - lastItem.clientHeight * 2 - 2) {
 				fetchItems(true);
@@ -2746,7 +2767,7 @@ function instance($$self, $$props, $$invalidate) {
 			real.addEventListener(ev, eventListeners[ev]);
 		});
 
-		$$invalidate(66, mounted = true);
+		$$invalidate(48, mounted = true);
 	});
 
 	beforeUpdate(function () {
@@ -2766,9 +2787,9 @@ function instance($$self, $$props, $$invalidate) {
 	});
 
 	function setupComponent() {
-		real.classList.add("ss-select-hidden");
-		real.setAttribute("tabindex", "-1");
-		real.setAttribute("aria-hidden", "true");
+		real.classList.add('ss-select-hidden');
+		real.setAttribute('tabindex', '-1');
+		real.setAttribute('aria-hidden', 'true');
 		$$invalidate(30, multiple = real.multiple);
 		let ds = real.dataset;
 		let baseId = real.id || nextUID();
@@ -2831,7 +2852,7 @@ function instance($$self, $$props, $$invalidate) {
 		}
 
 		$$invalidate(10, maxItems = config.maxItems || maxItems);
-		placeholderItem.text = config.placeholder || "";
+		placeholderItem.text = config.placeholder || '';
 
 		if (jQuery.tooltip) {
 			jQuery(toggleEl).tooltip();
@@ -2855,16 +2876,16 @@ function instance($$self, $$props, $$invalidate) {
 		}
 
 		if (!labelId) {
-			$$invalidate(8, labelText = real.getAttribute("aria-label") || null);
+			$$invalidate(8, labelText = real.getAttribute('aria-label') || null);
 		}
 	}
 
 	function handleMutation(mutationsList, observer) {
 		for (let mutation of mutationsList) {
-			if (mutation.type === "childList") {
+			if (mutation.type === 'childList') {
 				reload();
-			} else if (mutation.type === "attributes") {
-				if (mutation.attributeName === "disabled") {
+			} else if (mutation.type === 'attributes') {
+				if (mutation.attributeName === 'disabled') {
 					syncFromRealDisabled();
 				}
 			}
@@ -2882,16 +2903,16 @@ function instance($$self, $$props, $$invalidate) {
 				syncFromRealSelection();
 			}
 		},
-		"select-reload"(event) {
+		'select-reload'(event) {
 			reload();
 		},
-		"focus"(event) {
+		'focus'(event) {
 			focusToggle();
 		}
 	};
 
 	function findActiveOption() {
-		return optionsEl.querySelector(".ss-item-active");
+		return optionsEl.querySelector('.ss-item-active');
 	}
 
 	function findFirstOption() {
@@ -2909,7 +2930,7 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	function findInitialDynamic() {
-		return optionsEl.querySelectorAll(".ss-js-item")[0];
+		return optionsEl.querySelectorAll('.ss-js-item')[0];
 	}
 
 	function updatePopupPosition() {
@@ -3082,10 +3103,10 @@ function instance($$self, $$props, $$invalidate) {
 
 	function activateNextByKey(ch) {
 		ch = ch.toUpperCase();
-		let nodes = optionsEl.querySelectorAll(".ss-js-item");
+		let nodes = optionsEl.querySelectorAll('.ss-js-item');
 		let curr = findActiveOption() || findFirstOption();
 
-		if (curr.classList.contains("ss-js-item")) {
+		if (curr.classList.contains('ss-js-item')) {
 			curr = curr.nextElementSibling;
 		} else {
 			curr = null;
@@ -3127,10 +3148,10 @@ function instance($$self, $$props, $$invalidate) {
 		old = old || findActiveOption();
 
 		if (old && old !== el) {
-			old.classList.remove("ss-item-active");
+			old.classList.remove('ss-item-active');
 		}
 
-		el.classList.add("ss-item-active");
+		el.classList.add('ss-item-active');
 		$$invalidate(22, activeId = `${containerId}_item_${el.dataset.id}`);
 		let clientHeight = resultEl.clientHeight;
 
@@ -3156,11 +3177,11 @@ function instance($$self, $$props, $$invalidate) {
 		let next = el ? el.previousElementSibling : findFirstOption();
 
 		if (next) {
-			while (next && next.classList.contains("ss-js-dead")) {
+			while (next && next.classList.contains('ss-js-dead')) {
 				next = next.previousElementSibling;
 			}
 
-			if (next && !next.classList.contains("ss-js-item")) {
+			if (next && !next.classList.contains('ss-js-item')) {
 				next = null;
 			}
 		}
@@ -3179,11 +3200,11 @@ function instance($$self, $$props, $$invalidate) {
 		let next = el ? el.nextElementSibling : findFirstOption();
 
 		if (next) {
-			while (next && next.classList.contains("ss-js-dead")) {
+			while (next && next.classList.contains('ss-js-dead')) {
 				next = next.nextElementSibling;
 			}
 
-			if (next && !next.classList.contains("ss-js-item")) {
+			if (next && !next.classList.contains('ss-js-item')) {
 				next = null;
 			}
 		}
@@ -3219,7 +3240,7 @@ function instance($$self, $$props, $$invalidate) {
 		}
 
 		let newY = resultEl.scrollTop - resultEl.clientHeight;
-		let nodes = optionsEl.querySelectorAll(".ss-js-item");
+		let nodes = optionsEl.querySelectorAll('.ss-js-item');
 		let next = null;
 
 		for (let i = 0; !next && i < nodes.length; i++) {
@@ -3245,7 +3266,7 @@ function instance($$self, $$props, $$invalidate) {
 
 		let curr = findActiveOption() || findFirstOption();
 		let newY = curr.offsetTop + resultEl.clientHeight;
-		let nodes = optionsEl.querySelectorAll(".ss-js-item");
+		let nodes = optionsEl.querySelectorAll('.ss-js-item');
 		let next = null;
 
 		for (let i = 0; !next && i < nodes.length; i++) {
@@ -3269,7 +3290,7 @@ function instance($$self, $$props, $$invalidate) {
 			return;
 		}
 
-		let nodes = optionsEl.querySelectorAll(".ss-js-item");
+		let nodes = optionsEl.querySelectorAll('.ss-js-item');
 		let next = nodes.length ? nodes[0] : null;
 		activateOption(next);
 		event.preventDefault();
@@ -3280,7 +3301,7 @@ function instance($$self, $$props, $$invalidate) {
 			return;
 		}
 
-		let nodes = optionsEl.querySelectorAll(".ss-js-item");
+		let nodes = optionsEl.querySelectorAll('.ss-js-item');
 		let next = nodes.length ? nodes[nodes.length - 1] : null;
 		activateOption(next);
 		event.preventDefault();
@@ -3382,7 +3403,7 @@ function instance($$self, $$props, $$invalidate) {
 			return;
 		}
 
-		let el = event.target.closest(".ss-item");
+		let el = event.target.closest('.ss-item');
 		activateOption(el);
 
 		if (!hasModifier(event)) {
@@ -3404,14 +3425,14 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	function div1_binding($$value) {
-		binding_callbacks[$$value ? "unshift" : "push"](() => {
+		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
 			toggleEl = $$value;
 			$$invalidate(3, toggleEl);
 		});
 	}
 
 	function input_binding($$value) {
-		binding_callbacks[$$value ? "unshift" : "push"](() => {
+		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
 			inputEl = $$value;
 			$$invalidate(2, inputEl);
 		});
@@ -3423,44 +3444,44 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	function ul_binding($$value) {
-		binding_callbacks[$$value ? "unshift" : "push"](() => {
+		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
 			optionsEl = $$value;
 			$$invalidate(6, optionsEl);
 		});
 	}
 
 	function div2_binding($$value) {
-		binding_callbacks[$$value ? "unshift" : "push"](() => {
+		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
 			resultEl = $$value;
 			$$invalidate(5, resultEl);
 		});
 	}
 
 	function div3_binding($$value) {
-		binding_callbacks[$$value ? "unshift" : "push"](() => {
+		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
 			popupEl = $$value;
 			$$invalidate(4, popupEl);
 		});
 	}
 
 	function div4_binding($$value) {
-		binding_callbacks[$$value ? "unshift" : "push"](() => {
+		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
 			containerEl = $$value;
 			$$invalidate(1, containerEl);
 		});
 	}
 
 	$$self.$$set = $$props => {
-		if ("real" in $$props) $$invalidate(0, real = $$props.real);
-		if ("config" in $$props) $$invalidate(46, config = $$props.config);
+		if ('real' in $$props) $$invalidate(0, real = $$props.real);
+		if ('config' in $$props) $$invalidate(46, config = $$props.config);
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty[2] & /*mounted*/ 16) {
+		if ($$self.$$.dirty[1] & /*mounted*/ 131072) {
 			////////////////////////////////////////////////////////////
 			// Setup
 			//
-			 {
+			{
 				if (mounted) {
 					syncToRealSelection();
 				}
@@ -3517,6 +3538,7 @@ function instance($$self, $$props, $$invalidate) {
 		handleResultScroll,
 		config,
 		selectItem,
+		mounted,
 		div1_binding,
 		input_binding,
 		input_input_handler,
@@ -3530,7 +3552,7 @@ function instance($$self, $$props, $$invalidate) {
 class Select extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance, create_fragment, safe_not_equal, { real: 0, config: 46, selectItem: 47 }, [-1, -1, -1, -1, -1]);
+		init(this, options, instance, create_fragment, safe_not_equal, { real: 0, config: 46, selectItem: 47 }, null, [-1, -1, -1, -1, -1]);
 	}
 
 	get selectItem() {
@@ -3538,4 +3560,4 @@ class Select extends SvelteComponent {
 	}
 }
 
-export default Select;
+export { Select as default };

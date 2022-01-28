@@ -20,6 +20,9 @@ var Select = (function () {
   function _createClass(Constructor, protoProps, staticProps) {
     if (protoProps) _defineProperties(Constructor.prototype, protoProps);
     if (staticProps) _defineProperties(Constructor, staticProps);
+    Object.defineProperty(Constructor, "prototype", {
+      writable: false
+    });
     return Constructor;
   }
 
@@ -52,28 +55,27 @@ var Select = (function () {
         configurable: true
       }
     });
+    Object.defineProperty(subClass, "prototype", {
+      writable: false
+    });
     if (superClass) _setPrototypeOf(subClass, superClass);
   }
 
   function _typeof(obj) {
     "@babel/helpers - typeof";
 
-    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-      _typeof = function _typeof(obj) {
-        return typeof obj;
-      };
-    } else {
-      _typeof = function _typeof(obj) {
-        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-      };
-    }
-
-    return _typeof(obj);
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
+      return typeof obj;
+    } : function (obj) {
+      return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
   }
 
   function _possibleConstructorReturn(self, call) {
     if (call && (_typeof(call) === "object" || typeof call === "function")) {
       return call;
+    } else if (call !== void 0) {
+      throw new TypeError("Derived constructors may only return object or undefined");
     }
 
     return _assertThisInitialized(self);
@@ -101,7 +103,7 @@ var Select = (function () {
     return obj;
   }
 
-  function _arrayLikeToArray(arr, len) {
+  function _arrayLikeToArray$1(arr, len) {
     if (len == null || len > arr.length) len = arr.length;
 
     for (var i = 0, arr2 = new Array(len); i < len; i++) {
@@ -112,20 +114,20 @@ var Select = (function () {
   }
 
   function _arrayWithoutHoles(arr) {
-    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+    if (Array.isArray(arr)) return _arrayLikeToArray$1(arr);
   }
 
   function _iterableToArray(iter) {
-    if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
   }
 
-  function _unsupportedIterableToArray(o, minLen) {
+  function _unsupportedIterableToArray$1(o, minLen) {
     if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    if (typeof o === "string") return _arrayLikeToArray$1(o, minLen);
     var n = Object.prototype.toString.call(o).slice(8, -1);
     if (n === "Object" && o.constructor) n = o.constructor.name;
     if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen);
   }
 
   function _nonIterableSpread() {
@@ -133,7 +135,7 @@ var Select = (function () {
   }
 
   function _toConsumableArray(arr) {
-    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray$1(arr) || _nonIterableSpread();
   }
 
   function noop() {}
@@ -229,7 +231,7 @@ var Select = (function () {
   }
 
   function get_current_component() {
-    if (!current_component) throw new Error("Function called outside component initialization");
+    if (!current_component) throw new Error('Function called outside component initialization');
     return current_component;
   }
 
@@ -262,25 +264,44 @@ var Select = (function () {
   function add_render_callback(fn) {
     render_callbacks.push(fn);
   }
+  // 1. All beforeUpdate callbacks, in order: parents before children
+  // 2. All bind:this callbacks, in reverse order: children before parents.
+  // 3. All afterUpdate callbacks, in order: parents before children. EXCEPT
+  //    for afterUpdates called during the initial onMount, which are called in
+  //    reverse order: children before parents.
+  // Since callbacks might update component values, which could trigger another
+  // call to flush(), the following steps guard against this:
+  // 1. During beforeUpdate, any updated components will be added to the
+  //    dirty_components array and will cause a reentrant call to flush(). Because
+  //    the flush index is kept outside the function, the reentrant call will pick
+  //    up where the earlier call left off and go through all dirty components. The
+  //    current_component value is saved and restored so that the reentrant call will
+  //    not interfere with the "parent" flush() call.
+  // 2. bind:this callbacks cannot trigger new flush() calls.
+  // 3. During afterUpdate, any updated components will NOT have their afterUpdate
+  //    callback called a second time; the seen_callbacks set, outside the flush()
+  //    function, guarantees this behavior.
 
-  var flushing = false;
+
   var seen_callbacks = new Set();
+  var flushidx = 0; // Do *not* move this inside the flush() function
 
   function flush() {
-    if (flushing) return;
-    flushing = true;
+    var saved_component = current_component;
 
     do {
       // first, call beforeUpdate functions
       // and update components
-      for (var i = 0; i < dirty_components.length; i += 1) {
-        var component = dirty_components[i];
+      while (flushidx < dirty_components.length) {
+        var component = dirty_components[flushidx];
+        flushidx++;
         set_current_component(component);
         update(component.$$);
       }
 
       set_current_component(null);
       dirty_components.length = 0;
+      flushidx = 0;
 
       while (binding_callbacks.length) {
         binding_callbacks.pop()();
@@ -289,8 +310,8 @@ var Select = (function () {
       // subsequent updates...
 
 
-      for (var _i = 0; _i < render_callbacks.length; _i += 1) {
-        var callback = render_callbacks[_i];
+      for (var i = 0; i < render_callbacks.length; i += 1) {
+        var callback = render_callbacks[i];
 
         if (!seen_callbacks.has(callback)) {
           // ...so guard against infinite loops
@@ -307,8 +328,8 @@ var Select = (function () {
     }
 
     update_scheduled = false;
-    flushing = false;
     seen_callbacks.clear();
+    set_current_component(saved_component);
   }
 
   function update($$) {
@@ -418,27 +439,31 @@ var Select = (function () {
     return new_blocks;
   }
 
-  function mount_component(component, target, anchor) {
+  function mount_component(component, target, anchor, customElement) {
     var _component$$$ = component.$$,
         fragment = _component$$$.fragment,
         on_mount = _component$$$.on_mount,
         on_destroy = _component$$$.on_destroy,
         after_update = _component$$$.after_update;
-    fragment && fragment.m(target, anchor); // onMount happens before the initial afterUpdate
+    fragment && fragment.m(target, anchor);
 
-    add_render_callback(function () {
-      var new_on_destroy = on_mount.map(run).filter(is_function);
+    if (!customElement) {
+      // onMount happens before the initial afterUpdate
+      add_render_callback(function () {
+        var new_on_destroy = on_mount.map(run).filter(is_function);
 
-      if (on_destroy) {
-        on_destroy.push.apply(on_destroy, _toConsumableArray(new_on_destroy));
-      } else {
-        // Edge case - component was destroyed immediately,
-        // most likely as a result of a binding initialising
-        run_all(new_on_destroy);
-      }
+        if (on_destroy) {
+          on_destroy.push.apply(on_destroy, _toConsumableArray(new_on_destroy));
+        } else {
+          // Edge case - component was destroyed immediately,
+          // most likely as a result of a binding initialising
+          run_all(new_on_destroy);
+        }
 
-      component.$$.on_mount = [];
-    });
+        component.$$.on_mount = [];
+      });
+    }
+
     after_update.forEach(add_render_callback);
   }
 
@@ -465,11 +490,10 @@ var Select = (function () {
     component.$$.dirty[i / 31 | 0] |= 1 << i % 31;
   }
 
-  function init(component, options, instance, create_fragment, not_equal, props) {
-    var dirty = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : [-1];
+  function init(component, options, instance, create_fragment, not_equal, props, append_styles) {
+    var dirty = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : [-1];
     var parent_component = current_component;
     set_current_component(component);
-    var prop_values = options.props || {};
     var $$ = component.$$ = {
       fragment: null,
       ctx: null,
@@ -481,16 +505,19 @@ var Select = (function () {
       // lifecycle
       on_mount: [],
       on_destroy: [],
+      on_disconnect: [],
       before_update: [],
       after_update: [],
-      context: new Map(parent_component ? parent_component.$$.context : []),
+      context: new Map(options.context || (parent_component ? parent_component.$$.context : [])),
       // everything else
       callbacks: blank_object(),
       dirty: dirty,
-      skip_bound: false
+      skip_bound: false,
+      root: options.target || parent_component.$$.root
     };
+    append_styles && append_styles($$.root);
     var ready = false;
-    $$.ctx = instance ? instance(component, prop_values, function (i, ret) {
+    $$.ctx = instance ? instance(component, options.props || {}, function (i, ret) {
       var value = (arguments.length <= 2 ? 0 : arguments.length - 2) ? arguments.length <= 2 ? undefined : arguments[2] : ret;
 
       if ($$.ctx && not_equal($$.ctx[i], $$.ctx[i] = value)) {
@@ -518,12 +545,16 @@ var Select = (function () {
       }
 
       if (options.intro) transition_in(component.$$.fragment);
-      mount_component(component, options.target, options.anchor);
+      mount_component(component, options.target, options.anchor, options.customElement);
       flush();
     }
 
     set_current_component(parent_component);
   }
+  /**
+   * Base class for Svelte components. Used when dev=false.
+   */
+
 
   var SvelteComponent = /*#__PURE__*/function () {
     function SvelteComponent() {
@@ -562,13 +593,13 @@ var Select = (function () {
 
   function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-  function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+  function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
-  function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$1(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+  function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
-  function _unsupportedIterableToArray$1(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
+  function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
-  function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+  function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
   function get_each_context(ctx, list, i) {
     var child_ctx = ctx.slice();
@@ -704,7 +735,7 @@ var Select = (function () {
         t = space();
         attr(span, "class", span_class_value =
         /*item*/
-        ctx[125].item_class || "");
+        ctx[125].item_class || '');
         toggle_class(span, "ss-blank",
         /*item*/
         ctx[125].blank);
@@ -721,7 +752,9 @@ var Select = (function () {
         if_block.m(span, null);
         append(span, t);
       },
-      p: function p(ctx, dirty) {
+      p: function p(new_ctx, dirty) {
+        ctx = new_ctx;
+
         if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block) {
           if_block.p(ctx, dirty);
         } else {
@@ -738,7 +771,7 @@ var Select = (function () {
         /*summaryItems*/
         2097152 && span_class_value !== (span_class_value =
         /*item*/
-        ctx[125].item_class || "")) {
+        ctx[125].item_class || '')) {
           attr(span, "class", span_class_value);
         }
 
@@ -786,7 +819,7 @@ var Select = (function () {
         attr(svg, "viewBox", "0 0 16 16");
         attr(svg, "class", svg_class_value =
         /*disabled*/
-        ctx[31] ? "ss-svg-caret-diasbled" : "ss-svg-caret");
+        ctx[31] ? 'ss-svg-caret-diasbled' : 'ss-svg-caret');
       },
       m: function m(target, anchor) {
         insert(target, svg, anchor);
@@ -797,7 +830,7 @@ var Select = (function () {
         /*disabled*/
         1 && svg_class_value !== (svg_class_value =
         /*disabled*/
-        ctx[31] ? "ss-svg-caret-diasbled" : "ss-svg-caret")) {
+        ctx[31] ? 'ss-svg-caret-diasbled' : 'ss-svg-caret')) {
           attr(svg, "class", svg_class_value);
         }
       },
@@ -820,7 +853,7 @@ var Select = (function () {
         attr(svg, "viewBox", "0 0 16 16");
         attr(svg, "class", svg_class_value =
         /*disabled*/
-        ctx[31] ? "ss-svg-caret-diasbled" : "ss-svg-caret");
+        ctx[31] ? 'ss-svg-caret-diasbled' : 'ss-svg-caret');
       },
       m: function m(target, anchor) {
         insert(target, svg, anchor);
@@ -831,7 +864,7 @@ var Select = (function () {
         /*disabled*/
         1 && svg_class_value !== (svg_class_value =
         /*disabled*/
-        ctx[31] ? "ss-svg-caret-diasbled" : "ss-svg-caret")) {
+        ctx[31] ? 'ss-svg-caret-diasbled' : 'ss-svg-caret')) {
           attr(svg, "class", svg_class_value);
         }
       },
@@ -847,7 +880,7 @@ var Select = (function () {
     var label;
     var t0_value =
     /*translate*/
-    ctx[33]("typeahead_input") + "";
+    ctx[33]('typeahead_input') + "";
     var t0;
     var label_for_value;
     var t1;
@@ -884,7 +917,7 @@ var Select = (function () {
         ctx[12] + "_items"));
         attr(input, "aria-activedescendant", input_aria_activedescendant_value =
         /*activeId*/
-        ctx[22] || "");
+        ctx[22] || '');
         attr(div, "class", "ss-input-item");
       },
       m: function m(target, anchor) {
@@ -895,7 +928,7 @@ var Select = (function () {
         append(div, input);
         /*input_binding*/
 
-        ctx[49](input);
+        ctx[50](input);
         set_input_value(input,
         /*query*/
         ctx[14]);
@@ -903,7 +936,7 @@ var Select = (function () {
         if (!mounted) {
           dispose = [listen(input, "input",
           /*input_input_handler*/
-          ctx[50]), listen(input, "blur",
+          ctx[51]), listen(input, "blur",
           /*handleInputBlur*/
           ctx[35]), listen(input, "keypress",
           /*handleInputKeypress*/
@@ -944,7 +977,7 @@ var Select = (function () {
         /*activeId*/
         4194304 && input_aria_activedescendant_value !== (input_aria_activedescendant_value =
         /*activeId*/
-        ctx[22] || "")) {
+        ctx[22] || '')) {
           attr(input, "aria-activedescendant", input_aria_activedescendant_value);
         }
 
@@ -962,7 +995,7 @@ var Select = (function () {
         if (detaching) detach(div);
         /*input_binding*/
 
-        ctx[49](null);
+        ctx[50](null);
         mounted = false;
         run_all(dispose);
       }
@@ -1013,7 +1046,7 @@ var Select = (function () {
         attr(div1, "class", "ss-no-click");
         attr(li, "class", li_class_value = "dropdown-item ss-item ss-js-item " + (
         /*item*/
-        ctx[125].item_class || ""));
+        ctx[125].item_class || ''));
         attr(li, "id", li_id_value = "" + (
         /*containerId*/
         ctx[12] + "_item_" +
@@ -1024,7 +1057,7 @@ var Select = (function () {
         /*selectionById*/
         ctx[17][
         /*item*/
-        ctx[125].id] ? "true" : null);
+        ctx[125].id] ? 'true' : null);
         attr(li, "data-id", li_data_id_value =
         /*item*/
         ctx[125].id);
@@ -1091,7 +1124,7 @@ var Select = (function () {
         /*displayItems*/
         65536 && li_class_value !== (li_class_value = "dropdown-item ss-item ss-js-item " + (
         /*item*/
-        ctx[125].item_class || ""))) {
+        ctx[125].item_class || ''))) {
           attr(li, "class", li_class_value);
         }
 
@@ -1111,7 +1144,7 @@ var Select = (function () {
         /*selectionById*/
         ctx[17][
         /*item*/
-        ctx[125].id] ? "true" : null)) {
+        ctx[125].id] ? 'true' : null)) {
           attr(li, "aria-selected", li_aria_selected_value);
         }
 
@@ -1189,7 +1222,7 @@ var Select = (function () {
         t3 = space();
         attr(div0, "class", div0_class_value = "ss-item-text " + (
         /*item*/
-        ctx[125].item_class || ""));
+        ctx[125].item_class || ''));
         attr(div1, "class", "d-inline-block");
         attr(li, "class", "dropdown-item ss-item ss-item-muted ss-js-dead");
       },
@@ -1232,7 +1265,7 @@ var Select = (function () {
         /*displayItems*/
         65536 && div0_class_value !== (div0_class_value = "ss-item-text " + (
         /*item*/
-        ctx[125].item_class || ""))) {
+        ctx[125].item_class || ''))) {
           attr(div0, "class", div0_class_value);
         }
 
@@ -1493,7 +1526,7 @@ var Select = (function () {
         t = text(t_value);
         attr(div, "class", div_class_value = "ss-item-text " + (
         /*item*/
-        ctx[125].item_text_class || ""));
+        ctx[125].item_text_class || ''));
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -1510,7 +1543,7 @@ var Select = (function () {
         /*displayItems*/
         65536 && div_class_value !== (div_class_value = "ss-item-text " + (
         /*item*/
-        ctx[125].item_text_class || ""))) {
+        ctx[125].item_text_class || ''))) {
           attr(div, "class", div_class_value);
         }
       },
@@ -1588,7 +1621,7 @@ var Select = (function () {
         t = text(t_value);
         attr(div, "class", div_class_value = "ss-item-desc " + (
         /*item*/
-        ctx[125].item_desc_class || ""));
+        ctx[125].item_desc_class || ''));
       },
       m: function m(target, anchor) {
         insert(target, div, anchor);
@@ -1605,7 +1638,7 @@ var Select = (function () {
         /*displayItems*/
         65536 && div_class_value !== (div_class_value = "ss-item-desc " + (
         /*item*/
-        ctx[125].item_desc_class || ""))) {
+        ctx[125].item_desc_class || ''))) {
           attr(div, "class", div_class_value);
         }
       },
@@ -1645,7 +1678,7 @@ var Select = (function () {
   function create_if_block_8(ctx) {
     var t_value =
     /*translate*/
-    ctx[33]("clear") + "";
+    ctx[33]('clear') + "";
     var t;
     return {
       c: function c() {
@@ -1741,7 +1774,9 @@ var Select = (function () {
         if_block.m(target, anchor);
         insert(target, if_block_anchor, anchor);
       },
-      p: function p(ctx, dirty) {
+      p: function p(new_ctx, dirty) {
+        ctx = new_ctx;
+
         if (current_block_type === (current_block_type = select_block_type_2(ctx)) && if_block) {
           if_block.p(ctx, dirty);
         } else {
@@ -1770,7 +1805,7 @@ var Select = (function () {
         div = element("div");
         div.textContent = "".concat(
         /*translate*/
-        ctx[33]("no_results"));
+        ctx[33]('no_results'));
         attr(div, "class", "dropdown-item ss-message-item ss-item-muted");
       },
       m: function m(target, anchor) {
@@ -1817,7 +1852,7 @@ var Select = (function () {
     var div;
     var t0_value =
     /*translate*/
-    ctx[33]("max_limit") + "";
+    ctx[33]('max_limit') + "";
     var t0;
     var t1;
     var t2;
@@ -1877,7 +1912,6 @@ var Select = (function () {
     var t3;
     var t4;
     var div3_id_value;
-    var div4_class_value;
     var mounted;
     var dispose;
     var each_value_1 =
@@ -2005,7 +2039,7 @@ var Select = (function () {
         ctx[12] + "_popup"));
         attr(div1, "tabindex", div1_tabindex_value =
         /*disabled*/
-        ctx[31] ? "-1" : "0");
+        ctx[31] ? '-1' : '0');
         attr(div1, "title",
         /*selectionTip*/
         ctx[19]);
@@ -2035,7 +2069,7 @@ var Select = (function () {
         ctx[18][0].id) : null);
         attr(ul, "aria-multiselectable", ul_aria_multiselectable_value =
         /*multiple*/
-        ctx[30] ? "true" : null);
+        ctx[30] ? 'true' : null);
         attr(div2, "class", "ss-result");
         attr(div3, "class", "dropdown-menu ss-popup");
         attr(div3, "id", div3_id_value = "" + (
@@ -2067,9 +2101,9 @@ var Select = (function () {
         ctx[27] &&
         /*popupFixed*/
         ctx[9]);
-        attr(div4, "class", div4_class_value = "form-control ss-container " + (
+        attr(div4, "class", "form-control ss-container " + (
         /*styles*/
-        ctx[32].container_class || ""));
+        ctx[32].container_class || ''));
         attr(div4, "id",
         /*containerId*/
         ctx[12]);
@@ -2091,7 +2125,7 @@ var Select = (function () {
         if_block0.m(div0, null);
         /*div1_binding*/
 
-        ctx[48](div1);
+        ctx[49](div1);
         append(div4, t1);
         append(div4, div3);
         if (if_block1) if_block1.m(div3, null);
@@ -2105,20 +2139,20 @@ var Select = (function () {
         /*ul_binding*/
 
 
-        ctx[51](ul);
+        ctx[52](ul);
         /*div2_binding*/
 
-        ctx[52](div2);
+        ctx[53](div2);
         append(div3, t3);
         if (if_block2) if_block2.m(div3, null);
         append(div3, t4);
         if (if_block3) if_block3.m(div3, null);
         /*div3_binding*/
 
-        ctx[53](div3);
+        ctx[54](div3);
         /*div4_binding*/
 
-        ctx[54](div4);
+        ctx[55](div4);
 
         if (!mounted) {
           dispose = [listen(div1, "blur",
@@ -2141,10 +2175,10 @@ var Select = (function () {
         3145728 | dirty[1] &
         /*handleToggleLinkClick*/
         2048) {
-          var _each_value_ =
+          each_value_1 =
           /*summaryItems*/
           ctx[21];
-          each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key, 1, ctx, _each_value_, each0_lookup, span, destroy_block, create_each_block_1, null, get_each_context_1);
+          each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key, 1, ctx, each_value_1, each0_lookup, span, destroy_block, create_each_block_1, null, get_each_context_1);
         }
 
         if (dirty[0] &
@@ -2219,7 +2253,7 @@ var Select = (function () {
         /*disabled*/
         1 && div1_tabindex_value !== (div1_tabindex_value =
         /*disabled*/
-        ctx[31] ? "-1" : "0")) {
+        ctx[31] ? '-1' : '0')) {
           attr(div1, "tabindex", div1_tabindex_value);
         }
 
@@ -2267,10 +2301,10 @@ var Select = (function () {
         1073942528 | dirty[1] &
         /*handleOptionClick, translate, handleOptionLinkClick*/
         12292) {
-          var _each_value =
+          each_value =
           /*displayItems*/
           ctx[16];
-          each_blocks = update_keyed_each(each_blocks, dirty, get_key_1, 1, ctx, _each_value, each1_lookup, ul, destroy_block, create_each_block, null, get_each_context);
+          each_blocks = update_keyed_each(each_blocks, dirty, get_key_1, 1, ctx, each_value, each1_lookup, ul, destroy_block, create_each_block, null, get_each_context);
         }
 
         if (dirty[0] &
@@ -2307,7 +2341,7 @@ var Select = (function () {
         /*multiple*/
         1073741824 && ul_aria_multiselectable_value !== (ul_aria_multiselectable_value =
         /*multiple*/
-        ctx[30] ? "true" : null)) {
+        ctx[30] ? 'true' : null)) {
           attr(ul, "aria-multiselectable", ul_aria_multiselectable_value);
         }
 
@@ -2432,7 +2466,7 @@ var Select = (function () {
         if_block0.d();
         /*div1_binding*/
 
-        ctx[48](null);
+        ctx[49](null);
         if (if_block1) if_block1.d();
 
         for (var _i7 = 0; _i7 < each_blocks.length; _i7 += 1) {
@@ -2441,10 +2475,10 @@ var Select = (function () {
         /*ul_binding*/
 
 
-        ctx[51](null);
+        ctx[52](null);
         /*div2_binding*/
 
-        ctx[52](null);
+        ctx[53](null);
 
         if (if_block2) {
           if_block2.d();
@@ -2453,28 +2487,28 @@ var Select = (function () {
         if (if_block3) if_block3.d();
         /*div3_binding*/
 
-        ctx[53](null);
+        ctx[54](null);
         /*div4_binding*/
 
-        ctx[54](null);
+        ctx[55](null);
         mounted = false;
         run_all(dispose);
       }
     };
   }
   var I18N_DEFAULTS = {
-    clear: "Clear",
-    no_results: "No results",
-    max_limit: "Max limit reached",
-    selected_count: "selected",
-    selected_more: "more",
-    typeahead_input: "Search for..."
+    clear: 'Clear',
+    no_results: 'No results',
+    max_limit: 'Max limit reached',
+    selected_count: 'selected',
+    selected_more: 'more',
+    typeahead_input: 'Search for...'
   };
   var STYLE_DEFAULTS = {
-    container_class: ""
+    container_class: ''
   };
-  var BLANK_ID = "";
-  var FIXED_SORT_KEY = "_";
+  var BLANK_ID = '';
+  var FIXED_SORT_KEY = '_';
   var FETCH_INDICATOR_DELAY = 150;
   var META_KEYS = {
     // Modifiers
@@ -2541,7 +2575,7 @@ var Select = (function () {
 
 
   function isBlankId(id) {
-    return id !== 0 && id !== "0" && (id == null || id == BLANK_ID);
+    return id !== 0 && id !== '0' && (id == null || id == BLANK_ID);
   }
   /**
    * Normalize id value
@@ -2553,18 +2587,18 @@ var Select = (function () {
   }
 
   function toUnderscore(key) {
-    return key.split(/(?=[A-Z])/).join("_").toLowerCase();
+    return key.split(/(?=[A-Z])/).join('_').toLowerCase();
   }
 
   function toDash(key) {
-    return key.replace(/_/g, "-");
+    return key.replace(/_/g, '-');
   }
 
   function createItemFromOption(el, styles, baseHref) {
     var ds = el.dataset;
     var item = {
       id: normalizeId(el.value),
-      text: el.text || "",
+      text: el.text || '',
       disabled: el.disabled
     };
 
@@ -2609,31 +2643,31 @@ var Select = (function () {
   }
 
   function createOptionFromItem(item) {
-    var el = document.createElement("option");
-    el.setAttribute("value", item.id);
+    var el = document.createElement('option');
+    el.setAttribute('value', item.id);
 
     if (item.desc) {
-      el.setAttribute("data-item-desc", item.desc);
+      el.setAttribute('data-item-desc', item.desc);
     }
 
     if (item.item_class) {
-      el.setAttribute("data-item-class", item.item_class);
+      el.setAttribute('data-item-class', item.item_class);
     }
 
     if (item.item_text_class) {
-      el.setAttribute("data-item-text-class", item.item_class);
+      el.setAttribute('data-item-text-class', item.item_class);
     }
 
     if (item.item_desc_class) {
-      el.setAttribute("data-item-desc-class", item.item_class);
+      el.setAttribute('data-item-desc-class', item.item_class);
     }
 
     if (item.action) {
-      el.setAttribute("data-item-action", item.action);
+      el.setAttribute('data-item-action', item.action);
     }
 
     if (item.summary) {
-      el.setAttribute("data-item-summary", item.desc);
+      el.setAttribute('data-item-summary', item.desc);
     }
 
     if (item.data) {
@@ -2650,7 +2684,7 @@ var Select = (function () {
     var byId = {};
     var items = [];
     var blankItem = null;
-    var query = (data.query || "").trim();
+    var query = (data.query || '').trim();
     var fixedItems = data.fixedItems || [];
     var fetchedItems = data.fetchedItems || [];
     var selectionItems = data.selectionItems || [];
@@ -2703,7 +2737,7 @@ var Select = (function () {
 
     if (data.typeahead && items.length && filteredSelection.length && filteredFetched.length) {
       items.push({
-        id: "fixed_sep",
+        id: 'fixed_sep',
         separator: true
       });
     }
@@ -2714,7 +2748,7 @@ var Select = (function () {
 
     if (filteredSelection.length && filteredFetched.length) {
       items.push({
-        id: "selection_sep",
+        id: 'selection_sep',
         separator: true
       });
     }
@@ -2745,7 +2779,7 @@ var Select = (function () {
       }
 
       if (item.text == null) {
-        item.text = "";
+        item.text = '';
       }
 
       if (item.sort_key == null) {
@@ -2835,14 +2869,14 @@ var Select = (function () {
     var noCache = false;
     var placeholderItem = {
       id: BLANK_ID,
-      text: "",
+      text: '',
       blank: true
     };
     var baseHref = null;
     var mounted = false;
     var containerId = null;
     var containerName = null;
-    var query = "";
+    var query = '';
     var fixedItems = [];
     var result = createResult({});
     var actualCount = 0;
@@ -2851,7 +2885,7 @@ var Select = (function () {
     var displayItems = [];
     var selectionById = {};
     var selectionItems = [];
-    var selectionTip = "";
+    var selectionTip = '';
     var summarySingle = true;
     var summaryItems = [];
     var activeId = null;
@@ -2881,7 +2915,7 @@ var Select = (function () {
     }
 
     function clearQuery() {
-      $$invalidate(14, query = "");
+      $$invalidate(14, query = '');
 
       if (noCache) {
         previousQuery = null;
@@ -2914,7 +2948,7 @@ var Select = (function () {
 
       if (!windowScrollListener) {
         windowScrollListener = handleWindowScroll;
-        window.addEventListener("scroll", windowScrollListener);
+        window.addEventListener('scroll', windowScrollListener);
       }
 
       return true;
@@ -2924,7 +2958,7 @@ var Select = (function () {
       $$invalidate(25, popupVisible = false);
 
       if (windowScrollListener) {
-        window.removeEventListener("scroll", windowScrollListener);
+        window.removeEventListener('scroll', windowScrollListener);
         windowScrollListener = null;
       }
 
@@ -2979,7 +3013,7 @@ var Select = (function () {
       }
 
       syncToRealSelection();
-      real.dispatchEvent(new CustomEvent("select-select", {
+      real.dispatchEvent(new CustomEvent('select-select', {
         detail: selectionItems
       }));
     }
@@ -2993,7 +3027,7 @@ var Select = (function () {
       }
 
       closePopup(true);
-      real.dispatchEvent(new CustomEvent("select-action", {
+      real.dispatchEvent(new CustomEvent('select-action', {
         detail: item
       }));
     }
@@ -3058,7 +3092,7 @@ var Select = (function () {
             return;
           }
 
-          var el = real.querySelector("option[value=\"" + item.id + "\"]");
+          var el = real.querySelector('option[value="' + item.id + '"]');
 
           if (!el) {
             el = createOptionFromItem(item);
@@ -3076,10 +3110,10 @@ var Select = (function () {
         changed = changed || el.selected !== selected;
 
         if (selected) {
-          el.setAttribute("selected", "");
+          el.setAttribute('selected', '');
           el.selected = true;
         } else {
-          el.removeAttribute("selected");
+          el.removeAttribute('selected');
           el.selected = false;
         }
       }
@@ -3089,7 +3123,7 @@ var Select = (function () {
       if (changed) {
         try {
           isSyncToReal = true;
-          real.dispatchEvent(new Event("change"));
+          real.dispatchEvent(new Event('change'));
         } finally {
           isSyncToReal = false;
         }
@@ -3185,7 +3219,7 @@ var Select = (function () {
       }));
       var tip = selectionItems.map(function (item) {
         return item.text;
-      }).join(", ");
+      }).join(', ');
       var len = selectionItems.length;
 
       if (len > 1) {
@@ -3193,18 +3227,18 @@ var Select = (function () {
 
         if (summaryItems.length < len) {
           summaryItems.push({
-            id: "more",
-            text: "".concat(len - summaryLen, " ").concat(translate("selected_more")),
-            item_class: "ss-summary-more"
+            id: 'more',
+            text: "".concat(len - summaryLen, " ").concat(translate('selected_more')),
+            item_class: 'ss-summary-more'
           });
         }
 
-        $$invalidate(19, selectionTip = "".concat(len, " ").concat(translate("selected_count"), ": ").concat(tip));
+        $$invalidate(19, selectionTip = "".concat(len, " ").concat(translate('selected_count'), ": ").concat(tip));
       } else {
         $$invalidate(21, summaryItems = selectionItems);
 
         if (summaryItems[0].blank) {
-          $$invalidate(19, selectionTip = "");
+          $$invalidate(19, selectionTip = '');
         } else {
           $$invalidate(19, selectionTip = summaryItems[0].text);
         }
@@ -3292,7 +3326,7 @@ var Select = (function () {
       var currentQuery;
 
       if (fetchId) {
-        currentQuery = "";
+        currentQuery = '';
       } else {
         currentQuery = query.trim();
 
@@ -3400,7 +3434,7 @@ var Select = (function () {
 
     function fetchMoreIfneeded() {
       if (hasMore && !fetchingMore && popupVisible) {
-        var lastItem = optionsEl.querySelector(".ss-item:last-child");
+        var lastItem = optionsEl.querySelector('.ss-item:last-child');
 
         if (resultEl.scrollTop + resultEl.clientHeight >= resultEl.scrollHeight - lastItem.clientHeight * 2 - 2) {
           fetchItems(true);
@@ -3415,7 +3449,7 @@ var Select = (function () {
       Object.keys(eventListeners).forEach(function (ev) {
         real.addEventListener(ev, eventListeners[ev]);
       });
-      $$invalidate(66, mounted = true);
+      $$invalidate(48, mounted = true);
     });
     beforeUpdate(function () {
       if (!setupDone) {
@@ -3433,9 +3467,9 @@ var Select = (function () {
     });
 
     function setupComponent() {
-      real.classList.add("ss-select-hidden");
-      real.setAttribute("tabindex", "-1");
-      real.setAttribute("aria-hidden", "true");
+      real.classList.add('ss-select-hidden');
+      real.setAttribute('tabindex', '-1');
+      real.setAttribute('aria-hidden', 'true');
       $$invalidate(30, multiple = real.multiple);
       var ds = real.dataset;
       var baseId = real.id || nextUID();
@@ -3476,7 +3510,7 @@ var Select = (function () {
       }
 
       $$invalidate(10, maxItems = config.maxItems || maxItems);
-      placeholderItem.text = config.placeholder || "";
+      placeholderItem.text = config.placeholder || '';
 
       if (jQuery.tooltip) {
         jQuery(toggleEl).tooltip();
@@ -3500,7 +3534,7 @@ var Select = (function () {
       }
 
       if (!labelId) {
-        $$invalidate(8, labelText = real.getAttribute("aria-label") || null);
+        $$invalidate(8, labelText = real.getAttribute('aria-label') || null);
       }
     }
 
@@ -3512,10 +3546,10 @@ var Select = (function () {
         for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var mutation = _step.value;
 
-          if (mutation.type === "childList") {
+          if (mutation.type === 'childList') {
             reload();
-          } else if (mutation.type === "attributes") {
-            if (mutation.attributeName === "disabled") {
+          } else if (mutation.type === 'attributes') {
+            if (mutation.attributeName === 'disabled') {
               syncFromRealDisabled();
             }
           }
@@ -3538,16 +3572,16 @@ var Select = (function () {
           syncFromRealSelection();
         }
       },
-      "select-reload": function selectReload(event) {
+      'select-reload': function selectReload(event) {
         reload();
       },
-      "focus": function focus(event) {
+      'focus': function focus(event) {
         focusToggle();
       }
     };
 
     function findActiveOption() {
-      return optionsEl.querySelector(".ss-item-active");
+      return optionsEl.querySelector('.ss-item-active');
     }
 
     function findFirstOption() {
@@ -3565,7 +3599,7 @@ var Select = (function () {
     }
 
     function findInitialDynamic() {
-      return optionsEl.querySelectorAll(".ss-js-item")[0];
+      return optionsEl.querySelectorAll('.ss-js-item')[0];
     }
 
     function updatePopupPosition() {
@@ -3734,10 +3768,10 @@ var Select = (function () {
 
     function activateNextByKey(ch) {
       ch = ch.toUpperCase();
-      var nodes = optionsEl.querySelectorAll(".ss-js-item");
+      var nodes = optionsEl.querySelectorAll('.ss-js-item');
       var curr = findActiveOption() || findFirstOption();
 
-      if (curr.classList.contains("ss-js-item")) {
+      if (curr.classList.contains('ss-js-item')) {
         curr = curr.nextElementSibling;
       } else {
         curr = null;
@@ -3779,10 +3813,10 @@ var Select = (function () {
       old = old || findActiveOption();
 
       if (old && old !== el) {
-        old.classList.remove("ss-item-active");
+        old.classList.remove('ss-item-active');
       }
 
-      el.classList.add("ss-item-active");
+      el.classList.add('ss-item-active');
       $$invalidate(22, activeId = "".concat(containerId, "_item_").concat(el.dataset.id));
       var clientHeight = resultEl.clientHeight;
 
@@ -3808,11 +3842,11 @@ var Select = (function () {
       var next = el ? el.previousElementSibling : findFirstOption();
 
       if (next) {
-        while (next && next.classList.contains("ss-js-dead")) {
+        while (next && next.classList.contains('ss-js-dead')) {
           next = next.previousElementSibling;
         }
 
-        if (next && !next.classList.contains("ss-js-item")) {
+        if (next && !next.classList.contains('ss-js-item')) {
           next = null;
         }
       }
@@ -3831,11 +3865,11 @@ var Select = (function () {
       var next = el ? el.nextElementSibling : findFirstOption();
 
       if (next) {
-        while (next && next.classList.contains("ss-js-dead")) {
+        while (next && next.classList.contains('ss-js-dead')) {
           next = next.nextElementSibling;
         }
 
-        if (next && !next.classList.contains("ss-js-item")) {
+        if (next && !next.classList.contains('ss-js-item')) {
           next = null;
         }
       }
@@ -3871,7 +3905,7 @@ var Select = (function () {
       }
 
       var newY = resultEl.scrollTop - resultEl.clientHeight;
-      var nodes = optionsEl.querySelectorAll(".ss-js-item");
+      var nodes = optionsEl.querySelectorAll('.ss-js-item');
       var next = null;
 
       for (var i = 0; !next && i < nodes.length; i++) {
@@ -3897,7 +3931,7 @@ var Select = (function () {
 
       var curr = findActiveOption() || findFirstOption();
       var newY = curr.offsetTop + resultEl.clientHeight;
-      var nodes = optionsEl.querySelectorAll(".ss-js-item");
+      var nodes = optionsEl.querySelectorAll('.ss-js-item');
       var next = null;
 
       for (var i = 0; !next && i < nodes.length; i++) {
@@ -3921,7 +3955,7 @@ var Select = (function () {
         return;
       }
 
-      var nodes = optionsEl.querySelectorAll(".ss-js-item");
+      var nodes = optionsEl.querySelectorAll('.ss-js-item');
       var next = nodes.length ? nodes[0] : null;
       activateOption(next);
       event.preventDefault();
@@ -3932,7 +3966,7 @@ var Select = (function () {
         return;
       }
 
-      var nodes = optionsEl.querySelectorAll(".ss-js-item");
+      var nodes = optionsEl.querySelectorAll('.ss-js-item');
       var next = nodes.length ? nodes[nodes.length - 1] : null;
       activateOption(next);
       event.preventDefault();
@@ -4035,7 +4069,7 @@ var Select = (function () {
         return;
       }
 
-      var el = event.target.closest(".ss-item");
+      var el = event.target.closest('.ss-item');
       activateOption(el);
 
       if (!hasModifier(event)) {
@@ -4058,14 +4092,14 @@ var Select = (function () {
     }
 
     function div1_binding($$value) {
-      binding_callbacks[$$value ? "unshift" : "push"](function () {
+      binding_callbacks[$$value ? 'unshift' : 'push'](function () {
         toggleEl = $$value;
         $$invalidate(3, toggleEl);
       });
     }
 
     function input_binding($$value) {
-      binding_callbacks[$$value ? "unshift" : "push"](function () {
+      binding_callbacks[$$value ? 'unshift' : 'push'](function () {
         inputEl = $$value;
         $$invalidate(2, inputEl);
       });
@@ -4077,46 +4111,46 @@ var Select = (function () {
     }
 
     function ul_binding($$value) {
-      binding_callbacks[$$value ? "unshift" : "push"](function () {
+      binding_callbacks[$$value ? 'unshift' : 'push'](function () {
         optionsEl = $$value;
         $$invalidate(6, optionsEl);
       });
     }
 
     function div2_binding($$value) {
-      binding_callbacks[$$value ? "unshift" : "push"](function () {
+      binding_callbacks[$$value ? 'unshift' : 'push'](function () {
         resultEl = $$value;
         $$invalidate(5, resultEl);
       });
     }
 
     function div3_binding($$value) {
-      binding_callbacks[$$value ? "unshift" : "push"](function () {
+      binding_callbacks[$$value ? 'unshift' : 'push'](function () {
         popupEl = $$value;
         $$invalidate(4, popupEl);
       });
     }
 
     function div4_binding($$value) {
-      binding_callbacks[$$value ? "unshift" : "push"](function () {
+      binding_callbacks[$$value ? 'unshift' : 'push'](function () {
         containerEl = $$value;
         $$invalidate(1, containerEl);
       });
     }
 
     $$self.$$set = function ($$props) {
-      if ("real" in $$props) $$invalidate(0, real = $$props.real);
-      if ("config" in $$props) $$invalidate(46, config = $$props.config);
+      if ('real' in $$props) $$invalidate(0, real = $$props.real);
+      if ('config' in $$props) $$invalidate(46, config = $$props.config);
     };
 
     $$self.$$.update = function () {
-      if ($$self.$$.dirty[2] &
+      if ($$self.$$.dirty[1] &
       /*mounted*/
-      16) {
+      131072) {
         ////////////////////////////////////////////////////////////
         // Setup
         //
-         {
+        {
           if (mounted) {
             syncToRealSelection();
           }
@@ -4124,7 +4158,7 @@ var Select = (function () {
       }
     };
 
-    return [real, containerEl, inputEl, toggleEl, popupEl, resultEl, optionsEl, labelId, labelText, popupFixed, maxItems, typeahead, containerId, containerName, query, actualCount, displayItems, selectionById, selectionItems, selectionTip, summarySingle, summaryItems, activeId, showFetching, fetchError, popupVisible, popupTop, popupLeft, activeFetch, previousFetch, multiple, disabled, styles, translate, handleBlur, handleInputBlur, handleInputKeypress, handleInputKeydown, handleInputKeyup, handleToggleKeydown, handleToggleKeyup, handleToggleClick, handleToggleLinkClick, handleOptionClick, handleOptionLinkClick, handleResultScroll, config, selectItem, div1_binding, input_binding, input_input_handler, ul_binding, div2_binding, div3_binding, div4_binding];
+    return [real, containerEl, inputEl, toggleEl, popupEl, resultEl, optionsEl, labelId, labelText, popupFixed, maxItems, typeahead, containerId, containerName, query, actualCount, displayItems, selectionById, selectionItems, selectionTip, summarySingle, summaryItems, activeId, showFetching, fetchError, popupVisible, popupTop, popupLeft, activeFetch, previousFetch, multiple, disabled, styles, translate, handleBlur, handleInputBlur, handleInputKeypress, handleInputKeydown, handleInputKeyup, handleToggleKeydown, handleToggleKeyup, handleToggleClick, handleToggleLinkClick, handleOptionClick, handleOptionLinkClick, handleResultScroll, config, selectItem, mounted, div1_binding, input_binding, input_input_handler, ul_binding, div2_binding, div3_binding, div4_binding];
   }
 
   var Select = /*#__PURE__*/function (_SvelteComponent) {
@@ -4142,7 +4176,7 @@ var Select = (function () {
         real: 0,
         config: 46,
         selectItem: 47
-      }, [-1, -1, -1, -1, -1]);
+      }, null, [-1, -1, -1, -1, -1]);
       return _this;
     }
 
@@ -4158,4 +4192,4 @@ var Select = (function () {
 
   return Select;
 
-}());
+})();

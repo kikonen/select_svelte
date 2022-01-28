@@ -33,3 +33,15 @@ https://host.ikari.fi/svelte_test/select
 
 ### sprockets4 version
 https://host.ikari.fi/test
+
+## BUILD
+
+``bash
+yarn run build
+``
+
+## RELEASE
+
+``bash
+yarn run build
+``
